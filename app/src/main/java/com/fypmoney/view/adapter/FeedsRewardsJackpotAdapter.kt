@@ -10,8 +10,8 @@ import com.fypmoney.databinding.*
 import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
-import com.fypmoney.viewhelper.FeedsViewHelper
 import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsJackpotVM
+import com.fypmoney.viewhelper.FeedsViewHelper
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 
@@ -99,10 +99,10 @@ class FeedsRewardsJackpotAdapter(
                 if (position == feedList?.size!! - 1 && viewModel.totalCountJackpot.get()!! > feedList?.size!!) {
                     viewModel.isApiLoading.set(true)
                     viewModel.pagejackpot.set(viewModel.pagejackpot.get()!! + 1)
-                    viewModel.callFetchFeedsJackpotApi(
+                   /* viewModel.callFetchFeedsJackpotApi(
                         latitude = viewModel.latitude.get(),
                         longitude = viewModel.longitude.get()
-                    )
+                    )*/
 
                 }
             } catch (e: Exception) {
@@ -136,10 +136,10 @@ class FeedsRewardsJackpotAdapter(
                 if (position == feedList?.size!! - 1 && viewModel.totalCountJackpot.get()!! > feedList?.size!!) {
                     viewModel.isApiLoading.set(true)
                     viewModel.pagejackpot.set(viewModel.pagejackpot.get()!! + 1)
-                    viewModel.callFetchFeedsJackpotApi(
+                    /*viewModel.callFetchFeedsJackpotApi(
                         latitude = viewModel.latitude.get(),
                         longitude = viewModel.longitude.get()
-                    )
+                    )*/
 
                 }
             } catch (e: Exception) {
@@ -189,10 +189,10 @@ class FeedsRewardsJackpotAdapter(
                 if (position == feedList?.size!! - 1 && viewModel.totalCountJackpot.get()!! > feedList?.size!!) {
                     viewModel.isApiLoading.set(true)
                     viewModel.pagejackpot.set(viewModel.pagejackpot.get()!! + 1)
-                    viewModel.callFetchFeedsJackpotApi(
+                   /* viewModel.callFetchFeedsJackpotApi(
                         latitude = viewModel.latitude.get(),
                         longitude = viewModel.longitude.get()
-                    )
+                    )*/
 
                 }
             } catch (e: Exception) {
@@ -254,10 +254,10 @@ class FeedsRewardsJackpotAdapter(
                 if (position == feedList?.size!! - 1 && viewModel.totalCountJackpot.get()!! > feedList?.size!!) {
                     viewModel.isApiLoading.set(true)
                     viewModel.pagejackpot.set(viewModel.pagejackpot.get()!! + 1)
-                    viewModel.callFetchFeedsJackpotApi(
+                  /*  viewModel.callFetchFeedsJackpotApi(
                         latitude = viewModel.latitude.get(),
                         longitude = viewModel.longitude.get()
-                    )
+                    )*/
 
                 }
             } catch (e: Exception) {

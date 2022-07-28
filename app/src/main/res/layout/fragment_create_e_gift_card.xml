@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.fypmoney.view.giftcard.viewModel.CreateEGiftCardFragmentVM" />
+
+
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:background="@color/bgcolor"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/toolbar_gift_card" />
+
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="0dp">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="@dimen/dp16">
+
+                <FrameLayout
+                    android:id="@+id/banner_fl"
+                    android:layout_marginTop="@dimen/dp16"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/gift_card_iv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:elevation="@dimen/dp1"
+                        tools:src="@drawable/gift_card_img"/>
+
+                    <com.facebook.shimmer.ShimmerFrameLayout
+                        android:id="@+id/gift_card_banner_shimmer_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="@dimen/dp50"
+                        android:visibility="gone"
+                        tools:visibility="gone">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <include layout="@layout/shimmer_placeholder_layout_store" />
+                        </LinearLayout>
+                    </com.facebook.shimmer.ShimmerFrameLayout>
+
+                </FrameLayout>
+
+
+
+
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/gift_card_msg"
+                    style="@style/TextviewRegular"
+                    android:text="@string/add_money_gift_card"
+                    android:textColor="@color/white"
+                    android:lineSpacingExtra="17sp"
+                    android:layout_marginTop="@dimen/dp_40"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/banner_fl"
+                    android:textSize="17sp" />
+
+                <FrameLayout
+                    android:id="@+id/possible_denomination_fl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp30"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/gift_card_msg">
+
+                    <com.facebook.shimmer.ShimmerFrameLayout
+                        android:id="@+id/possible_denomination_gift_card_amount_shimmer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:visibility="visible">
+
+                        <include layout="@layout/shimmer_list_view_placeholder" />
+
+                    </com.facebook.shimmer.ShimmerFrameLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/gift_card_amount_rv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:listitem="@layout/item_only_text"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        android:orientation="horizontal"
+                        app:layout_constraintTop_toBottomOf="@+id/gift_card_msg"/>
+                </FrameLayout>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/gift_amount"
+                    android:layout_width="wrap_content"
+                    style="@style/TextviewBold"
+                    android:textSize="18sp"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:maxLength="8"
+                    android:drawableTint="@color/white"
+                    android:drawablePadding="@dimen/dp16"
+                    android:drawableStart="@drawable/ic_rupess"
+                    android:textCursorDrawable="@drawable/cursor_edittext"
+                    android:paddingHorizontal="@dimen/dp16"
+                    android:paddingVertical="@dimen/dp16"
+                    android:inputType="number"
+                    app:customBackgroundColor="@{@color/edit_text_bg}"
+                    app:customCornerRadius="@{@dimen/dp16}"
+                    android:hint="@string/enter_amount"
+                    android:textColorHint="@color/text_color_light"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="@dimen/dp30"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/possible_denomination_fl" />
+
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/max_min_amount_tv"
+                    style="@style/TextviewRegular"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/text_color_light"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/gift_amount"
+                    tools:text="Min ₹50 - Max ₹10,000" />
+
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:background="@color/text_color_light"
+                    android:layout_marginTop="@dimen/dp30"
+                    app:layout_constraintTop_toBottomOf="@+id/max_min_amount_tv"/>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/whom_you_are_gifting_cl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp30"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/whom_you_are_gifting_tv"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:text="@string/whom_are_you_gifting_this_to"
+                        app:layout_constraintTop_toTopOf="parent"
+                        style="@style/TextviewRegular"
+                        android:textColor="@color/text_color_light" />
+
+                    <RadioGroup
+                        android:id="@+id/gifting_category_rg"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp30"
+                        android:orientation="horizontal"
+                        android:weightSum="2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/whom_you_are_gifting_tv">
+
+                        <RadioButton
+                            android:id="@+id/myself_rb"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:useMaterialThemeColors="true"
+                            android:buttonTint="@drawable/radio_selector_gifts"
+                            android:onClick="@{()->viewModel.onMySelfClicked()}"
+                            android:text="@string/myself"
+                            android:checked="true"
+                            style="@style/Widget.MaterialComponents.CompoundButton.RadioButton"
+                            android:layout_weight="1"
+                            android:textColor="@color/white" />
+
+                        <RadioButton
+                            android:id="@+id/someone_rb"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/someone"
+                            android:layout_weight="1"
+                            android:onClick="@{()->viewModel.onSomeOneClicked()}"
+                            android:buttonTint="@drawable/radio_selector_gifts"
+                            style="@style/Widget.MaterialComponents.CompoundButton.RadioButton"
+                            android:textColor="@color/white" />
+
+                    </RadioGroup>
+
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/someone_cl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/whom_you_are_gifting_cl">
+
+                    <View
+                        android:id="@+id/view1"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:background="@color/text_color_light"
+                        android:layout_marginTop="@dimen/dp30"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/someone_title_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_14sdp"
+                        android:alpha=".60"
+                        style="@style/TextviewRegular"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/view1"
+                        android:text="@string/fill_in_the_details_below_to_whom_you_re_sending_this_gift_card"
+                        android:textColor="@color/white" />
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/name_til"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/select_contact_iv"
+                        app:layout_constraintTop_toBottomOf="@+id/someone_title_tv"
+                        app:boxBackgroundMode="filled"
+                        android:layout_marginEnd="@dimen/dp16"
+                        android:layout_marginTop="@dimen/dp16"
+                        app:boxBackgroundColor="@color/edit_text_bg"
+                        app:boxStrokeErrorColor="@color/red1"
+                        app:boxCornerRadiusTopStart="@dimen/dp16"
+                        app:boxCornerRadiusTopEnd="@dimen/dp16"
+                        app:hintTextColor="@color/white"
+                        android:hint="@string/name">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/name_et"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="17sp"
+                            android:textCursorDrawable="@drawable/cursor_edittext"
+                            android:textColorHint="@color/text_color_light"
+                            android:fontFamily="@font/product_sans_regular"
+                            android:textColor="@color/white"
+                            android:inputType="text"
+                            android:imeOptions="actionNext" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:id="@+id/select_contact_iv"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/someone_title_tv"
+                        app:customBackgroundColor="@{@color/edit_text_bg}"
+                        app:customIsRounded="@{true}"
+                        app:customCornerRadius="@{@dimen/dp29}"
+                        android:onClick="@{()->viewModel.onSelectFromContactClicked()}"
+                        android:padding="15dp"
+                        android:src="@drawable/ic_my_contact" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/email_til"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/name_til"
+                        app:boxBackgroundMode="filled"
+                        android:layout_marginTop="@dimen/dp16"
+                        app:hintTextColor="@color/white"
+                        app:boxBackgroundColor="@color/edit_text_bg"
+                        app:boxStrokeErrorColor="@color/red1"
+                        app:boxCornerRadiusTopStart="@dimen/dp16"
+                        app:boxCornerRadiusTopEnd="@dimen/dp16"
+                        android:hint="@string/email">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/email_et"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="17sp"
+                            android:textCursorDrawable="@drawable/cursor_edittext"
+                            android:textColorHint="@color/text_color_light"
+                            android:fontFamily="@font/product_sans_regular"
+                            android:textColor="@color/white"
+                            android:inputType="textEmailAddress"
+                            android:imeOptions="actionNext" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/phone_til"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/email_til"
+                        app:boxBackgroundMode="filled"
+                        android:layout_marginTop="@dimen/dp16"
+                        app:hintTextColor="@color/white"
+                        app:boxBackgroundColor="@color/edit_text_bg"
+                        app:boxStrokeErrorColor="@color/red1"
+                        app:boxCornerRadiusTopStart="@dimen/dp16"
+                        app:boxCornerRadiusTopEnd="@dimen/dp16"
+                        android:hint="@string/phone_number">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/phone_et"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="17sp"
+                            android:maxLength="10"
+                            android:textCursorDrawable="@drawable/cursor_edittext"
+                            android:textColorHint="@color/text_color_light"
+                            android:fontFamily="@font/product_sans_regular"
+                            android:textColor="@color/white"
+                            android:inputType="numberSigned"
+                            android:imeOptions="actionNext" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <com.fypmoney.view.customview.PrimaryButton
+                    android:id="@+id/pay_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:layout_marginTop="@dimen/dp_40"
+                    android:paddingHorizontal="@dimen/dp30"
+                    android:paddingVertical="@dimen/dp15"
+                    app:text="@string/pay"
+                    app:enabled="false"
+                    android:onClick="@{()->viewModel.onPayClicked()}"
+                    app:enabled_bg="@color/color_task_card_green"
+                    app:disabled_bg="@color/buttonUnselectedColor"
+                    app:layout_constraintTop_toBottomOf="@+id/someone_cl"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginBottom="@dimen/dp10"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.core.widget.NestedScrollView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

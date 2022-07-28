@@ -58,7 +58,12 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
             "ONBOARD_SHARE_1",
             "ADD_MONEY_VIDEO",
             "SHOW_RECHARGE_SCREEN",
-            "ADD_MONEY_VIDEO_NEW"
+            "ADD_MONEY_VIDEO_NEW",
+            "IS_GIFT_CARD_IS_AVAILABLE",
+            "SERVER_IS_UNDER_MAINTENANCE",
+            "SERVER_MAINTENANCE_DESCRIPTION",
+            "CASHBACK_RECHARGE_ALLOWED",
+            "MESSAGE_ON_RECHARGE"
         )
         WebApiCaller.getInstance().request(
             ApiRequest(
@@ -275,6 +280,43 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
                                 SharedPrefUtils.putString(
                                     getApplication(),
                                     SharedPrefUtils.SF_SHOW_RECHARGE_IN_HOME_SCREEN,
+                                    it.value
+                                )
+                            }
+
+                            AppConstants.IS_GIFT_CARD_IS_AVAILABLE ->{
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_SHOW_MY_ORDERS,
+                                    it.value
+                                )
+                            }
+                            AppConstants.SERVER_IS_UNDER_MAINTENANCE ->{
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_SERVER_IS_UNDER_MAINTENANCE,
+                                    it.value
+                                )
+                            }
+                            AppConstants.SERVER_MAINTENANCE_DESCRIPTION ->{
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_SERVER_MAINTENANCE_DESCRIPTION,
+                                    it.value
+                                )
+                            }
+                            "CASHBACK_RECHARGE_ALLOWED"->{
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_CASHBACK_RECHARGE_ALLOWED,
+                                    it.value
+                                )
+                            }
+
+                            "MESSAGE_ON_RECHARGE"->{
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_MESSAGE_ON_RECHARGE,
                                     it.value
                                 )
                             }

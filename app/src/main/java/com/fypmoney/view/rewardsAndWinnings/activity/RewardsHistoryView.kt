@@ -18,15 +18,10 @@ import com.fypmoney.base.PaginationListener
 import com.fypmoney.databinding.ViewRewardHistoryBinding
 import com.fypmoney.model.HistoryItem
 import com.fypmoney.model.RewardHistoryResponseNew
-
 import com.fypmoney.util.AppConstants
 import com.fypmoney.view.rewardsAndWinnings.adapters.RewardsHistoryBaseAdapter
 import com.fypmoney.view.rewardsAndWinnings.interfaces.ListRewardsItemClickListener
-
 import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsHistoryVM
-import kotlinx.android.synthetic.main.fragment_reward_history.view.*
-import kotlinx.android.synthetic.main.fragment_your_task.view.*
-
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_reward_history.*
 
@@ -192,24 +187,49 @@ class RewardsHistoryView : BaseActivity<ViewRewardHistoryBinding, RewardsHistory
 
             override fun onItemClicked(historyItem: HistoryItem) {
 
-                if (historyItem.productType == AppConstants.PRODUCT_SPIN) {
-                    val intent = Intent(this@RewardsHistoryView, SpinWheelViewDark::class.java)
-                    SpinWheelViewDark.sectionArrayList.clear()
-                    intent.putExtra(AppConstants.NO_GOLDED_CARD, historyItem.noOfJackpotTicket)
+                when (historyItem.productType) {
+                    AppConstants.PRODUCT_SPIN -> {
+                        val intent = Intent(this@RewardsHistoryView, SpinWheelViewDark::class.java)
+//                        SpinWheelViewDark.sectionArrayList.clear()
+                        intent.putExtra(
+                            AppConstants.ORDER_NUM,
+                            historyItem.orderNumber.toString()
+                        )
+                        intent.putExtra(
+                            AppConstants.PRODUCT_CODE,
+                            historyItem.productCode
+                        )
+                        intent.putExtra(AppConstants.NO_GOLDED_CARD, historyItem.noOfJackpotTicket)
+                        startActivity(intent)
+                    }
 
-                    intent.putExtra(
-                        AppConstants.ORDER_NUM,
-                        historyItem.orderNumber.toString()
-                    )
-                    startActivity(intent)
+                    AppConstants.PRODUCT_TREASURE_BOX -> {
+//                        findNavController().navigate(R.id.navigation_rotating_treasure)
+                    }
+                    else -> {
+                        mVM.callProductsDetailsApi(historyItem.orderNumber)
 
-
-
-                } else {
-
-                    mVM.callProductsDetailsApi(historyItem.orderNumber)
-
+                    }
                 }
+//                if (historyItem.productType == AppConstants.PRODUCT_SPIN) {
+//                    val intent = Intent(this@RewardsHistoryView, SpinWheelViewDark::class.java)
+//                    SpinWheelViewDark.sectionArrayList.clear()
+//                    intent.putExtra(AppConstants.NO_GOLDED_CARD, historyItem.noOfJackpotTicket)
+//
+//                    intent.putExtra(
+//                        AppConstants.ORDER_NUM,
+//                        historyItem.orderNumber.toString()
+//                    )
+//                    startActivity(intent)
+//
+//
+//                } else if (historyItem.productType == AppConstants.PRODUCT_TREASURE_BOX) {
+//                    findNavController().navigate(R.id.navigation_rotating_treasure)
+//                } else {
+//
+//                    mVM.callProductsDetailsApi(historyItem.orderNumber)
+//
+//                }
             }
 
 

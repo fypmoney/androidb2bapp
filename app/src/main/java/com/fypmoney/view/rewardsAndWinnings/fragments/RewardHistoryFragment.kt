@@ -1,10 +1,12 @@
 package com.fypmoney.view.rewardsAndWinnings.fragments
 
-import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.navOptions
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fypmoney.BR
 import com.fypmoney.R
@@ -12,8 +14,6 @@ import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.FragmentRewardHistoryBinding
 import com.fypmoney.model.HistoryItem
 import com.fypmoney.util.AppConstants
-import com.fypmoney.view.rewardsAndWinnings.activity.RewardsHistoryView
-import com.fypmoney.view.rewardsAndWinnings.activity.SpinWheelViewDark
 import com.fypmoney.view.rewardsAndWinnings.adapters.RewardsHistoryLeaderboardAdapter
 import com.fypmoney.view.rewardsAndWinnings.interfaces.ListRewardsItemClickListener
 import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardHistoryFragmentVM
@@ -25,7 +25,7 @@ class RewardHistoryFragment :
     BaseFragment<FragmentRewardHistoryBinding, RewardHistoryFragmentVM>() {
     companion object {
         var page = 0
-        fun newInstance():RewardHistoryFragment{
+        fun newInstance(): RewardHistoryFragment {
             return RewardHistoryFragment()
         }
     }
@@ -68,8 +68,16 @@ class RewardHistoryFragment :
         )
         mViewBinding?.showHistory?.setOnClickListener {
 
-            val intent = Intent(requireContext(), RewardsHistoryView::class.java)
-            requireContext().startActivity(intent)
+            findNavController().navigate(R.id.navigation_more_history, null, navOptions {
+                anim {
+                    popEnter = R.anim.slide_in_left
+                    popExit = R.anim.slide_out_righ
+                    enter = R.anim.slide_in_right
+                    exit = R.anim.slide_out_left
+                }
+            })
+//            val intent = Intent(requireContext(), RewardsHistoryView::class.java)
+//            requireContext().startActivity(intent)
         }
 
         setRecyclerView(mViewBinding)
@@ -87,23 +95,51 @@ class RewardHistoryFragment :
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         root?.rvHistory?.layoutManager = layoutManager
 
-        var itemClickListener2 = object : ListRewardsItemClickListener {
-
-
+        val itemClickListener2 = object : ListRewardsItemClickListener {
             override fun onItemClicked(historyItem: HistoryItem) {
-                if (historyItem.productType == AppConstants.PRODUCT_SPIN) {
-                    val intent = Intent(requireContext(), SpinWheelViewDark::class.java)
-                    SpinWheelViewDark.sectionArrayList.clear()
-                    intent.putExtra(
-                        AppConstants.ORDER_NUM,
-                        historyItem.orderNumber.toString()
-                    )
-                    intent.putExtra(AppConstants.NO_GOLDED_CARD, historyItem.noOfJackpotTicket)
-                    startActivity(intent)
-
-                } else {
-                    mViewModel?.callProductsDetailsApi(historyItem.orderNumber)
-
+                when (historyItem.productType) {
+                    AppConstants.PRODUCT_SPIN -> {
+//                        val intent = Intent(requireContext(), SpinWheelHistoryView::class.java)
+////                        SpinWheelViewDark.sectionArrayList.clear()
+//                        intent.putExtra(
+//                            AppConstants.ORDER_NUM,
+//                            historyItem.orderNumber.toString()
+//                        )
+//                        intent.putExtra(
+//                            AppConstants.PRODUCT_CODE,
+//                            historyItem.productCode
+//                        )
+//                        intent.putExtra(AppConstants.NO_GOLDED_CARD, historyItem.noOfJackpotTicket)
+//                        startActivity(intent)
+                        val productId = historyItem.orderNumber.toString()
+                        val productCode = historyItem.productCode.toString()
+                        findNavController().navigate(Uri.parse("https://www.fypmoney.in/spinwheel/${productCode}/${productId}"),
+                            navOptions {
+                            anim {
+                                popEnter = R.anim.slide_in_left
+                                popExit = R.anim.slide_out_righ
+                                enter = R.anim.slide_in_right
+                                exit = R.anim.slide_out_left
+                            }
+                        })
+//                        findNavController().navigate(R.id.navigation_spin_wheel, productCode, productId)
+                    }
+                    AppConstants.PRODUCT_TREASURE_BOX -> {
+//                        findNavController().navigate(R.id.navigation_rotating_treasure)
+                        val productId = historyItem.orderNumber.toString()
+                        val productCode = historyItem.productCode.toString()
+                        findNavController().navigate(Uri.parse("https://www.fypmoney.in/rotating_treasure/${productCode}/${productId}"), navOptions {
+                            anim {
+                                popEnter = R.anim.slide_in_left
+                                popExit = R.anim.slide_out_righ
+                                enter = R.anim.slide_in_right
+                                exit = R.anim.slide_out_left
+                            }
+                        })
+                    }
+                    else -> {
+                        mViewModel?.callProductsDetailsApi(historyItem.orderNumber)
+                    }
                 }
             }
         }
@@ -169,6 +205,7 @@ class RewardHistoryFragment :
 
             })
     }
+
 
 
 }

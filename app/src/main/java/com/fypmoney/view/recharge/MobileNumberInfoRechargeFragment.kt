@@ -151,7 +151,7 @@ class MobileNumberInfoRechargeFragment:BaseFragment<MobileNumberInfoRechargeFrag
 
                 directions.let { it1 -> findNavController().navigate(it1) }
             }
-            null -> TODO()
+            null -> {}
             is MobileNumberInfoRechargeFragmentVM.EnterMobileNumberInfoRechargeEvent.ShowPlanScreen -> {
                 val directions = mViewModel.mobileNumberInfoModel?.circle?.let { it1 ->
                     MobileNumberInfoRechargeFragmentDirections.actionSelectRechargePlans(
@@ -193,7 +193,7 @@ class MobileNumberInfoRechargeFragment:BaseFragment<MobileNumberInfoRechargeFrag
             MobileNumberInfoRechargeFragmentVM.EnterMobileNumberInfoRechargeState.Loading -> {
                 mViewBinding.shimmerLayout.toVisible()
             }
-            null -> TODO()
+            null -> {}
         }
     }
 
@@ -265,13 +265,11 @@ class MobileNumberInfoRechargeFragment:BaseFragment<MobileNumberInfoRechargeFrag
                 startActivity(intent)
             }
             AppConstants.EXPLORE_SECTION_EXPLORE -> {
-                val directions = exploreContentResponse?.sectionDisplayText?.let { it1 ->
-                    MobileNumberInfoRechargeFragmentDirections.actionExploreSectionExplore(
+                val directions = MobileNumberInfoRechargeFragmentDirections.actionExploreSectionExplore(
                         sectionExploreItem = sectionContentItem,
-                        sectionExploreName = it1
+                        sectionExploreName = exploreContentResponse?.sectionDisplayText
                     )
-                }
-                directions?.let { it1 -> findNavController().navigate(it1) }
+                directions.let { it1 -> findNavController().navigate(it1) }
             }
             AppConstants.EXPLORE_IN_APP -> {
                 redirectionResource?.let { uri ->

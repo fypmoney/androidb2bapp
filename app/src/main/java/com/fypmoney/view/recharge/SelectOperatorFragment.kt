@@ -147,7 +147,7 @@ class SelectOperatorFragment : BaseFragment<SelectOperatorFragmentBinding, Selec
 
 
             }
-            null -> TODO()
+            null -> {}
         }
     }
 

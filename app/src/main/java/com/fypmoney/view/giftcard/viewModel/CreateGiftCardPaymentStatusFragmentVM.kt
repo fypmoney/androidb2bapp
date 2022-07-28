@@ -1,0 +1,88 @@
+package com.fypmoney.view.giftcard.viewModel
+
+import android.app.Application
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.viewModelScope
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
+import com.fypmoney.base.BaseViewModel
+import com.fypmoney.util.livedata.LiveEvent
+import com.fypmoney.view.giftcard.model.CreateEGiftCardOrderStatus
+import com.fypmoney.view.giftcard.model.GiftCardStatusScreenCTA
+import com.fypmoney.view.giftcard.model.PurchasedGiftCardStatusUiModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+
+class CreateGiftCardPaymentStatusFragmentVM(application: Application) : BaseViewModel(application) {
+    lateinit var purchasedGiftCardStatusUiModel: PurchasedGiftCardStatusUiModel
+
+    val state:LiveData<CreateGiftCardPaymentSuccessState>
+        get() = _state
+    private val _state = LiveEvent<CreateGiftCardPaymentSuccessState>()
+
+
+    val event:LiveData<CreateGiftCardPaymentSuccessEvent>
+        get() = _event
+    private val _event = LiveEvent<CreateGiftCardPaymentSuccessEvent>()
+
+    fun onContinueClick(){
+        checkForNavigation()
+    }
+    fun checkForStatus(){
+        when(purchasedGiftCardStatusUiModel.status){
+            CreateEGiftCardOrderStatus.Failed -> {
+                trackr {
+                    it.name = TrackrEvent.gift_card_fail
+                }
+                _state.value =
+                    CreateGiftCardPaymentSuccessState.Failed(purchasedGiftCardStatusUiModel)
+            }
+            CreateEGiftCardOrderStatus.Pending -> {
+                trackr {
+                    it.name = TrackrEvent.gift_card_pending
+                }
+                _state.value =
+                    CreateGiftCardPaymentSuccessState.Pending(purchasedGiftCardStatusUiModel)
+
+            }
+            CreateEGiftCardOrderStatus.Success -> {
+                trackr {
+                    it.name = TrackrEvent.gift_card_success
+                }
+                _state.value =
+                    CreateGiftCardPaymentSuccessState.Success(purchasedGiftCardStatusUiModel)
+                viewModelScope.launch {
+                    delay(5000)
+                    checkForNavigation()
+                }
+            }
+        }
+    }
+
+    private fun checkForNavigation() {
+        when(purchasedGiftCardStatusUiModel.actionBtnCTA){
+            GiftCardStatusScreenCTA.NavigateToHome -> {
+                _event.value = CreateGiftCardPaymentSuccessEvent.NavigateToHome
+            }
+            is GiftCardStatusScreenCTA.NavigateToGiftCardDetails -> {
+                _event.value = CreateGiftCardPaymentSuccessEvent.NavigateToGiftCardDetails(
+                    purchasedGiftCardStatusUiModel.purchaseGiftCardDetailId
+                )
+            }
+        }
+    }
+
+    sealed class CreateGiftCardPaymentSuccessState{
+        data class Success(val purchasedGiftCardStatusUiModel: PurchasedGiftCardStatusUiModel):
+            CreateGiftCardPaymentSuccessState()
+        data class Failed(val purchasedGiftCardStatusUiModel: PurchasedGiftCardStatusUiModel):
+            CreateGiftCardPaymentSuccessState()
+        data class Pending(val purchasedGiftCardStatusUiModel: PurchasedGiftCardStatusUiModel):
+            CreateGiftCardPaymentSuccessState()
+    }
+    sealed class CreateGiftCardPaymentSuccessEvent{
+        object NavigateToHome: CreateGiftCardPaymentSuccessEvent()
+        data class NavigateToGiftCardDetails(var giftCardId: String) :
+            CreateGiftCardPaymentSuccessEvent()
+    }
+}

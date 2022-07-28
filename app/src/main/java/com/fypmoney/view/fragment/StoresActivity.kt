@@ -157,7 +157,6 @@ class StoresActivity : BaseActivity<FragmentStoreBinding, StoreScreenViewModel>(
         return json
     }
     override fun onTryAgainClicked() {
-        TODO("Not yet implemented")
     }
 
     private fun observeInput(sharedViewModel: StoreScreenViewModel) {

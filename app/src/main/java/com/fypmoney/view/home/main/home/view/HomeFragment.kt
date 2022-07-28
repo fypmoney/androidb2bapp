@@ -18,6 +18,7 @@ import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.FragmentHomeBinding
 import com.fypmoney.extension.toGone
+import com.fypmoney.extension.toInvisible
 import com.fypmoney.extension.toVisible
 import com.fypmoney.model.CustomerInfoResponseDetails
 import com.fypmoney.model.FeedDetails
@@ -27,17 +28,20 @@ import com.fypmoney.util.AppConstants.FyperScreen
 import com.fypmoney.util.AppConstants.NO
 import com.fypmoney.util.AppConstants.YES
 import com.fypmoney.util.SharedPrefUtils
+import com.fypmoney.util.SharedPrefUtils.Companion.SF_MESSAGE_ON_RECHARGE
 import com.fypmoney.util.Utility
 import com.fypmoney.util.Utility.deeplinkRedirection
 import com.fypmoney.util.videoplayer.VideoActivity2
 import com.fypmoney.util.videoplayer.VideoActivityWithExplore
 import com.fypmoney.view.StoreWebpageOpener2
-import com.fypmoney.view.contacts.view.PayToContactsActivity
 import com.fypmoney.view.activity.UserFeedsDetailView
 import com.fypmoney.view.addmoney.NewAddMoneyActivity
+import com.fypmoney.view.arcadegames.model.ArcadeType
+import com.fypmoney.view.arcadegames.model.checkTheArcadeType
 import com.fypmoney.view.contacts.model.CONTACT_ACTIVITY_UI_MODEL
 import com.fypmoney.view.contacts.model.ContactActivityActionEvent
 import com.fypmoney.view.contacts.model.ContactsActivityUiModel
+import com.fypmoney.view.contacts.view.PayToContactsActivity
 import com.fypmoney.view.fragment.OfferDetailsBottomSheet
 import com.fypmoney.view.fypstories.view.StoriesBottomSheet
 import com.fypmoney.view.home.main.explore.ViewDetails.ExploreInAppWebview
@@ -49,7 +53,6 @@ import com.fypmoney.view.home.main.explore.model.SectionContentItem
 import com.fypmoney.view.home.main.home.adapter.CallToActionAdapter
 import com.fypmoney.view.home.main.home.viewmodel.HomeFragmentVM
 import com.fypmoney.view.register.PanAdhaarSelectionActivity
-import com.fypmoney.view.register.adapters.OffersHomeAdapter
 import com.fypmoney.view.register.fragments.CompleteKYCBottomSheet
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
@@ -65,12 +68,10 @@ import kotlinx.coroutines.ObsoleteCoroutinesApi
 class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
     ExploreAdapter.OnFeedItemClickListener {
 
-    private var typeAdapter: OffersHomeAdapter? = null
     private val homeFragmentVM by viewModels<HomeFragmentVM> {
         defaultViewModelProviderFactory
     }
     private lateinit var _binding: FragmentHomeBinding
-    private var itemsArrayList: ArrayList<offerDetailResponse> = ArrayList()
 
     private val binding get() = _binding
 
@@ -100,6 +101,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
     override fun onStart() {
         super.onStart()
         homeFragmentVM.fetchBalance()
+        checkForRechargeCashback()
+    }
+
+    private fun checkForRechargeCashback() {
+        SharedPrefUtils.getString(requireContext(), SF_MESSAGE_ON_RECHARGE)?.let {
+            if(it.isEmpty()){
+                binding.cashbackAmountTv.toInvisible()
+            }else{
+                binding.cashbackAmountTv.text = it
+                binding.cashbackAmountTv.toVisible()
+            }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -112,6 +125,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
         homeFragmentVM.callToAction()
         checkForErrorNotice()
         rechargeVisbility()
+
 
     }
 
@@ -263,6 +277,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
                 val upiComingSoonBottomSheet = UpiComingSoonBottomSheet()
                 upiComingSoonBottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
                 upiComingSoonBottomSheet.show(childFragmentManager, "UpiComingSoonBottomSheet")
+
             }
             HomeFragmentVM.HomeFragmentEvent.BroadbandRechargeEvent -> {
                 val intent = Intent(requireContext(), StoreWebpageOpener2::class.java)
@@ -290,7 +305,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
                 }
 
             }
-            null -> TODO()
+            null -> {
+
+            }
         }
     }
 
@@ -470,12 +487,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
                     }
                     param(FirebaseAnalytics.Param.SCREEN_CLASS, HomeFragment::class.java.simpleName)
                 }
-                val directions = exploreContentResponse?.sectionDisplayText?.let { it1 ->
-                    HomeFragmentDirections.actionHomeToSectionExplore(sectionExploreItem = sectionContentItem,
-                        sectionExploreName= it1
-                    )
-                }
-                directions?.let { it1 -> findNavController().navigate(it1) }
+                val directions = HomeFragmentDirections.actionHomeToSectionExplore(sectionExploreItem = sectionContentItem,
+                        sectionExploreName= exploreContentResponse?.sectionDisplayText)
+
+                directions.let { it1 -> findNavController().navigate(it1) }
             }
             AppConstants.EXPLORE_IN_APP -> {
                 redirectionResource?.let { uri ->
@@ -496,6 +511,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
                         AppConstants.ARCADE -> {
                             findNavController().navigate(R.id.navigation_arcade)
                         }
+                        AppConstants.GIFT_VOUCHER -> {
+                            findNavController().navigate(Uri.parse("fypmoney://creategiftcard/${redirectionResources}"))
+                        }
                         else -> {
                             redirectionResources.let { it1 ->
                                 deeplinkRedirection(
@@ -513,7 +531,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
             AppConstants.EXPLORE_IN_APP_WEBVIEW -> {
 
                 val intent = Intent(requireContext(), ExploreInAppWebview::class.java)
-//        intent.putExtra(AppConstants.EXPLORE_RESPONSE, feedDetails)
                 intent.putExtra(
                     AppConstants.FROM_WHICH_SCREEN,
                     AppConstants.EXPLORE_IN_APP_WEBVIEW
@@ -536,7 +553,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
 
             AppConstants.FEED_TYPE_BLOG -> {
                 homeFragmentVM.callFetchFeedsApi(redirectionResource)
-
             }
 
             AppConstants.EXT_WEBVIEW -> {
@@ -559,6 +575,30 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
 
                 }
 
+            }
+            AppConstants.GIFT_VOUCHER -> {
+                findNavController().navigate(Uri.parse("fypmoney://creategiftcard/${redirectionResource}"))
+            }
+
+            AppConstants.LEADERBOARD -> {
+                findNavController().navigate(Uri.parse("https://www.fypmoney.in/leaderboard/${redirectionResource}"))
+            }
+            "ARCADE"-> {
+                val type = sectionContentItem.rfu1?.let { rfu->sectionContentItem.redirectionResource?.let { it1 -> checkTheArcadeType(arcadeType = rfu, productCode = it1) } }
+                when(type){
+                    ArcadeType.NOTypeFound -> {}
+                    is ArcadeType.SCRATCH_CARD -> {}
+                    is ArcadeType.SLOT -> {}
+                    is ArcadeType.SPIN_WHEEL -> {
+                        //TODO create deeplink with query parameter
+                        findNavController().navigate(Uri.parse("https://www.fypmoney.in/spinwheel/${type.productCode}/${null}"))
+                    }
+                    is ArcadeType.TREASURE_BOX -> {
+                        //TODO create deeplink with query parameter
+                        findNavController().navigate(Uri.parse("https://www.fypmoney.in/rotating_treasure/${type.productCode}/${null}"))
+                    }
+                    null -> {}
+                }
             }
         }
     }
@@ -648,6 +688,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
 
             }
 
+
             /*AppConstants.EXPLORE_SECTION_EXPLORE->{
                 val directions = exploreContentResponse?.sectionDisplayText?.let { it1 ->
                     ExploreFragmentDirections.actionExploreSectionExplore(sectionExploreItem = sectionContentItem,
@@ -685,7 +726,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
     }
 
     override fun onFeedClick(position: Int, feedDetails: SectionContentItem) {
-        TODO("Not yet implemented")
+
     }
 
 

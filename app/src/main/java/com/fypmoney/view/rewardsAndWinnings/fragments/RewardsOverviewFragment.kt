@@ -7,8 +7,10 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.SystemClock
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navOptions
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.TrackrField
@@ -16,6 +18,7 @@ import com.fyp.trackr.models.trackr
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
+import com.fypmoney.bindingAdapters.setBackgroundDrawable
 import com.fypmoney.databinding.FragmentRewardsOverviewBinding
 import com.fypmoney.model.CustomerInfoResponseDetails
 import com.fypmoney.model.FeedDetails
@@ -27,6 +30,8 @@ import com.fypmoney.view.StoreWebpageOpener2
 import com.fypmoney.view.activity.UserFeedsDetailView
 import com.fypmoney.view.activity.UserFeedsInAppWebview
 import com.fypmoney.view.adapter.FeedsAdapter
+import com.fypmoney.view.arcadegames.model.ArcadeType
+import com.fypmoney.view.arcadegames.model.checkTheArcadeType
 import com.fypmoney.view.fragment.OfferDetailsBottomSheet
 import com.fypmoney.view.fypstories.view.StoriesBottomSheet
 import com.fypmoney.view.home.main.explore.ViewDetails.ExploreInAppWebview
@@ -40,7 +45,7 @@ import com.fypmoney.view.storeoffers.model.offerDetailResponse
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
 
 
-class RewardsOverviewFragment() :
+class RewardsOverviewFragment :
     BaseFragment<FragmentRewardsOverviewBinding, RewardsAndVM>(),
     FeedsAdapter.OnFeedItemClickListener {
 
@@ -48,7 +53,7 @@ class RewardsOverviewFragment() :
 
     companion object {
         var page = 0
-        fun newInstance():RewardsOverviewFragment{
+        fun newInstance(): RewardsOverviewFragment {
             return RewardsOverviewFragment()
         }
 
@@ -57,6 +62,13 @@ class RewardsOverviewFragment() :
     private var mViewBinding: FragmentRewardsOverviewBinding? = null
     private var mViewmodel: RewardsAndVM? = null
 
+//    val startForResult =
+//        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+//            if (result.resultCode == 99) {
+//                mViewmodel?.totalMynts?.postValue(true)
+//            }
+//
+//        }
     //private var feedsRewardsAdapter: FeedsRewardsAdapter? = null
 
     override fun getBindingVariable(): Int {
@@ -76,14 +88,14 @@ class RewardsOverviewFragment() :
         return mViewmodel!!
     }
 
-    override fun onFeedClick(position: Int, it: FeedDetails) {
+    override fun onFeedClick(position: Int, feedDetails: FeedDetails) {
         if (SystemClock.elapsedRealtime() - mLastClickTime < 1200) {
             return
         }
-        mLastClickTime = SystemClock.elapsedRealtime();
-        when (it.displayCard) {
+        mLastClickTime = SystemClock.elapsedRealtime()
+        when (feedDetails.displayCard) {
             AppConstants.FEED_TYPE_DEEPLINK -> {
-                it.action?.url?.let {
+                feedDetails.action?.url?.let {
                     Utility.deeplinkRedirection(it.split(",")[0], requireContext())
 
                 }
@@ -91,7 +103,7 @@ class RewardsOverviewFragment() :
             AppConstants.FEED_TYPE_INAPPWEB2 -> {
                 intentToActivity(
                     UserFeedsInAppWebview::class.java,
-                    it,
+                    feedDetails,
                     AppConstants.FEED_TYPE_INAPPWEB
                 )
             }
@@ -100,7 +112,7 @@ class RewardsOverviewFragment() :
                     Intent.createChooser(
                         Intent(
                             Intent.ACTION_VIEW,
-                            Uri.parse(it.action?.url)
+                            Uri.parse(feedDetails.action?.url)
                         ), getString(R.string.browse_with)
                     )
                 )
@@ -109,14 +121,14 @@ class RewardsOverviewFragment() :
             AppConstants.FEED_TYPE_INAPPWEB -> {
                 intentToActivity(
                     UserFeedsInAppWebview::class.java,
-                    it,
+                    feedDetails,
                     AppConstants.FEED_TYPE_INAPPWEB
                 )
             }
             AppConstants.FEED_TYPE_BLOG -> {
                 intentToActivity(
                     UserFeedsDetailView::class.java,
-                    it,
+                    feedDetails,
                     AppConstants.FEED_TYPE_BLOG
                 )
             }
@@ -125,17 +137,16 @@ class RewardsOverviewFragment() :
                     Intent.createChooser(
                         Intent(
                             Intent.ACTION_VIEW,
-                            Uri.parse(it.action?.url)
+                            Uri.parse(feedDetails.action?.url)
                         ), getString(R.string.browse_with)
                     )
                 )
 
             }
             AppConstants.FEED_TYPE_STORIES -> {
-                if (!it.resourceArr.isNullOrEmpty()) {
-                    callDiduKnowBottomSheet(it.resourceArr)
+                if (!feedDetails.resourceArr.isNullOrEmpty()) {
+                    callDiduKnowBottomSheet(feedDetails.resourceArr)
                 }
-
             }
         }
     }
@@ -145,31 +156,74 @@ class RewardsOverviewFragment() :
         mViewBinding = getViewDataBinding()
 
 
+        setBackgrounds()
 
+//        mViewBinding?.loadingGoldenCards?.visibility = View.VISIBLE
+//        mViewBinding?.loadingAmountMynts?.visibility = View.VISIBLE
+//        mViewBinding?.loadingAmountHdp?.visibility = View.VISIBLE
 
-        mViewBinding?.loadingGoldenCards?.visibility = View.VISIBLE
-        mViewBinding?.loadingAmountMynts?.visibility = View.VISIBLE
-        mViewBinding?.loadingAmountHdp?.visibility = View.VISIBLE
+        mViewBinding?.loadingMynts?.visibility = View.VISIBLE
+        mViewBinding?.loadingTickets?.visibility = View.VISIBLE
+        mViewBinding?.loadingCash?.visibility = View.VISIBLE
 
         setRecyclerView()
         mViewmodel?.let { observeInput(it) }
-        mViewBinding?.bootomPartCl?.setOnClickListener {
+
+//        mViewBinding?.bootomPartCl?.setOnClickListener {
+//            val intent = Intent(requireContext(), CashBackWonHistoryActivity::class.java)
+//            startActivity(intent)
+//        }
+
+//        mViewBinding?.totalMyntsLayout?.setOnClickListener {
+//            //tabchangeListner.tabchange(0, getString(R.string.reward_history))
+//            findNavController().navigate(R.id.navigation_arcade)
+//        }
+//        mViewBinding?.goldenCardLayout?.setOnClickListener {
+//
+//            //tabchangeListner.tabchange(0, getString(R.string.jackpot))
+//            findNavController().navigate(R.id.navigation_jackpot)
+////            findNavController().navigate(R.id.navigation_multiple_jackpots)
+//
+//        }
+
+        mViewBinding?.chipCashView?.setOnClickListener {
             val intent = Intent(requireContext(), CashBackWonHistoryActivity::class.java)
             startActivity(intent)
         }
-        mViewBinding?.totalMyntsLayout?.setOnClickListener {
-            //tabchangeListner.tabchange(0, getString(R.string.reward_history))
-            findNavController().navigate(R.id.navigation_arcade)
+
+        mViewBinding?.chipMyntsView?.setOnClickListener {
+            findNavController().navigate(R.id.navigation_rewards_history, null, navOptions {
+                anim {
+                    popEnter = R.anim.slide_in_left
+                    popExit = R.anim.slide_out_righ
+                    enter = R.anim.slide_in_right
+                    exit = R.anim.slide_out_left
+                }
+            })
         }
-        mViewBinding?.goldenCardLayout?.setOnClickListener {
 
-            //tabchangeListner.tabchange(0, getString(R.string.jackpot))
-            findNavController().navigate(R.id.navigation_jackpot)
-
+        mViewBinding?.chipTicketsView?.setOnClickListener {
+            findNavController().navigate(R.id.navigation_multiple_jackpots, null, navOptions {
+                anim {
+                    popEnter = R.anim.slide_in_left
+                    popExit = R.anim.slide_out_righ
+                    enter = R.anim.slide_in_right
+                    exit = R.anim.slide_out_left
+                }
+            })
         }
 
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>("arcade_is_played")
+            ?.observe(
+                viewLifecycleOwner
+            ) { result ->
+                if (result) {
+                    mViewmodel?.callTotalJackpotCards()
+                    mViewmodel?.callRewardSummary()
+                    mViewmodel?.callTotalRewardsEarnings()
+                }
+            }
     }
-
 
 
     override fun onTryAgainClicked() {
@@ -187,22 +241,26 @@ class RewardsOverviewFragment() :
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         root.exploreHomeRv.layoutManager = layoutManager
 
-        var arrayList: ArrayList<ExploreContentResponse> = ArrayList()
+        val arrayList: ArrayList<ExploreContentResponse> = ArrayList()
         list.forEach { item ->
             if (item.sectionContent?.size!! > 0) {
                 arrayList.add(item)
             }
         }
-        var exploreClickListener2 = object : ExploreItemClickListener {
-            override fun onItemClicked(position: Int, it1: SectionContentItem, exploreContentResponse: ExploreContentResponse?) {
+        val exploreClickListener2 = object : ExploreItemClickListener {
+            override fun onItemClicked(
+                position: Int,
+                sectionContentItem: SectionContentItem,
+                exploreContentResponse: ExploreContentResponse?
+            ) {
                 trackr {
                     it.name = TrackrEvent.home_explore_click
-                    it.add(TrackrField.explore_content_id, it1.id)
+                    it.add(TrackrField.explore_content_id, sectionContentItem.id)
                 }
                 openExploreFeatures(
-                    it1.redirectionType,
-                    it1.redirectionResource,
-                    it1,
+                    sectionContentItem.redirectionType,
+                    sectionContentItem.redirectionResource,
+                    sectionContentItem,
                     exploreContentResponse
                 )
 
@@ -242,19 +300,17 @@ class RewardsOverviewFragment() :
                 startActivity(intent)
             }
             AppConstants.EXPLORE_SECTION_EXPLORE -> {
-                val directions = exploreContentResponse?.sectionDisplayText?.let { it1 ->
-                    RewardsOverviewFragmentDirections.actionExploreSectionExplore(
-                        sectionExploreItem = sectionContentItem,
-                        sectionExploreName = it1
-                    )
-                }
-                directions?.let { it1 -> findNavController().navigate(it1) }
+                val directions = RewardsOverviewFragmentDirections.actionExploreSectionExplore(
+                    sectionExploreItem = sectionContentItem,
+                    sectionExploreName = exploreContentResponse?.sectionDisplayText
+                )
+                directions.let { it1 -> findNavController().navigate(it1) }
             }
             AppConstants.EXPLORE_IN_APP -> {
 
                 redirectionResource?.let { uri ->
 
-                    val redirectionResources = uri?.split(",")?.get(0)
+                    val redirectionResources = uri.split(",")[0]
                     if (redirectionResources == AppConstants.FyperScreen) {
                         findNavController().navigate(R.id.navigation_fyper)
                     } else if (redirectionResources == AppConstants.JACKPOTTAB) {
@@ -263,18 +319,38 @@ class RewardsOverviewFragment() :
                         findNavController().navigate(R.id.navigation_card)
                     } else if (redirectionResources == AppConstants.RewardHistory) {
                         findNavController().navigate(R.id.navigation_rewards_history)
-                    }else if (redirectionResources == AppConstants.ARCADE) {
+                    } else if (redirectionResources == AppConstants.ARCADE) {
                         findNavController().navigate(R.id.navigation_arcade)
-                    }else {
-                        redirectionResources?.let { it1 ->
+                    } else if (redirectionResources == AppConstants.GIFT_VOUCHER) {
+                        findNavController().navigate(
+                            Uri.parse("fypmoney://creategiftcard/${redirectionResource}"),
+                            navOptions {
+                                anim {
+                                    popEnter = R.anim.slide_in_left
+                                    popExit = R.anim.slide_out_righ
+                                    enter = R.anim.slide_in_right
+                                    exit = R.anim.slide_out_left
+                                }
+                            })
+                    } else if (redirectionResources == AppConstants.ARCADE) {
+                        findNavController().navigate(
+                            Uri.parse("https://www.fypmoney.in/leaderboard/${redirectionResource}"),
+                            navOptions {
+                                anim {
+                                    popEnter = R.anim.slide_in_left
+                                    popExit = R.anim.slide_out_righ
+                                    enter = R.anim.slide_in_right
+                                    exit = R.anim.slide_out_left
+                                }
+                            })
+                    } else {
+                        redirectionResources.let { it1 ->
                             Utility.deeplinkRedirection(
                                 it1,
                                 requireContext()
                             )
                         }
                     }
-
-
                 }
 
             }
@@ -328,18 +404,78 @@ class RewardsOverviewFragment() :
                 }
 
             }
+
+            AppConstants.LEADERBOARD -> {
+                findNavController().navigate(Uri.parse("https://www.fypmoney.in/leaderboard/${redirectionResource}"), navOptions {
+                    anim {
+                        popEnter = R.anim.slide_in_left
+                        popExit = R.anim.slide_out_righ
+                        enter = R.anim.slide_in_right
+                        exit = R.anim.slide_out_left
+                    }
+                })
+            }
+            AppConstants.GIFT_VOUCHER -> {
+                findNavController().navigate(Uri.parse("fypmoney://creategiftcard/${redirectionResource}"), navOptions {
+                    anim {
+                        popEnter = R.anim.slide_in_left
+                        popExit = R.anim.slide_out_righ
+                        enter = R.anim.slide_in_right
+                        exit = R.anim.slide_out_left
+                    }
+                })
+            }
+            "ARCADE" -> {
+                val type = sectionContentItem.rfu1?.let {
+                    redirectionResource?.let { it1 ->
+                        checkTheArcadeType(
+                            arcadeType = it,
+                            productCode = it1
+                        )
+                    }
+                }
+                when (type) {
+                    ArcadeType.NOTypeFound -> {
+
+                    }
+                    is ArcadeType.SCRATCH_CARD -> {}
+                    is ArcadeType.SLOT -> {}
+                    is ArcadeType.SPIN_WHEEL -> {
+                        findNavController().navigate(Uri.parse("https://www.fypmoney.in/spinwheel/${type.productCode}/${null}"),navOptions {
+                            anim {
+                                popEnter = R.anim.slide_in_left
+                                popExit = R.anim.slide_out_righ
+                                enter = R.anim.slide_in_right
+                                exit = R.anim.slide_out_left
+                            }
+                        })
+                    }
+                    is ArcadeType.TREASURE_BOX -> {
+                        findNavController().navigate(Uri.parse("https://www.fypmoney.in/rotating_treasure/${type.productCode}/${null}"),navOptions {
+                            anim {
+                                popEnter = R.anim.slide_in_left
+                                popExit = R.anim.slide_out_righ
+                                enter = R.anim.slide_in_right
+                                exit = R.anim.slide_out_left
+                            }
+                        })
+                    }
+                    null -> {}
+                }
+            }
         }
     }
+
     private fun setRecyclerView() {
-       /* val layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        mViewBinding?.recyclerView?.layoutManager = layoutManager
+        /* val layoutManager =
+             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+         mViewBinding?.recyclerView?.layoutManager = layoutManager
 
 
 
 
-        feedsRewardsAdapter = mViewmodel?.let { FeedsRewardsAdapter(requireActivity(), it, this) }
-        mViewBinding?.recyclerView?.adapter = feedsRewardsAdapter*/
+         feedsRewardsAdapter = mViewmodel?.let { FeedsRewardsAdapter(requireActivity(), it, this) }
+         mViewBinding?.recyclerView?.adapter = feedsRewardsAdapter*/
 
     }
 
@@ -363,6 +499,10 @@ class RewardsOverviewFragment() :
         })
 */
 
+//        viewModel.totalMynts.observe(viewLifecycleOwner){
+//            mViewBinding?.tvRewardsMyntsCount?.text = it.toString()
+//        }
+
         viewModel.rewardHistoryList.observe(
             viewLifecycleOwner
         ) { list ->
@@ -371,86 +511,145 @@ class RewardsOverviewFragment() :
         }
 
         viewModel.openBottomSheet.observe(
-            viewLifecycleOwner,
-            { list ->
+            viewLifecycleOwner
+        ) { list ->
 
-                if(list.isNotEmpty()){
-                    callOfferDetailsSheeet(list[0])
-                }
-            })
+            if (list.isNotEmpty()) {
+                callOfferDetailsSheeet(list[0])
+            }
+        }
 
         viewModel.feedDetail.observe(
-            viewLifecycleOwner,
-            { list ->
+            viewLifecycleOwner
+        ) { list ->
 
-                when (list.displayCard) {
+            when (list.displayCard) {
 
-                    AppConstants.FEED_TYPE_BLOG -> {
+                AppConstants.FEED_TYPE_BLOG -> {
 
-                        intentToActivitytoBlog(
-                            UserFeedsDetailView::class.java,
-                            list,
-                            AppConstants.FEED_TYPE_BLOG
-                        )
-                    }
-                    AppConstants.FEED_TYPE_STORIES -> {
+                    intentToActivitytoBlog(
+                        UserFeedsDetailView::class.java,
+                        list,
+                        AppConstants.FEED_TYPE_BLOG
+                    )
+                }
+                AppConstants.FEED_TYPE_STORIES -> {
 
-                        callDiduKnowBottomSheet(list.resourceArr)
-                    }
-
+                    callDiduKnowBottomSheet(list.resourceArr)
                 }
 
+            }
 
-            })
+
+        }
+
         viewModel.totalRewardsResponse.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer { list ->
-                mViewBinding?.loadingAmountHdp?.clearAnimation()
-                mViewBinding?.loadingAmountHdp?.visibility = View.GONE
-                mViewBinding?.totalRefralWonValueTv?.text =
-                    getString(R.string.rupee_symbol) + Utility.convertToRs("${list.amount}")
+            viewLifecycleOwner
+        ) { list ->
+//            mViewBinding?.loadingAmountHdp?.clearAnimation()
+//            mViewBinding?.loadingAmountHdp?.visibility = View.GONE
 
+            mViewBinding?.loadingCash?.clearAnimation()
+            mViewBinding?.loadingCash?.visibility = View.INVISIBLE
 
-            })
+            mViewBinding?.tvRewardCashCount?.text =
+                getString(R.string.rupee_symbol) + Utility.convertToRs("${list.amount}")
+//            mViewBinding?.totalRefralWonValueTv?.text =
+//                getString(R.string.rupee_symbol) + Utility.convertToRs("${list.amount}")
+
+        }
 
         viewModel.rewardSummaryStatus.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer { list ->
-                mViewBinding?.loadingAmountMynts?.clearAnimation()
-                mViewBinding?.loadingAmountMynts?.visibility = View.GONE
-                if (list.totalPoints != null) {
-                    mViewBinding?.totalMyntsWonValueTv?.text =
-                        String.format("%.0f", list.remainingPoints)
+            viewLifecycleOwner
+        ) { list ->
+//            mViewBinding?.loadingAmountMynts?.clearAnimation()
+//            mViewBinding?.loadingAmountMynts?.visibility = View.GONE
+
+            mViewBinding?.loadingMynts?.clearAnimation()
+            mViewBinding?.loadingMynts?.visibility = View.INVISIBLE
+
+            if (list.totalPoints != null) {
+//                mViewBinding?.totalMyntsWonValueTv?.text =
+//                    String.format("%.0f", list.remainingPoints)
+
+                mViewBinding?.tvRewardsMyntsCount?.text =
+                    String.format("%.0f", list.remainingPoints)
+            }
+
+
+        }
+
+//        viewModel.totalJackpotAmount.observe(
+//            viewLifecycleOwner
+//        ) { list ->
+//
+//            mViewBinding?.loadingTickets?.clearAnimation()
+//            mViewBinding?.loadingTickets?.visibility = View.INVISIBLE
+//
+//            if (list.count != null) {
+//                mViewBinding?.tvRewardsTicketsCount?.text =
+//                    "${list.count}"
+//            }
+//
+//        }
+
+        viewModel.state.observe(viewLifecycleOwner) {
+            when (it) {
+                is RewardsAndVM.RewardsTicket.Error -> {
+
                 }
+                is RewardsAndVM.RewardsTicket.Success -> {
+                    mViewBinding?.loadingTickets?.clearAnimation()
+                    mViewBinding?.loadingTickets?.visibility = View.INVISIBLE
 
-
-            })
-
-        viewModel.totalJackpotAmount.observe(
-            viewLifecycleOwner,
-            { list ->
-                mViewBinding?.loadingGoldenCards?.clearAnimation()
-                mViewBinding?.loadingGoldenCards?.visibility = View.GONE
-                mViewBinding?.amountGolderTv?.visibility = View.VISIBLE
-                if (list.count != null) {
-                    mViewBinding?.amountGolderTv?.text =
-                        "${list.count}"
+                    mViewBinding?.tvRewardsTicketsCount?.text = "${it.totalTickets}"
                 }
-                if (list.totalJackpotMsg != null) {
-                    mViewBinding?.golderCardWonHeading?.text = "${list.totalJackpotMsg}"
-                }
+                is RewardsAndVM.RewardsTicket.Loading -> {
 
-            })
+                }
+            }
+        }
     }
 
+    private fun setBackgrounds() {
+        mViewBinding?.let {
+            setBackgroundDrawable(
+                it.chipMyntsView,
+                ContextCompat.getColor(this.requireContext(), R.color.back_surface_color),
+                68f,
+                ContextCompat.getColor(this.requireContext(), R.color.back_surface_color),
+                0f,
+                false
+            )
 
+            setBackgroundDrawable(
+                it.chipTicketsView,
+                ContextCompat.getColor(this.requireContext(), R.color.back_surface_color),
+                68f,
+                ContextCompat.getColor(this.requireContext(), R.color.back_surface_color),
+                0f,
+                false
+            )
+
+            setBackgroundDrawable(
+                it.chipCashView,
+                ContextCompat.getColor(this.requireContext(), R.color.back_surface_color),
+                68f,
+                ContextCompat.getColor(this.requireContext(), R.color.back_surface_color),
+                0f,
+                false
+            )
+
+        }
+    }
 
     private fun callOfferDetailsSheeet(redeemDetails: offerDetailResponse) {
 
-        var bottomSheetMessage = OfferDetailsBottomSheet(redeemDetails)
+        val bottomSheetMessage = OfferDetailsBottomSheet(redeemDetails)
         bottomSheetMessage.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomSheetMessage.show(childFragmentManager, "TASKMESSAGE")
     }
+
     private fun callDiduKnowBottomSheet(list: List<String>) {
         val bottomSheet =
             StoriesBottomSheet(list)
@@ -477,5 +676,6 @@ class RewardsOverviewFragment() :
         intent.putExtra(AppConstants.CUSTOMER_INFO_RESPONSE, CustomerInfoResponseDetails())
         startActivity(intent)
     }
+
 
 }

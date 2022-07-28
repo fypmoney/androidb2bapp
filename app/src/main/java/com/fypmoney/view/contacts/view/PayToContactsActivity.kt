@@ -8,7 +8,6 @@ import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -28,17 +27,14 @@ import com.fypmoney.view.activity.PayRequestProfileView
 import com.fypmoney.view.contacts.adapter.ContactsAdapter
 import com.fypmoney.view.contacts.model.CONTACT_ACTIVITY_UI_MODEL
 import com.fypmoney.view.contacts.model.ContactActivityActionEvent
-import com.fypmoney.view.contacts.model.ContactsActivityUiModel
 import com.fypmoney.view.contacts.viewmodel.PayToContactsActivityVM
 import com.fypmoney.view.fragment.InviteBottomSheet
 import com.fypmoney.view.fragment.InviteMemberBottomSheet
 import com.karumi.dexter.Dexter
-import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
 import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.karumi.dexter.listener.single.PermissionListener
 import kotlinx.android.synthetic.main.activity_pay_to_contacts.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -154,7 +150,9 @@ class PayToContactsActivity : BaseActivity<ActivityPayToContactsBinding, PayToCo
             PayToContactsActivityVM.PayToContactsState.HideBalanceView -> {
                 payToContactsBinding.avilableBalanceCl.toGone()
             }
-            null -> TODO()
+            null -> {
+
+            }
             PayToContactsActivityVM.PayToContactsState.ShowBalanceView -> {
                 payToContactsBinding.avilableBalanceCl.toVisible()
             }
@@ -183,7 +181,7 @@ class PayToContactsActivity : BaseActivity<ActivityPayToContactsBinding, PayToCo
                     callInviteBottomSheet()
                 }
             }
-            null -> TODO()
+            null -> {}
         }
     }
 

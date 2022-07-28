@@ -1,5 +1,8 @@
 package com.fypmoney.view.recharge.model
 
+import androidx.annotation.Keep
+
+@Keep
 data class OfflineOperatorResponse(
 	val operator_id: String? = null,
 	val displayname: String? = null,

@@ -25,6 +25,7 @@ import com.fypmoney.util.AppConstants.ADD_MONEY_VIDEO
 import com.fypmoney.util.AppConstants.ADD_MONEY_VIDEO_NEW
 import com.fypmoney.util.AppConstants.CARD_ORDER_FLAG
 import com.fypmoney.util.AppConstants.ERROR_MESSAGE_HOME
+import com.fypmoney.util.AppConstants.IS_GIFT_CARD_IS_AVAILABLE
 import com.fypmoney.util.AppConstants.IS_NEW_FEED_AVAILABLE
 import com.fypmoney.util.AppConstants.ONBOARD_SHARE_1
 import com.fypmoney.util.AppConstants.ONBOARD_SHARE_90
@@ -33,6 +34,8 @@ import com.fypmoney.util.AppConstants.REFER_LINE1
 import com.fypmoney.util.AppConstants.REFER_LINE2
 import com.fypmoney.util.AppConstants.REFER_MSG_SHARED_1
 import com.fypmoney.util.AppConstants.REFER_MSG_SHARED_2
+import com.fypmoney.util.AppConstants.SERVER_IS_UNDER_MAINTENANCE
+import com.fypmoney.util.AppConstants.SERVER_MAINTENANCE_DESCRIPTION
 import com.fypmoney.util.AppConstants.SHOW_RECHARGE_SCREEN
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.SharedPrefUtils.Companion.SF_KEY_APP_VERSION_CODE
@@ -171,7 +174,12 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
             "ONBOARD_SHARE_1",
             "ADD_MONEY_VIDEO",
             "SHOW_RECHARGE_SCREEN",
-            "ADD_MONEY_VIDEO_NEW"
+            "ADD_MONEY_VIDEO_NEW",
+            "IS_GIFT_CARD_AVAILABLE",
+            "SERVER_IS_UNDER_MAINTENANCE",
+            "SERVER_MAINTENANCE_DESCRIPTION",
+            "CASHBACK_RECHARGE_ALLOWED",
+            "MESSAGE_ON_RECHARGE"
         )
         WebApiCaller.getInstance().request(
             ApiRequest(
@@ -361,13 +369,45 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
                             IS_NEW_FEED_AVAILABLE -> {
                                 PockketApplication.isNewFeedAvailableData = it
                             }
-                            IS_NEW_FEED_AVAILABLE -> {
-                                PockketApplication.isNewFeedAvailableData = it
-                            }
                             SHOW_RECHARGE_SCREEN->{
                                 SharedPrefUtils.putString(
                                     getApplication(),
                                     SharedPrefUtils.SF_SHOW_RECHARGE_IN_HOME_SCREEN,
+                                    it.value
+                                )
+                            }
+                            IS_GIFT_CARD_IS_AVAILABLE->{
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_SHOW_MY_ORDERS,
+                                    it.value
+                                )
+                            }
+                            SERVER_IS_UNDER_MAINTENANCE->{
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_SERVER_IS_UNDER_MAINTENANCE,
+                                    it.value
+                                )
+                            }
+                            SERVER_MAINTENANCE_DESCRIPTION->{
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_SERVER_MAINTENANCE_DESCRIPTION,
+                                    it.value
+                                )
+                            }
+                            "CASHBACK_RECHARGE_ALLOWED"->{
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_CASHBACK_RECHARGE_ALLOWED,
+                                    it.value
+                                )
+                            }
+                            "MESSAGE_ON_RECHARGE"->{
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_MESSAGE_ON_RECHARGE,
                                     it.value
                                 )
                             }

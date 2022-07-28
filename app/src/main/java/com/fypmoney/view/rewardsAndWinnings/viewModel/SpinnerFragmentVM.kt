@@ -11,12 +11,7 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.*
-import com.fypmoney.util.AppConstants
-import com.fypmoney.util.SharedPrefUtils
-import com.fypmoney.util.Utility
 import com.fypmoney.util.livedata.LiveEvent
-import com.fypmoney.view.rewardsAndWinnings.model.TotalJackpotResponse
-import com.fypmoney.view.rewardsAndWinnings.model.totalRewardsResponse
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -99,7 +94,7 @@ class SpinnerFragmentVM(application: Application) : BaseViewModel(application) {
     fun callRewardProductList() {
         WebApiCaller.getInstance().request(
             ApiRequest(
-                ApiConstant.API_GET_REWARD_PRODUCTS,
+                ApiConstant.API_GET_REWARD_PRODUCTS_PURPOSE,
                 NetworkUtil.endURL(ApiConstant.API_GET_REWARD_PRODUCTS),
                 ApiUrl.GET,
                 BaseRequest(),
@@ -136,7 +131,7 @@ class SpinnerFragmentVM(application: Application) : BaseViewModel(application) {
         when (purpose) {
 
 
-            ApiConstant.API_GET_REWARD_PRODUCTS -> {
+            ApiConstant.API_GET_REWARD_PRODUCTS_PURPOSE -> {
 
 
                 val json = JsonParser.parseString(responseData.toString()) as JsonObject

@@ -172,7 +172,7 @@ class EnterMobileNumberRechargeFragment : BaseFragment<EnterMobileNumberRecharge
             EnterMobileNumberRechargeFragmentVM.EnterMobileNumberRechargeState.Loading -> {
                 binding.shimmerLayout.toVisible()
             }
-            null -> TODO()
+            null -> {}
             is EnterMobileNumberRechargeFragmentVM.EnterMobileNumberRechargeState.HLRSuccess -> {
                 binding.continueBtn.setBusy(false)
             }
@@ -221,7 +221,7 @@ class EnterMobileNumberRechargeFragment : BaseFragment<EnterMobileNumberRecharge
             EnterMobileNumberRechargeFragmentVM.EnterMobileNumberRechargeEvent.PickContactFromContactBookEvent -> {
                 selectContactFromPhoneContactList(PICK_CONTACT)
             }
-            null -> TODO()
+            null -> {}
             is EnterMobileNumberRechargeFragmentVM.EnterMobileNumberRechargeEvent.ShowNextScreenWithHlrInfo -> {
                 showEnterMobileNumberInfoRechargeScreen(it.hlrInfo?.circle,it.hlrInfo?.operator)
             }
@@ -388,13 +388,11 @@ class EnterMobileNumberRechargeFragment : BaseFragment<EnterMobileNumberRecharge
                 startActivity(intent)
             }
             AppConstants.EXPLORE_SECTION_EXPLORE -> {
-                val directions = exploreContentResponse?.sectionDisplayText?.let { it1 ->
-                    EnterMobileNumberRechargeFragmentDirections.actionEnterMobileNumberRechargeToSectionExplore(
+                val directions = EnterMobileNumberRechargeFragmentDirections.actionEnterMobileNumberRechargeToSectionExplore(
                         sectionExploreItem = sectionContentItem,
-                        sectionExploreName = it1
+                        sectionExploreName = exploreContentResponse?.sectionDisplayText
                     )
-                }
-                directions?.let { it1 -> findNavController().navigate(it1) }
+                directions.let { it1 -> findNavController().navigate(it1) }
             }
             AppConstants.EXPLORE_IN_APP -> {
                 redirectionResource?.let { uri ->

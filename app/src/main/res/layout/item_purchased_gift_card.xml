@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/voucher_item_mcv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/edit_text_bg"
+        app:cardCornerRadius="@dimen/dp16"
+        app:cardElevation="@dimen/dp1"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/item_cl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/brand_logo_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginStart="@dimen/dp16"
+                android:layout_marginEnd="@dimen/dp16"
+                android:layout_marginTop="@dimen/dp10"
+                tools:srcCompat="@drawable/gift_test_logo"
+                android:adjustViewBounds="true"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/gift_received_purchased_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_purchased"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="Purchased"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:gravity="end|center"
+                android:layout_marginTop="@dimen/dp10"
+                android:paddingHorizontal="@dimen/dp10"
+                app:layout_constraintBottom_toBottomOf="@+id/brand_logo_iv"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/purchased_date_and_time_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextviewRegular"
+                android:textSize="14sp"
+                tools:text="18 jan 2022, 10:30 pm"
+                android:layout_marginTop="@dimen/dp16"
+                android:layout_marginStart="@dimen/dp16"
+                android:textColor="@color/text_color_light"
+                app:layout_constraintTop_toBottomOf="@+id/brand_logo_iv"
+                app:layout_constraintStart_toStartOf="parent"
+                />
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/gift_card_amount_tv"
+                style="@style/TextviewBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp16"
+                android:layout_marginBottom="@dimen/dp20"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:layout_marginTop="@dimen/dp43"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/purchased_date_and_time_tv"
+                tools:text="₹ 5000" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/gift_card_status_tv"
+                style="@style/TextviewRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp16"
+                android:layout_marginBottom="@dimen/dp16"
+                android:drawablePadding="6dp"
+                android:textSize="@dimen/text_14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/gift_card_amount_tv"
+                tools:drawableStart="@drawable/ic_success_status"
+                tools:text="Success"
+                tools:textColor="@color/reward_continue_button" />
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/refresh_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextviewRegular"
+                android:textSize="12sp"
+                android:text="@string/refresh"
+                android:layout_marginEnd="@dimen/dp16"
+                android:visibility="visible"
+                android:clickable="true"
+                android:duplicateParentState="false"
+                app:layout_constraintTop_toTopOf="@+id/gift_card_status_tv"
+                app:layout_constraintBottom_toBottomOf="@+id/gift_card_status_tv"
+                app:layout_constraintEnd_toStartOf="@+id/gift_card_status_tv"
+                android:textColor="@color/add_money_amount_color"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

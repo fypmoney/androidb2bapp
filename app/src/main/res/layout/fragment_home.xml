@@ -346,11 +346,12 @@
                             android:orientation="vertical">
 
                             <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/cashback_amount_tv"
                                 style="@style/TextviewRegular"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/_5_cashback"
                                 android:padding="2dp"
+                                android:visibility="invisible"
                                 android:textColor="@color/black_background"
                                 app:customBackgroundColor="@{@color/color_little_orange}"
                                 app:customCornerRadius="@{@dimen/dp5}"

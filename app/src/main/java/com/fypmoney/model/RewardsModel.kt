@@ -43,7 +43,8 @@ data class SpinWheelRotateResponseDetails(
     @SerializedName("cashbackWon") var cashbackWon: String?,
     @SerializedName("sectionValue") var sectionValue: String?,
     @SerializedName("sectionId") var sectionId: Int?,
-    @SerializedName("noOfJackpotTicket") var noOfJackpotTicket: Int?
+    @SerializedName("noOfJackpotTicket") var noOfJackpotTicket: Int?,
+    @SerializedName("myntsWon") var myntsWon: Int?
 
 ) : Serializable
 

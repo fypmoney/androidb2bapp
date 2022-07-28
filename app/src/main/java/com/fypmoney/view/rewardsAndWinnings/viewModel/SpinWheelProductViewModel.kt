@@ -5,7 +5,6 @@ import android.graphics.Color
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.R
-import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiUrl
@@ -64,7 +63,7 @@ class SpinWheelProductViewModel(application: Application) : BaseViewModel(applic
                 val luckyItem1 = LuckyItem()
 //                luckyItem1.topText =
 //                    PockketApplication.instance.getString(R.string.better_luck_emoji)
-                luckyItem1.icon = R.drawable.ticket
+                luckyItem1.icon = R.drawable.ticket_new
                 luckyItem1.color = Color.parseColor(item.colorCode)
                 luckyItemList.add(luckyItem1)
             } else if (pos % 2 == 0) {
@@ -101,7 +100,6 @@ class SpinWheelProductViewModel(application: Application) : BaseViewModel(applic
                 this, isProgressBar = true
             )
         )
-
 
     }
 

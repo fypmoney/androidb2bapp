@@ -13,6 +13,13 @@ import com.fypmoney.connectivity.ApiConstant.API_UPDATE_PROFILE
 import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.model.*
+import com.fypmoney.view.addmoney.model.BankProfileDetailsNetworkResponse
+import com.fypmoney.view.arcadegames.model.LeaderBoardResponse
+import com.fypmoney.view.giftcard.model.*
+import com.fypmoney.view.arcadegames.model.MultipleJackpotNetworkResponse
+import com.fypmoney.view.arcadegames.model.SingleSpinWheelProductNetworkResponse
+import com.fypmoney.view.arcadegames.model.TreasureBoxNetworkResponse
+import com.fypmoney.view.giftcard.model.*
 import com.fypmoney.view.home.main.home.model.networkmodel.CallToActionNetworkResponse
 import com.fypmoney.view.ordercard.model.UserOfferCardResponse
 import com.fypmoney.view.recharge.model.RecentRechargesResponse
@@ -222,10 +229,37 @@ class ApiDataParsing {
                 }
                 ApiConstant.API_RECENT_RECHARGE -> {
                     getObject(response, RecentRechargesResponse::class.java)
-                }/*
-                ApiConstant.API_30_DAYS_TRANSACTION -> {
-                    getObject(response, SpendAndIncomeNetworkResponse::class.java)
-                }*/
+                }
+                ApiConstant.API_BRAND_DETAILS -> {
+                    getObject(response, CreateGiftCardBrandNetworkResponse::class.java)
+                }
+                ApiConstant.PURCHASE_GIFT_CARD -> {
+                    getObject(response, PurchaseGiftCardNetworkResponse::class.java)
+                }
+                ApiConstant.API_GIFT_CARD_DETAILS -> {
+                    getObject(response, GiftCardDetailsNetworkResponse::class.java)
+                }
+                ApiConstant.GET_HISTORY_LIST -> {
+                    getObject(response, GiftCardHistoryListNetworkResponse::class.java)
+                }
+                ApiConstant.GET_GIFT_VOUCHER_STATUS -> {
+                    getObject(response, GiftCardStatusNetworkResponse::class.java)
+                }
+                ApiConstant.API_BANK_DETAILS -> {
+                    getObject(response, BankProfileDetailsNetworkResponse::class.java)
+                }
+                ApiConstant.API_GET_REWARD_SINGLE_PRODUCTS_PURPOSE -> {
+                    getObject(response, SingleSpinWheelProductNetworkResponse::class.java)
+                }
+                ApiConstant.API_GET_TREASURE_DATA -> {
+                    getObject(response, TreasureBoxNetworkResponse::class.java)
+                }
+                ApiConstant.API_GET_LEADERBOARD_DATA -> {
+                    getObject(response, LeaderBoardResponse::class.java)
+                }
+                ApiConstant.API_GET_ALL_JACKPOTS_PRODUCTWISE -> {
+                    getObject(response, MultipleJackpotNetworkResponse::class.java)
+                }
                 ApiConstant.PAYU_PRODUCTION_URL -> {
                     when (command) {
                         PayuConstants.VALIDATE_VPA -> {

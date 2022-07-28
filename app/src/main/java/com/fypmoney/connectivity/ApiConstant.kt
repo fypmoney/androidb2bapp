@@ -78,11 +78,11 @@ object ApiConstant {
     const val API_GET_STATE = "/services/loyaltyservice/api/states"
     const val API_GET_CITY = "/services/loyaltyservice/api/cities/"
 
-  const val API_CHECK_USER_ERROR_CODE = "LOY_5035"
+    const val API_CHECK_USER_ERROR_CODE = "LOY_5035"
 
-  // pay u test url
+    // pay u test url
 
-  const val PAYU_PRODUCTION_URL = "/merchant/postservice.php?form=2"
+    const val PAYU_PRODUCTION_URL = "/merchant/postservice.php?form=2"
 
     const val GET_USER_CARDS = "get_user_cards"
 
@@ -119,6 +119,9 @@ object ApiConstant {
         "services/loyaltyservice/api/loyalty/points/summary"
     const val API_GET_REWARD_PRODUCTS =
         "services/PockketService/api/list/reward-product"
+    //TODO need to change APIData parsing logic
+    const val API_GET_REWARD_PRODUCTS_PURPOSE =
+        "reward-product_purpose"
     const val API_GET_REWARD_EARNINGS =
         "services/PockketService/api/total-cashback-earned"
     const val API_POST_CHECK_OFFLINE_CARD =
@@ -135,6 +138,9 @@ object ApiConstant {
         "/services/PockketService/api/cashback-earned/bymrn/"
     const val API_GET_REWARDS_EARNED =
         "services/loyaltyservice/api/loyalty/transaction/bymrn/"
+    const val GET_BRAND_GIFT_CARD =
+        "services/PockketService/api/product/"
+    const val PURCHASE_GIFT_CARD = "services/PockketService/api/purchase-voucher"
     const val API_GET_JACKPOT_CARDS =
         "services/PockketService/api/jackpot/tickets"
 
@@ -166,6 +172,34 @@ object ApiConstant {
     const val API_RECENT_RECHARGE = "services/PockketService/api/recharge-orders"
     const val Api_GET_DISCORD_PROFILE = "/services/loyaltyservice/api/fetch-discord-data"
     const val API_30_DAYS_TRANSACTION = "/services/PockketService/api/fetch/data-for/30Days_transaction"
+
+    const val GET_GIFTS_LIST = "services/PockketService/api/search-voucher"
+
+    const val GET_HISTORY_LIST =
+        "services/PockketService/api/purchased-voucher?size=10&sort=id,desc&gifted=NO&page="
+    const val GET_HISTORY_UNUSED_LIST =
+        "services/PockketService/api/unused-voucher?page=0&size=10&sort=id,desc"
+    const val GET_GIFT_VOUCHER_STATUS =
+        "/services/PockketService/api/voucher-status/"
+
+    const val GET_GIFT_VOUCHER_DETAILS =
+        "services/PockketService/api/voucher-order-detail/"
+
+    const val API_BRAND_DETAILS = "services/PockketService/api/product/"
+    const val API_GIFT_CARD_DETAILS = "/services/PockketService/api/voucher-order-detail/"
+    const val API_BANK_DETAILS = "/services/PockketService/api/bank-details"
+    const val API_GET_REWARD_SINGLE_PRODUCTS =
+        "services/PockketService/api/list/reward-product/"
+    const val API_GET_REWARD_SINGLE_PRODUCTS_PURPOSE =
+        "reward-product"
+
+    const val API_GET_TREASURE_DATA =
+        "services/PockketService/api/list/reward-product"
+
+    const val API_GET_ALL_JACKPOTS_PRODUCTWISE =
+        "services/PockketService/api/jackpot/tickets/productwise/"
+
+    const val API_GET_LEADERBOARD_DATA = "services/PockketService/api/reward/leaderboard/"
 
 }
 

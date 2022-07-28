@@ -13,7 +13,7 @@ plugins {
 android {
     signingConfigs {
         config {
-            storeFile file('C:\\Users\\PawanKumar\\Desktop\\FypKeystore.jks')
+            storeFile file('C:\\Users\\Pawankumar\\Desktop\\FypKeystore.jks')
             storePassword 'WjfUzYjN8bem6bX6'
             keyAlias 'Fyp'
             keyPassword 'WjfUzYjN8bem6bX6'
@@ -26,9 +26,8 @@ android {
         ndk.abiFilters 'armeabi-v7a','arm64-v8a','x86','x86_64'
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 74
-        versionName "4.0.7"
-
+        versionCode 76
+        versionName "4.2.2"
         multiDexEnabled = true
         vectorDrawables.useSupportLibrary = true
         // Stops the Gradle plugin�s automatic rasterization of vectors
@@ -114,6 +113,7 @@ dependencies {
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
 
     implementation 'com.android.installreferrer:installreferrer:2.2'
+    implementation 'androidx.viewpager2:viewpager2:1.1.0-beta01'
 
     implementation 'com.airbnb.android:lottie:3.7.0'
     // view model

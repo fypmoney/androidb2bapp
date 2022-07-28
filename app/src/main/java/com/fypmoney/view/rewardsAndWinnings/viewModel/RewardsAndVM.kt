@@ -2,6 +2,7 @@ package com.fypmoney.view.rewardsAndWinnings.viewModel
 
 import android.app.Application
 import androidx.databinding.ObservableField
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
@@ -12,6 +13,7 @@ import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.*
 import com.fypmoney.util.livedata.LiveEvent
+import com.fypmoney.view.arcadegames.model.MultipleJackpotNetworkResponse
 import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
 import com.fypmoney.view.rewardsAndWinnings.model.TotalJackpotResponse
 import com.fypmoney.view.rewardsAndWinnings.model.totalRewardsResponse
@@ -36,6 +38,15 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
     val isApiLoading = ObservableField(true)
     val detailsCalling = ObservableField(false)
 
+    var totalMynts = MutableLiveData(false)
+    var totalCash = MutableLiveData(false)
+    var totalTickets = MutableLiveData(false)
+    var noOfJackpotTickets: Int? = null
+
+    val state: LiveData<RewardsTicket>
+        get() = _state
+    private val _state = MutableLiveData<RewardsTicket>()
+
 
     var orderNumber = MutableLiveData("")
 
@@ -55,22 +66,16 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
     var openBottomSheet: MutableLiveData<ArrayList<offerDetailResponse>> = MutableLiveData()
     var feedDetail: MutableLiveData<FeedDetails> = LiveEvent()
 
-
-
     fun onSelectClicked() {
         onAddMoneyClicked.value = true
     }
 
 
     init {
-//        callRewardProductList()
-        //callFetchFeedsApi()
         callRewardSummary()
         callExplporeContent()
-
         callTotalRewardsEarnings()
         callTotalJackpotCards()
-
     }
 
 
@@ -166,8 +171,8 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
     fun callTotalJackpotCards() {
         WebApiCaller.getInstance().request(
             ApiRequest(
-                ApiConstant.API_GET_JACKPOT_CARDS,
-                NetworkUtil.endURL(ApiConstant.API_GET_JACKPOT_CARDS),
+                ApiConstant.API_GET_ALL_JACKPOTS_PRODUCTWISE,
+                NetworkUtil.endURL(ApiConstant.API_GET_ALL_JACKPOTS_PRODUCTWISE),
                 ApiUrl.GET,
                 BaseRequest(),
                 this, isProgressBar = false
@@ -246,21 +251,21 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
 
             }*/
 
-            ApiConstant.API_GET_JACKPOT_CARDS -> {
-
-
-                val json = JsonParser.parseString(responseData.toString()) as JsonObject
-                if (json != null && json.get("data").toString() != "[]") {
-                    val array = Gson().fromJson<TotalJackpotResponse>(
-                        json.get("data").toString(),
-                        TotalJackpotResponse::class.java
-                    )
-
-                    totalJackpotAmount.postValue(array)
-                }
-
-
-            }
+//            ApiConstant.API_GET_JACKPOT_CARDS -> {
+//
+//
+//                val json = JsonParser.parseString(responseData.toString()) as JsonObject
+//                if (json != null && json.get("data").toString() != "[]") {
+//                    val array = Gson().fromJson<TotalJackpotResponse>(
+//                        json.get("data").toString(),
+//                        TotalJackpotResponse::class.java
+//                    )
+//
+//                    totalJackpotAmount.postValue(array)
+//                }
+//
+//
+//            }
             ApiConstant.API_FETCH_FEED_DETAILS -> {
 
                 val json = JsonParser.parseString(responseData.toString()) as JsonObject
@@ -308,7 +313,7 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
 
                 val json = JsonParser.parseString(responseData.toString()) as JsonObject
 
-                val array = Gson().fromJson<RewardPointsSummaryResponse>(
+                val array = Gson().fromJson(
                     json.get("data").toString(),
                     RewardPointsSummaryResponse::class.java
                 )
@@ -316,6 +321,13 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
                 rewardSummaryStatus.postValue(array)
 
 
+            }
+
+            ApiConstant.API_GET_ALL_JACKPOTS_PRODUCTWISE -> {
+
+                if (responseData is MultipleJackpotNetworkResponse) {
+                    _state.value = RewardsTicket.Success(responseData.data?.totalTickets)
+                }
             }
 
         }
@@ -329,6 +341,12 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
         when (purpose) {
 
         }
+    }
+
+    sealed class RewardsTicket {
+        object Loading : RewardsTicket()
+        data class Success(val totalTickets: Int?) : RewardsTicket()
+        object Error : RewardsTicket()
     }
 
 

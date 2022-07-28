@@ -18,7 +18,6 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.view.recharge.model.RecentRechargeItem
 
-
 class RecentRechargeAdapter(
     private val lifeCycleOwner: LifecycleOwner,
     private val onCheckStatusClick:(rechargeItem:RecentRechargeUiModel)->Unit,

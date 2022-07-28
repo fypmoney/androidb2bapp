@@ -143,7 +143,7 @@ class SelectCircleFragment : BaseFragment<SelectCircleFragmentBinding, SelectCir
                 mViewBinding.rvCircles.toVisible()
                 (mViewBinding.rvCircles.adapter as CircleSelectionAdapter).submitList(it.circles)
             }
-            null -> TODO()
+            null -> {}
             SelectCircleFragmentVM.SelectCircleState.Empty -> {
                 mViewBinding.noCircleFoundTv.toVisible()
                 mViewBinding.noCircleFoundTv.text = getString(R.string.no_circle_found_according_to_your_search)
