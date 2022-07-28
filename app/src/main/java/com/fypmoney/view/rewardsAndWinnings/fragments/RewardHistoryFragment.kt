@@ -1,12 +1,12 @@
 package com.fypmoney.view.rewardsAndWinnings.fragments
 
-import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navOptions
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fypmoney.BR
 import com.fypmoney.R
@@ -14,9 +14,6 @@ import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.FragmentRewardHistoryBinding
 import com.fypmoney.model.HistoryItem
 import com.fypmoney.util.AppConstants
-import com.fypmoney.view.arcadegames.ui.SpinWheelHistoryView
-import com.fypmoney.view.rewardsAndWinnings.activity.RewardsHistoryView
-import com.fypmoney.view.rewardsAndWinnings.activity.SpinWheelViewDark
 import com.fypmoney.view.rewardsAndWinnings.adapters.RewardsHistoryLeaderboardAdapter
 import com.fypmoney.view.rewardsAndWinnings.interfaces.ListRewardsItemClickListener
 import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardHistoryFragmentVM
@@ -71,7 +68,14 @@ class RewardHistoryFragment :
         )
         mViewBinding?.showHistory?.setOnClickListener {
 
-            findNavController().navigate(R.id.navigation_more_history)
+            findNavController().navigate(R.id.navigation_more_history, null, navOptions {
+                anim {
+                    popEnter = R.anim.slide_in_left
+                    popExit = R.anim.slide_out_righ
+                    enter = R.anim.slide_in_right
+                    exit = R.anim.slide_out_left
+                }
+            })
 //            val intent = Intent(requireContext(), RewardsHistoryView::class.java)
 //            requireContext().startActivity(intent)
         }
@@ -109,14 +113,29 @@ class RewardHistoryFragment :
 //                        startActivity(intent)
                         val productId = historyItem.orderNumber.toString()
                         val productCode = historyItem.productCode.toString()
-                        findNavController().navigate(Uri.parse("https://www.fypmoney.in/spinwheel/${productCode}/${productId}"))
+                        findNavController().navigate(Uri.parse("https://www.fypmoney.in/spinwheel/${productCode}/${productId}"),
+                            navOptions {
+                            anim {
+                                popEnter = R.anim.slide_in_left
+                                popExit = R.anim.slide_out_righ
+                                enter = R.anim.slide_in_right
+                                exit = R.anim.slide_out_left
+                            }
+                        })
 //                        findNavController().navigate(R.id.navigation_spin_wheel, productCode, productId)
                     }
                     AppConstants.PRODUCT_TREASURE_BOX -> {
 //                        findNavController().navigate(R.id.navigation_rotating_treasure)
                         val productId = historyItem.orderNumber.toString()
                         val productCode = historyItem.productCode.toString()
-                        findNavController().navigate(Uri.parse("https://www.fypmoney.in/rotating_treasure/${productCode}/${productId}"))
+                        findNavController().navigate(Uri.parse("https://www.fypmoney.in/rotating_treasure/${productCode}/${productId}"), navOptions {
+                            anim {
+                                popEnter = R.anim.slide_in_left
+                                popExit = R.anim.slide_out_righ
+                                enter = R.anim.slide_in_right
+                                exit = R.anim.slide_out_left
+                            }
+                        })
                     }
                     else -> {
                         mViewModel?.callProductsDetailsApi(historyItem.orderNumber)

@@ -53,7 +53,6 @@ class MultipleJackpotAdapter(val onJackpotClick: (productCode: String) -> Unit) 
                 binding.tvExpiredProduct.visibility = View.VISIBLE
             }
 
-
         }
 
     }

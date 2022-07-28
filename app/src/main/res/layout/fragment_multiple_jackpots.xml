@@ -204,10 +204,42 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerLayoutMultipleJackpots"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/_12sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/containerMultipleJackpotChips">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <include layout="@layout/shimmer_multiple_jackpots_item" />
+
+                    <include layout="@layout/shimmer_multiple_jackpots_item" />
+
+                    <include layout="@layout/shimmer_multiple_jackpots_item" />
+
+                    <include layout="@layout/shimmer_multiple_jackpots_item" />
+
+                    <include layout="@layout/shimmer_multiple_jackpots_item" />
+
+                    <include layout="@layout/shimmer_multiple_jackpots_item" />
+
+                </LinearLayout>
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerMultipleJackpots"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:visibility="invisible"
                 android:layout_marginTop="@dimen/_12sdp"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -219,8 +251,8 @@
                 android:id="@+id/emptyMultipleJackpots"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:visibility="invisible"
                 android:layout_marginTop="@dimen/_12sdp"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

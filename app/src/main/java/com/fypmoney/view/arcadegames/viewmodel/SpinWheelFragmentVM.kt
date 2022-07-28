@@ -2,6 +2,7 @@ package com.fypmoney.view.arcadegames.viewmodel
 
 import android.app.Application
 import android.graphics.Color
+import android.media.MediaPlayer
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.R
@@ -24,19 +25,15 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 
-class FragmentSpinWheelVM(application: Application) : BaseViewModel(application) {
+class SpinWheelFragmentVM(application: Application) : BaseViewModel(application) {
 
     //To store explore redirection code
     lateinit var productCode: String
 
+    var mp: MediaPlayer? = null
+
     //To store productId on redirection
     lateinit var productId: String
-
-    //live data variable to store mynts data
-    var rewardSummaryStatus: MutableLiveData<RewardPointsSummaryResponse> = MutableLiveData()
-
-    //live data variable to store cash count data
-    var totalRewardsResponse: MutableLiveData<totalRewardsResponse> = MutableLiveData()
 
     //live event data to store purchase reward-product response
     var coinsBurned: LiveEvent<CoinsBurnedResponse> = LiveEvent()
@@ -52,6 +49,9 @@ class FragmentSpinWheelVM(application: Application) : BaseViewModel(application)
 
     //To store total mynts value
     var myntsCount: Float? = 0f
+
+    //To store mynts that will be required to play games
+    var myntsDisplay: Int? = null
 
     //live data to store product data on spin-wheel history view
     var redeemCallBackResponse = MutableLiveData<aRewardProductResponse>()
@@ -69,11 +69,6 @@ class FragmentSpinWheelVM(application: Application) : BaseViewModel(application)
     val state: LiveData<SpinWheelState>
         get() = _state
     private val _state = MutableLiveData<SpinWheelState>()
-
-    //Observe ticket data using sealed class using product-wise api
-    val stateMJ: LiveData<SpinWheelStateTicket>
-        get() = _stateMJ
-    private val _stateMJ = MutableLiveData<SpinWheelStateTicket>()
 
     init {
         remainFrequency.value = 0
@@ -198,7 +193,7 @@ class FragmentSpinWheelVM(application: Application) : BaseViewModel(application)
                 NetworkUtil.endURL(ApiConstant.API_GET_REWARD_SINGLE_PRODUCTS) + code,
                 ApiUrl.GET,
                 BaseRequest(),
-                this, isProgressBar = true
+                this, isProgressBar = false
             )
         )
     }
@@ -211,10 +206,10 @@ class FragmentSpinWheelVM(application: Application) : BaseViewModel(application)
                 val json = JsonParser.parseString(responseData.toString()) as JsonObject
                 val array = Gson().fromJson(
                     json.get("data").toString(),
-                    com.fypmoney.view.rewardsAndWinnings.model.totalRewardsResponse::class.java
+                    totalRewardsResponse::class.java
                 )
+                _state.value = SpinWheelState.CashSuccess(array.amount)
 
-                totalRewardsResponse.postValue(array)
             }
 
             ApiConstant.API_REWARD_SUMMARY -> {
@@ -224,14 +219,14 @@ class FragmentSpinWheelVM(application: Application) : BaseViewModel(application)
                     json.get("data").toString(),
                     RewardPointsSummaryResponse::class.java
                 )
+                _state.value = SpinWheelState.MyntsSuccess(array.remainingPoints)
 
-                rewardSummaryStatus.postValue(array)
             }
 
             ApiConstant.API_GET_ALL_JACKPOTS_PRODUCTWISE -> {
 
                 if (responseData is MultipleJackpotNetworkResponse) {
-                    _stateMJ.value = SpinWheelStateTicket.Success(responseData.data?.totalTickets)
+                    _state.value = SpinWheelState.TicketSuccess(responseData.data?.totalTickets)
                 }
             }
 
@@ -309,14 +304,10 @@ class FragmentSpinWheelVM(application: Application) : BaseViewModel(application)
     sealed class SpinWheelState {
         object Loading : SpinWheelState()
         data class Success(var spinWheelData: SpinWheelItem) : SpinWheelState()
+        data class TicketSuccess(val totalTickets: Int?) : SpinWheelState()
+        data class MyntsSuccess(val remainingMynts: Float?) : SpinWheelState()
+        data class CashSuccess(val totalCash: Int?) : SpinWheelState()
         object Error : SpinWheelState()
     }
 
-    sealed class SpinWheelStateTicket {
-        object Loading : SpinWheelStateTicket()
-        data class Success(val totalTickets: Int?) :
-            SpinWheelStateTicket()
-
-        object Error : SpinWheelStateTicket()
-    }
 }

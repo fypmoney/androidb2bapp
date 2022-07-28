@@ -13,17 +13,13 @@ import com.fypmoney.model.BaseRequest
 import com.fypmoney.model.RewardPointsSummaryResponse
 import com.fypmoney.view.arcadegames.model.JackpotDetailsItem
 import com.fypmoney.view.arcadegames.model.MultipleJackpotNetworkResponse
-import com.fypmoney.view.rewardsAndWinnings.model.TotalJackpotResponse
 import com.fypmoney.view.rewardsAndWinnings.model.totalRewardsResponse
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 
-class FragmentMultipleJackpotVM(application: Application) : BaseViewModel(application) {
+class MultipleJackpotFragmentVM(application: Application) : BaseViewModel(application) {
 
-    var rewardSummaryStatus: MutableLiveData<RewardPointsSummaryResponse> = MutableLiveData()
-    var totalRewardsResponse: MutableLiveData<totalRewardsResponse> = MutableLiveData()
-    var totalJackpotAmount: MutableLiveData<TotalJackpotResponse> = MutableLiveData()
     val state: LiveData<MultipleJackpotsState>
         get() = _state
     private val _state = MutableLiveData<MultipleJackpotsState>()
@@ -31,7 +27,6 @@ class FragmentMultipleJackpotVM(application: Application) : BaseViewModel(applic
     init {
         callRewardSummary()
         callTotalRewardsEarnings()
-        callTotalJackpotCards()
         callMultipleJackpotsProduct()
     }
 
@@ -59,18 +54,6 @@ class FragmentMultipleJackpotVM(application: Application) : BaseViewModel(applic
         )
     }
 
-    private fun callTotalJackpotCards() {
-        WebApiCaller.getInstance().request(
-            ApiRequest(
-                ApiConstant.API_GET_JACKPOT_CARDS,
-                NetworkUtil.endURL(ApiConstant.API_GET_JACKPOT_CARDS),
-                ApiUrl.GET,
-                BaseRequest(),
-                this, isProgressBar = false
-            )
-        )
-    }
-
     private fun callMultipleJackpotsProduct() {
         _state.postValue(MultipleJackpotsState.Loading)
         WebApiCaller.getInstance().request(
@@ -79,7 +62,7 @@ class FragmentMultipleJackpotVM(application: Application) : BaseViewModel(applic
                 NetworkUtil.endURL(ApiConstant.API_GET_ALL_JACKPOTS_PRODUCTWISE),
                 ApiUrl.GET,
                 BaseRequest(),
-                this, isProgressBar = true
+                this, isProgressBar = false
             )
         )
     }
@@ -92,10 +75,11 @@ class FragmentMultipleJackpotVM(application: Application) : BaseViewModel(applic
                 val json = JsonParser.parseString(responseData.toString()) as JsonObject
                 val array = Gson().fromJson(
                     json.get("data").toString(),
-                    com.fypmoney.view.rewardsAndWinnings.model.totalRewardsResponse::class.java
+                    totalRewardsResponse::class.java
                 )
 
-                totalRewardsResponse.postValue(array)
+                _state.value = MultipleJackpotsState.CashSuccess(array.amount)
+
             }
 
             ApiConstant.API_REWARD_SUMMARY -> {
@@ -105,24 +89,16 @@ class FragmentMultipleJackpotVM(application: Application) : BaseViewModel(applic
                     json.get("data").toString(),
                     RewardPointsSummaryResponse::class.java
                 )
+                _state.value = MultipleJackpotsState.MyntsSuccess(array.remainingPoints)
 
-                rewardSummaryStatus.postValue(array)
-            }
-
-            ApiConstant.API_GET_JACKPOT_CARDS -> {
-                val json = JsonParser.parseString(responseData.toString()) as JsonObject
-                if (json.get("data").toString() != "[]") {
-                    val array = Gson().fromJson(
-                        json.get("data").toString(),
-                        TotalJackpotResponse::class.java
-                    )
-                    totalJackpotAmount.postValue(array)
-                }
             }
 
             ApiConstant.API_GET_ALL_JACKPOTS_PRODUCTWISE -> {
                 if (responseData is MultipleJackpotNetworkResponse) {
-                    _state.value = MultipleJackpotsState.Success(responseData.data?.jackpotDetails, responseData.data?.totalTickets)
+                    _state.value = MultipleJackpotsState.Success(
+                        responseData.data?.jackpotDetails,
+                        responseData.data?.totalTickets
+                    )
                 }
             }
         }
@@ -130,7 +106,13 @@ class FragmentMultipleJackpotVM(application: Application) : BaseViewModel(applic
 
     sealed class MultipleJackpotsState {
         object Loading : MultipleJackpotsState()
-        data class Success(val listOfJackpotDetailsItem: List<JackpotDetailsItem?>?, val totalTickets: Int?) : MultipleJackpotsState()
+        data class Success(
+            val listOfJackpotDetailsItem: List<JackpotDetailsItem?>?,
+            val totalTickets: Int?
+        ) : MultipleJackpotsState()
+
+        data class CashSuccess(val totalCash: Int?) : MultipleJackpotsState()
+        data class MyntsSuccess(val remainingMynts: Float?) : MultipleJackpotsState()
         object Error : MultipleJackpotsState()
     }
 

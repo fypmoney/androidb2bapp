@@ -1,10 +1,9 @@
 package com.fypmoney.view.arcadegames.viewmodel
 
 import android.app.Application
-import android.util.Log
+import android.media.MediaPlayer
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiUrl
@@ -17,31 +16,26 @@ import com.fypmoney.util.livedata.LiveEvent
 import com.fypmoney.view.arcadegames.model.MultipleJackpotNetworkResponse
 import com.fypmoney.view.arcadegames.model.TreasureBoxItem
 import com.fypmoney.view.arcadegames.model.TreasureBoxNetworkResponse
-import com.fypmoney.view.rewardsAndWinnings.model.TotalJackpotResponse
 import com.fypmoney.view.rewardsAndWinnings.model.totalRewardsResponse
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
-class FragmentRotatingTreasureVM(application: Application) : BaseViewModel(application) {
+class RotatingTreasureFragmentVM(application: Application) : BaseViewModel(application) {
 
     lateinit var productCode:String
 
     //To store productId on redirection
     lateinit var productId: String
 
-    var rewardSummaryStatus: MutableLiveData<RewardPointsSummaryResponse> = MutableLiveData()
-    var totalRewardsResponse: MutableLiveData<totalRewardsResponse> = MutableLiveData()
-    var totalJackpotAmount: MutableLiveData<TotalJackpotResponse> = MutableLiveData()
+    var spinWheelRotateResponseDetails: SpinWheelRotateResponseDetails? = null
+
+    var myntsDisplay: Int? = null
+    var mp: MediaPlayer? = null
+
     var coinsBurned: LiveEvent<CoinsBurnedResponse> = LiveEvent()
-    var listAddedCount: Int = 0
-    //    var rotatingTreasureResponseList = MutableLiveData<Rotati>
     var remainFrequency: MutableLiveData<Int> = MutableLiveData()
     var spinWheelResponseList = MutableLiveData<SpinWheelRotateResponseDetails>()
-    var noOfJackpotTickets: Int? = null
-    var positionSectionId: MutableLiveData<Int> = MutableLiveData()
 
     //live data to store product data on treasure history view
     var redeemCallBackResponse = MutableLiveData<aRewardProductResponse>()
@@ -53,24 +47,14 @@ class FragmentRotatingTreasureVM(application: Application) : BaseViewModel(appli
     var isArcadeIsPlayed = false
 
     var sectionId: Int? = null
-    //    var noOfJackpotTickets: Int? = null
     var frequency: Int? = 0
-
-//    var currentRotateCount: Int? = 0
 
     val state: LiveData<RotatingTreasureState>
         get() = _state
     private val _state = MutableLiveData<RotatingTreasureState>()
 
-    val stateRotTicket: LiveData<RotatingTicket>
-        get() = _stateRotTicket
-    private val _stateRotTicket = MutableLiveData<RotatingTicket>()
-
-
     init {
         remainFrequency.value = 0
-        noOfJackpotTickets = 0
-//        currentRotateCount = 0
 
         callRewardSummary()
         callTotalRewardsEarnings()
@@ -121,7 +105,7 @@ class FragmentRotatingTreasureVM(application: Application) : BaseViewModel(appli
                 NetworkUtil.endURL(ApiConstant.API_GET_TREASURE_DATA+ "/${code}"),
                 ApiUrl.GET,
                 BaseRequest(),
-                this, isProgressBar = true
+                this, isProgressBar = false
             )
         )
     }
@@ -173,13 +157,11 @@ class FragmentRotatingTreasureVM(application: Application) : BaseViewModel(appli
     sealed class RotatingTreasureState {
         object Loading : RotatingTreasureState()
         data class Success(var treasureBoxItem: TreasureBoxItem) : RotatingTreasureState()
+        data class TicketSuccess(val totalTickets: Int?) : RotatingTreasureState()
+        data class MyntsSuccess(val remainingMynts: Float?) : RotatingTreasureState()
+//        data class MyntsBurnSuccess(var coinsBurnedResponse: CoinsBurnedResponse) : RotatingTreasureState()
+        data class CashSuccess(val totalCash: Int?) : RotatingTreasureState()
         object Error : RotatingTreasureState()
-    }
-
-    sealed class RotatingTicket {
-        object Loading : RotatingTicket()
-        data class Success(val totalTickets: Int?) : RotatingTicket()
-        object Error : RotatingTicket()
     }
 
     override fun onSuccess(purpose: String, responseData: Any) {
@@ -191,10 +173,11 @@ class FragmentRotatingTreasureVM(application: Application) : BaseViewModel(appli
                 val json = JsonParser.parseString(responseData.toString()) as JsonObject
                 val array = Gson().fromJson(
                     json.get("data").toString(),
-                    com.fypmoney.view.rewardsAndWinnings.model.totalRewardsResponse::class.java
+                    totalRewardsResponse::class.java
                 )
 
-                totalRewardsResponse.postValue(array)
+                _state.value = RotatingTreasureState.CashSuccess(array.amount)
+
             }
 
             ApiConstant.API_REWARD_SUMMARY -> {
@@ -205,7 +188,7 @@ class FragmentRotatingTreasureVM(application: Application) : BaseViewModel(appli
                     RewardPointsSummaryResponse::class.java
                 )
 
-                rewardSummaryStatus.postValue(array)
+                _state.value = RotatingTreasureState.MyntsSuccess(array.remainingPoints)
             }
 
             ApiConstant.API_GET_TREASURE_DATA -> {
@@ -222,6 +205,7 @@ class FragmentRotatingTreasureVM(application: Application) : BaseViewModel(appli
                     CoinsBurnedResponse::class.java
                 )
                 isArcadeIsPlayed = true
+
                 coinsBurned.postValue(array)
 
             }
@@ -236,16 +220,13 @@ class FragmentRotatingTreasureVM(application: Application) : BaseViewModel(appli
                 )
 
                 spinWheelResponseList.value = spinDetails
-//                played.set(true)
-//                fromWhich.set(AppConstants.ERROR_TYPE_AFTER_SPIN)
-
 
             }
 
             ApiConstant.API_GET_ALL_JACKPOTS_PRODUCTWISE -> {
 
                 if (responseData is MultipleJackpotNetworkResponse) {
-                    _stateRotTicket.value = RotatingTicket.Success(responseData.data?.totalTickets)
+                    _state.value = RotatingTreasureState.TicketSuccess(responseData.data?.totalTickets)
                 }
             }
 
@@ -255,6 +236,7 @@ class FragmentRotatingTreasureVM(application: Application) : BaseViewModel(appli
                     json.get("data"),
                     aRewardProductResponse::class.java
                 )
+
                 redeemCallBackResponse.value = spinDetails
             }
 

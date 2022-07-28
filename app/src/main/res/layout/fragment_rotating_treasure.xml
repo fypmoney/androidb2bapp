@@ -17,14 +17,6 @@
             android:id="@+id/layout_toolbar"
             layout="@layout/toolbar" />
 
-        <!--        <androidx.core.widget.NestedScrollView-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="0dp"-->
-        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--            app:layout_constraintEnd_toEndOf="parent"-->
-        <!--            app:layout_constraintStart_toStartOf="parent"-->
-        <!--            app:layout_constraintTop_toBottomOf="@+id/layout_toolbar">-->
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/rotatingTreasureContainer"
             android:layout_width="match_parent"
@@ -120,6 +112,20 @@
                         app:layout_constraintTop_toTopOf="@id/frameRotatingMynts"
                         tools:text="@string/dummy_amount" />
 
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:id="@+id/loadingMynts"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="2dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/frameRotatingMynts"
+                        app:layout_constraintStart_toEndOf="@+id/frameRotatingMynts"
+                        app:layout_constraintTop_toTopOf="@+id/frameRotatingMynts"
+                        app:lottie_autoPlay="true"
+                        app:lottie_loop="true"
+                        app:lottie_rawRes="@raw/three_dot_amount_loader"
+                        tools:visibility="visible" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -198,6 +204,20 @@
                         app:layout_constraintTop_toTopOf="@id/frameRotatingTicket"
                         tools:text="@string/dummy_amount" />
 
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:id="@+id/loadingTickets"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="2dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/frameRotatingTicket"
+                        app:layout_constraintStart_toEndOf="@+id/frameRotatingTicket"
+                        app:layout_constraintTop_toTopOf="@+id/frameRotatingTicket"
+                        app:lottie_autoPlay="true"
+                        app:lottie_loop="true"
+                        app:lottie_rawRes="@raw/three_dot_amount_loader"
+                        tools:visibility="visible" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -262,6 +282,20 @@
                         app:layout_constraintStart_toEndOf="@id/frameRotatingCash"
                         app:layout_constraintTop_toTopOf="@id/frameRotatingCash"
                         tools:text="@string/dummy_amount1" />
+
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:id="@+id/loadingCash"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="2dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/frameRotatingCash"
+                        app:layout_constraintStart_toEndOf="@+id/frameRotatingCash"
+                        app:layout_constraintTop_toTopOf="@+id/frameRotatingCash"
+                        app:lottie_autoPlay="true"
+                        app:lottie_loop="true"
+                        app:lottie_rawRes="@raw/three_dot_amount_loader"
+                        tools:visibility="visible" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -347,27 +381,38 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--                <com.airbnb.lottie.LottieAnimationView-->
-<!--                    android:id="@+id/lottieRewardConfetti"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="match_parent"-->
-<!--                    android:layout_centerInParent="true"-->
-<!--                    android:visibility="gone"-->
-<!--                    app:lottie_autoPlay="true"-->
-<!--                    app:lottie_rawRes="@raw/arcade_confetti_lottie" />-->
+                <!--                <com.airbnb.lottie.LottieAnimationView-->
+                <!--                    android:id="@+id/lottieRewardConfetti"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="match_parent"-->
+                <!--                    android:layout_centerInParent="true"-->
+                <!--                    android:visibility="gone"-->
+                <!--                    app:lottie_autoPlay="true"-->
+                <!--                    app:lottie_rawRes="@raw/arcade_confetti_lottie" />-->
 
             </com.google.android.material.card.MaterialCardView>
 
-            <!--                <com.airbnb.lottie.LottieAnimationView-->
-            <!--                    android:id="@+id/lottie_test"-->
-            <!--                    android:layout_width="match_parent"-->
-            <!--                    android:layout_height="200dp"-->
-            <!--                    app:layout_constraintEnd_toEndOf="parent"-->
-            <!--                    app:layout_constraintStart_toStartOf="parent"-->
-            <!--                    app:layout_constraintTop_toBottomOf="@+id/cvJackpot"-->
-            <!--                    app:lottie_autoPlay="true"-->
-            <!--                    app:lottie_repeatCount="1"-->
-            <!--                    app:lottie_rawRes="@raw/gold_box_open" />-->
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerLayoutRotatingTreasure"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:layout_marginBottom="@dimen/_18sdp"
+                app:layout_constraintBottom_toTopOf="@+id/chipMyntsBurnView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cvJackpot">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <include layout="@layout/shimmer_arcade_games_bottom" />
+
+                </LinearLayout>
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/vpTreasuryBox"
@@ -378,6 +423,7 @@
                 android:paddingStart="90dp"
                 android:paddingTop="10dp"
                 android:paddingEnd="90dp"
+                android:visibility="invisible"
                 android:paddingBottom="10dp"
                 app:layout_constraintBottom_toTopOf="@id/tvRotatingAttemptsLeft"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -405,8 +451,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:fontFamily="@font/product_sans_regular"
-                android:text="@string/attempts_left"
                 android:textColor="@color/text_body_grey"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toTopOf="@+id/frameBtnContainer"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -418,6 +464,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_6sdp"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toTopOf="@+id/chipMyntsBurnView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -439,27 +486,6 @@
                     app:indicatorColor="@color/color_orange" />
 
             </FrameLayout>
-
-            <!--                <androidx.appcompat.widget.AppCompatButton-->
-            <!--                    android:id="@+id/btnPlayNow"-->
-            <!--                    android:layout_width="wrap_content"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:layout_centerHorizontal="true"-->
-            <!--                    android:layout_marginTop="24dp"-->
-            <!--                    android:background="@drawable/button_bottom_spin_wheel_back"-->
-            <!--                    android:fontFamily="@font/product_sans_bold"-->
-            <!--                    android:paddingStart="62dp"-->
-            <!--                    android:paddingTop="16dp"-->
-            <!--                    android:paddingEnd="62dp"-->
-            <!--                    android:paddingBottom="16dp"-->
-            <!--                    android:text="@string/play_now"-->
-            <!--                    android:textAllCaps="false"-->
-            <!--                    android:textColor="@color/text_color_dark"-->
-            <!--                    android:textSize="16sp"-->
-            <!--                    app:layout_constraintEnd_toEndOf="parent"-->
-            <!--                    app:layout_constraintStart_toStartOf="parent"-->
-            <!--                    app:layout_constraintTop_toBottomOf="@+id/tvRotatingAttemptsLeft" />-->
-
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/chipMyntsBurnView"
@@ -487,6 +513,20 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/ic_mynt_coin" />
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/loadingBurnMynts"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivMyntsRequired"
+                    app:layout_constraintStart_toEndOf="@+id/ivMyntsRequired"
+                    app:layout_constraintTop_toTopOf="@+id/ivMyntsRequired"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"
+                    app:lottie_rawRes="@raw/three_dot_amount_loader"
+                    tools:visibility="visible" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/tvRotatingBurnMyntsCount"
@@ -518,8 +558,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:lottie_autoPlay="true"
             app:lottie_rawRes="@raw/arcade_confetti" />
-
-        <!--        </androidx.core.widget.NestedScrollView>-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

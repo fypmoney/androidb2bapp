@@ -15,7 +15,7 @@ import com.fypmoney.model.BaseRequest
 import com.fypmoney.view.arcadegames.model.Data3
 import com.fypmoney.view.arcadegames.model.LeaderBoardResponse
 
-class FragmentLeaderBoardVM(application: Application) : BaseViewModel(application) {
+class LeaderBoardFragmentVM(application: Application) : BaseViewModel(application) {
 
     lateinit var productCode: String
 
@@ -33,7 +33,7 @@ class FragmentLeaderBoardVM(application: Application) : BaseViewModel(applicatio
                 NetworkUtil.endURL(ApiConstant.API_GET_LEADERBOARD_DATA) + code,
                 ApiUrl.GET,
                 BaseRequest(),
-                this, isProgressBar = true
+                this, isProgressBar = false
             )
         )
 

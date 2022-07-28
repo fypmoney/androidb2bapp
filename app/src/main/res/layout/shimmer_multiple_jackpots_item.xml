@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/layoutServicePrice"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_92sdp"
+        app:cardBackgroundColor="#15181F"
+        app:cardCornerRadius="@dimen/dp16"
+        app:cardElevation="@dimen/card_elevation"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <View
+                android:id="@+id/ivServiceLogo"
+                android:layout_width="@dimen/_72sdp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:background="@color/editTextStrokeColor"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/ic_fyp_logo" />
+
+            <View
+                android:id="@+id/heading"
+                style="@style/TextviewRegular"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_12sdp"
+                android:layout_marginStart="@dimen/margin"
+                android:layout_marginTop="@dimen/margin"
+                android:background="@color/editTextStrokeColor"
+                app:layout_constraintEnd_toStartOf="@id/ticket"
+                app:layout_constraintStart_toEndOf="@+id/ivServiceLogo"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/date"
+                style="@style/TextviewRegular"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_10sdp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="@dimen/margin"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_12sdp"
+                android:layout_toEndOf="@+id/ivServiceLogo"
+                android:background="@color/editTextStrokeColor"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/ticket"
+                app:layout_constraintStart_toEndOf="@+id/ivServiceLogo" />
+
+            <View
+                android:id="@+id/ticket"
+                style="@style/TextviewRegular"
+                android:layout_width="@dimen/_24sdp"
+                android:layout_height="@dimen/_16sdp"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/margin"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:background="@color/editTextStrokeColor"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/heading"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/ticketCount"
+                style="@style/TextviewRegular"
+                android:layout_width="@dimen/_24sdp"
+                android:layout_height="@dimen/_12sdp"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:background="@color/editTextStrokeColor"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/heading"
+                app:layout_constraintTop_toBottomOf="@+id/ticket" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>

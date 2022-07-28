@@ -9,6 +9,7 @@ import android.view.View
 import androidx.annotation.Nullable
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navOptions
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
@@ -189,30 +190,30 @@ class RewardsMoreHistoryFragment :
 
                 when (historyItem.productType) {
                     AppConstants.PRODUCT_SPIN -> {
-//                        val intent = Intent(requireContext(), SpinWheelHistoryView::class.java)
-////                        SpinWheelViewDark.sectionArrayList.clear()
-//                        intent.putExtra(
-//                            AppConstants.ORDER_NUM,
-//                            historyItem.orderNumber.toString()
-//                        )
-//                        intent.putExtra(
-//                            AppConstants.PRODUCT_CODE,
-//                            historyItem.productCode
-//                        )
-//                        intent.putExtra(AppConstants.NO_GOLDED_CARD, historyItem.noOfJackpotTicket)
-//                        startActivity(intent)
 
                         val productId = historyItem.orderNumber.toString()
                         val productCode = historyItem.productCode.toString()
-                        findNavController().navigate(Uri.parse("https://www.fypmoney.in/spinwheel/${productCode}/${productId}"))
+                        findNavController().navigate(Uri.parse("https://www.fypmoney.in/spinwheel/${productCode}/${productId}"), navOptions {
+                            anim {
+                                popEnter = R.anim.slide_in_left
+                                popExit = R.anim.slide_out_righ
+                                enter = R.anim.slide_in_right
+                                exit = R.anim.slide_out_left
+                            }
+                        })
                     }
 
                     AppConstants.PRODUCT_TREASURE_BOX -> {
-//                        findNavController().navigate(R.id.navigation_rotating_treasure)
-
                         val productId = historyItem.orderNumber.toString()
                         val productCode = historyItem.productCode.toString()
-                        findNavController().navigate(Uri.parse("https://www.fypmoney.in/rotating_treasure/${productCode}/${productId}"))
+                        findNavController().navigate(Uri.parse("https://www.fypmoney.in/rotating_treasure/${productCode}/${productId}"), navOptions {
+                            anim {
+                                popEnter = R.anim.slide_in_left
+                                popExit = R.anim.slide_out_righ
+                                enter = R.anim.slide_in_right
+                                exit = R.anim.slide_out_left
+                            }
+                        })
                     }
                     else -> {
                         rewardsHistoryVM.callProductsDetailsApi(historyItem.orderNumber)
