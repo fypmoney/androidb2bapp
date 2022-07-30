@@ -70,7 +70,7 @@ data class AllTxnItem(
 	val mobileNo: String? = null,
 
 	@field:SerializedName("categoryCode")
-	val categoryCode: String? = null,
+	var categoryCode: String? = null,
 
 	@field:SerializedName("message")
 	val message: String? = null,
@@ -88,10 +88,10 @@ data class AllTxnItem(
 	val bankReferenceNumber: String? = null,
 
 	@field:SerializedName("iconLink")
-	val iconLink: String? = null,
+	var iconLink: String? = null,
 
 	@field:SerializedName("category")
-	val category: String? = null
+	var category: String? = null
 ):Parcelable
 
 @Keep

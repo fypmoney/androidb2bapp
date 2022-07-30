@@ -1,6 +1,7 @@
 package com.fypmoney.view.insights.view
 
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
@@ -10,6 +11,8 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.FragmentCategoryWaiseTransactionDetailsBinding
+import com.fypmoney.extension.toGone
+import com.fypmoney.extension.toVisible
 import com.fypmoney.util.Utility
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kotlinx.android.synthetic.main.toolbar.*
@@ -44,6 +47,8 @@ class CategoryWaiseTransactionDetailsFragment : BaseFragment<FragmentCategoryWai
         setupViews()
         setupObserver()
         categoryWaiseTransactionDetailsFragmentVM.showData()
+        categoryWaiseTransactionDetailsFragmentVM.callRewardsEarned()
+        categoryWaiseTransactionDetailsFragmentVM.callCashbackEarned()
     }
 
     private fun setupViews() {
@@ -63,8 +68,14 @@ class CategoryWaiseTransactionDetailsFragment : BaseFragment<FragmentCategoryWai
         categoryWaiseTransactionDetailsFragmentVM.event.observe(viewLifecycleOwner){
             handelEvent(it)
         }
+        categoryWaiseTransactionDetailsFragmentVM.rewardsState.observe(viewLifecycleOwner){
+            handelRewardState(it)
+        }
+        categoryWaiseTransactionDetailsFragmentVM.cashbackState.observe(viewLifecycleOwner){
+            handelCashbackState(it)
+        }
     }
-
+    
     private fun handelState(it: CategoryWaiseTransactionDetailsFragmentVM.CategoryWaiseTxnDetailsState?) {
         when(it){
             is CategoryWaiseTransactionDetailsFragmentVM.CategoryWaiseTxnDetailsState.ShowTxnDetails -> {
@@ -79,11 +90,28 @@ class CategoryWaiseTransactionDetailsFragment : BaseFragment<FragmentCategoryWai
                     binding.tvTxnStatusAndDateAndTime.text = txnStatusDateAndTime
                     binding.tvFypTxnIdValue.text = txnFypTxnId
                     binding.tvBankTxnIdValue.text = bankTxnId
-
+                    Utility.setImageUsingGlideWithShimmerPlaceholder(
+                        url = txnCategoryImage,
+                        imageView = binding.ivSelectedCategory
+                    )
+                    binding.tvCategoryName.text = txnCategory
                 }
 
             }
             null -> {
+            }
+            CategoryWaiseTransactionDetailsFragmentVM.CategoryWaiseTxnDetailsState.ChangeMerchantCategoryError -> {
+
+            }
+            CategoryWaiseTransactionDetailsFragmentVM.CategoryWaiseTxnDetailsState.MerchantCategoryListError -> {
+
+            }
+            is CategoryWaiseTransactionDetailsFragmentVM.CategoryWaiseTxnDetailsState.MerchantCategoryUpdated -> {
+                Utility.setImageUsingGlideWithShimmerPlaceholder(
+                    url = it.changeCategory.iconLink,
+                    imageView = binding.ivSelectedCategory
+                )
+                binding.tvCategoryName.text = it.changeCategory.categoryCode
             }
         }
     }
@@ -94,7 +122,59 @@ class CategoryWaiseTransactionDetailsFragment : BaseFragment<FragmentCategoryWai
                 callFreshChat(requireContext())
             }
             null -> {}
+            is CategoryWaiseTransactionDetailsFragmentVM.CategoryWaiseTxnDetailsEvent.ShowMerchantCategoryListBottomsheet ->{
+                val merchantCategoryListBottomSheet = MerchantCategoryListBottomSheet(
+                    categoryList = it.category,
+                    onCategoryClick = {
+                        categoryWaiseTransactionDetailsFragmentVM.postCategoryChangeData(it)
+                    })
+                merchantCategoryListBottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+                merchantCategoryListBottomSheet.show(childFragmentManager, "MonthBottomSheet")
+            }
         }
     }
+
+    private fun handelRewardState(it: CategoryWaiseTransactionDetailsFragmentVM.RewardsEarnedState?) {
+        when(it){
+            CategoryWaiseTransactionDetailsFragmentVM.RewardsEarnedState.Error -> {
+                binding.chipMyntsView.toGone()
+            }
+            CategoryWaiseTransactionDetailsFragmentVM.RewardsEarnedState.Loading -> {
+                binding.chipMyntsView.toVisible()
+                binding.loadingMynts.toVisible()
+            }
+            CategoryWaiseTransactionDetailsFragmentVM.RewardsEarnedState.RewardsNotReceived -> {
+                binding.chipMyntsView.toGone()
+            }
+            is CategoryWaiseTransactionDetailsFragmentVM.RewardsEarnedState.Success -> {
+                binding.chipMyntsView.toVisible()
+                binding.loadingMynts.toGone()
+                binding.tvRewardsMyntsCount.text  = it.rewardsEarned
+            }
+            null -> {}
+        }
+    }
+    private fun handelCashbackState(it: CategoryWaiseTransactionDetailsFragmentVM.CashbackEarnedState?) {
+        when(it){
+            CategoryWaiseTransactionDetailsFragmentVM.CashbackEarnedState.CashbackNotReceived -> {
+                binding.chipCashView.toGone()
+            }
+            CategoryWaiseTransactionDetailsFragmentVM.CashbackEarnedState.Error -> {
+                binding.chipCashView.toGone()
+            }
+            CategoryWaiseTransactionDetailsFragmentVM.CashbackEarnedState.Loading -> {
+                binding.chipCashView.toVisible()
+                binding.loadingCash.toVisible()
+            }
+            is CategoryWaiseTransactionDetailsFragmentVM.CashbackEarnedState.Success -> {
+                binding.chipCashView.toVisible()
+                binding.loadingCash.toGone()
+                binding.tvRewardCashCount.text  = it.cashbackAmount
+            }
+            null -> {}
+        }
+    }
+
+
 
 }

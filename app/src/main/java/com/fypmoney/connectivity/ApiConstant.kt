@@ -200,6 +200,8 @@ object ApiConstant {
         "services/PockketService/api/jackpot/tickets/productwise/"
 
     const val API_GET_LEADERBOARD_DATA = "services/PockketService/api/reward/leaderboard/"
+    const val API_GET_MERCHANT_CATEGORY = "/services/PockketService/api/fetch/data-for/ALL_MCC_CATEGORY"
+    const val API_CHANGE_TXN_CATEGORY = "/services/PockketService/api/account-transaction/icon"
 
 }
 

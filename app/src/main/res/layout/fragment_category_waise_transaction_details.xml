@@ -98,38 +98,67 @@
                     style="@style/TextviewRegular"
                     android:gravity="center"
                     android:drawablePadding="@dimen/dp11"
-                    android:drawableStart="@drawable/ic_check_green_tick"
+                    android:drawableStart="@drawable/ic_tick_mark_white"
                     android:textColor="@color/text_color_light"
                     android:textSize="14sp"
                     tools:text="Sent | Nov 24, 9:48AM"/>
 
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tvTxnCategory"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clCategory"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:customCornerRadius="@{@dimen/dp16}"
+                    android:layout_marginTop="@dimen/dp24"
                     app:customBackgroundColor="@{@color/black13}"
+                    app:customCornerRadius="@{@dimen/dp16}"
                     android:paddingVertical="@dimen/dp10"
                     android:paddingHorizontal="@dimen/dp10"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvTxnStatusAndDateAndTime"
-                    android:layout_marginTop="@dimen/dp24"
-                    style="@style/TextviewRegular"
-                    android:gravity="center"
-                    android:textColor="@color/text_color_light"
-                    android:textSize="14sp"
-                    tools:text="Genral"/>
+                    >
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivSelectedCategory"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center_vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvCategoryName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:layout_marginStart="@dimen/dp8"
+                        app:fontFamily="@font/product_sans_bold"
+                        app:layout_constraintBottom_toBottomOf="@id/ivSelectedCategory"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintStart_toEndOf="@+id/ivSelectedCategory"
+                        app:layout_constraintTop_toTopOf="@id/ivSelectedCategory"
+                        tools:text="2328742" />
+
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/ivEdit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp5"
-                    app:layout_constraintStart_toEndOf="@+id/tvTxnCategory"
-                    app:layout_constraintTop_toTopOf="@+id/tvTxnCategory"
-                    app:layout_constraintBottom_toBottomOf="@+id/tvTxnCategory"
+                    android:onClick="@{()->viewModel.onCategoryEditClick()}"
+                    app:layout_constraintStart_toEndOf="@+id/clCategory"
+                    app:layout_constraintTop_toTopOf="@+id/clCategory"
+                    app:layout_constraintBottom_toBottomOf="@+id/clCategory"
                     app:srcCompat="@drawable/ic_edit"/>
 
 
@@ -141,53 +170,142 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvTxnCategory">
+                    app:layout_constraintTop_toBottomOf="@+id/clCategory">
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/tvReccivedMynts"
-                        style="@style/TextviewRegular"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/chipMyntsView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/ic_mynt_coin"
-                        android:drawablePadding="@dimen/dp6"
-                        android:gravity="center"
-                        android:paddingHorizontal="@dimen/dp5"
-                        android:paddingVertical="7dp"
-                        android:text="3000"
-                        android:textAlignment="center"
-                        android:textColor="@color/color_orange"
-                        android:textSize="14sp"
+                        android:layout_marginStart="@dimen/dp8"
+                        android:paddingStart="@dimen/dp8"
+                        android:paddingEnd="@dimen/dp10"
                         app:customBackgroundColor="@{@color/black13}"
                         app:customCornerRadius="@{@dimen/dp16}"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/tvReccivedCashback"
+                        app:layout_constraintEnd_toStartOf="@+id/chipCashView"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintHorizontal_chainStyle="packed"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent">
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/tvReccivedCashback"
-                        style="@style/TextviewRegular"
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivRewardsMynts"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center_vertical"
+                            android:paddingStart="1dp"
+                            android:paddingTop="10dp"
+                            android:paddingEnd="1dp"
+                            android:paddingBottom="10dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/ic_mynt_coin" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvRewardsMyntsCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_marginStart="1dp"
+                            android:layout_marginTop="2dp"
+                            android:gravity="center_vertical"
+                            android:textColor="@color/color_dark_yellow"
+                            android:textSize="14sp"
+                            app:fontFamily="@font/product_sans_bold"
+                            app:layout_constraintBottom_toBottomOf="@id/ivRewardsMynts"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0"
+                            app:layout_constraintStart_toEndOf="@+id/ivRewardsMynts"
+                            app:layout_constraintTop_toTopOf="@id/ivRewardsMynts"
+                            tools:text="2328742" />
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/loadingMynts"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="2dp"
+                            android:layout_marginEnd="6dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toBottomOf="@+id/tvRewardsMyntsCount"
+                            app:layout_constraintStart_toEndOf="@+id/ivRewardsMynts"
+                            app:layout_constraintTop_toTopOf="@+id/tvRewardsMyntsCount"
+                            app:lottie_autoPlay="true"
+                            app:lottie_loop="true"
+                            app:lottie_rawRes="@raw/three_dot_amount_loader"
+                            tools:visibility="visible" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/chipCashView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/cash"
-                        android:drawablePadding="@dimen/dp6"
-                        android:gravity="center"
-                        android:paddingHorizontal="@dimen/dp5"
-                        android:paddingVertical="7dp"
-                        android:text="3000"
-                        android:textAlignment="center"
-                        android:textColor="@color/green1"
-                        android:textSize="14sp"
+                        android:layout_marginEnd="16dp"
+                        android:paddingStart="@dimen/dp8"
+                        android:paddingEnd="@dimen/dp10"
                         android:layout_marginStart="@dimen/dp10"
                         app:customBackgroundColor="@{@color/black13}"
                         app:customCornerRadius="@{@dimen/dp16}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/tvReccivedMynts"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintStart_toEndOf="@+id/chipMyntsView"
+                        app:layout_constraintTop_toTopOf="parent" >
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivRewardsCash"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:paddingStart="6dp"
+                            android:paddingTop="12dp"
+                            android:paddingEnd="6dp"
+                            android:paddingBottom="12dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/cash" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvRewardCashCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_marginStart="1dp"
+                            android:gravity="center_vertical"
+                            android:textColor="@color/green_winnings"
+                            android:textSize="14sp"
+                            app:fontFamily="@font/product_sans_bold"
+                            app:layout_constraintBottom_toBottomOf="@id/ivRewardsCash"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0"
+                            app:layout_constraintStart_toEndOf="@id/ivRewardsCash"
+                            app:layout_constraintTop_toTopOf="@id/ivRewardsCash"
+                            tools:text="2328742" />
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/loadingCash"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginBottom="2dp"
+                            android:layout_marginEnd="6dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toBottomOf="@+id/tvRewardCashCount"
+                            app:layout_constraintStart_toEndOf="@+id/ivRewardsCash"
+                            app:layout_constraintTop_toTopOf="@+id/tvRewardCashCount"
+                            app:lottie_autoPlay="true"
+                            app:lottie_loop="true"
+                            app:lottie_rawRes="@raw/three_dot_amount_loader"
+                            tools:visibility="visible" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -214,7 +332,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:background="@color/dividerColor" />
+                    android:background="@color/text_color_light" />
 
 
                 <com.google.android.material.textview.MaterialTextView
