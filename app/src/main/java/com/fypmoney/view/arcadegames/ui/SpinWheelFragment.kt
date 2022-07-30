@@ -33,6 +33,7 @@ import com.fypmoney.model.SpinWheelRotateResponseDetails
 import com.fypmoney.util.Utility
 import com.fypmoney.view.arcadegames.model.SectionListItem
 import com.fypmoney.view.arcadegames.viewmodel.SpinWheelFragmentVM
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kotlinx.android.synthetic.main.dialog_rewards_insufficient.*
 import kotlinx.android.synthetic.main.fragment_spin_wheel.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -563,24 +564,30 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, SpinWheelFragme
     }
 
     private fun decreaseCountAnimation(textScore: TextView, finalCount: Int) {
-        val animator = ValueAnimator.ofInt(
-            Integer.parseInt(textScore.text.toString()),
-            Integer.parseInt(textScore.text.toString()) - (finalCount)
-        )
-        animator.duration = 1500
-        animator.addUpdateListener { animation ->
-            textScore.text = animation.animatedValue.toString()
-        }
-        animator.start()
-
-        Handler(Looper.getMainLooper()).postDelayed({
-            setViewVisibility(mViewBinding!!.ivSpinWheelMynts, mViewBinding!!.ivSpinWheelMyntsAnim)
-            setViewVisibility(
-                mViewBinding!!.ivSpinWheelTicket,
-                mViewBinding!!.ivSpinWheelTicketAnim
+        if(!textScore.text.isNullOrEmpty()){
+            val animator = ValueAnimator.ofInt(
+                Integer.parseInt(textScore.text.toString()),
+                Integer.parseInt(textScore.text.toString()) - (finalCount)
             )
-            setViewVisibility(mViewBinding!!.ivSpinWheelCash, mViewBinding!!.ivSpinWheelCashAnim)
-        }, 1500)
+            animator.duration = 1500
+            animator.addUpdateListener { animation ->
+                textScore.text = animation.animatedValue.toString()
+            }
+            animator.start()
+
+            Handler(Looper.getMainLooper()).postDelayed({
+                setViewVisibility(mViewBinding!!.ivSpinWheelMynts, mViewBinding!!.ivSpinWheelMyntsAnim)
+                setViewVisibility(
+                    mViewBinding!!.ivSpinWheelTicket,
+                    mViewBinding!!.ivSpinWheelTicketAnim
+                )
+                setViewVisibility(mViewBinding!!.ivSpinWheelCash, mViewBinding!!.ivSpinWheelCashAnim)
+            }, 1500)
+        }else{
+            FirebaseCrashlytics.getInstance().recordException(Throwable("Unable to decrease mynts. ${textScore.text}"))
+            Utility.showToast("Please check history")
+        }
+
     }
 
     private fun increaseCountAnimation(
@@ -589,53 +596,59 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, SpinWheelFragme
         finalCount: Int,
         via: String
     ) {
-        if (via == "Cash") {
-            val startPosition = (textScore.text.toString().split("₹")[1]).toIntOrNull()
-            val endPosition = (textScore.text.toString().split("₹")[1]).toIntOrNull()
-            if (startPosition == null || endPosition == null) {
-                textScore.text = String.format(
-                    getString(R.string.arcade_cash_value),
-                    (textScore.text.toString().split("₹")[1]).toDouble() + finalCount
-                )
-            } else {
-                val animator: ValueAnimator =
-                    ValueAnimator.ofInt(
-                        (textScore.text.toString().split("₹")[1]).toInt(),
-                        (textScore.text.toString().split("₹")[1]).toInt() + (finalCount)
+        if(!textScore.text.isNullOrEmpty()){
+            if (via == "Cash") {
+                val startPosition = (textScore.text.toString().split("₹")[1]).toIntOrNull()
+                val endPosition = (textScore.text.toString().split("₹")[1]).toIntOrNull()
+                if (startPosition == null || endPosition == null) {
+                    textScore.text = String.format(
+                        getString(R.string.arcade_cash_value),
+                        (textScore.text.toString().split("₹")[1]).toDouble() + finalCount
                     )
+                } else {
+                    val animator: ValueAnimator =
+                        ValueAnimator.ofInt(
+                            (textScore.text.toString().split("₹")[1]).toInt(),
+                            (textScore.text.toString().split("₹")[1]).toInt() + (finalCount)
+                        )
+
+                    animator.duration = animDuration
+                    animator.addUpdateListener { animation ->
+                        textScore.text = String.format(
+                            getString(R.string.arcade_cash_value),
+                            animation.animatedValue.toString()
+                        )
+                    }
+                    animator.start()
+                }
+            } else {
+                val animator: ValueAnimator = ValueAnimator.ofInt(
+                    Integer.parseInt(textScore.text.toString()),
+                    Integer.parseInt(textScore.text.toString()) + (finalCount)
+                )
 
                 animator.duration = animDuration
                 animator.addUpdateListener { animation ->
-                    textScore.text = String.format(
-                        getString(R.string.arcade_cash_value),
-                        animation.animatedValue.toString()
-                    )
+                    textScore.text = animation.animatedValue.toString()
                 }
                 animator.start()
             }
-        } else {
-            val animator: ValueAnimator = ValueAnimator.ofInt(
-                Integer.parseInt(textScore.text.toString()),
-                Integer.parseInt(textScore.text.toString()) + (finalCount)
-            )
 
-            animator.duration = animDuration
-            animator.addUpdateListener { animation ->
-                textScore.text = animation.animatedValue.toString()
-            }
-            animator.start()
+
+            Handler(Looper.getMainLooper()).postDelayed({
+                setViewVisibility(mViewBinding!!.ivSpinWheelMynts, mViewBinding!!.ivSpinWheelMyntsAnim)
+                setViewVisibility(
+                    mViewBinding!!.ivSpinWheelTicket,
+                    mViewBinding!!.ivSpinWheelTicketAnim
+                )
+                setViewVisibility(mViewBinding!!.ivSpinWheelCash, mViewBinding!!.ivSpinWheelCashAnim)
+                mViewBinding!!.lottieRewardConfetti.visibility = View.INVISIBLE
+            }, animDuration)
+        }else{
+            FirebaseCrashlytics.getInstance().recordException(Throwable("Unable to decrease mynts. ${textScore.text}"))
+            Utility.showToast("Please check history")
         }
 
-
-        Handler(Looper.getMainLooper()).postDelayed({
-            setViewVisibility(mViewBinding!!.ivSpinWheelMynts, mViewBinding!!.ivSpinWheelMyntsAnim)
-            setViewVisibility(
-                mViewBinding!!.ivSpinWheelTicket,
-                mViewBinding!!.ivSpinWheelTicketAnim
-            )
-            setViewVisibility(mViewBinding!!.ivSpinWheelCash, mViewBinding!!.ivSpinWheelCashAnim)
-            mViewBinding!!.lottieRewardConfetti.visibility = View.INVISIBLE
-        }, animDuration)
     }
 
     override fun onDestroyView() {
