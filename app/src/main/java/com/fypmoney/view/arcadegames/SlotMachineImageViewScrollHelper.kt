@@ -2,8 +2,12 @@ package com.fypmoney.view.arcadegames
 
 import android.animation.Animator
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.DecelerateInterpolator
 import android.widget.FrameLayout
 import android.widget.ImageView
 import com.fypmoney.R
@@ -23,7 +27,7 @@ class SlotMachineImageViewScrollHelper(context: Context, attributeSet: Attribute
         ViewSlotMachineImageScrollingBinding.inflate(LayoutInflater.from(context))
 
     companion object {
-        private const val ANIMATION_DURATION = 150
+        private const val ANIMATION_DURATION = 100
     }
 
     val value: Int
@@ -43,11 +47,15 @@ class SlotMachineImageViewScrollHelper(context: Context, attributeSet: Attribute
     fun setValueRandom(image: Int, num_rotate: Int) {
         currentImage.animate()
             .translationY((-height).toFloat())
+            .setInterpolator(AccelerateInterpolator())
             .setDuration(ANIMATION_DURATION.toLong()).start()
 
         nextImage.translationY = nextImage.height.toFloat()
 
-        nextImage.animate().translationY(0f).setDuration(ANIMATION_DURATION.toLong())
+        nextImage.animate()
+            .translationY(0f)
+            .setDuration(ANIMATION_DURATION.toLong())
+            .setInterpolator(DecelerateInterpolator())
             .setListener(object : Animator.AnimatorListener {
                 override fun onAnimationStart(animation: Animator?) {
 
@@ -58,8 +66,15 @@ class SlotMachineImageViewScrollHelper(context: Context, attributeSet: Attribute
                     currentImage.translationY = 0f
 
                     if (oldValue != num_rotate) {//if still have rotate
-                        setValueRandom(image, num_rotate)
-                        oldValue++
+//                        if (oldValue == num_rotate - 1){
+//                            Handler(Looper.getMainLooper()).postDelayed({
+//                                setValueRandom(image, num_rotate)
+//                                oldValue++
+//                            }, 1000)
+//                        }else{
+                            setValueRandom(image, num_rotate)
+                            oldValue++
+//                        }
                     } else {
                         lastResult = 0
                         oldValue = 0

@@ -301,7 +301,7 @@ public class PielView extends View {
 //                x + imgWidth, y + imgWidth / 2);
 
         Rect rect = new Rect(x - imgWidth, y - imgWidth / 2 - 60,
-                x + imgWidth, y + imgWidth / 2 + 10 );
+                x + imgWidth, y + imgWidth / 2 + 10);
 
         int arraySize = mLuckyItemList.size();
 

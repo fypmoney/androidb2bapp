@@ -2,6 +2,7 @@ package com.fypmoney.view.arcadegames.viewmodel
 
 import android.app.Application
 import android.media.MediaPlayer
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.base.BaseViewModel
@@ -11,9 +12,13 @@ import com.fypmoney.connectivity.ErrorResponseInfo
 import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
-import com.fypmoney.model.*
-import com.fypmoney.util.livedata.LiveEvent
-import com.fypmoney.view.arcadegames.model.*
+import com.fypmoney.model.BaseRequest
+import com.fypmoney.model.CoinsBurnedResponse
+import com.fypmoney.model.RewardPointsSummaryResponse
+import com.fypmoney.model.SpinWheelRotateResponseDetails
+import com.fypmoney.view.arcadegames.model.MultipleJackpotNetworkResponse
+import com.fypmoney.view.arcadegames.model.SLOTItem
+import com.fypmoney.view.arcadegames.model.SlotMachineResponse
 import com.fypmoney.view.rewardsAndWinnings.model.totalRewardsResponse
 import com.google.gson.Gson
 import com.google.gson.JsonObject
@@ -106,8 +111,8 @@ class SlotMachineFragmentVM(application: Application) : BaseViewModel(applicatio
         _state.postValue(SlotMachineState.Loading)
         WebApiCaller.getInstance().request(
             ApiRequest(
-                ApiConstant.API_GET_TREASURE_DATA,
-                NetworkUtil.endURL(ApiConstant.API_GET_TREASURE_DATA + "/${code}"),
+                ApiConstant.API_GET_REWARD_SLOT_MACHINE_PURPOSE,
+                NetworkUtil.endURL(ApiConstant.API_GET_SLOT_MACHINE_DATA + "/${code}"),
                 ApiUrl.GET,
                 BaseRequest(),
                 this, isProgressBar = false
@@ -169,9 +174,9 @@ class SlotMachineFragmentVM(application: Application) : BaseViewModel(applicatio
                 }
             }
 
-            ApiConstant.API_GET_TREASURE_DATA -> {
-                if (responseData is TreasureBoxNetworkResponse) {
-                    _state.value = responseData.data?.treasureBox?.get(0)
+            ApiConstant.API_GET_REWARD_SLOT_MACHINE_PURPOSE -> {
+                if (responseData is SlotMachineResponse) {
+                    _state.value = responseData.data?.sLOT?.get(0)
                         ?.let { SlotMachineState.Success(it) }
                 }
             }
@@ -214,7 +219,7 @@ class SlotMachineFragmentVM(application: Application) : BaseViewModel(applicatio
         //        data class Error(var apiName:String): SlotMachineState()
         object Error : SlotMachineState()
 
-        data class Success(var treasureBoxItem: TreasureBoxItem) : SlotMachineState()
+        data class Success(var slotItem: SLOTItem) : SlotMachineState()
         data class TicketSuccess(val totalTickets: Int?) : SlotMachineState()
         data class MyntsSuccess(val remainingMynts: Float?) : SlotMachineState()
         data class MyntsBurnSuccess(var coinsBurnedResponse: CoinsBurnedResponse) :

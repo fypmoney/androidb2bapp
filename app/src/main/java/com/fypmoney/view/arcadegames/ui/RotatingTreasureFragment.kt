@@ -297,36 +297,37 @@ class RotatingTreasureFragment :
 
                 rotatingTreasureVM.callSpinWheelApi(list.orderNo)
 
+                val listOfBoxes = arrayListOf<TreasureAdapterUiModel>()
+                listOfBoxes.add(
+                    TreasureAdapterUiModel(
+                        R.raw.silver_box_open,
+                        rotatingTreasureVM.sectionId == 1
+                    )
+                )
+                listOfBoxes.add(
+                    TreasureAdapterUiModel(
+                        R.raw.wood_box_open,
+                        rotatingTreasureVM.sectionId == 2
+                    )
+                )
+                listOfBoxes.add(
+                    TreasureAdapterUiModel(
+                        R.raw.gold_box_open,
+                        rotatingTreasureVM.sectionId == 3
+                    )
+                )
+                listOfBoxes.add(TreasureAdapterUiModel(R.raw.silver_box_open, false))
+                listOfBoxes.add(TreasureAdapterUiModel(R.raw.wood_box_open, false))
+                listOfBoxes.add(TreasureAdapterUiModel(R.raw.gold_box_open, false))
+                adapter!!.newTreasureImages = listOfBoxes
+                sliderHandler.postDelayed(sliderRunnable, 200)
+
             }
 
         }
 
         viewModel.spinWheelResponseList.observe(viewLifecycleOwner) {
             rotatingTreasureVM.spinWheelRotateResponseDetails = it
-            val listOfBoxes = arrayListOf<TreasureAdapterUiModel>()
-            listOfBoxes.add(
-                TreasureAdapterUiModel(
-                    R.raw.silver_box_open,
-                    rotatingTreasureVM.sectionId == 1
-                )
-            )
-            listOfBoxes.add(
-                TreasureAdapterUiModel(
-                    R.raw.wood_box_open,
-                    rotatingTreasureVM.sectionId == 2
-                )
-            )
-            listOfBoxes.add(
-                TreasureAdapterUiModel(
-                    R.raw.gold_box_open,
-                    rotatingTreasureVM.sectionId == 3
-                )
-            )
-            listOfBoxes.add(TreasureAdapterUiModel(R.raw.silver_box_open, false))
-            listOfBoxes.add(TreasureAdapterUiModel(R.raw.wood_box_open, false))
-            listOfBoxes.add(TreasureAdapterUiModel(R.raw.gold_box_open, false))
-            adapter!!.newTreasureImages = listOfBoxes
-            sliderHandler.postDelayed(sliderRunnable, 200)
 
         }
 
