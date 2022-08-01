@@ -19,6 +19,7 @@ import com.fypmoney.model.FeedDetails
 import com.fypmoney.model.GetWalletBalanceResponse
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
+import com.fypmoney.util.Utility
 import com.fypmoney.util.livedata.LiveEvent
 import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
 import com.fypmoney.view.home.main.home.model.CallToActionUiModel
@@ -41,9 +42,20 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
 
     var rewardHistoryList: MutableLiveData<ArrayList<ExploreContentResponse>> = MutableLiveData()
 
-    var openBottomSheet: MutableLiveData<ArrayList<offerDetailResponse>> = MutableLiveData()
+    var openBottomSheet: MutableLiveData<ArrayList<offerDetailResponse>> = LiveEvent()
     var feedDetail: MutableLiveData<FeedDetails> = LiveEvent()
 
+    val isUnreadNotificationAvailable = SharedPrefUtils.getString(
+        application,
+        SharedPrefUtils.SF_KEY_NEW_MESSAGE
+    )
+    val userProfileUrl = SharedPrefUtils.getString(
+        application,
+        SharedPrefUtils.SF_KEY_PROFILE_IMAGE
+    )
+
+    var toolbarTitle = MutableLiveData(
+        "Hey ${Utility.getCustomerDataFromPreference()?.firstName},")
     init {
         //callgetOffer()
         callExplporeContent()
@@ -61,6 +73,13 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
         )
     }*/
 
+    fun onProfileClicked() {
+        _event.value = HomeFragmentEvent.ProfileClicked
+    }
+
+    fun onNotificationClicked() {
+        _event.value = HomeFragmentEvent.NotificationClicked
+    }
     fun onViewDetailsClicked() {
         _event.value = HomeFragmentEvent.ViewCardDetails
     }
@@ -365,6 +384,8 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
         data class PostpaidRechargeEvent(val rechargeType:String):HomeFragmentEvent()
         object DthRechargeEvent:HomeFragmentEvent()
         object BroadbandRechargeEvent:HomeFragmentEvent()
+        object ProfileClicked : HomeFragmentEvent()
+        object NotificationClicked : HomeFragmentEvent()
     }
    /* sealed class QuickActionEvent{
         object AddAction:QuickActionEvent()

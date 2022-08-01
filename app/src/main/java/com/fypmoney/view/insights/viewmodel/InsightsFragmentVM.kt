@@ -57,14 +57,14 @@ class InsightsFragmentVM(application: Application) : BaseViewModel(application) 
         observeSearchQuery()
     }
     @ObsoleteCoroutinesApi
-    private fun emitSelectedMonth() {
+    fun emitSelectedMonth() {
         _state.addSource(selectedMonth) {
             it?.let { selectedMonthBroadcastChannel.trySend(it) }
         }
     }
     @ObsoleteCoroutinesApi
     @FlowPreview
-    private fun observeSearchQuery(){
+    fun observeSearchQuery(){
         viewModelScope.launch {
             selectedMonthBroadcastChannel.asFlow().debounce(800).collect {
                 setUpStartAndEndDate()
@@ -94,7 +94,7 @@ class InsightsFragmentVM(application: Application) : BaseViewModel(application) 
         }
         _event.value = InsightsEvent.ShowMonthListClickEvent(listOfMonth,selectedMonth.value!!)
     }
-    private fun setupData(){
+    fun setupData(){
         setUpStartAndEndDate()
         last12Month = Utility.getLast12Months(getCurrentMonth())
     }

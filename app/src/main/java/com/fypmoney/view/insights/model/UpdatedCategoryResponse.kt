@@ -1,13 +1,16 @@
 package com.fypmoney.view.insights.model
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
+@Keep
 data class UpdatedCategoryResponse(
 
 	@field:SerializedName("data")
 	val data: Data? = null
 )
 
+@Keep
 data class Data(
 
 	@field:SerializedName("amount")

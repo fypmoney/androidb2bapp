@@ -3,6 +3,7 @@ package com.fypmoney.view.insights.view
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.fypmoney.BR
@@ -68,6 +69,27 @@ class CategoryWaiseTransactionListFragment : BaseFragment<FragmentCategoryWaiseT
                 )
                 findNavController().navigate(directions)
             })
+
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>("category_updated")
+            ?.observe(
+                viewLifecycleOwner
+            ) { result ->
+                categoryWaiseTransactionListFragmentVM.categoryUpdated = result
+            }
+
+        val onBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                // Handle the back button event
+                if(categoryWaiseTransactionListFragmentVM.categoryUpdated){
+                    findNavController().previousBackStackEntry?.savedStateHandle?.set(
+                        "category_updated",
+                        true
+                    )
+                }
+                findNavController().navigateUp()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, onBackPressedCallback)
     }
 
     private fun setupObserver() {

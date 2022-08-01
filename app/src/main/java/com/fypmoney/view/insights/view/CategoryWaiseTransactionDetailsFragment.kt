@@ -116,7 +116,11 @@ class CategoryWaiseTransactionDetailsFragment : BaseFragment<FragmentCategoryWai
                     url = it.changeCategory.iconLink,
                     imageView = binding.ivSelectedCategory
                 )
-                binding.tvCategoryName.text = it.changeCategory.categoryCode
+                binding.tvCategoryName.text = it.changeCategory.category
+                findNavController().previousBackStackEntry?.savedStateHandle?.set(
+                    "category_updated",
+                    true
+                )
             }
         }
     }

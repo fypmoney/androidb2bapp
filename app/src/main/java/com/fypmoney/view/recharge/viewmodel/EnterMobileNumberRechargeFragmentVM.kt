@@ -27,7 +27,7 @@ import com.google.gson.JsonParser
 
 class EnterMobileNumberRechargeFragmentVM(application: Application) : BaseViewModel(application) {
 
-    var openBottomSheet: MutableLiveData<ArrayList<offerDetailResponse>> = MutableLiveData()
+    var openBottomSheet: MutableLiveData<ArrayList<offerDetailResponse>> = LiveEvent()
 
     val state:LiveData<EnterMobileNumberRechargeState>
         get() = _state

@@ -41,7 +41,7 @@ class DthDetailsRechargeFragmentVM(application: Application) : BaseViewModel(app
 
     var selectedDthOperator:StoreDataModel? = null
 
-    var openBottomSheet: MutableLiveData<ArrayList<offerDetailResponse>> = MutableLiveData()
+    var openBottomSheet: MutableLiveData<ArrayList<offerDetailResponse>> = LiveEvent()
 
     var feedDetail: MutableLiveData<FeedDetails> = LiveEvent()
 

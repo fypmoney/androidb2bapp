@@ -4,7 +4,6 @@ import android.app.Application
 import android.os.Build
 import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
@@ -15,7 +14,6 @@ import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.UserDeviceInfo
 import com.fypmoney.util.SharedPrefUtils
-import com.fypmoney.util.Utility
 import com.fypmoney.util.livedata.LiveEvent
 import kotlinx.coroutines.launch
 import java.util.*
@@ -23,7 +21,7 @@ import java.util.*
 
 class HomeActivityVM(application: Application): BaseViewModel(application) {
     private val TAG = HomeActivityVM::class.java.simpleName
-    val isUnreadNotificationAvailable = SharedPrefUtils.getString(
+    /*val isUnreadNotificationAvailable = SharedPrefUtils.getString(
         application,
         SharedPrefUtils.SF_KEY_NEW_MESSAGE
     )
@@ -35,7 +33,7 @@ class HomeActivityVM(application: Application): BaseViewModel(application) {
 
 
     var toolbarTitle = MutableLiveData(
-        "Hey ${Utility.getCustomerDataFromPreference()?.firstName},")
+        "Hey ${Utility.getCustomerDataFromPreference()?.firstName},")*/
 
     val event:LiveData<HomeActivityEvent>
         get() = _event
@@ -44,13 +42,13 @@ class HomeActivityVM(application: Application): BaseViewModel(application) {
     init {
         checkServerIsUnderMaintenance()
     }
-    fun onProfileClicked() {
+    /*fun onProfileClicked() {
         _event.value = HomeActivityEvent.ProfileClicked
     }
 
     fun onNotificationClicked() {
         _event.value = HomeActivityEvent.NotificationClicked
-    }
+    }*/
     fun onTransactionHistoryClicked() {
         _event.value = HomeActivityEvent.TransactionHistoryClicked
     }
@@ -117,8 +115,8 @@ class HomeActivityVM(application: Application): BaseViewModel(application) {
 
 
     sealed class HomeActivityEvent {
-        object ProfileClicked : HomeActivityEvent()
-        object NotificationClicked : HomeActivityEvent()
+/*        object ProfileClicked : HomeActivityEvent()
+        object NotificationClicked : HomeActivityEvent()*/
         object TransactionHistoryClicked : HomeActivityEvent()
         object GiftVoucherHistoryClicked : HomeActivityEvent()
         data class ShowServerIsUnderMaintenance(val msg:String) : HomeActivityEvent()

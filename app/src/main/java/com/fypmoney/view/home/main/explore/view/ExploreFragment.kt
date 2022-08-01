@@ -87,6 +87,9 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
 //        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
         setObserver()
+        binding.giftVoucherHistoryTv.setOnClickListener {
+            findNavController().navigate(R.id.navigation_gift_card_history)
+        }
 
     }
 
@@ -200,6 +203,15 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
                                 }
                                 AppConstants.GIFT_VOUCHER -> {
                                     findNavController().navigate(Uri.parse("fypmoney://creategiftcard/${it.redirectionResource}"))
+                                }
+                                AppConstants.F_Store -> {
+                                    findNavController().navigate(R.id.navigation_explore)
+                                }
+                                AppConstants.REWARDS -> {
+                                    findNavController().navigate(R.id.navigation_rewards)
+                                }
+                                AppConstants.INSIGHTS -> {
+                                    findNavController().navigate(R.id.navigation_insights)
                                 }
                                 else -> {
                                     Utility.deeplinkRedirection(redirectionResources, requireContext())

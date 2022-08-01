@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
@@ -59,6 +60,14 @@ class InsightsFragment : BaseFragment<FragmentInsightsBinding,InsightsFragmentVM
         binding = getViewDataBinding()
         setUpViews()
         setupObserver()
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>("category_updated")
+            ?.observe(
+                viewLifecycleOwner
+            ) { result ->
+                if(result){
+                    insightsFragmentVM.selectedMonth.postValue(insightsFragmentVM.selectedMonth.value)
+                }
+            }
     }
 
     private fun setUpViews() {

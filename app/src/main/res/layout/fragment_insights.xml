@@ -24,15 +24,16 @@
             android:layout_marginStart="0dp"
             android:layout_marginEnd="0dp"
             app:elevation="0dp"
+            app:liftOnScroll="true"
+            app:layout_scrollFlags="scroll|enterAlways|snap"
+            android:background="@android:color/transparent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
-                style="@style/Widget.MaterialComponents.Toolbar.Primary"
                 android:layout_width="match_parent"
-                android:background="@color/bgcolor"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -315,6 +316,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:background="@color/bgcolor"
                 app:tabMode="fixed"
+                app:tabTextAppearance="@style/MyCustomInsightsTabTextAppearance"
                 app:tabIndicatorHeight="@dimen/dp1"
                 style="@style/Widget.App.TabLayout"
                 app:tabInlineLabel="true">
@@ -339,8 +341,9 @@
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/pager"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:paddingBottom="96dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"

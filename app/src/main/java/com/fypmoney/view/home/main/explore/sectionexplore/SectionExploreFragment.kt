@@ -33,7 +33,6 @@ import com.fypmoney.view.home.main.explore.adapters.ExploreAdapter
 import com.fypmoney.view.home.main.explore.adapters.ExploreBaseAdapter
 import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
 import com.fypmoney.view.home.main.explore.model.SectionContentItem
-import com.fypmoney.view.home.main.explore.view.ExploreFragmentDirections
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
 import kotlinx.android.synthetic.main.toolbar.*
@@ -119,7 +118,6 @@ class SectionExploreFragment : BaseFragment<FragmentSectionExploreBinding,Sectio
             if (list.size > 0) {
                 callOfferDetailsSheeet(list[0])
             }
-
         }
 
         sectionExploreFragmentVM.feedDetail.observe(
@@ -206,6 +204,15 @@ class SectionExploreFragment : BaseFragment<FragmentSectionExploreBinding,Sectio
                                 AppConstants.GIFT_VOUCHER -> {
                                     findNavController().navigate(Uri.parse("fypmoney://creategiftcard/${it.redirectionResource}"))
                                 }
+                                AppConstants.F_Store -> {
+                                    findNavController().navigate(R.id.navigation_explore)
+                                }
+                                AppConstants.REWARDS -> {
+                                    findNavController().navigate(R.id.navigation_rewards)
+                                }
+                                AppConstants.INSIGHTS -> {
+                                    findNavController().navigate(R.id.navigation_insights)
+                                }
                                 else -> {
                                     Utility.deeplinkRedirection(redirectionResources, requireContext())
                                 }
@@ -277,12 +284,10 @@ class SectionExploreFragment : BaseFragment<FragmentSectionExploreBinding,Sectio
 
                     }
                     AppConstants.EXPLORE_SECTION_EXPLORE->{
-                        val directions = exploreContentResponse?.sectionDisplayText?.let { it1 ->
-                            ExploreFragmentDirections.actionExploreSectionExplore(it,
-                                it1
-                            )
-                        }
-                        directions?.let { it1 -> findNavController().navigate(it1) }
+                        val direction = SectionExploreFragmentDirections.actionExploreSectionExplore(it,
+                            exploreContentResponse?.sectionDisplayText
+                        )
+                         findNavController().navigate(direction)
                     }
                     AppConstants.GIFT_VOUCHER -> {
                         findNavController().navigate(Uri.parse("fypmoney://creategiftcard/${it.redirectionResource}"))

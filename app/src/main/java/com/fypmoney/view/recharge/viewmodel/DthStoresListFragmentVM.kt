@@ -28,7 +28,7 @@ class DthStoresListFragmentVM(application: Application) : BaseViewModel(applicat
 
 
 
-    var openBottomSheet: MutableLiveData<ArrayList<offerDetailResponse>> = MutableLiveData()
+    var openBottomSheet: MutableLiveData<ArrayList<offerDetailResponse>> = LiveEvent()
 
     var feedDetail: MutableLiveData<FeedDetails> = LiveEvent()
 

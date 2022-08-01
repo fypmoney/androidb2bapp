@@ -11,6 +11,7 @@ import com.fypmoney.view.insights.model.CategoriesWiseTransactionUiModel.Compani
 
 class CategoryWaiseTransactionListFragmentVM(application: Application) : BaseViewModel(application) {
     lateinit var categoryName:String
+    var categoryUpdated:Boolean = false
     var categoryWiseTxnList:List<AllTxnItem> = mutableListOf()
 
     val state:LiveData<CategoryWiseTxnListState>

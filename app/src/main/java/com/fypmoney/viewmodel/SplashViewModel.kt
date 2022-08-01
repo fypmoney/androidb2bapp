@@ -179,7 +179,8 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
             "SERVER_IS_UNDER_MAINTENANCE",
             "SERVER_MAINTENANCE_DESCRIPTION",
             "CASHBACK_RECHARGE_ALLOWED",
-            "MESSAGE_ON_RECHARGE"
+            "MESSAGE_ON_RECHARGE",
+            "HOME_SCREEN_BG"
         )
         WebApiCaller.getInstance().request(
             ApiRequest(
@@ -408,6 +409,13 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
                                 SharedPrefUtils.putString(
                                     getApplication(),
                                     SharedPrefUtils.SF_MESSAGE_ON_RECHARGE,
+                                    it.value
+                                )
+                            }
+                            "HOME_SCREEN_BG"->{
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_HOME_SCREEN_BG,
                                     it.value
                                 )
                             }

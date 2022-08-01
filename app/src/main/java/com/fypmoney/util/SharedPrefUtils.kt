@@ -68,6 +68,7 @@ class SharedPrefUtils {
         const val SF_SERVER_MAINTENANCE_DESCRIPTION  = "server_maintenance_description"
         const val SF_CASHBACK_RECHARGE_ALLOWED = "recharge_cashback_allowed"
         const val SF_MESSAGE_ON_RECHARGE = "message_on_recharge_at_home"
+        const val SF_HOME_SCREEN_BG = "home_screen_bg"
 
         private fun getSharedPreferences(context: Context): SharedPreferences? {
             return PreferenceManager.getDefaultSharedPreferences(context)

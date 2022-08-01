@@ -83,6 +83,13 @@
         <item name="textAllCaps">false</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textAllCaps">false</item>
+        <item name="fontFamily">@font/product_sans_regular</item>
+    </style>
+    <style name="MyCustomInsightsTabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="fontFamily">@font/product_sans_regular</item>
     </style>
 
     <style name="Theme.DreamfolksApp.NoActionBar">

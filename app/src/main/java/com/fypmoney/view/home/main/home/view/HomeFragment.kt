@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,6 +17,7 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseFragment
+import com.fypmoney.bindingAdapters.loadImage
 import com.fypmoney.databinding.FragmentHomeBinding
 import com.fypmoney.extension.toGone
 import com.fypmoney.extension.toInvisible
@@ -28,13 +30,16 @@ import com.fypmoney.util.AppConstants.FyperScreen
 import com.fypmoney.util.AppConstants.NO
 import com.fypmoney.util.AppConstants.YES
 import com.fypmoney.util.SharedPrefUtils
+import com.fypmoney.util.SharedPrefUtils.Companion.SF_HOME_SCREEN_BG
 import com.fypmoney.util.SharedPrefUtils.Companion.SF_MESSAGE_ON_RECHARGE
 import com.fypmoney.util.Utility
 import com.fypmoney.util.Utility.deeplinkRedirection
 import com.fypmoney.util.videoplayer.VideoActivity2
 import com.fypmoney.util.videoplayer.VideoActivityWithExplore
 import com.fypmoney.view.StoreWebpageOpener2
+import com.fypmoney.view.activity.NotificationView
 import com.fypmoney.view.activity.UserFeedsDetailView
+import com.fypmoney.view.activity.UserProfileView
 import com.fypmoney.view.addmoney.NewAddMoneyActivity
 import com.fypmoney.view.arcadegames.model.ArcadeType
 import com.fypmoney.view.arcadegames.model.checkTheArcadeType
@@ -104,6 +109,23 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
         checkForRechargeCashback()
     }
 
+    override fun onResume() {
+        super.onResume()
+        loadProfile(homeFragmentVM.userProfileUrl)
+        showNewMessage()
+    }
+
+    private fun loadProfile(url: String?) {
+        url?.let {
+            loadImage(
+                binding.myProfileIv,
+                it,
+                ContextCompat.getDrawable(requireContext(), R.drawable.ic_profile_img),
+                true
+            )
+        }
+    }
+
     private fun checkForRechargeCashback() {
         SharedPrefUtils.getString(requireContext(), SF_MESSAGE_ON_RECHARGE)?.let {
             if(it.isEmpty()){
@@ -114,10 +136,20 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
             }
         }
     }
+    private fun checkForHomeScreenBackground(){
+        SharedPrefUtils.getString(requireContext(), SF_HOME_SCREEN_BG)?.let {
+            if(it.isEmpty()){
+                binding.clMainLayout.setBackgroundColor(resources.getColor(R.color.white))
+            }else{
+               Utility.setImageUsingGlideWithShimmerPlaceholder(requireContext(),it,binding.ivBackgroundImage)
+            }
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = getViewDataBinding()
+        checkForHomeScreenBackground()
         setupRecyclerView()
         //setRecyclerView(_binding)
         setObserver()
@@ -125,7 +157,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
         homeFragmentVM.callToAction()
         checkForErrorNotice()
         rechargeVisbility()
-
+        binding.help.setOnClickListener {
+            callFreshChat(requireContext())
+        }
 
     }
 
@@ -136,6 +170,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
             }else if(it==NO){
                 binding.rechargeSectionCl.toGone()
             }
+        }
+    }
+
+    private fun showNewMessage() {
+        if (homeFragmentVM.isUnreadNotificationAvailable.isNullOrEmpty()) {
+            binding.newNotification.toGone()
+        } else {
+            binding.newNotification.toVisible()
         }
     }
 
@@ -308,6 +350,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
             null -> {
 
             }
+            HomeFragmentVM.HomeFragmentEvent.NotificationClicked -> {
+                startActivity(Intent(requireActivity(), NotificationView::class.java))
+            }
+            HomeFragmentVM.HomeFragmentEvent.ProfileClicked -> {
+                startActivity(Intent(requireActivity(), UserProfileView::class.java))
+
+            }
         }
     }
 
@@ -365,7 +414,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
                 callOfferDetailsSheeet(list[0])
             }
         }
-
         homeFragmentVM.feedDetail.observe(
             viewLifecycleOwner
         ) { list ->
@@ -513,6 +561,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
                         }
                         AppConstants.GIFT_VOUCHER -> {
                             findNavController().navigate(Uri.parse("fypmoney://creategiftcard/${redirectionResources}"))
+                        }
+                        AppConstants.F_Store -> {
+                            findNavController().navigate(R.id.navigation_explore)
+                        }
+                        AppConstants.REWARDS -> {
+                            findNavController().navigate(R.id.navigation_rewards)
+                        }
+                        AppConstants.INSIGHTS -> {
+                            findNavController().navigate(R.id.navigation_insights)
                         }
                         else -> {
                             redirectionResources.let { it1 ->
@@ -701,7 +758,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
     }
     private fun callOfferDetailsSheeet(redeemDetails: offerDetailResponse) {
 
-        var bottomSheetMessage = OfferDetailsBottomSheet(redeemDetails)
+        val bottomSheetMessage = OfferDetailsBottomSheet(redeemDetails)
         bottomSheetMessage.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomSheetMessage.show(childFragmentManager, "TASKMESSAGE")
     }

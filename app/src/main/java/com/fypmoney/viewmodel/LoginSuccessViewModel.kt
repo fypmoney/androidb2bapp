@@ -30,10 +30,6 @@ import com.moengage.core.internal.MoEConstants.*
 class LoginSuccessViewModel(application: Application) : BaseViewModel(application) {
     var onApiSuccess = MutableLiveData<Boolean>()
 
-    init {
-
-    }
-
     /*
     * This method is used to handle click of continue
     * */
@@ -63,6 +59,7 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
             "SERVER_IS_UNDER_MAINTENANCE",
             "SERVER_MAINTENANCE_DESCRIPTION",
             "CASHBACK_RECHARGE_ALLOWED",
+            "MESSAGE_ON_RECHARGE",
             "MESSAGE_ON_RECHARGE"
         )
         WebApiCaller.getInstance().request(
@@ -317,6 +314,13 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
                                 SharedPrefUtils.putString(
                                     getApplication(),
                                     SharedPrefUtils.SF_MESSAGE_ON_RECHARGE,
+                                    it.value
+                                )
+                            }
+                            "HOME_SCREEN_BG"->{
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_HOME_SCREEN_BG,
                                     it.value
                                 )
                             }
