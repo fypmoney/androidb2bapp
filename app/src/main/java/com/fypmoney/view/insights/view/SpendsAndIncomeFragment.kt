@@ -85,32 +85,27 @@ class SpendsAndIncomeFragment : BaseFragment<FragmentSpendsAndIncomeBinding, Ins
             when(it){
                 InsightsFragmentVM.InsightsState.Error -> {
                     binding.shimmerLayoutLoading.toGone()
-                    binding.ivNoSpendsAndIncome.toVisible()
-                    binding.tvNoSpendsAndIncome.toVisible()
+                    binding.clEmptyState.toVisible()
                     binding.rvSpendsAndIncome.toGone()
 
                 }
                 InsightsFragmentVM.InsightsState.Loading -> {
                     binding.shimmerLayoutLoading.toVisible()
-                    binding.ivNoSpendsAndIncome.toGone()
-                    binding.tvNoSpendsAndIncome.toGone()
+                    binding.clEmptyState.toGone()
                     binding.rvSpendsAndIncome.toGone()
                 }
                 is InsightsFragmentVM.InsightsState.Success -> {
                     binding.shimmerLayoutLoading.toGone()
-                    binding.ivNoSpendsAndIncome.toGone()
-                    binding.tvNoSpendsAndIncome.toGone()
+                    binding.clEmptyState.toGone()
                     binding.rvSpendsAndIncome.toVisible()
                     if(pageType==getString(R.string.spends)){
                         if(it.data.spent?.category.isNullOrEmpty()){
                             binding.shimmerLayoutLoading.toGone()
-                            binding.ivNoSpendsAndIncome.toVisible()
-                            binding.tvNoSpendsAndIncome.toVisible()
+                            binding.clEmptyState.toVisible()
                             binding.rvSpendsAndIncome.toGone()
                         }else{
                             binding.shimmerLayoutLoading.toGone()
-                            binding.ivNoSpendsAndIncome.toGone()
-                            binding.tvNoSpendsAndIncome.toGone()
+                            binding.clEmptyState.toGone()
                             binding.rvSpendsAndIncome.toVisible()
                             (binding.rvSpendsAndIncome.adapter as SpendAndIncomeCategoryListAdapter).submitList(
                                 it.data.spent?.category?.map { categoryItem->
@@ -122,13 +117,11 @@ class SpendsAndIncomeFragment : BaseFragment<FragmentSpendsAndIncomeBinding, Ins
                     }else if(pageType==getString(R.string.income)){
                         if(it.data.income?.category.isNullOrEmpty()){
                             binding.shimmerLayoutLoading.toGone()
-                            binding.ivNoSpendsAndIncome.toVisible()
-                            binding.tvNoSpendsAndIncome.toVisible()
+                            binding.clEmptyState.toVisible()
                             binding.rvSpendsAndIncome.toGone()
                         }else{
                             binding.shimmerLayoutLoading.toGone()
-                            binding.ivNoSpendsAndIncome.toGone()
-                            binding.tvNoSpendsAndIncome.toGone()
+                            binding.clEmptyState.toGone()
                             binding.rvSpendsAndIncome.toVisible()
                             (binding.rvSpendsAndIncome.adapter as SpendAndIncomeCategoryListAdapter).submitList(
                                 it.data.income?.category?.map { categoryItem->

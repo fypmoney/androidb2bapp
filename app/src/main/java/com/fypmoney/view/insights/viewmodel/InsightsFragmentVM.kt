@@ -46,6 +46,7 @@ class InsightsFragmentVM(application: Application) : BaseViewModel(application) 
     var selectedMonth = MutableLiveData(0)
 
      var allTxnItem:List<AllTxnItem?>? = null
+
     @ObsoleteCoroutinesApi
     private val selectedMonthBroadcastChannel = ConflatedBroadcastChannel<Int>()
 

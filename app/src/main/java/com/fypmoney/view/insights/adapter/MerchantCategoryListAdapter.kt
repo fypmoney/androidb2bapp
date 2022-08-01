@@ -45,20 +45,20 @@ class MerchantCategoryListAdapter(
                 if(item.isSelected){
                     setBackgroundDrawable(clCategory,
                         ContextCompat.getColor(clCategory.context, R.color.orange1),
-                        31.0f,false,
+                        41.0f,false,
                     )
                     tvCategoryName.setTextColor(ContextCompat.getColor(clCategory.context, R.color.black10))
                 }else{
                     setBackgroundDrawable(clCategory,
                         ContextCompat.getColor(clCategory.context, R.color.black13),
-                        31.0f,false,
+                        41.0f,false,
                     )
                     tvCategoryName.setTextColor(ContextCompat.getColor(clCategory.context, R.color.white))
                 }
                 clCategory.setOnClickListener {
                     setBackgroundDrawable(clCategory,
                         ContextCompat.getColor(clCategory.context, R.color.orange1),
-                        31.0f,false,
+                        41.0f,false,
                     )
                     onCategoryClick(item.categoryCode)
                 }

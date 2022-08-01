@@ -95,6 +95,11 @@ class CategoryWaiseTransactionDetailsFragment : BaseFragment<FragmentCategoryWai
                         imageView = binding.ivSelectedCategory
                     )
                     binding.tvCategoryName.text = txnCategory
+                    if(isCategoryIsEditable){
+                        binding.ivEdit.toVisible()
+                    }else{
+                        binding.ivEdit.toGone()
+                    }
                 }
 
             }

@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.Keep
+import androidx.core.graphics.ColorUtils
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -96,8 +97,8 @@ class SpendAndIncomeCategoryListAdapter(
                 tvCategoryName.text = item.categoryName
                 tvAmount.text = item.amount?:"₹ 0"
                 tvPercentage.text = item.percentage?:"0 %"
+                item.progressBarColor?.let { Color.parseColor("#47BC5C")}
                 cpiIncomeSpendsPercentage.progress = item.progress?:0
-                cpiIncomeSpendsPercentage.setIndicatorColor(Color.parseColor(item.categoryColor))
                 cvSpendsAndIncome.setOnClickListener{
                     onCategoryClick(item.categoryCode!!,item.categoryName!!)
                 }
@@ -178,7 +179,8 @@ data class SpendAndIncomeCategoryUiModel(
     var percentage:String?,
     var progress:Int?,
     var categoryColor:String?,
-    var categoryCode:String?
+    var categoryCode:String?,
+    var progressBarColor:Int?
     ){
         companion object{
             fun mapNetworkResponseToSpendAndIncomeCategoryUiModel(context: Context,categoryItem: CategoryItem):SpendAndIncomeCategoryUiModel{
@@ -189,7 +191,8 @@ data class SpendAndIncomeCategoryUiModel(
                     percentage = categoryItem.percentage.toString()+" %",
                     progress = categoryItem.percentage?.roundToInt(),
                     categoryColor = categoryItem.categoryCol,
-                    categoryCode = categoryItem.categoryCode
+                    categoryCode = categoryItem.categoryCode,
+                    progressBarColor = ColorUtils.setAlphaComponent(Color.parseColor(categoryItem.categoryCol),128)
                 )
             }
         }

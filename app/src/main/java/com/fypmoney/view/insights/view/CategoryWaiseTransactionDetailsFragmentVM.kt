@@ -121,7 +121,8 @@ class CategoryWaiseTransactionDetailsFragmentVM(application: Application) : Base
             },
             txnCategory = txnItem.category,
             txnFypTxnId = txnItem.accReferenceNumber,
-            bankTxnId = txnItem.bankReferenceNumber
+            bankTxnId = txnItem.bankReferenceNumber,
+            isCategoryIsEditable = txnItem.paymentMode=="MerchantTransaction"
         )
         _state.value = CategoryWaiseTxnDetailsState.ShowTxnDetails(categoryTxnDetailsUiModel)
     }
@@ -227,7 +228,8 @@ class CategoryWaiseTransactionDetailsFragmentVM(application: Application) : Base
         var txnStatusDateAndTime:String?,
         var txnCategory:String?,
         var txnFypTxnId:String?,
-        var bankTxnId:String?
+        var bankTxnId:String?,
+        var isCategoryIsEditable:Boolean
     )
     private fun <T> getObject(response: String, instance: Class<T>): Any? {
         return Gson().fromJson(response, instance)
