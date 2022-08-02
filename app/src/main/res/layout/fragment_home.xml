@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="android.graphics.Color"/>
         <variable
             name="viewModel"
             type="com.fypmoney.view.home.main.home.viewmodel.HomeFragmentVM" />
@@ -71,7 +71,8 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         android:textAppearance="@style/TextAppearance.Fyp.Subtitle1"
-                        android:textColor="@color/black"
+                        android:textColor="@{Color.parseColor(viewModel.textColor)}"
+                        tools:textColor="@color/black"
                         tools:text="Hey User"
                         android:text="@{viewModel.toolbarTitle}"
                         android:layout_marginStart="12dp"
@@ -288,42 +289,13 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/notice_alert_fl">
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/quick_action_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawableEnd="@drawable/ic_quick_actions"
-                        android:drawablePadding="@dimen/dp10"
-                        android:fontFamily="@font/product_sans_bold"
-                        android:gravity="start"
-                        android:lineSpacingExtra="14sp"
-                        android:text="@string/quick_action"
-                        android:textColor="@color/black"
-                        android:textSize="17sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                    <!--<androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/quick_action_rv"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:orientation="vertical"
-                        android:visibility="gone"
-                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/quick_action_tv"
-                        app:spanCount="3"
-                        tools:itemCount="5"9123459123
-                        tools:listitem="@layout/item_quick_action" />-->
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_marginTop="10dp"
                         android:orientation="horizontal"
                         android:layout_height="wrap_content"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/quick_action_tv">
+                        app:layout_constraintTop_toTopOf="parent">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -417,7 +389,7 @@
                     android:layout_width="match_parent"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
-                    android:layout_marginTop="@dimen/dp30"
+                    android:layout_marginTop="@dimen/dp20"
                     android:paddingHorizontal="20dp"
                     android:paddingVertical="15dp"
                     app:customStrokeColor="@{@color/strokeColor}"
@@ -436,7 +408,8 @@
                         android:layout_marginTop="6dp"
                         android:text="@string/mobile_recharge_bill_payments"
                         android:textSize="14sp"
-                        android:textColor="@color/black"
+                        android:textColor="@{Color.parseColor(viewModel.textColor)}"
+                        tools:textColor="@color/black"
                         android:layout_marginStart="@dimen/_4sdp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -490,8 +463,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_4sdp"
                                 android:text="@string/recharge"
-                                android:textColor="@color/black_background"
-                                android:textSize="@dimen/text_14sp"
+                                android:textColor="@{Color.parseColor(viewModel.textColor)}"
+                                tools:textColor="@color/black"                                android:textSize="@dimen/text_14sp"
                                 />
                         </LinearLayout>
 
@@ -524,7 +497,8 @@
                                 android:textSize="@dimen/text_14sp"
                                 android:layout_gravity="center"
                                 android:gravity="center"
-                                android:textColor="@color/black_background" />
+                                android:textColor="@{Color.parseColor(viewModel.textColor)}"
+                                tools:textColor="@color/black" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -556,7 +530,8 @@
                                 android:layout_gravity="center"
                                 android:gravity="center"
                                 android:textSize="@dimen/text_14sp"
-                                android:textColor="@color/black_background" />
+                                android:textColor="@{Color.parseColor(viewModel.textColor)}"
+                                tools:textColor="@color/black"/>
                         </LinearLayout>
 
                         <LinearLayout
@@ -588,7 +563,8 @@
                                 android:layout_gravity="center"
                                 android:gravity="center"
                                 android:textSize="@dimen/text_14sp"
-                                android:textColor="@color/black_background" />
+                                android:textColor="@{Color.parseColor(viewModel.textColor)}"
+                                tools:textColor="@color/black" />
                         </LinearLayout>
 
 
@@ -615,7 +591,8 @@
                         android:gravity="start"
                         android:lineSpacingExtra="14sp"
                         android:text="@string/for_you"
-                        android:textColor="@color/black"
+                        android:textColor="@{Color.parseColor(viewModel.textColor)}"
+                        tools:textColor="@color/black"
                         android:textSize="16sp"
                         android:drawablePadding="@dimen/dp10"
                         app:layout_constraintTop_toTopOf="parent"

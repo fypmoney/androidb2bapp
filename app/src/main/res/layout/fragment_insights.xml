@@ -350,5 +350,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/tabLayoutSpendsIncome"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

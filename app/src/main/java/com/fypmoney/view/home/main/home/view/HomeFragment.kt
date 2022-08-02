@@ -265,6 +265,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
                 loadMoneyBottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
                 loadMoneyBottomSheet.show(childFragmentManager, "LoadMoneySheet")
             }*/
+            HomeFragmentVM.HomeFragmentState.ShowLoadMoneySheetState -> {
+
+            }
+            null -> {}
         }
     }
 
@@ -502,7 +506,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
             requireContext(),
             exploreClickListener2,
             scale,
-            Color.BLACK
+            Color.parseColor(homeFragmentVM.textColor.value)
         )
         root.exploreHomeRv.adapter = typeAdapter
     }

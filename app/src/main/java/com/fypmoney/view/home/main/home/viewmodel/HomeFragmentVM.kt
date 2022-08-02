@@ -53,9 +53,27 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
         application,
         SharedPrefUtils.SF_KEY_PROFILE_IMAGE
     )
+    /*val textColor = MutableLiveData(SharedPrefUtils.getString(
+        application,
+        SharedPrefUtils.SF_HOME_SCREEN_TEXT_COLOR
+    )?:"#000000")*/
+
+    val textColor:MutableLiveData<String> by lazy {
+        SharedPrefUtils.getString(
+            application,
+            SharedPrefUtils.SF_HOME_SCREEN_TEXT_COLOR
+        )?.let {
+            if(it.isNotEmpty()){
+                MutableLiveData(it)
+            }else{
+                MutableLiveData("#000000")
+            }
+        }?: kotlin.run { MutableLiveData("#000000") }
+    }
 
     var toolbarTitle = MutableLiveData(
         "Hey ${Utility.getCustomerDataFromPreference()?.firstName},")
+
     init {
         //callgetOffer()
         callExplporeContent()
