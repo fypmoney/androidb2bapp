@@ -276,7 +276,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
         when(it){
             HomeFragmentVM.HomeFragmentEvent.ViewCardDetails -> {
                 findNavController().navigate(R.id.navigation_card)
-
             }
             HomeFragmentVM.HomeFragmentEvent.AddAction -> {
                 Utility.getCustomerDataFromPreference()?.let {

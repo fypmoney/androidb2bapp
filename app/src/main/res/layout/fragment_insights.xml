@@ -17,339 +17,365 @@
         android:background="@color/bgcolor"
         tools:context=".view.insights.view.InsightsFragment">
 
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/toolbarTitleTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:textAppearance="@style/TextAppearance.Fyp.Subtitle1"
+                    android:textColor="@color/white"
+                    android:text="@string/insights"
+                    android:layout_marginStart="12dp"
+                    android:textSize="@dimen/text_18sp" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/insights_filter_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp16"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:onClick="@{()->viewModel.showMonthFilterClick()}"
+                    app:tint="@color/white"
+                    app:srcCompat="@drawable/ic_filter" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </com.google.android.material.appbar.MaterialToolbar>
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/app_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="0dp"
             android:layout_marginEnd="0dp"
-            app:elevation="0dp"
-            app:liftOnScroll="true"
-            app:layout_scrollFlags="scroll|enterAlways|snap"
             android:background="@android:color/transparent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/toolbar"
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                app:contentScrim="@color/black"
+                app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/calender_waise_insights_cl"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/dp16"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/app_bar">
 
-                    <TextView
-                        android:id="@+id/toolbarTitleTv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:textAppearance="@style/TextAppearance.Fyp.Subtitle1"
-                        android:textColor="@color/white"
-                        android:text="@string/insights"
-                        android:layout_marginStart="12dp"
-                        android:textSize="@dimen/text_18sp" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clMonths"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="@dimen/dp6"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/insights_filter_iv"
+                        android:id="@+id/ivPreviousMonth"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/dp16"
+                        app:srcCompat="@drawable/ic_forword_arrow"
+                        android:rotation="180"
+                        app:tint="@color/white"
+                        android:visibility="@{viewModel.selectedMonth==11 ? View.GONE : View.VISIBLE}"
+                        android:onClick="@{()->viewModel.selectPreviousMonthClick()}"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvMonth"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="December"
+                        android:textSize="20sp"
+                        android:gravity="center"
+                        app:layout_constraintStart_toEndOf="@+id/ivPreviousMonth"
+                        app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/ivNextMonth"
+                        android:textColor="@color/white"
+                        style="@style/TextviewRegular"/>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivNextMonth"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_forword_arrow"
+                        app:tint="@color/white"
+                        android:onClick="@{()->viewModel.selectNextMonthClick()}"
+                        android:visibility="@{viewModel.selectedMonth==0 ? View.GONE : View.VISIBLE}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        android:onClick="@{()->viewModel.showMonthFilterClick()}"
-                        app:tint="@color/white"
-                        app:srcCompat="@drawable/ic_filter" />
+                        app:layout_constraintBottom_toBottomOf="parent"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clSpends"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp12"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/clMonths">
 
-            </com.google.android.material.appbar.MaterialToolbar>
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/clTotalSpends"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:paddingHorizontal="@dimen/dp10"
+                        android:paddingVertical="@dimen/dp8"
+                        app:customBackgroundColor="@{@color/orange11}"
+                        app:customCornerRadius="@{@dimen/dp18}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/clTotalIncome"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:background="@color/orange11">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivTotalSpends"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/ic_total_spends" />
+
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvTotalSpendsLabel"
+                            style="@style/TextviewRegular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp4"
+                            android:text="@string/total_spends"
+                            android:textColor="@color/black10"
+                            android:layout_marginStart="@dimen/dp8"
+                            android:textSize="10sp"
+                            app:layout_constraintStart_toStartOf="@+id/ivTotalSpends"
+                            app:layout_constraintTop_toBottomOf="@+id/ivTotalSpends" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvTotalSpendsValue"
+                            style="@style/TextviewBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp5"
+                            android:text="₹0.00"
+                            android:layout_marginStart="@dimen/dp8"
+                            android:textColor="@color/black11"
+                            android:textSize="24sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tvTotalSpendsLabel"
+                            tools:text="₹5000" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/clTotalIncome"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:paddingHorizontal="@dimen/dp10"
+                        android:paddingVertical="@dimen/dp8"
+                        android:layout_marginStart="@dimen/dp16"
+                        app:customBackgroundColor="@{@color/sky1}"
+                        app:customCornerRadius="@{@dimen/dp18}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintStart_toEndOf="@+id/clTotalSpends"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:background="@color/sky1">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivTotalIncome"
+                            android:layout_width="0dp"
+                            android:layout_height="178dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/ic_total_income" />
+
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvTotalIncomeLabel"
+                            style="@style/TextviewRegular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp4"
+                            android:text="@string/total_income"
+                            android:textColor="@color/black10"
+                            android:textSize="10sp"
+                            android:layout_marginStart="@dimen/dp8"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/ivTotalIncome" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvTotalIncomeValue"
+                            style="@style/TextviewBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp5"
+                            android:text="₹0.00"
+                            android:textColor="@color/black11"
+                            android:textSize="24sp"
+                            android:layout_marginStart="@dimen/dp8"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tvTotalIncomeLabel"
+                            tools:text="₹5000" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clShowTxnHistory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:customBackgroundColor="@{@color/grey}"
+                    app:customCornerRadius="@{@dimen/dp16}"
+                    app:customBackgroundAlpha="@{5}"
+                    android:padding="@dimen/dp15"
+                    android:layout_marginTop="@dimen/dp20"
+                    android:onClick="@{()->viewModel.showTransactionHistory()}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/clSpends">
+
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvShowTxnHistory"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/show_transaction_history"
+                        android:textSize="17sp"
+                        android:gravity="center"
+                        android:drawablePadding="@dimen/dp8"
+                        android:drawableStart="@drawable/ic_history"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:textColor="@color/white"
+                        style="@style/TextviewRegular"/>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivArrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_forword_arrow"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/calender_waise_insights_cl"
+
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="@dimen/dp16"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/app_bar">
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:fillViewport="true"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/clMonths"
+                android:id="@+id/clTabBar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingVertical="@dimen/dp6"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ivPreviousMonth"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_forword_arrow"
-                    android:rotation="180"
-                    app:tint="@color/white"
-                    android:visibility="@{viewModel.selectedMonth==11 ? View.GONE : View.VISIBLE}"
-                    android:onClick="@{()->viewModel.selectPreviousMonthClick()}"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tvMonth"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:text="December"
-                    android:textSize="20sp"
-                    android:gravity="center"
-                    app:layout_constraintStart_toEndOf="@+id/ivPreviousMonth"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/ivNextMonth"
-                    android:textColor="@color/white"
-                    style="@style/TextviewRegular"/>
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ivNextMonth"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_forword_arrow"
-                    app:tint="@color/white"
-                    android:onClick="@{()->viewModel.selectNextMonthClick()}"
-                    android:visibility="@{viewModel.selectedMonth==0 ? View.GONE : View.VISIBLE}"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/clSpends"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp12"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/clMonths">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/clTotalSpends"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:paddingHorizontal="@dimen/dp10"
-                    android:paddingVertical="@dimen/dp8"
-                    app:customBackgroundColor="@{@color/orange11}"
-                    app:customCornerRadius="@{@dimen/dp18}"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/clTotalIncome"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintHorizontal_weight="1"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:background="@color/orange11">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/ivTotalSpends"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_total_spends" />
-
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/tvTotalSpendsLabel"
-                        style="@style/TextviewRegular"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp4"
-                        android:text="@string/total_spends"
-                        android:textColor="@color/black10"
-                        android:layout_marginStart="@dimen/dp8"
-                        android:textSize="10sp"
-                        app:layout_constraintStart_toStartOf="@+id/ivTotalSpends"
-                        app:layout_constraintTop_toBottomOf="@+id/ivTotalSpends" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/tvTotalSpendsValue"
-                        style="@style/TextviewBold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp5"
-                        android:text="₹0.00"
-                        android:layout_marginStart="@dimen/dp8"
-                        android:textColor="@color/black11"
-                        android:textSize="24sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tvTotalSpendsLabel"
-                        tools:text="₹5000" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/clTotalIncome"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:paddingHorizontal="@dimen/dp10"
-                    android:paddingVertical="@dimen/dp8"
-                    android:layout_marginStart="@dimen/dp16"
-                    app:customBackgroundColor="@{@color/sky1}"
-                    app:customCornerRadius="@{@dimen/dp18}"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintHorizontal_weight="1"
-                    app:layout_constraintStart_toEndOf="@+id/clTotalSpends"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:background="@color/sky1">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/ivTotalIncome"
-                        android:layout_width="0dp"
-                        android:layout_height="178dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_total_income" />
-
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/tvTotalIncomeLabel"
-                        style="@style/TextviewRegular"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp4"
-                        android:text="@string/total_income"
-                        android:textColor="@color/black10"
-                        android:textSize="10sp"
-                        android:layout_marginStart="@dimen/dp8"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/ivTotalIncome" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/tvTotalIncomeValue"
-                        style="@style/TextviewBold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp5"
-                        android:text="₹0.00"
-                        android:textColor="@color/black11"
-                        android:textSize="24sp"
-                        android:layout_marginStart="@dimen/dp8"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tvTotalIncomeLabel"
-                        tools:text="₹5000" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/clShowTxnHistory"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:customBackgroundColor="@{@color/grey}"
-                app:customCornerRadius="@{@dimen/dp16}"
-                app:customBackgroundAlpha="@{5}"
-                android:padding="@dimen/dp15"
-                android:layout_marginTop="@dimen/dp20"
-                android:onClick="@{()->viewModel.showTransactionHistory()}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/clSpends">
-
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tvShowTxnHistory"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/show_transaction_history"
-                    android:textSize="17sp"
-                    android:gravity="center"
-                    android:drawablePadding="@dimen/dp8"
-                    android:drawableStart="@drawable/ic_history"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:textColor="@color/white"
-                    style="@style/TextviewRegular"/>
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ivArrow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_forword_arrow"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/clTabBar"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="@dimen/dp16"
-            android:paddingHorizontal="@dimen/dp16"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/calender_waise_insights_cl">
-
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabLayoutSpendsIncome"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:background="@color/bgcolor"
-                app:tabMode="fixed"
-                app:tabTextAppearance="@style/MyCustomInsightsTabTextAppearance"
-                app:tabIndicatorHeight="@dimen/dp1"
-                style="@style/Widget.App.TabLayout"
-                app:tabInlineLabel="true">
-
-                <com.google.android.material.tabs.TabItem
-                    android:id="@+id/tiSpends"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/spends"
-                    android:icon="@drawable/ic_down_arrow"
-                    />
-
-                <com.google.android.material.tabs.TabItem
-                    android:id="@+id/tiIncome"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/income"
-                    android:icon="@drawable/ic_up_arrow"
-                    />
-
-            </com.google.android.material.tabs.TabLayout>
-
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/pager"
-                android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:paddingBottom="96dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="@dimen/dp16"
+                android:paddingHorizontal="@dimen/dp16"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tabLayoutSpendsIncome"/>
+                app:layout_constraintTop_toBottomOf="@+id/calender_waise_insights_cl">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tabLayoutSpendsIncome"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:background="@color/bgcolor"
+                    app:tabMode="fixed"
+                    app:tabTextAppearance="@style/MyCustomInsightsTabTextAppearance"
+                    app:tabIndicatorHeight="@dimen/dp1"
+                    style="@style/Widget.App.TabLayout"
+                    app:tabInlineLabel="true">
+
+                    <com.google.android.material.tabs.TabItem
+                        android:id="@+id/tiSpends"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/spends"
+                        android:icon="@drawable/ic_down_arrow"
+                        />
+
+                    <com.google.android.material.tabs.TabItem
+                        android:id="@+id/tiIncome"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/income"
+                        android:icon="@drawable/ic_up_arrow"
+                        />
+
+                </com.google.android.material.tabs.TabLayout>
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tabLayoutSpendsIncome"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

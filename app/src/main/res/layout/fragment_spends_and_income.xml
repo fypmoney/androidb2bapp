@@ -7,16 +7,11 @@
 
     </data>
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:background="@color/bgcolor"
-        tools:context=".view.insights.view.SpendsAndIncomeFragment">
-
-        <FrameLayout
+    <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/bgcolor"
+            tools:context=".view.insights.view.SpendsAndIncomeFragment">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/clEmptyState"
@@ -134,5 +129,4 @@
 
         </FrameLayout>
 
-    </androidx.core.widget.NestedScrollView>
 </layout>
