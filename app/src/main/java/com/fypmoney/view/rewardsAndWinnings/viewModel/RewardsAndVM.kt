@@ -63,13 +63,12 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
     var bottomSheetStatus: MutableLiveData<UpdateTaskGetResponse> = MutableLiveData()
     /*var rewardfeedList: MutableLiveData<ArrayList<FeedDetails>> =
         MutableLiveData()*/
-    var openBottomSheet: MutableLiveData<ArrayList<offerDetailResponse>> = MutableLiveData()
+    var openBottomSheet: MutableLiveData<ArrayList<offerDetailResponse>> = LiveEvent()
     var feedDetail: MutableLiveData<FeedDetails> = LiveEvent()
 
     fun onSelectClicked() {
         onAddMoneyClicked.value = true
     }
-
 
     init {
         callRewardSummary()

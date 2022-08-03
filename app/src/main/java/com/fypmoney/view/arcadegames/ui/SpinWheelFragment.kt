@@ -27,6 +27,7 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.bindingAdapters.setBackgroundDrawable
 import com.fypmoney.databinding.FragmentSpinWheelBinding
+import com.fypmoney.extension.toGone
 import com.fypmoney.extension.toInvisible
 import com.fypmoney.extension.toVisible
 import com.fypmoney.model.SpinWheelRotateResponseDetails
@@ -565,6 +566,7 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, SpinWheelFragme
 
     private fun decreaseCountAnimation(textScore: TextView, finalCount: Int) {
         if(!textScore.text.isNullOrEmpty()){
+            mViewBinding!!.tvPointsApiError.toGone()
             val animator = ValueAnimator.ofInt(
                 Integer.parseInt(textScore.text.toString()),
                 Integer.parseInt(textScore.text.toString()) - (finalCount)
@@ -585,7 +587,8 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, SpinWheelFragme
             }, 1500)
         }else{
             FirebaseCrashlytics.getInstance().recordException(Throwable("Unable to decrease mynts. ${textScore.text}"))
-            Utility.showToast("Please check history")
+            mViewBinding!!.tvPointsApiError.toVisible()
+
         }
 
     }
@@ -597,6 +600,7 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, SpinWheelFragme
         via: String
     ) {
         if(!textScore.text.isNullOrEmpty()){
+            mViewBinding!!.tvPointsApiError.toGone()
             if (via == "Cash") {
                 val startPosition = (textScore.text.toString().split("₹")[1]).toIntOrNull()
                 val endPosition = (textScore.text.toString().split("₹")[1]).toIntOrNull()
@@ -646,7 +650,7 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, SpinWheelFragme
             }, animDuration)
         }else{
             FirebaseCrashlytics.getInstance().recordException(Throwable("Unable to decrease mynts. ${textScore.text}"))
-            Utility.showToast("Please check history")
+            mViewBinding!!.tvPointsApiError.toVisible()
         }
 
     }

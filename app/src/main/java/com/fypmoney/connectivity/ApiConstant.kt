@@ -171,6 +171,7 @@ object ApiConstant {
     const val API_PAY_BILL = "services/PockketService/api/billPayment"
     const val API_RECENT_RECHARGE = "services/PockketService/api/recharge-orders"
     const val Api_GET_DISCORD_PROFILE = "/services/loyaltyservice/api/fetch-discord-data"
+    const val API_30_DAYS_TRANSACTION = "/services/PockketService/api/fetch/data-for/30Days_transaction"
 
     const val GET_GIFTS_LIST = "services/PockketService/api/search-voucher"
 
@@ -199,6 +200,8 @@ object ApiConstant {
         "services/PockketService/api/jackpot/tickets/productwise/"
 
     const val API_GET_LEADERBOARD_DATA = "services/PockketService/api/reward/leaderboard/"
+    const val API_GET_MERCHANT_CATEGORY = "/services/PockketService/api/fetch/data-for/ALL_MCC_CATEGORY"
+    const val API_CHANGE_TXN_CATEGORY = "/services/PockketService/api/account-transaction/icon"
 
 }
 

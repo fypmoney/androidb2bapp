@@ -4,29 +4,148 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="android.graphics.Color"/>
         <variable
             name="viewModel"
             type="com.fypmoney.view.home.main.home.viewmodel.HomeFragmentVM" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clMainLayout"
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivBackgroundImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="0dp"
+            app:elevation="0dp"
+            app:liftOnScroll="true"
+            app:layout_scrollFlags="scroll|enterAlways|snap"
+            android:background="@android:color/transparent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/myProfileIv"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginStart="14dp"
+                        android:onClick="@{()->viewModel.onProfileClicked()}"
+                        app:srcCompat="@drawable/ic_profile_img" />
+
+                    <TextView
+                        android:id="@+id/toolbarTitleTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toEndOf="@+id/myProfileIv"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:textAppearance="@style/TextAppearance.Fyp.Subtitle1"
+                        android:textColor="@{Color.parseColor(viewModel.textColor)}"
+                        tools:textColor="@color/black"
+                        tools:text="Hey User"
+                        android:text="@{viewModel.toolbarTitle}"
+                        android:layout_marginStart="12dp"
+                        android:textSize="@dimen/text_18sp" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/help"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/framne"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:onClick="@{()->viewModel.onNotificationClicked()}"
+                        app:srcCompat="@drawable/ic_support" />
+
+
+
+
+
+
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/framne"
+                        android:layout_marginEnd="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <View
+                            android:layout_width="@dimen/dp8"
+                            android:elevation="@dimen/_1sdp"
+                            android:id="@+id/new_notification"
+                            android:visibility="gone"
+                            tools:visibility= "visible"
+                            android:layout_height="@dimen/dp8"
+                            android:layout_gravity="top|end"
+                            android:layout_marginEnd="4dp"
+                            android:background="@drawable/circular_red"/>
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivNotificationBell"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="@{()->viewModel.onNotificationClicked()}"
+                            app:srcCompat="@drawable/ic_notification_home" />
+                    </FrameLayout>
+
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </com.google.android.material.appbar.MaterialToolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:paddingBottom="92dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/app_bar"
             app:layout_constraintBottom_toBottomOf="parent"
             android:fillViewport="true"
             tools:context=".view.home.main.home.view.HomeFragment">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/main_cl"
+                android:paddingBottom="96dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -170,42 +289,13 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/notice_alert_fl">
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/quick_action_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawableEnd="@drawable/ic_quick_actions"
-                        android:drawablePadding="@dimen/dp10"
-                        android:fontFamily="@font/product_sans_bold"
-                        android:gravity="start"
-                        android:lineSpacingExtra="14sp"
-                        android:text="@string/quick_action"
-                        android:textColor="@color/black"
-                        android:textSize="17sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                    <!--<androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/quick_action_rv"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:orientation="vertical"
-                        android:visibility="gone"
-                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/quick_action_tv"
-                        app:spanCount="3"
-                        tools:itemCount="5"9123459123
-                        tools:listitem="@layout/item_quick_action" />-->
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_marginTop="10dp"
                         android:orientation="horizontal"
                         android:layout_height="wrap_content"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/quick_action_tv">
+                        app:layout_constraintTop_toTopOf="parent">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -299,7 +389,7 @@
                     android:layout_width="match_parent"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
-                    android:layout_marginTop="@dimen/dp30"
+                    android:layout_marginTop="@dimen/dp20"
                     android:paddingHorizontal="20dp"
                     android:paddingVertical="15dp"
                     app:customStrokeColor="@{@color/strokeColor}"
@@ -318,7 +408,8 @@
                         android:layout_marginTop="6dp"
                         android:text="@string/mobile_recharge_bill_payments"
                         android:textSize="14sp"
-                        android:textColor="@color/black"
+                        android:textColor="@{Color.parseColor(viewModel.textColor)}"
+                        tools:textColor="@color/black"
                         android:layout_marginStart="@dimen/_4sdp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -372,8 +463,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_4sdp"
                                 android:text="@string/recharge"
-                                android:textColor="@color/black_background"
-                                android:textSize="@dimen/text_14sp"
+                                android:textColor="@{Color.parseColor(viewModel.textColor)}"
+                                tools:textColor="@color/black"                                android:textSize="@dimen/text_14sp"
                                 />
                         </LinearLayout>
 
@@ -406,7 +497,8 @@
                                 android:textSize="@dimen/text_14sp"
                                 android:layout_gravity="center"
                                 android:gravity="center"
-                                android:textColor="@color/black_background" />
+                                android:textColor="@{Color.parseColor(viewModel.textColor)}"
+                                tools:textColor="@color/black" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -438,7 +530,8 @@
                                 android:layout_gravity="center"
                                 android:gravity="center"
                                 android:textSize="@dimen/text_14sp"
-                                android:textColor="@color/black_background" />
+                                android:textColor="@{Color.parseColor(viewModel.textColor)}"
+                                tools:textColor="@color/black"/>
                         </LinearLayout>
 
                         <LinearLayout
@@ -470,7 +563,8 @@
                                 android:layout_gravity="center"
                                 android:gravity="center"
                                 android:textSize="@dimen/text_14sp"
-                                android:textColor="@color/black_background" />
+                                android:textColor="@{Color.parseColor(viewModel.textColor)}"
+                                tools:textColor="@color/black" />
                         </LinearLayout>
 
 
@@ -497,7 +591,8 @@
                         android:gravity="start"
                         android:lineSpacingExtra="14sp"
                         android:text="@string/for_you"
-                        android:textColor="@color/black"
+                        android:textColor="@{Color.parseColor(viewModel.textColor)}"
+                        tools:textColor="@color/black"
                         android:textSize="16sp"
                         android:drawablePadding="@dimen/dp10"
                         app:layout_constraintTop_toTopOf="parent"

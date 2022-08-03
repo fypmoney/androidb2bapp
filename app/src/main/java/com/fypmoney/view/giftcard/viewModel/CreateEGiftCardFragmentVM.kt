@@ -37,7 +37,7 @@ class CreateEGiftCardFragmentVM(application: Application) : BaseViewModel(applic
         get() = _event
     private var _event = LiveEvent<CreateEGiftCardEvent>()
 
-    lateinit var brandDetails:GiftCardBrandDetails
+     var brandDetails:GiftCardBrandDetails? = null
 
     lateinit var brandCode:String
     val createEGiftCardModel:CreateEGiftCardModel = CreateEGiftCardModel(
@@ -102,26 +102,26 @@ class CreateEGiftCardFragmentVM(application: Application) : BaseViewModel(applic
                     )
                 )
             }
-            else if(amount<Utility.convertToRs(brandDetails.minPrice.toString())!!.toLong()){
+            else if(amount<Utility.convertToRs(brandDetails?.minPrice.toString())!!.toLong()){
                 _state.value = CreateEGiftCardState.ValidationError(
                     ValidationErrorData(
                         field = Field.Amount,
                         validationMsg = String.format(PockketApplication.instance.getString(
                             R.string.gift_card_amount_should_be_grater_with_min_amount),
                             String.format(PockketApplication.instance.getString(
-                                R.string.amount_with_currency),Utility.convertToRs(brandDetails.minPrice.toString()))
+                                R.string.amount_with_currency),Utility.convertToRs(brandDetails?.minPrice.toString()))
                         )
                     )
                 )
             }
-            else if(amount>Utility.convertToRs(brandDetails.maxPrice.toString())!!.toLong()){
+            else if(amount>Utility.convertToRs(brandDetails?.maxPrice.toString())!!.toLong()){
                 _state.value = CreateEGiftCardState.ValidationError(
                     ValidationErrorData(
                         field = Field.Amount,
                         validationMsg = String.format(PockketApplication.instance.getString(
                             R.string.gift_card_amount_should_be_less_with_max_amount),
                             String.format(PockketApplication.instance.getString(
-                                R.string.amount_with_currency),Utility.convertToRs(brandDetails.maxPrice.toString()))
+                                R.string.amount_with_currency),Utility.convertToRs(brandDetails?.maxPrice.toString()))
                         )
                     )
                 )
@@ -161,17 +161,17 @@ class CreateEGiftCardFragmentVM(application: Application) : BaseViewModel(applic
                 createEGiftCardModel.giftedPerson = "NONE"
             }
         }
-        brandDetails.displayName?.let {
+        brandDetails?.displayName?.let {
             createEGiftCardModel.brandName = it
 
         }
-        brandDetails.voucherProduct?.let {
+        brandDetails?.voucherProduct?.let {
             if(it.isNotEmpty()){
                 createEGiftCardModel.voucherProductId = it[0]?.id.toString()
             }
 
         }
-        createEGiftCardModel.myntsMultiPlier = brandDetails.myntsMultiPlier
+        createEGiftCardModel.myntsMultiPlier = brandDetails?.myntsMultiPlier
         fetchBalance()
     }
 

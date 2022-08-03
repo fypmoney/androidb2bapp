@@ -28,9 +28,9 @@
 
 
     <item
-        android:id="@+id/navigation_fyper"
-        android:icon="@drawable/ic_fyper_nav_menu"
-        android:title="@string/family"
+        android:id="@+id/navigation_insights"
+        android:icon="@drawable/ic_insights"
+        android:title="@string/insights"
         app:cnb_backgroundColor="@color/bgcolor"
         app:cnb_textColor="#FFFFFF"
         app:cnb_iconColor="@color/colorSelectedMenu" />

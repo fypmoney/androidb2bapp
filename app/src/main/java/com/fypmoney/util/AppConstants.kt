@@ -147,6 +147,7 @@ object AppConstants {
     const val RESPONSE = "response"
     const val SERVER_DATE_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
     const val SERVER_DATE_TIME_FORMAT1 = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+    const val SERVER_DATE_TIME_FORMAT3 = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
     const val SERVER_DATE_TIME_FORMAT2 = "yyyy-MM-dd'T'HH:mm:ss.SSS"
     const val CHANGED_DATE_TIME_FORMAT = "MMM dd,yyyy-HH:mmaa"
     const val CHANGED_DATE_TIME_FORMAT9 = "dd MMM,yyyy-HH:mmaa"
@@ -236,7 +237,9 @@ object AppConstants {
     const val OrderCard = "OrderCard"
     const val JACKPOTTAB = "Jackpot"
     const val ARCADE = "Arcade"
-
+    const val REWARDS = "Rewards"
+    const val F_Store = "F-Store"
+    const val INSIGHTS = "Insights"
     const val RechargeHomeScreen = "RechargeHomeScreen"
     const val RewardHistory = "RewardHistory"
     const val StoreofferScreen = "Storeofferscreen"

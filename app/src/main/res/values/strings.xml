@@ -1313,5 +1313,22 @@ Coming really soon!
         <item>Real time activity notification</item>
         <item>Easy card locking</item>
     </string-array>
+    <string name="insights">Insights</string>
+    <string name="total_spends">Total Spends</string>
+    <string name="total_income">Total Income</string>
+    <string name="show_transaction_history">Show transaction history</string>
+    <string name="spends">Spends</string>
+    <string name="income">Income</string>
+    <string name="do_your_first_transaction">Do your first transaction!</string>
+    <string name="pecentaze_value">%1$s %</string>
+    <string name="choose_month_to_display_transactions">Choose month to display transactions</string>
+    <string name="choose_category">Choose category for this transactions</string>
+    <string name="no_transaction_marked_in_this_category">No transaction marked in this category</string>
+    <string name="transaction_details">Transaction Details</string>
+    <string name="fyp_transaction_id">Fyp Transaction ID</string>
+    <string name="sent_with_time">Sent | %1$s</string>
+    <string name="reccived_with_time">Received | %1$s</string>
+    <string name="f_store">F-Store</string>
+    <string name="unable_to_fetch_points_please_check_reward_history_after_playing">Unable to fetch points, please check Reward History after playing!</string>
 
 </resources>
