@@ -84,7 +84,7 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, SpinWheelFragme
             if (spinWheelFragmentVM.productId == null || spinWheelFragmentVM.productId == "null") {
                 if (spinWheelFragmentVM.remainFrequency.value!! > 0) {
                     mViewBinding!!.containerSpinWheelRewards.visibility = View.INVISIBLE
-                    mViewBinding!!.containerSpinWheelDefaultBanner.visibility = View.VISIBLE
+                    mViewBinding!!.ivBannerSpinWheel.visibility = View.VISIBLE
 
                     mViewBinding!!.ivBtnPlayAnimation.visibility = View.INVISIBLE
                     mViewBinding!!.progressBtnPlay.visibility = View.VISIBLE
@@ -106,7 +106,7 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, SpinWheelFragme
             } else {
 
                 mViewBinding!!.containerSpinWheelRewards.visibility = View.INVISIBLE
-                mViewBinding!!.containerSpinWheelDefaultBanner.visibility = View.VISIBLE
+                mViewBinding!!.ivBannerSpinWheel.visibility = View.VISIBLE
 
                 mViewBinding!!.ivBtnPlayAnimation.visibility = View.INVISIBLE
                 mViewBinding!!.progressBtnPlay.visibility = View.VISIBLE
@@ -175,7 +175,7 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, SpinWheelFragme
     private fun setSelectionOnCard(spinWheelRotateResponseDetails: SpinWheelRotateResponseDetails) {
 
         mViewBinding!!.containerSpinWheelRewards.visibility = View.VISIBLE
-        mViewBinding!!.containerSpinWheelDefaultBanner.visibility = View.INVISIBLE
+        mViewBinding!!.ivBannerSpinWheel.visibility = View.INVISIBLE
 
         mViewBinding!!.lottieRewardConfetti.visibility = View.VISIBLE
         mViewBinding!!.lottieRewardConfetti.playAnimation()

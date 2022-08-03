@@ -69,32 +69,56 @@ class MultipleJackpotsFragment :
         multipleJackpotVM.state.observe(viewLifecycleOwner) {
             handleState(it)
         }
+        multipleJackpotVM.stateMynts.observe(viewLifecycleOwner) {
+            handleStateMynts(it)
+        }
+        multipleJackpotVM.stateCash.observe(viewLifecycleOwner) {
+            handleStateCash(it)
+        }
+    }
+
+    private fun handleStateCash(it: MultipleJackpotFragmentVM.CashState?) {
+        when (it) {
+            is MultipleJackpotFragmentVM.CashState.Success -> {
+                mViewBinding?.loadingCash?.clearAnimation()
+                mViewBinding?.loadingCash?.visibility = View.INVISIBLE
+                mViewBinding?.tvMultipleJackpotsCashCount?.text = String.format(
+                    getString(R.string.arcade_cash_value),
+                    Utility.convertToRs(it.totalCash.toString())
+                )
+            }
+            MultipleJackpotFragmentVM.CashState.Error -> {
+
+            }
+            MultipleJackpotFragmentVM.CashState.Loading -> {
+
+            }
+        }
+    }
+
+    private fun handleStateMynts(it: MultipleJackpotFragmentVM.MyntsState?) {
+        when (it) {
+            is MultipleJackpotFragmentVM.MyntsState.Success -> {
+                if (it.remainingMynts != null) {
+                    mViewBinding?.loadingMynts?.clearAnimation()
+                    mViewBinding?.loadingMynts?.visibility = View.INVISIBLE
+                    mViewBinding?.tvMultipleJackpotsMyntsCount?.text =
+                        String.format("%.0f", it.remainingMynts)
+                }
+            }
+            MultipleJackpotFragmentVM.MyntsState.Error -> {
+
+            }
+            MultipleJackpotFragmentVM.MyntsState.Loading -> {
+
+            }
+        }
     }
 
     private fun handleState(it: MultipleJackpotFragmentVM.MultipleJackpotsState?) {
         when (it) {
             is MultipleJackpotFragmentVM.MultipleJackpotsState.Error -> {
 
-            }
-
-            is MultipleJackpotFragmentVM.MultipleJackpotsState.MyntsSuccess -> {
-                if (it.remainingMynts != null) {
-                    mViewBinding?.loadingMynts?.clearAnimation()
-                    mViewBinding?.loadingMynts?.visibility = View.INVISIBLE
-
-                    mViewBinding?.tvMultipleJackpotsMyntsCount?.text =
-                        String.format("%.0f", it.remainingMynts)
-                }
-            }
-
-            is MultipleJackpotFragmentVM.MultipleJackpotsState.CashSuccess -> {
-                mViewBinding?.loadingCash?.clearAnimation()
-                mViewBinding?.loadingCash?.visibility = View.INVISIBLE
-
-                mViewBinding?.tvMultipleJackpotsCashCount?.text = String.format(
-                    getString(R.string.arcade_cash_value),
-                    Utility.convertToRs(it.totalCash.toString())
-                )
             }
 
             is MultipleJackpotFragmentVM.MultipleJackpotsState.Success -> {

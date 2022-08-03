@@ -110,7 +110,7 @@ class RotatingTreasureFragment :
                     mViewBinding!!.lottieRotatingVP.toInvisible()
 
                     mViewBinding!!.containerRotatingTreasureRewards.visibility = View.INVISIBLE
-                    mViewBinding!!.containerRotatingDefaultBanner.visibility = View.VISIBLE
+                    mViewBinding!!.ivBannerRotatingTreasures.visibility = View.VISIBLE
 
                     mViewBinding!!.ivBtnPlayAnimation.visibility = View.INVISIBLE
                     mViewBinding!!.progressBtnPlay.visibility = View.VISIBLE
@@ -132,7 +132,7 @@ class RotatingTreasureFragment :
                 mViewBinding!!.lottieRotatingVP.toInvisible()
 
                 mViewBinding!!.containerRotatingTreasureRewards.visibility = View.INVISIBLE
-                mViewBinding!!.containerRotatingDefaultBanner.visibility = View.VISIBLE
+                mViewBinding!!.ivBannerRotatingTreasures.visibility = View.VISIBLE
 
                 mViewBinding!!.ivBtnPlayAnimation.visibility = View.INVISIBLE
                 mViewBinding!!.progressBtnPlay.visibility = View.VISIBLE
@@ -359,7 +359,7 @@ class RotatingTreasureFragment :
 //        mViewBinding!!.progressBtnPlay.visibility = View.INVISIBLE
 
         mViewBinding!!.containerRotatingTreasureRewards.visibility = View.VISIBLE
-        mViewBinding!!.containerRotatingDefaultBanner.visibility = View.INVISIBLE
+        mViewBinding!!.ivBannerRotatingTreasures.visibility = View.INVISIBLE
 
         mViewBinding!!.lottieRewardConfetti.visibility = View.VISIBLE
         mViewBinding!!.lottieRewardConfetti.playAnimation()
@@ -533,7 +533,6 @@ class RotatingTreasureFragment :
                     it.treasureBoxItem.successResourceId,
                     mViewBinding!!.ivBannerRotatingTreasures
                 )
-
                 rotatingTreasureVM.myntsDisplay = it.treasureBoxItem.appDisplayText?.toInt()
 
                 mViewBinding?.loadingBurnMynts?.clearAnimation()

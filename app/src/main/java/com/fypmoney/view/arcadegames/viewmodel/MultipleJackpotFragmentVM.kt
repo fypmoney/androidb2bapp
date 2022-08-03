@@ -24,6 +24,14 @@ class MultipleJackpotFragmentVM(application: Application) : BaseViewModel(applic
         get() = _state
     private val _state = MutableLiveData<MultipleJackpotsState>()
 
+    val stateMynts: LiveData<MyntsState>
+        get() = _stateMynts
+    private val _stateMynts = MutableLiveData<MyntsState>()
+
+    val stateCash: LiveData<CashState>
+        get() = _stateCash
+    private val _stateCash = MutableLiveData<CashState>()
+
     init {
         callRewardSummary()
         callTotalRewardsEarnings()
@@ -78,7 +86,9 @@ class MultipleJackpotFragmentVM(application: Application) : BaseViewModel(applic
                     totalRewardsResponse::class.java
                 )
 
-                _state.value = MultipleJackpotsState.CashSuccess(array.amount)
+                _stateCash.value = CashState.Success(array.amount)
+
+
 
             }
 
@@ -89,7 +99,10 @@ class MultipleJackpotFragmentVM(application: Application) : BaseViewModel(applic
                     json.get("data").toString(),
                     RewardPointsSummaryResponse::class.java
                 )
-                _state.value = MultipleJackpotsState.MyntsSuccess(array.remainingPoints)
+
+                _stateMynts.value = MyntsState.Success(array.remainingPoints)
+
+
 
             }
 
@@ -110,10 +123,19 @@ class MultipleJackpotFragmentVM(application: Application) : BaseViewModel(applic
             val listOfJackpotDetailsItem: List<JackpotDetailsItem?>?,
             val totalTickets: Int?
         ) : MultipleJackpotsState()
-
-        data class CashSuccess(val totalCash: Int?) : MultipleJackpotsState()
-        data class MyntsSuccess(val remainingMynts: Float?) : MultipleJackpotsState()
         object Error : MultipleJackpotsState()
+    }
+
+    sealed class CashState{
+        object Loading : CashState()
+        object Error : CashState()
+        data class Success(val totalCash: Int?) : CashState()
+    }
+
+    sealed class MyntsState{
+        object Loading : MyntsState()
+        object Error : MyntsState()
+        data class Success(val remainingMynts: Float?) : MyntsState()
     }
 
 }

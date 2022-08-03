@@ -74,6 +74,7 @@
     <dimen name="dp11">11dp</dimen>
     <dimen name="dp7">7dp</dimen>
     <dimen name="dp31">31dp</dimen>
+    <dimen name="dp210">210dp</dimen>
 
 
 </resources>
