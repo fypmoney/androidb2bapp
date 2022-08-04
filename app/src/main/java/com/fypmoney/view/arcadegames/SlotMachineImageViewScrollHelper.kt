@@ -2,9 +2,8 @@ package com.fypmoney.view.arcadegames
 
 import android.animation.Animator
 import android.content.Context
-import android.os.Handler
-import android.os.Looper
 import android.util.AttributeSet
+import android.view.HapticFeedbackConstants
 import android.view.LayoutInflater
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
@@ -12,7 +11,7 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import com.fypmoney.R
 import com.fypmoney.databinding.ViewSlotMachineImageScrollingBinding
-import com.fypmoney.view.arcadegames.helper.Common.NO_OF_IMAGES
+import com.fypmoney.view.arcadegames.helper.Utils.NO_OF_IMAGES
 import com.fypmoney.view.arcadegames.helper.Utils
 import kotlinx.android.synthetic.main.view_slot_machine_image_scrolling.view.*
 
@@ -66,19 +65,12 @@ class SlotMachineImageViewScrollHelper(context: Context, attributeSet: Attribute
                     currentImage.translationY = 0f
 
                     if (oldValue != num_rotate) {//if still have rotate
-//                        if (oldValue == num_rotate - 1){
-//                            Handler(Looper.getMainLooper()).postDelayed({
-//                                setValueRandom(image, num_rotate)
-//                                oldValue++
-//                            }, 1000)
-//                        }else{
-                            setValueRandom(image, num_rotate)
-                            oldValue++
-//                        }
+                        setValueRandom(image, num_rotate)
+                        oldValue++
                     } else {
                         lastResult = 0
                         oldValue = 0
-                        setImage(nextImage, image)
+                        setImage(nextImage, image % NO_OF_IMAGES)
                         eventEnd.eventEnd(image % NO_OF_IMAGES, currentImage)
                     }
                 }
@@ -92,6 +84,12 @@ class SlotMachineImageViewScrollHelper(context: Context, attributeSet: Attribute
                 }
 
             }).start()
+
+        nextImage.performHapticFeedback(
+            HapticFeedbackConstants.KEYBOARD_TAP,
+            HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING
+        )
+
     }
 
     private fun setImage(img: ImageView?, value: Int) {

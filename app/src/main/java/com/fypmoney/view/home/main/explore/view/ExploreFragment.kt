@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navOptions
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fypmoney.BR
 import com.fypmoney.R
@@ -268,19 +269,53 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
                         findNavController().navigate(Uri.parse("fypmoney://creategiftcard/${it.redirectionResource}"))
                     }
                     AppConstants.LEADERBOARD -> {
-                        findNavController().navigate(Uri.parse("https://www.fypmoney.in/leaderboard/${it.redirectionResource}"))
+                        findNavController().navigate(Uri.parse("https://www.fypmoney.in/leaderboard/${it.redirectionResource}"),
+                            navOptions {
+                                anim {
+                                    popEnter = R.anim.slide_in_left
+                                    popExit = R.anim.slide_out_righ
+                                    enter = R.anim.slide_in_right
+                                    exit = R.anim.slide_out_left
+                                }
+                            })
                     }
                     "ARCADE"-> {
                         val type = it.rfu1?.let { rfu->it.redirectionResource?.let { it1 -> checkTheArcadeType(arcadeType = rfu, productCode = it1) } }
                         when(type){
                             ArcadeType.NOTypeFound -> TODO()
                             is ArcadeType.SCRATCH_CARD -> TODO()
-                            is ArcadeType.SLOT -> TODO()
+                            is ArcadeType.SLOT -> {
+                                findNavController().navigate(Uri.parse("https://www.fypmoney.in/slot_machine/${type.productCode}/${null}"),
+                                    navOptions {
+                                    anim {
+                                        popEnter = R.anim.slide_in_left
+                                        popExit = R.anim.slide_out_righ
+                                        enter = R.anim.slide_in_right
+                                        exit = R.anim.slide_out_left
+                                    }
+                                })
+                            }
                             is ArcadeType.SPIN_WHEEL -> {
-                                findNavController().navigate(Uri.parse("https://www.fypmoney.in/spinwheel/${type.productCode}/${null}"))
+                                findNavController().navigate(Uri.parse("https://www.fypmoney.in/spinwheel/${type.productCode}/${null}"),
+                                    navOptions {
+                                        anim {
+                                            popEnter = R.anim.slide_in_left
+                                            popExit = R.anim.slide_out_righ
+                                            enter = R.anim.slide_in_right
+                                            exit = R.anim.slide_out_left
+                                        }
+                                    })
                             }
                             is ArcadeType.TREASURE_BOX -> {
-                                findNavController().navigate(Uri.parse("https://www.fypmoney.in/rotating_treasure/${type.productCode}/${null}"))
+                                findNavController().navigate(Uri.parse("https://www.fypmoney.in/rotating_treasure/${type.productCode}/${null}"),
+                                    navOptions {
+                                        anim {
+                                            popEnter = R.anim.slide_in_left
+                                            popExit = R.anim.slide_out_righ
+                                            enter = R.anim.slide_in_right
+                                            exit = R.anim.slide_out_left
+                                        }
+                                    })
                             }
                             null -> TODO()
                         }

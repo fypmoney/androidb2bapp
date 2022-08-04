@@ -17,6 +17,7 @@ data class aRewardProductResponse(
     val scratchResourceShow: String? = null,
     val productType: String? = null,
     val sectionId: Int? = null,
+    val sectionCode: String? = null,
     val appDisplayTextColor: String? = null,
     val backgroundColor: String? = null,
     val noOfJackpotTicket: Int? = null

@@ -120,6 +120,18 @@ class RewardHistoryFragment :
                             }
                         })
                     }
+                    AppConstants.PRODUCT_SLOT_MACHINE -> {
+                        val productId = historyItem.orderNumber.toString()
+                        val productCode = historyItem.productCode.toString()
+                        findNavController().navigate(Uri.parse("https://www.fypmoney.in/slot_machine/${productCode}/${productId}"), navOptions {
+                            anim {
+                                popEnter = R.anim.slide_in_left
+                                popExit = R.anim.slide_out_righ
+                                enter = R.anim.slide_in_right
+                                exit = R.anim.slide_out_left
+                            }
+                        })
+                    }
                     else -> {
                         mViewModel?.callProductsDetailsApi(historyItem.orderNumber)
                     }

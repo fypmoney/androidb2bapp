@@ -895,6 +895,25 @@
         android:id="@+id/navigation_slot_machine"
         android:name="com.fypmoney.view.arcadegames.ui.SlotMachineFragment"
         android:label="Slot Machine Fragment"
-        tools:layout="@layout/fragment_slot_machine" />
+        tools:layout="@layout/fragment_slot_machine" >
+
+        <argument
+            android:name="productCode"
+            android:defaultValue=""
+            app:argType="string"
+            app:nullable="false" />
+
+        <argument
+            android:name="orderId"
+            android:defaultValue=""
+            app:argType="string"
+            app:nullable="true" />
+
+        <deepLink
+            android:id="@+id/arcade_slot_machine_deep_link"
+            android:autoVerify="true"
+            app:uri="https://www.fypmoney.in/slot_machine/{productCode}/{orderId}" />
+
+    </fragment>
 
 </navigation>

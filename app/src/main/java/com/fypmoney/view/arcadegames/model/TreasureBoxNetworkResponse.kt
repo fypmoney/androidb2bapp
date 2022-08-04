@@ -20,7 +20,7 @@ data class SectionListItem1(
     val sectionValue: String? = null,
 
     @field:SerializedName("sectionCode")
-    val sectionCode: Any? = null,
+    val sectionCode: String? = null,
 
     @field:SerializedName("colorCode")
     val colorCode: Any? = null,

@@ -10,6 +10,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.navOptions
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fypmoney.BR
 import com.fypmoney.R
@@ -38,7 +39,8 @@ import com.fypmoney.view.storeoffers.model.offerDetailResponse
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
 import kotlinx.android.synthetic.main.toolbar.*
 
-class SectionExploreFragment : BaseFragment<FragmentSectionExploreBinding,SectionExploreFragmentVM>(),
+class SectionExploreFragment :
+    BaseFragment<FragmentSectionExploreBinding, SectionExploreFragmentVM>(),
     ExploreAdapter.OnFeedItemClickListener {
 
     private val args: SectionExploreFragmentArgs by navArgs()
@@ -53,9 +55,6 @@ class SectionExploreFragment : BaseFragment<FragmentSectionExploreBinding,Sectio
     }
 
 
-
-
-
     override fun onTryAgainClicked() {
 
     }
@@ -65,7 +64,7 @@ class SectionExploreFragment : BaseFragment<FragmentSectionExploreBinding,Sectio
      *
      * @return variable id
      */
-    override fun getBindingVariable(): Int  = BR.viewModel
+    override fun getBindingVariable(): Int = BR.viewModel
 
     /**
      * @return layout resource id
@@ -84,6 +83,7 @@ class SectionExploreFragment : BaseFragment<FragmentSectionExploreBinding,Sectio
         sectionExploreFragmentVM.sectionContent.value = args.sectionExploreItem
         sectionExploreFragmentVM.sectionName = args.sectionExploreName
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = getViewDataBinding()
@@ -91,7 +91,7 @@ class SectionExploreFragment : BaseFragment<FragmentSectionExploreBinding,Sectio
         setToolbarAndTitle(
             context = requireContext(),
             toolbar = toolbar,
-            isBackArrowVisible = true, toolbarTitle = sectionExploreFragmentVM.sectionName?:"",
+            isBackArrowVisible = true, toolbarTitle = sectionExploreFragmentVM.sectionName ?: "",
             titleColor = Color.WHITE,
             backArrowTint = Color.WHITE
         )
@@ -181,7 +181,11 @@ class SectionExploreFragment : BaseFragment<FragmentSectionExploreBinding,Sectio
             }
         }
         val exploreClickListener2 = object : ExploreItemClickListener {
-            override fun onItemClicked(position: Int, it: SectionContentItem,exploreContentResponse:ExploreContentResponse?) {
+            override fun onItemClicked(
+                position: Int,
+                it: SectionContentItem,
+                exploreContentResponse: ExploreContentResponse?
+            ) {
 
                 when (it.redirectionType) {
                     AppConstants.EXPLORE_IN_APP -> {
@@ -207,7 +211,10 @@ class SectionExploreFragment : BaseFragment<FragmentSectionExploreBinding,Sectio
                                     findNavController().navigate(Uri.parse("fypmoney://creategiftcard/${it.redirectionResource}"))
                                 }
                                 else -> {
-                                    Utility.deeplinkRedirection(redirectionResources, requireContext())
+                                    Utility.deeplinkRedirection(
+                                        redirectionResources,
+                                        requireContext()
+                                    )
                                 }
                             }
 
@@ -276,9 +283,10 @@ class SectionExploreFragment : BaseFragment<FragmentSectionExploreBinding,Sectio
                         }
 
                     }
-                    AppConstants.EXPLORE_SECTION_EXPLORE->{
+                    AppConstants.EXPLORE_SECTION_EXPLORE -> {
                         val directions = exploreContentResponse?.sectionDisplayText?.let { it1 ->
-                            ExploreFragmentDirections.actionExploreSectionExplore(it,
+                            ExploreFragmentDirections.actionExploreSectionExplore(
+                                it,
                                 it1
                             )
                         }
@@ -289,23 +297,59 @@ class SectionExploreFragment : BaseFragment<FragmentSectionExploreBinding,Sectio
                     }
 
                     AppConstants.LEADERBOARD -> {
-                        findNavController().navigate(Uri.parse("https://www.fypmoney.in/leaderboard/${it.redirectionResource}"))
+                        findNavController().navigate(Uri.parse("https://www.fypmoney.in/leaderboard/${it.redirectionResource}"),
+                            navOptions {
+                                anim {
+                                    popEnter = R.anim.slide_in_left
+                                    popExit = R.anim.slide_out_righ
+                                    enter = R.anim.slide_in_right
+                                    exit = R.anim.slide_out_left
+                                }
+                            })
                     }
-                    "ARCADE"-> {
-                        when(val type = it.rfu1?.let { rfu->it.redirectionResource?.let { it1 ->
-                            checkTheArcadeType(
-                                arcadeType = rfu,
-                                productCode = it1
-                            )
-                        } }){
+                    "ARCADE" -> {
+                        when (val type = it.rfu1?.let { rfu ->
+                            it.redirectionResource?.let { it1 ->
+                                checkTheArcadeType(
+                                    arcadeType = rfu,
+                                    productCode = it1
+                                )
+                            }
+                        }) {
                             ArcadeType.NOTypeFound -> TODO()
                             is ArcadeType.SCRATCH_CARD -> TODO()
-                            is ArcadeType.SLOT -> TODO()
+                            is ArcadeType.SLOT -> {
+                                findNavController().navigate(Uri.parse("https://www.fypmoney.in/slot_machine/${type.productCode}/${null}"),
+                                    navOptions {
+                                        anim {
+                                            popEnter = R.anim.slide_in_left
+                                            popExit = R.anim.slide_out_righ
+                                            enter = R.anim.slide_in_right
+                                            exit = R.anim.slide_out_left
+                                        }
+                                    })
+                            }
                             is ArcadeType.SPIN_WHEEL -> {
-                                findNavController().navigate(Uri.parse("https://www.fypmoney.in/spinwheel/${type.productCode}/${null}"))
+                                findNavController().navigate(Uri.parse("https://www.fypmoney.in/spinwheel/${type.productCode}/${null}"),
+                                    navOptions {
+                                        anim {
+                                            popEnter = R.anim.slide_in_left
+                                            popExit = R.anim.slide_out_righ
+                                            enter = R.anim.slide_in_right
+                                            exit = R.anim.slide_out_left
+                                        }
+                                    })
                             }
                             is ArcadeType.TREASURE_BOX -> {
-                                findNavController().navigate(Uri.parse("https://www.fypmoney.in/rotating_treasure/${type.productCode}/${null}"))
+                                findNavController().navigate(Uri.parse("https://www.fypmoney.in/rotating_treasure/${type.productCode}/${null}"),
+                                    navOptions {
+                                        anim {
+                                            popEnter = R.anim.slide_in_left
+                                            popExit = R.anim.slide_out_righ
+                                            enter = R.anim.slide_in_right
+                                            exit = R.anim.slide_out_left
+                                        }
+                                    })
                             }
                             null -> TODO()
                         }
@@ -324,8 +368,6 @@ class SectionExploreFragment : BaseFragment<FragmentSectionExploreBinding,Sectio
         )
         root.rvExplore.adapter = typeAdapter
     }
-
-
 
 
     private fun intentToActivitytoBlog(

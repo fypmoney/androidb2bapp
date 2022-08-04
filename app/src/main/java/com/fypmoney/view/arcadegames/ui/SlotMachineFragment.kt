@@ -1,14 +1,13 @@
 package com.fypmoney.view.arcadegames.ui
 
 import android.animation.ValueAnimator
-import android.app.Dialog
-import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.media.MediaPlayer
-import android.os.*
+import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -16,9 +15,8 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
-import com.fyp.trackr.models.TrackrEvent
-import com.fyp.trackr.models.trackr
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
@@ -30,15 +28,16 @@ import com.fypmoney.model.SpinWheelRotateResponseDetails
 import com.fypmoney.util.Utility
 import com.fypmoney.view.arcadegames.SlotMachineImageEventEnd
 import com.fypmoney.view.arcadegames.viewmodel.SlotMachineFragmentVM
-import kotlinx.android.synthetic.main.dialog_rewards_insufficient.*
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.android.synthetic.main.view_slot_machine_image_scrolling.view.*
 
 class SlotMachineFragment : BaseFragment<FragmentSlotMachineBinding, SlotMachineFragmentVM>(),
     SlotMachineImageEventEnd {
 
     private val slotMachineFragmentVM by viewModels<SlotMachineFragmentVM> { defaultViewModelProviderFactory }
     private lateinit var binding: FragmentSlotMachineBinding
-    private var dialogInsufficientMynts: Dialog? = null
+    private val navArgs by navArgs<SlotMachineFragmentArgs>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -59,55 +58,73 @@ class SlotMachineFragment : BaseFragment<FragmentSlotMachineBinding, SlotMachine
             backArrowTint = Color.WHITE
         )
 
+        slotMachineFragmentVM.productCode = navArgs.productCode
+        slotMachineFragmentVM.productId = navArgs.orderId.toString()
+
         Glide.with(this).load(R.drawable.coin_updated).into(binding.ivSlotMachineMyntsAnim)
         Glide.with(this).load(R.drawable.ticket_g).into(binding.ivSlotMachineTicketAnim)
         Glide.with(this).load(R.drawable.cash_g).into(binding.ivSlotMachineCashAnim)
-
-        dialogInsufficientMynts = Dialog(this.requireContext())
 
         setBackgrounds()
 
         setObserver()
 
-        slotMachineFragmentVM.callGetProductDataApi("SLOT_MACHINE_100")
+        slotMachineFragmentVM.callGetProductDataApi(slotMachineFragmentVM.productCode)
 
         binding.ivBtnPlayAnimation.setOnClickListener {
-            if (slotMachineFragmentVM.remainFrequency.value!! > 0) {
+
+            if (slotMachineFragmentVM.productId == null || slotMachineFragmentVM.productId == "null") {
+
+                if (slotMachineFragmentVM.remainFrequency.value!! > 0) {
+
+                    slotMachineFragmentVM.isSlotMachineStarted = true
+
+                    binding.containerSlotMachineRewards.toInvisible()
+                    binding.containerSlotMachineDefaultBanner.toVisible()
+
+                    binding.ivBtnPlayAnimation.toInvisible()
+                    binding.progressBtnPlay.toVisible()
+
+                    setViewVisibility(binding.ivSlotMachineMyntsAnim, binding.ivSlotMachineMynts)
+
+                    slotMachineFragmentVM.callMyntsBurnApi(slotMachineFragmentVM.productCode)
+
+                } else {
+                    val limitOverBottomSheet = LimitOverBottomSheet()
+                    limitOverBottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+                    limitOverBottomSheet.show(childFragmentManager, "LimitOverBottomSheet")
+                }
+            } else {
+
+                slotMachineFragmentVM.isSlotMachineStarted = true
+
                 binding.containerSlotMachineRewards.toInvisible()
                 binding.containerSlotMachineDefaultBanner.toVisible()
 
                 binding.ivBtnPlayAnimation.toInvisible()
                 binding.progressBtnPlay.toVisible()
 
-                vibrateDevice()
+                binding.tvSlotMachineAttemptsLeft.toInvisible()
 
-                setViewVisibility(
-                    binding.ivSlotMachineMyntsAnim,
-                    binding.ivSlotMachineMynts
-                )
-
-                //call mynts burn api
-
-                slotMachineFragmentVM.callMyntsBurnApi("SLOT_MACHINE_100")
-
-            } else {
-                val limitOverBottomSheet = LimitOverBottomSheet()
-                limitOverBottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
-                limitOverBottomSheet.show(childFragmentManager, "LimitOverBottomSheet")
+                slotMachineFragmentVM.callProductsDetailsApi(slotMachineFragmentVM.productId)
             }
         }
 
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    if (slotMachineFragmentVM.isArcadeIsPlayed) {
-                        findNavController().previousBackStackEntry?.savedStateHandle?.set(
-                            "arcade_is_played",
-                            true
-                        )
-                        findNavController().popBackStack()
+                    if (slotMachineFragmentVM.isSlotMachineStarted) {
+                        Utility.showToast("Your reward is being processed")
                     } else {
-                        findNavController().navigateUp()
+                        if (slotMachineFragmentVM.isArcadeIsPlayed) {
+                            findNavController().previousBackStackEntry?.savedStateHandle?.set(
+                                "arcade_is_played",
+                                true
+                            )
+                            findNavController().popBackStack()
+                        } else {
+                            findNavController().navigateUp()
+                        }
                     }
                 }
             }
@@ -180,23 +197,9 @@ class SlotMachineFragment : BaseFragment<FragmentSlotMachineBinding, SlotMachine
         }
     }
 
-    private fun vibrateDevice() {
-        val vibrationEffect: VibrationEffect
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val vibrator = this.context?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-            vibrationEffect = VibrationEffect.createOneShot(1000, VibrationEffect.DEFAULT_AMPLITUDE)
-            vibrator.cancel()
-            vibrator.vibrate(vibrationEffect)
-        }
-
-    }
-
     private fun setObserver() {
 
-        slotMachineFragmentVM.remainFrequency.observe(
-            viewLifecycleOwner
-        ) {
+        slotMachineFragmentVM.remainFrequency.observe(viewLifecycleOwner) {
             binding.tvSlotMachineAttemptsLeft.text = String.format(
                 getString(R.string.attempts_left),
                 slotMachineFragmentVM.remainFrequency.value, slotMachineFragmentVM.frequency
@@ -206,42 +209,94 @@ class SlotMachineFragment : BaseFragment<FragmentSlotMachineBinding, SlotMachine
         slotMachineFragmentVM.state.observe(viewLifecycleOwner) {
             handleState(it)
         }
+
+        slotMachineFragmentVM.stateProductDetails.observe(viewLifecycleOwner) {
+            handleProductState(it)
+        }
+
+        slotMachineFragmentVM.stateMynts.observe(viewLifecycleOwner) {
+            handleMyntsState(it)
+        }
+
+        slotMachineFragmentVM.stateCash.observe(viewLifecycleOwner) {
+            handleCashState(it)
+        }
+
+        slotMachineFragmentVM.stateTickets.observe(viewLifecycleOwner) {
+            handleTicketsState(it)
+        }
+
+        slotMachineFragmentVM.stateMyntsBurn.observe(viewLifecycleOwner) {
+            handleMyntsBurnState(it)
+        }
+
+        slotMachineFragmentVM.statePlayOrder.observe(viewLifecycleOwner) {
+            handlePlayOrderState(it)
+        }
+
+    }
+
+    private fun handleProductState(it: SlotMachineFragmentVM.SlotMachineProductResponseState?) {
+        when (it) {
+            is SlotMachineFragmentVM.SlotMachineProductResponseState.Success -> {
+
+                val sApiShowData = it.aRewardProductResponse.sectionCode?.toCharArray()
+
+                if (sApiShowData != null) {
+
+                    arcadeSounds("SLOT")
+
+                    slotMachineFragmentVM.callPlayOrderApi(slotMachineFragmentVM.productId)
+
+                    binding.image.currentImage.toVisible()
+                    binding.image1.currentImage.toVisible()
+                    binding.image2.currentImage.toVisible()
+
+                    binding.image.setValueRandom(
+                        sApiShowData[0].toInt(), (20..23).random()
+                    )
+                    binding.image1.setValueRandom(
+                        sApiShowData[1].toInt(), (23..27).random()
+                    )
+                    binding.image2.setValueRandom(
+                        sApiShowData[2].toInt(), (27..30).random()
+                    )
+                } else {
+                    binding.ivBtnPlayAnimation.toVisible()
+                    binding.progressBtnPlay.toInvisible()
+                    Utility.showToast("Please try after sometime")
+                }
+
+            }
+
+            SlotMachineFragmentVM.SlotMachineProductResponseState.Loading -> {}
+
+            is SlotMachineFragmentVM.SlotMachineProductResponseState.Error -> {
+
+                binding.ivBtnPlayAnimation.visibility = View.VISIBLE
+                binding.progressBtnPlay.visibility = View.INVISIBLE
+
+                slotMachineFragmentVM.isSlotMachineStarted = false
+
+                setViewVisibility(
+                    binding.ivSlotMachineMynts,
+                    binding.ivSlotMachineMyntsAnim
+                )
+                setViewVisibility(
+                    binding.ivSlotMachineCash,
+                    binding.ivSlotMachineCashAnim
+                )
+                setViewVisibility(
+                    binding.ivSlotMachineTicket,
+                    binding.ivSlotMachineTicketAnim
+                )
+            }
+
+        }
     }
 
     private fun handleState(it: SlotMachineFragmentVM.SlotMachineState?) {
         when (it) {
-
-            is SlotMachineFragmentVM.SlotMachineState.MyntsSuccess -> {
-                if (it.remainingMynts != null) {
-                    binding.loadingMynts.clearAnimation()
-                    binding.loadingMynts.visibility = View.INVISIBLE
-
-                    slotMachineFragmentVM.myntsCount = it.remainingMynts
-
-                    binding.tvSlotMachineMyntsCount.text =
-                        String.format("%.0f", it.remainingMynts)
-                }
-            }
-
-            is SlotMachineFragmentVM.SlotMachineState.TicketSuccess -> {
-                if (it.totalTickets != null) {
-                    binding.loadingTickets.clearAnimation()
-                    binding.loadingTickets.visibility = View.INVISIBLE
-
-                    binding.tvSlotMachineTicketsCount.text = "${it.totalTickets}"
-                }
-            }
-
-            is SlotMachineFragmentVM.SlotMachineState.CashSuccess -> {
-                binding.loadingCash.clearAnimation()
-                binding.loadingCash.visibility = View.INVISIBLE
-
-                binding.tvSlotMachineCashCount.text = String.format(
-                    getString(R.string.arcade_cash_value),
-                    Utility.convertToRs(it.totalCash.toString())
-                )
-            }
-
             is SlotMachineFragmentVM.SlotMachineState.Success -> {
 
                 binding.loadingBurnMynts.clearAnimation()
@@ -255,7 +310,12 @@ class SlotMachineFragment : BaseFragment<FragmentSlotMachineBinding, SlotMachine
                 binding.shimmerLayoutSpinWheel.toInvisible()
                 binding.frameBtnContainer.toVisible()
                 binding.luckyLayout.toVisible()
-                binding.tvSlotMachineAttemptsLeft.toVisible()
+
+                if (slotMachineFragmentVM.productId == "null")
+                    binding.tvSlotMachineAttemptsLeft.toVisible()
+                else
+                    binding.tvSlotMachineAttemptsLeft.toInvisible()
+
                 binding.ivSlotMachineEllipse.toVisible()
 
                 Utility.setImageUsingGlideWithShimmerPlaceholderWithoutNull(
@@ -281,105 +341,9 @@ class SlotMachineFragment : BaseFragment<FragmentSlotMachineBinding, SlotMachine
                     }
             }
 
-            is SlotMachineFragmentVM.SlotMachineState.MyntsBurnSuccess -> {
+            is SlotMachineFragmentVM.SlotMachineState.Error -> {
+                slotMachineFragmentVM.isSlotMachineStarted = false
 
-                slotMachineFragmentVM.remainFrequency.value =
-                    slotMachineFragmentVM.remainFrequency.value?.minus(1)
-
-                decreaseCountAnimation(
-                    binding.tvSlotMachineMyntsCount,
-                    slotMachineFragmentVM.myntsDisplay!!
-                )
-
-                slotMachineFragmentVM.callPlayOrderApi(it.coinsBurnedResponse.orderNo)
-
-                val sApiShowData =
-                    if (it.coinsBurnedResponse.sectionCode == null) {
-                        "121".toCharArray()
-                    } else {
-                        it.coinsBurnedResponse.sectionCode?.toCharArray()
-                    }
-
-                Toast.makeText(context, "Code ${sApiShowData.toString()}", Toast.LENGTH_SHORT)
-                    .show()
-                if (sApiShowData != null) {
-                    sApiShowData[0].let { it1 ->
-                        it1.let { it2 ->
-                            binding.image.setValueRandom(
-                                it2.toInt(), (20..28).random()
-                            )
-                        }
-                    }
-
-                    sApiShowData[1].let { it1 ->
-                        it1.let { it2 ->
-                            binding.image1.setValueRandom(
-                                it2.toInt(), (20..28).random()
-                            )
-                        }
-                    }
-
-                    sApiShowData[2].let { it1 ->
-                        it1.let { it2 ->
-                            binding.image2.setValueRandom(
-                                it2.toInt(), (20..28).random()
-                            )
-                        }
-                    }
-                }
-
-            }
-
-            is SlotMachineFragmentVM.SlotMachineState.PlayOrderSuccess -> {
-
-                slotMachineFragmentVM.spinWheelRotateResponseDetails = it.spinWheelResponseDetails
-
-//                val sApiShowData =
-//                    if (it.spinWheelResponseDetails.sectionCode == null) {
-//                        "121".toCharArray()
-//                    } else {
-//                        it.spinWheelResponseDetails.sectionCode?.toCharArray()
-//                    }
-//
-//                Toast.makeText(context, "Code ${sApiShowData.toString()}", Toast.LENGTH_SHORT)
-//                    .show()
-//                if (sApiShowData != null) {
-//                    sApiShowData[0].let { it1 ->
-//                        it1.let { it2 ->
-//                            mViewBinding?.image?.setValueRandom(
-//                                it2.toInt(), (20..28).random()
-//                            )
-//                        }
-//                    }
-//
-//                    sApiShowData[1].let { it1 ->
-//                        it1.let { it2 ->
-//                            mViewBinding?.image1?.setValueRandom(
-//                                it2.toInt(), (20..28).random()
-//                            )
-//                        }
-//                    }
-//
-//                    sApiShowData[2].let { it1 ->
-//                        it1.let { it2 ->
-//                            mViewBinding?.image2?.setValueRandom(
-//                                it2.toInt(), (20..28).random()
-//                            )
-//                        }
-//                    }
-//                }
-
-            }
-
-            SlotMachineFragmentVM.SlotMachineState.Error -> {
-//                if (list.errorCode == "PKT_2051") {
-//                    callInsufficientDialog(list.msg)
-//                    mViewBinding!!.ivBtnPlayAnimation.visibility = View.VISIBLE
-//                    mViewBinding!!.progressBtnPlay.visibility = View.INVISIBLE
-//                } else {
-//                    mViewBinding!!.ivBtnPlayAnimation.visibility = View.VISIBLE
-//                    mViewBinding!!.progressBtnPlay.visibility = View.INVISIBLE
-//                }
                 setViewVisibility(
                     binding.ivSlotMachineMynts,
                     binding.ivSlotMachineMyntsAnim
@@ -393,12 +357,229 @@ class SlotMachineFragment : BaseFragment<FragmentSlotMachineBinding, SlotMachine
                     binding.ivSlotMachineTicketAnim
                 )
             }
+
             SlotMachineFragmentVM.SlotMachineState.Loading -> {}
-            null -> {}
+        }
+    }
+
+    private fun handleMyntsBurnState(it: SlotMachineFragmentVM.MyntsBurnSuccessState?) {
+        when (it) {
+            SlotMachineFragmentVM.MyntsBurnSuccessState.Loading -> {}
+
+            is SlotMachineFragmentVM.MyntsBurnSuccessState.Error -> {
+                if (it.errorResponseInfo.errorCode == "PKT_2051") {
+                    slotMachineFragmentVM.callInsufficientDialog(
+                        it.errorResponseInfo.msg,
+                        this.requireContext()
+                    )
+                    binding.ivBtnPlayAnimation.visibility = View.VISIBLE
+                    binding.progressBtnPlay.visibility = View.INVISIBLE
+                } else {
+                    binding.ivBtnPlayAnimation.visibility = View.VISIBLE
+                    binding.progressBtnPlay.visibility = View.INVISIBLE
+                }
+
+                slotMachineFragmentVM.isSlotMachineStarted = false
+
+                setViewVisibility(
+                    binding.ivSlotMachineMynts,
+                    binding.ivSlotMachineMyntsAnim
+                )
+                setViewVisibility(
+                    binding.ivSlotMachineCash,
+                    binding.ivSlotMachineCashAnim
+                )
+                setViewVisibility(
+                    binding.ivSlotMachineTicket,
+                    binding.ivSlotMachineTicketAnim
+                )
+            }
+
+            is SlotMachineFragmentVM.MyntsBurnSuccessState.MyntsBurnSuccess -> {
+
+                val sApiShowData = it.coinsBurnedResponse.sectionCode?.toCharArray()
+
+                if (sApiShowData != null) {
+
+                    arcadeSounds("SLOT")
+
+                    slotMachineFragmentVM.remainFrequency.value =
+                        slotMachineFragmentVM.remainFrequency.value?.minus(1)
+
+                    decreaseCountAnimation(
+                        binding.tvSlotMachineMyntsCount,
+                        slotMachineFragmentVM.myntsDisplay!!
+                    )
+
+                    slotMachineFragmentVM.callPlayOrderApi(it.coinsBurnedResponse.orderNo)
+
+                    binding.image.currentImage.toVisible()
+                    binding.image1.currentImage.toVisible()
+                    binding.image2.currentImage.toVisible()
+
+                    binding.image.setValueRandom(
+                        sApiShowData[0].toInt(), (20..23).random()
+                    )
+                    binding.image1.setValueRandom(
+                        sApiShowData[1].toInt(), (23..27).random()
+                    )
+                    binding.image2.setValueRandom(
+                        sApiShowData[2].toInt(), (27..30).random()
+                    )
+                } else {
+                    binding.ivBtnPlayAnimation.toVisible()
+                    binding.progressBtnPlay.toInvisible()
+                    Utility.showToast("Please try after sometime")
+                }
+
+            }
+        }
+    }
+
+    private fun handlePlayOrderState(it: SlotMachineFragmentVM.PlayOrderSuccessState?) {
+        when (it) {
+            SlotMachineFragmentVM.PlayOrderSuccessState.Loading -> {}
+
+            is SlotMachineFragmentVM.PlayOrderSuccessState.Error -> {
+                binding.ivBtnPlayAnimation.visibility = View.VISIBLE
+                binding.progressBtnPlay.visibility = View.INVISIBLE
+
+                slotMachineFragmentVM.isSlotMachineStarted = false
+
+                setViewVisibility(
+                    binding.ivSlotMachineMynts,
+                    binding.ivSlotMachineMyntsAnim
+                )
+                setViewVisibility(
+                    binding.ivSlotMachineCash,
+                    binding.ivSlotMachineCashAnim
+                )
+                setViewVisibility(
+                    binding.ivSlotMachineTicket,
+                    binding.ivSlotMachineTicketAnim
+                )
+            }
+
+            is SlotMachineFragmentVM.PlayOrderSuccessState.PlayOrderSuccess -> {
+                slotMachineFragmentVM.spinWheelRotateResponseDetails = it.spinWheelResponseDetails
+            }
+        }
+    }
+
+    private fun handleMyntsState(it: SlotMachineFragmentVM.MyntsSuccessState?) {
+        when (it) {
+            is SlotMachineFragmentVM.MyntsSuccessState.MyntsSuccess -> {
+                if (it.remainingMynts != null) {
+
+                    binding.loadingMynts.clearAnimation()
+                    binding.loadingMynts.toInvisible()
+
+                    binding.tvSlotMachineMyntsCount.text =
+                        String.format("%.0f", it.remainingMynts)
+                }
+            }
+
+            is SlotMachineFragmentVM.MyntsSuccessState.Error -> {
+                binding.ivBtnPlayAnimation.visibility = View.VISIBLE
+                binding.progressBtnPlay.visibility = View.INVISIBLE
+
+                slotMachineFragmentVM.isSlotMachineStarted = false
+
+                setViewVisibility(
+                    binding.ivSlotMachineMynts,
+                    binding.ivSlotMachineMyntsAnim
+                )
+                setViewVisibility(
+                    binding.ivSlotMachineCash,
+                    binding.ivSlotMachineCashAnim
+                )
+                setViewVisibility(
+                    binding.ivSlotMachineTicket,
+                    binding.ivSlotMachineTicketAnim
+                )
+            }
+            SlotMachineFragmentVM.MyntsSuccessState.Loading -> {
+            }
+        }
+    }
+
+    private fun handleCashState(it: SlotMachineFragmentVM.CashSuccessState?) {
+        when (it) {
+            is SlotMachineFragmentVM.CashSuccessState.CashSuccess -> {
+                binding.loadingCash.clearAnimation()
+                binding.loadingCash.toInvisible()
+
+                binding.tvSlotMachineCashCount.text = String.format(
+                    getString(R.string.arcade_cash_value),
+                    Utility.convertToRs(it.totalCash?.toString())
+                )
+            }
+
+            is SlotMachineFragmentVM.CashSuccessState.Error -> {
+                binding.ivBtnPlayAnimation.visibility = View.VISIBLE
+                binding.progressBtnPlay.visibility = View.INVISIBLE
+
+                slotMachineFragmentVM.isSlotMachineStarted = false
+
+                setViewVisibility(
+                    binding.ivSlotMachineMynts,
+                    binding.ivSlotMachineMyntsAnim
+                )
+                setViewVisibility(
+                    binding.ivSlotMachineCash,
+                    binding.ivSlotMachineCashAnim
+                )
+                setViewVisibility(
+                    binding.ivSlotMachineTicket,
+                    binding.ivSlotMachineTicketAnim
+                )
+            }
+            SlotMachineFragmentVM.CashSuccessState.Loading -> {
+            }
+        }
+    }
+
+    private fun handleTicketsState(it: SlotMachineFragmentVM.TicketSuccessState?) {
+        when (it) {
+            is SlotMachineFragmentVM.TicketSuccessState.TicketSuccess -> {
+                if (it.totalTickets != null) {
+                    binding.loadingTickets.clearAnimation()
+                    binding.loadingTickets.toInvisible()
+
+                    binding.tvSlotMachineTicketsCount.text = it.totalTickets.toString()
+                }
+            }
+
+            is SlotMachineFragmentVM.TicketSuccessState.Error -> {
+                binding.ivBtnPlayAnimation.visibility = View.VISIBLE
+                binding.progressBtnPlay.visibility = View.INVISIBLE
+
+                slotMachineFragmentVM.isSlotMachineStarted = false
+
+                setViewVisibility(
+                    binding.ivSlotMachineMynts,
+                    binding.ivSlotMachineMyntsAnim
+                )
+                setViewVisibility(
+                    binding.ivSlotMachineCash,
+                    binding.ivSlotMachineCashAnim
+                )
+                setViewVisibility(
+                    binding.ivSlotMachineTicket,
+                    binding.ivSlotMachineTicketAnim
+                )
+            }
+
+            SlotMachineFragmentVM.TicketSuccessState.Loading -> {
+            }
+
         }
     }
 
     private fun arcadeSounds(from: String) {
+
+        slotMachineFragmentVM.mp?.stop()
+
         when (from) {
             "MYNTS" -> {
                 slotMachineFragmentVM.mp = MediaPlayer.create(
@@ -412,10 +593,10 @@ class SlotMachineFragment : BaseFragment<FragmentSlotMachineBinding, SlotMachine
                     R.raw.arcade_golden_ticket
                 )
             }
-            "SPINNER" -> {
+            "SLOT" -> {
                 slotMachineFragmentVM.mp = MediaPlayer.create(
                     this.requireContext(),
-                    R.raw.arcade_spinner
+                    R.raw.arcade_slot_machine
                 )
             }
             else -> {
@@ -426,28 +607,6 @@ class SlotMachineFragment : BaseFragment<FragmentSlotMachineBinding, SlotMachine
             }
         }
         slotMachineFragmentVM.mp?.start()
-    }
-
-    private fun callInsufficientDialog(msg: String) {
-        dialogInsufficientMynts?.setCancelable(false)
-        dialogInsufficientMynts?.setCanceledOnTouchOutside(false)
-        dialogInsufficientMynts?.setContentView(R.layout.dialog_rewards_insufficient)
-
-        val wlp = dialogInsufficientMynts?.window?.attributes
-
-        wlp?.width = ViewGroup.LayoutParams.MATCH_PARENT
-        dialogInsufficientMynts?.setCanceledOnTouchOutside(false)
-        dialogInsufficientMynts?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialogInsufficientMynts?.window?.attributes = wlp
-        dialogInsufficientMynts?.error_msg?.text = msg
-
-        dialogInsufficientMynts?.clicked?.setOnClickListener {
-            trackr {
-                it.name = TrackrEvent.insufficient_mynts
-            }
-            dialogInsufficientMynts?.dismiss()
-        }
-        dialogInsufficientMynts?.show()
     }
 
     private fun setViewVisibility(visibleImage: ImageView, invisibleImage: ImageView) {
@@ -465,8 +624,7 @@ class SlotMachineFragment : BaseFragment<FragmentSlotMachineBinding, SlotMachine
 
     override fun getViewModel(): SlotMachineFragmentVM = slotMachineFragmentVM
 
-    override fun onTryAgainClicked() {
-    }
+    override fun onTryAgainClicked() {}
 
     override fun eventEnd(result: Int, imageInter: ImageView) {
 
@@ -475,7 +633,7 @@ class SlotMachineFragment : BaseFragment<FragmentSlotMachineBinding, SlotMachine
             imageInter.toInvisible()
         } else {
             slotMachineFragmentVM.countDown = 0
-            imageInter.toInvisible()
+            imageInter.currentImage.toInvisible()
 
             setSelectionOnCard(slotMachineFragmentVM.spinWheelRotateResponseDetails)
         }
@@ -558,40 +716,48 @@ class SlotMachineFragment : BaseFragment<FragmentSlotMachineBinding, SlotMachine
                 }
             }
 
-        }else{
-            Toast.makeText(context, "Some Error...", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(context, "Please check history", Toast.LENGTH_SHORT).show()
         }
-//        if (slotMachineFragmentVM.productId == null || slotMachineFragmentVM.productId == "null") {
-        binding.ivBtnPlayAnimation.visibility = View.VISIBLE
-        binding.progressBtnPlay.visibility = View.INVISIBLE
-//        }
-//        else {
-//            Handler(Looper.getMainLooper()).postDelayed({
-//                mViewBinding!!.ivBtnPlayAnimation.visibility = View.VISIBLE
-//                mViewBinding!!.progressBtnPlay.visibility = View.INVISIBLE
-//                slotMachineFragmentVM.isArcadeIsPlayed = true
-//                findNavController().navigateUp()
-//            }, 1500)
-//        }
+
+        slotMachineFragmentVM.isSlotMachineStarted = false
+
+        if (slotMachineFragmentVM.productId == null || slotMachineFragmentVM.productId == "null") {
+            binding.ivBtnPlayAnimation.visibility = View.VISIBLE
+            binding.progressBtnPlay.visibility = View.INVISIBLE
+        } else {
+            Handler(Looper.getMainLooper()).postDelayed({
+                binding.ivBtnPlayAnimation.visibility = View.VISIBLE
+                binding.progressBtnPlay.visibility = View.INVISIBLE
+                slotMachineFragmentVM.isArcadeIsPlayed = true
+                findNavController().navigateUp()
+            }, 1500)
+        }
     }
 
     private fun decreaseCountAnimation(textScore: TextView, finalCount: Int) {
-        val animator = ValueAnimator.ofInt(
-            Integer.parseInt(textScore.text.toString()),
-            Integer.parseInt(textScore.text.toString()) - (finalCount)
-        )
-        animator.duration = 1500
-        animator.addUpdateListener { animation ->
-            textScore.text = animation.animatedValue.toString()
-        }
-        animator.start()
-
-        Handler(Looper.getMainLooper()).postDelayed({
-            setViewVisibility(
-                binding.ivSlotMachineMynts,
-                binding.ivSlotMachineMyntsAnim
+        if (!textScore.text.isNullOrEmpty()) {
+            val animator = ValueAnimator.ofInt(
+                Integer.parseInt(textScore.text.toString()),
+                Integer.parseInt(textScore.text.toString()) - (finalCount)
             )
-        }, 1500)
+            animator.duration = 1500
+            animator.addUpdateListener { animation ->
+                textScore.text = animation.animatedValue.toString()
+            }
+            animator.start()
+
+            Handler(Looper.getMainLooper()).postDelayed({
+                setViewVisibility(
+                    binding.ivSlotMachineMynts,
+                    binding.ivSlotMachineMyntsAnim
+                )
+            }, 1500)
+        } else {
+            FirebaseCrashlytics.getInstance()
+                .recordException(Throwable("Unable to decrease mynts. ${textScore.text}"))
+            Utility.showToast("Please check history")
+        }
     }
 
     private fun increaseCountAnimation(
@@ -600,45 +766,66 @@ class SlotMachineFragment : BaseFragment<FragmentSlotMachineBinding, SlotMachine
         finalCount: Int,
         via: String
     ) {
-        val animator: ValueAnimator = if (via == "Cash") {
-            ValueAnimator.ofInt(
-                Integer.parseInt(textScore.text.toString().split("₹")[1]),
-                Integer.parseInt(textScore.text.toString().split("₹")[1]) + (finalCount)
-            )
-        } else {
-            ValueAnimator.ofInt(
-                Integer.parseInt(textScore.text.toString()),
-                Integer.parseInt(textScore.text.toString()) + (finalCount)
-            )
-        }
-        animator.duration = animDuration
 
-        animator.addUpdateListener { animation ->
-            if (via == "Cash")
-                textScore.text = String.format(
-                    getString(R.string.arcade_cash_value),
-                    animation.animatedValue.toString()
+        if (!textScore.text.isNullOrEmpty()) {
+            if (via == "Cash") {
+                val startPosition = (textScore.text.toString().split("₹")[1]).toIntOrNull()
+                val endPosition = (textScore.text.toString().split("₹")[1]).toIntOrNull()
+                if (startPosition == null || endPosition == null) {
+                    textScore.text = String.format(
+                        getString(R.string.arcade_cash_value),
+                        (textScore.text.toString().split("₹")[1]).toDouble() + finalCount
+                    )
+                } else {
+                    val animator: ValueAnimator =
+                        ValueAnimator.ofInt(
+                            (textScore.text.toString().split("₹")[1]).toInt(),
+                            (textScore.text.toString().split("₹")[1]).toInt() + (finalCount)
+                        )
+
+                    animator.duration = animDuration
+                    animator.addUpdateListener { animation ->
+                        textScore.text = String.format(
+                            getString(R.string.arcade_cash_value),
+                            animation.animatedValue.toString()
+                        )
+                    }
+                    animator.start()
+                }
+            } else {
+                val animator: ValueAnimator = ValueAnimator.ofInt(
+                    Integer.parseInt(textScore.text.toString()),
+                    Integer.parseInt(textScore.text.toString()) + (finalCount)
                 )
-            else
-                textScore.text = animation.animatedValue.toString()
-        }
-        animator.start()
 
-        Handler(Looper.getMainLooper()).postDelayed({
-            setViewVisibility(
-                binding.ivSlotMachineMynts,
-                binding.ivSlotMachineMyntsAnim
-            )
-            setViewVisibility(
-                binding.ivSlotMachineTicket,
-                binding.ivSlotMachineTicketAnim
-            )
-            setViewVisibility(
-                binding.ivSlotMachineCash,
-                binding.ivSlotMachineCashAnim
-            )
-            binding.lottieRewardConfetti.visibility = View.INVISIBLE
-        }, animDuration)
+                animator.duration = animDuration
+                animator.addUpdateListener { animation ->
+                    textScore.text = animation.animatedValue.toString()
+                }
+                animator.start()
+            }
+
+
+            Handler(Looper.getMainLooper()).postDelayed({
+                setViewVisibility(
+                    binding.ivSlotMachineMynts,
+                    binding.ivSlotMachineMyntsAnim
+                )
+                setViewVisibility(
+                    binding.ivSlotMachineTicket,
+                    binding.ivSlotMachineTicketAnim
+                )
+                setViewVisibility(
+                    binding.ivSlotMachineCash,
+                    binding.ivSlotMachineCashAnim
+                )
+                binding.lottieRewardConfetti.visibility = View.INVISIBLE
+            }, animDuration)
+        } else {
+            FirebaseCrashlytics.getInstance()
+                .recordException(Throwable("Unable to decrease mynts. ${textScore.text}"))
+            Utility.showToast("Please check history")
+        }
     }
 
     override fun onStop() {
