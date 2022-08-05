@@ -55,37 +55,37 @@ data class CategoryItem(
 data class AllTxnItem(
 
 	@field:SerializedName("amount")
-	val amount: String? = null,
+	var amount: String? = null,
 
 	@field:SerializedName("paymentMode")
-	val paymentMode: String? = null,
+	var paymentMode: String? = null,
 
 	@field:SerializedName("accReferenceNumber")
-	val accReferenceNumber: String? = null,
+	var accReferenceNumber: String? = null,
 
 	@field:SerializedName("mrn")
-	val mrn: String? = null,
+	var mrn: String? = null,
 
 	@field:SerializedName("mobileNo")
-	val mobileNo: String? = null,
+	var mobileNo: String? = null,
 
 	@field:SerializedName("categoryCode")
 	var categoryCode: String? = null,
 
 	@field:SerializedName("message")
-	val message: String? = null,
+	var message: String? = null,
 
 	@field:SerializedName("userName")
-	val userName: String? = null,
+	var userName: String? = null,
 
 	@field:SerializedName("transactionDate")
-	val transactionDate: String? = null,
+	var transactionDate: String? = null,
 
 	@field:SerializedName("transactionType")
-	val transactionType: String? = null,
+	var transactionType: String? = null,
 
 	@field:SerializedName("bankReferenceNumber")
-	val bankReferenceNumber: String? = null,
+	var bankReferenceNumber: String? = null,
 
 	@field:SerializedName("iconLink")
 	var iconLink: String? = null,

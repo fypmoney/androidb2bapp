@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.TrackrField
 import com.fyp.trackr.models.trackr
@@ -141,7 +142,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
             if(it.isEmpty()){
                 binding.clMainLayout.setBackgroundColor(resources.getColor(R.color.white))
             }else{
-               Utility.setImageUsingGlideWithShimmerPlaceholder(requireContext(),it,binding.ivBackgroundImage)
+                Glide.with(requireContext()).load(it)
+                    .into(binding.ivBackgroundImage)
             }
         }
     }

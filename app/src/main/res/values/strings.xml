@@ -1330,5 +1330,6 @@ Coming really soon!
     <string name="reccived_with_time">Received | %1$s</string>
     <string name="f_store">F-Store</string>
     <string name="unable_to_fetch_points_please_check_reward_history_after_playing">Unable to fetch points, please check Reward History after playing!</string>
+    <string name="looks_like_you_haven_t_done_any_transaction_yet">Looks like you haven’t done any transaction yet.</string>
 
 </resources>

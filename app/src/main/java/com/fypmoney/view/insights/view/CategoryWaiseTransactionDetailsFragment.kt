@@ -80,20 +80,27 @@ class CategoryWaiseTransactionDetailsFragment : BaseFragment<FragmentCategoryWai
         when(it){
             is CategoryWaiseTransactionDetailsFragmentVM.CategoryWaiseTxnDetailsState.ShowTxnDetails -> {
                 with(it.categoryTxnDetailsUiModel){
-                    Utility.setImageUsingGlideWithShimmerPlaceholder(
-                        url = txnCategoryImage,
-                        imageView = binding.ivCategory
-                    )
+                    txnCategoryImage?.let {
+                        Utility.setImageUsingGlideWithShimmerPlaceholder(
+                            url = txnCategoryImage,
+                            imageView = binding.ivCategory
+                        )
+                        Utility.setImageUsingGlideWithShimmerPlaceholder(
+                            url = txnCategoryImage,
+                            imageView = binding.ivSelectedCategory
+                        )
+                    }?: kotlin.run {
+                        binding.ivCategory.toGone()
+                        binding.clCategory.toGone()
+                    }
+
                     binding.tvName.text = txnName
                     binding.tvMobileNo.text = txnUserMobileNumber
                     binding.tvAmount.text = txnAmount
                     binding.tvTxnStatusAndDateAndTime.text = txnStatusDateAndTime
                     binding.tvFypTxnIdValue.text = txnFypTxnId
                     binding.tvBankTxnIdValue.text = bankTxnId
-                    Utility.setImageUsingGlideWithShimmerPlaceholder(
-                        url = txnCategoryImage,
-                        imageView = binding.ivSelectedCategory
-                    )
+
                     binding.tvCategoryName.text = txnCategory
                     if(isCategoryIsEditable){
                         binding.ivEdit.toVisible()
@@ -117,10 +124,15 @@ class CategoryWaiseTransactionDetailsFragment : BaseFragment<FragmentCategoryWai
                     imageView = binding.ivSelectedCategory
                 )
                 binding.tvCategoryName.text = it.changeCategory.category
-                findNavController().previousBackStackEntry?.savedStateHandle?.set(
-                    "category_updated",
-                    true
-                )
+                try{
+                    findNavController().previousBackStackEntry?.savedStateHandle?.set(
+                        "category_updated",
+                        true
+                    )
+                }catch (e:IllegalStateException){
+                    //User is come on this screen via BankTransactionHistoryView
+                }
+
             }
         }
     }
