@@ -24,7 +24,8 @@ data class ExploreContentResponse(
     val bgHeight:String? = null,
     val sectionSubTitle:String? = null,
     val scrolDisplay:String? = null,
-    val scrollColor:String? = null
+    val scrollColor:String? = null,
+    val topSpacing:String? = null
 ):Parcelable
 
 @Parcelize

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.fypmoney.R
 import com.fypmoney.bindingAdapters.shimmerColorDrawable
+import com.fypmoney.extension.setMargin
 import com.fypmoney.extension.toGone
 import com.fypmoney.extension.toVisible
 import com.fypmoney.util.AppConstants.YES
@@ -82,7 +83,9 @@ class ExploreBaseAdapter(
                 holder.tvSubTitle.setTextColor(Color.parseColor(it))
             }?: kotlin.run { holder.tvSubTitle.setTextColor(titleTextColor) }
         }
-
+        items[position].topSpacing?.let {
+            holder.rlBase.setMargin(left = 0.0f, top = it.toFloatOrNull()?:0.0f, right = 0.0f, bottom = 0.0f)
+        }
         if (items[position].sectionContent != null && items[position].sectionContent?.size!! > 1) {
             val itemClickListener2 = object : ExploreItemClickListener {
                 override fun onItemClicked(position: Int, sectionContentItem: SectionContentItem,exploreContentResponse: ExploreContentResponse?) {
