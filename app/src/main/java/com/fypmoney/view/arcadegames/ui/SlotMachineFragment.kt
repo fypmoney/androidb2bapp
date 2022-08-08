@@ -22,6 +22,7 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.bindingAdapters.setBackgroundDrawable
 import com.fypmoney.databinding.FragmentSlotMachineBinding
+import com.fypmoney.extension.toGone
 import com.fypmoney.extension.toInvisible
 import com.fypmoney.extension.toVisible
 import com.fypmoney.model.SpinWheelRotateResponseDetails
@@ -737,6 +738,7 @@ class SlotMachineFragment : BaseFragment<FragmentSlotMachineBinding, SlotMachine
 
     private fun decreaseCountAnimation(textScore: TextView, finalCount: Int) {
         if (!textScore.text.isNullOrEmpty()) {
+            binding.tvPointsApiError.toGone()
             val animator = ValueAnimator.ofInt(
                 Integer.parseInt(textScore.text.toString()),
                 Integer.parseInt(textScore.text.toString()) - (finalCount)
@@ -756,7 +758,8 @@ class SlotMachineFragment : BaseFragment<FragmentSlotMachineBinding, SlotMachine
         } else {
             FirebaseCrashlytics.getInstance()
                 .recordException(Throwable("Unable to decrease mynts. ${textScore.text}"))
-            Utility.showToast("Please check history")
+                        binding.tvPointsApiError.toVisible()
+
         }
     }
 
@@ -768,6 +771,7 @@ class SlotMachineFragment : BaseFragment<FragmentSlotMachineBinding, SlotMachine
     ) {
 
         if (!textScore.text.isNullOrEmpty()) {
+            binding.tvPointsApiError.toGone()
             if (via == "Cash") {
                 val startPosition = (textScore.text.toString().split("₹")[1]).toIntOrNull()
                 val endPosition = (textScore.text.toString().split("₹")[1]).toIntOrNull()
@@ -824,7 +828,8 @@ class SlotMachineFragment : BaseFragment<FragmentSlotMachineBinding, SlotMachine
         } else {
             FirebaseCrashlytics.getInstance()
                 .recordException(Throwable("Unable to decrease mynts. ${textScore.text}"))
-            Utility.showToast("Please check history")
+                        binding.tvPointsApiError.toVisible()
+
         }
     }
 

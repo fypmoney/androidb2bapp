@@ -99,13 +99,18 @@ class LeaderBoardFragment : BaseFragment<FragmentLeaderBoardBinding, LeaderBoard
                 mViewBinding!!.leaderBoardMainNSV.toInvisible()
             }
             is LeaderBoardFragmentVM.LeaderBoardState.Success -> {
-                mViewBinding!!.tvLeaderboard1.text =
-                    it.leaderBoardData?.leaderBoardList?.get(0)?.userName
-                mViewBinding!!.tvLeaderboard2.text =
-                    it.leaderBoardData?.leaderBoardList?.get(1)?.userName
-                mViewBinding!!.tvLeaderboard3.text =
-                    it.leaderBoardData?.leaderBoardList?.get(2)?.userName
-
+                if (it.leaderBoardData?.leaderBoardList?.size!! > 0) {
+                    mViewBinding!!.tvLeaderboard1.text =
+                        it.leaderBoardData?.leaderBoardList?.get(0)?.userName
+                }
+                if (it.leaderBoardData?.leaderBoardList?.size!! > 1) {
+                    mViewBinding!!.tvLeaderboard2.text =
+                        it.leaderBoardData?.leaderBoardList?.get(1)?.userName
+                }
+                if (it.leaderBoardData?.leaderBoardList?.size!! > 2) {
+                    mViewBinding!!.tvLeaderboard3.text =
+                        it.leaderBoardData?.leaderBoardList?.get(2)?.userName
+                }
                 mViewBinding!!.tvSpinWheelTicketsCount.text =
                     it.leaderBoardData?.currUserGoldenTickets.toString()
 
@@ -130,38 +135,53 @@ class LeaderBoardFragment : BaseFragment<FragmentLeaderBoardBinding, LeaderBoard
 
                 )
 
-                val ticketsData: String =
-                    it.leaderBoardData?.leaderBoardList?.get(0)?.goldenTickets?.minus(it.leaderBoardData?.currUserGoldenTickets!!)
-                        .toString()
+                if (it.leaderBoardData?.leaderBoardList?.size!! > 0) {
+                    val ticketsData: String =
+                        it.leaderBoardData?.leaderBoardList?.get(0)?.goldenTickets?.minus(it.leaderBoardData?.currUserGoldenTickets!!)
+                            .toString()
 
-                val ticketDataFinal = "$ticketsData Golden Tickets"
+                    val ticketDataFinal = "$ticketsData Golden Tickets"
 
-                val mSpannableString = SpannableString(ticketDataFinal)
+                    val mSpannableString = SpannableString(ticketDataFinal)
 
-                mSpannableString.setSpan(
-                    ForegroundColorSpan(Color.WHITE),
-                    0,
-                    ticketsData.length + 15,
-                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-                )
-
-                if ((it.leaderBoardData?.leaderBoardList?.get(0)?.goldenTickets?.minus(it.leaderBoardData?.currUserGoldenTickets!!))!! == 0) {
-                    mViewBinding!!.seekBarLeaderBoard.toGone()
-                    mViewBinding!!.ivWinningReward.toGone()
-                    mViewBinding!!.tvLeaderBoardTicketsAway.toGone()
-                } else {
-                    mViewBinding!!.tvLeaderBoardTicketsAway.text = String.format(
-                        getString(R.string.leaderboard_just_tickets),
-                        mSpannableString
+                    mSpannableString.setSpan(
+                        ForegroundColorSpan(Color.WHITE),
+                        0,
+                        ticketsData.length + 15,
+                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
                     )
-                    mViewBinding!!.seekBarLeaderBoard.toVisible()
-                    mViewBinding!!.ivWinningReward.toVisible()
-                    mViewBinding!!.tvLeaderBoardTicketsAway.toVisible()
+
+                    if ((it.leaderBoardData?.leaderBoardList?.get(0)?.goldenTickets?.minus(it.leaderBoardData?.currUserGoldenTickets!!))!! == 0) {
+                        mViewBinding!!.seekBarLeaderBoard.toGone()
+                        mViewBinding!!.ivWinningReward.toGone()
+                        mViewBinding!!.tvLeaderBoardTicketsAway.toGone()
+                    } else {
+                        mViewBinding!!.tvLeaderBoardTicketsAway.text = String.format(
+                            getString(R.string.leaderboard_just_tickets),
+                            mSpannableString
+                        )
+                        mViewBinding!!.seekBarLeaderBoard.toVisible()
+                        mViewBinding!!.ivWinningReward.toVisible()
+                        mViewBinding!!.tvLeaderBoardTicketsAway.toVisible()
+                    }
+
+                    val percent: Double =
+                        if (it.leaderBoardData?.leaderBoardList?.get(0)?.goldenTickets!! == 0) {
+                            0.0
+                        } else {
+                            ((it.leaderBoardData?.currUserGoldenTickets!!.toDouble() / it.leaderBoardData?.leaderBoardList?.get(
+                                0
+                            )?.goldenTickets!!) * 100)
+                        }
+                    mViewBinding!!.seekBarLeaderBoard.progress = percent.roundToInt()
+                    mViewBinding!!.seekBarLeaderBoardThumb.progress = percent.roundToInt()
+
                 }
 
                 val formatter = SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault())
                 formatter.timeZone = TimeZone.getTimeZone("Asia/Kolkata")
                 val date = Date()
+
                 it.leaderBoardData?.rewardProduct?.endDate?.let {
                     if (it.isNotEmpty()) {
                         val dateEndDate = formatter.parse(
@@ -187,26 +207,12 @@ class LeaderBoardFragment : BaseFragment<FragmentLeaderBoardBinding, LeaderBoard
                     mViewBinding!!.tvTimerSeconds.text = "00"
                 }
 
-
                 rulesList =
                     it.leaderBoardData!!.rewardProduct?.additionalInfo.toString().split(",")
                         .map { it1 -> it1.trim() }
 
-                val percent: Double =
-                    if (it.leaderBoardData?.leaderBoardList?.get(0)?.goldenTickets!! == 0) {
-                        0.0
-                    } else {
-                        ((it.leaderBoardData?.currUserGoldenTickets!!.toDouble() / it.leaderBoardData?.leaderBoardList?.get(
-                            0
-                        )?.goldenTickets!!) * 100)
-                    }
-                mViewBinding!!.seekBarLeaderBoard.progress = percent.roundToInt()
-                mViewBinding!!.seekBarLeaderBoardThumb.progress = percent.roundToInt()
-
-
                 mViewBinding!!.leaderBoardMainNSV.toVisible()
                 mViewBinding!!.shimmerLayoutLeaderBoard.toInvisible()
-
 
             }
         }
