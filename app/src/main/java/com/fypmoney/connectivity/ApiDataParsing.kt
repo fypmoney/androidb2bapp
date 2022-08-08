@@ -14,6 +14,7 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.model.*
 import com.fypmoney.view.addmoney.model.BankProfileDetailsNetworkResponse
+import com.fypmoney.view.arcadegames.brandedcoupons.model.BrandedCouponResponse
 import com.fypmoney.view.arcadegames.model.*
 import com.fypmoney.view.giftcard.model.*
 import com.fypmoney.view.home.main.home.model.networkmodel.CallToActionNetworkResponse
@@ -253,15 +254,25 @@ class ApiDataParsing {
                 ApiConstant.API_GET_REWARD_SLOT_MACHINE_PURPOSE -> {
                     getObject(response, SlotMachineResponse::class.java)
                 }
+                ApiConstant.API_GET_BRANDED_COUPONS_PURPOSE -> {
+                    getObject(response, BrandedCouponResponse::class.java)
+                }
 //                ApiConstant.API_GET_SLOT_MACHINE_DATA -> {
 //                    getObject(response, SlotMachineResponse::class.java)
 //                }
+
                 ApiConstant.API_GET_LEADERBOARD_DATA -> {
                     getObject(response, LeaderBoardResponse::class.java)
                 }
+
+                ApiConstant.API_GET_COUPON_REWARD_DATA -> {
+//                    getObject(response, LeaderBoardResponse::class.java)
+                }
+
                 ApiConstant.API_GET_ALL_JACKPOTS_PRODUCTWISE -> {
                     getObject(response, MultipleJackpotNetworkResponse::class.java)
                 }
+
                 ApiConstant.PAYU_PRODUCTION_URL -> {
                     when (command) {
                         PayuConstants.VALIDATE_VPA -> {

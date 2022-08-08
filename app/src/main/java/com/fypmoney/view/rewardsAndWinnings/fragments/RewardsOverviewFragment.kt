@@ -442,7 +442,8 @@ class RewardsOverviewFragment :
                     ArcadeType.NOTypeFound -> {
 
                     }
-                    is ArcadeType.SCRATCH_CARD -> TODO()
+                    is ArcadeType.SCRATCH_CARD -> {Utility.showToast("Scratch card")}
+
                     is ArcadeType.SLOT -> {
                         findNavController().navigate(
                             Uri.parse("https://www.fypmoney.in/slot_machine/${type.productCode}/${null}"),
@@ -479,7 +480,22 @@ class RewardsOverviewFragment :
                                 }
                             })
                     }
-                    null -> TODO()
+
+                    is ArcadeType.BRANDED_COUPONS -> {
+                        findNavController().navigate(
+                            Uri.parse("https://www.fypmoney.in/branded_coupons/${type.productCode}/${null}"),
+                            navOptions {
+                                anim {
+                                    popEnter = R.anim.slide_in_left
+                                    popExit = R.anim.slide_out_righ
+                                    enter = R.anim.slide_in_right
+                                    exit = R.anim.slide_out_left
+                                }
+                            })
+                    }
+                    null -> {
+
+                    }
                 }
             }
         }

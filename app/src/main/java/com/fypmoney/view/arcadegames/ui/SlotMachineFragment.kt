@@ -325,6 +325,7 @@ class SlotMachineFragment : BaseFragment<FragmentSlotMachineBinding, SlotMachine
                 )
 
                 binding.tvSlotMachineBurnMyntsCount.text = it.slotItem.appDisplayText
+
                 slotMachineFragmentVM.myntsCount = it.slotItem.appDisplayText?.let { it1 ->
                     slotMachineFragmentVM.myntsCount?.plus(
                         it1.toFloat()

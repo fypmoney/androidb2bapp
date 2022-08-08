@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/_36sdp"
+    android:layout_marginEnd="@dimen/_36sdp"
+    android:paddingBottom="@dimen/dp26"
+    android:background="@drawable/round_dark_grey_rewards_dialod">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivNoCouponBrandLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp32"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/myntra_logo" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvBrandedTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dp20"
+        android:layout_marginTop="@dimen/dp26"
+        android:text="@string/no_coupon_available"
+        android:textColor="@color/amount_bg1"
+        android:textSize="20sp"
+        app:fontFamily="@font/product_sans_bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivNoCouponBrandLogo" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvBrandedContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dp20"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="@dimen/dp18"
+        android:layout_marginEnd="32dp"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:alpha="0.6"
+        android:text="@string/please_try_again_next_time"
+        app:fontFamily="@font/product_sans_regular"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvBrandedTitle" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/clicked"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_18sdp"
+        android:layout_marginBottom="@dimen/_18sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvBrandedContent"
+        android:backgroundTint="@color/reward_continue_button"
+        android:text="@string/continue_txt" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

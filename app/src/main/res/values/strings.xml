@@ -1286,6 +1286,15 @@ Coming really soon!
     <string name="total_golden_tickets_won">Total Golden Tickets Won</string>
 
     <string name="leaderboard_just_tickets">You are just <b> %1$s </b> away</string>
+    <string name="coupon_code">Coupon Code</string>
+    <string name="how_to_redeem">How to redeem?</string>
+    <string name="terms_and_conditions_text"><![CDATA[Terms & Condition]]></string>
+    <string name="redeem_now">Redeem Now</string>
+    <string name="proceeding_terms_condition">By proceeding, you agree to <b>Terms &amp; Condition</b></string>
+    <string name="no_coupon_available">No Coupons Available!</string>
+    <string name="please_try_again_next_time">Please try again next time!</string>
+
+
     <string-array name="person_category_array">
         <item>Minor</item>
         <item>Major</item>

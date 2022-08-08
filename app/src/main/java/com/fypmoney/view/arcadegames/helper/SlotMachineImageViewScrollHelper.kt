@@ -1,4 +1,4 @@
-package com.fypmoney.view.arcadegames
+package com.fypmoney.view.arcadegames.helper
 
 import android.animation.Animator
 import android.content.Context
@@ -11,8 +11,8 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import com.fypmoney.R
 import com.fypmoney.databinding.ViewSlotMachineImageScrollingBinding
+import com.fypmoney.view.arcadegames.SlotMachineImageEventEnd
 import com.fypmoney.view.arcadegames.helper.Utils.NO_OF_IMAGES
-import com.fypmoney.view.arcadegames.helper.Utils
 import kotlinx.android.synthetic.main.view_slot_machine_image_scrolling.view.*
 
 class SlotMachineImageViewScrollHelper(context: Context, attributeSet: AttributeSet) :

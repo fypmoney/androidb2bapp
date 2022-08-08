@@ -195,6 +195,10 @@ object ApiConstant {
 
     const val API_GET_REWARD_SLOT_MACHINE_PURPOSE = "reward-product/slot"
 
+    const val API_GET_BRANDED_COUPONS_PURPOSE = "reward-product/branded"
+
+    const val API_GET_BRANDED_COUPONS = "services/PockketService/api/list/reward-product"
+
     const val API_GET_TREASURE_DATA =
         "services/PockketService/api/list/reward-product"
 
@@ -205,6 +209,8 @@ object ApiConstant {
         "services/PockketService/api/jackpot/tickets/productwise/"
 
     const val API_GET_LEADERBOARD_DATA = "services/PockketService/api/reward/leaderboard/"
+
+    const val API_GET_COUPON_REWARD_DATA = "services/PockketService/api/coupon/details/COMMON_COUPON_1/"
 
 }
 
