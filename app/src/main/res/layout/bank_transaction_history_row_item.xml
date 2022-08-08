@@ -53,14 +53,14 @@
             style="@style/TextviewRegular"
             android:layout_marginStart="@dimen/margin"
             android:layout_marginTop="@dimen/_5sdp"
-            android:layout_toEndOf="@+id/ivServiceLogo"
-            android:layout_toStartOf="@+id/invite"
             android:layout_marginEnd="@dimen/dp16"
+            android:layout_toStartOf="@+id/invite"
+            android:layout_toEndOf="@+id/ivServiceLogo"
             android:gravity="start"
-            tools:text = "Pawan kumar Sharma FYP Technology"
             android:text='@{viewHelper.bankHistory.userName ?? ""}'
             android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            tools:text="Pawan kumar Sharma FYP Technology" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/number_relation"

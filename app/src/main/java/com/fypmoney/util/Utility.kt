@@ -1392,12 +1392,12 @@ object Utility {
         val vibration = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
         if (Build.VERSION.SDK_INT >= 26) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                vibration.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE))
+                vibration.vibrate(VibrationEffect.createOneShot(40, VibrationEffect.DEFAULT_AMPLITUDE))
             }else{
-                vibration.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE))
+                vibration.vibrate(VibrationEffect.createOneShot(40, VibrationEffect.DEFAULT_AMPLITUDE))
             }
         } else {
-            vibration.vibrate(100)
+            vibration.vibrate(40)
         }
     }
 }

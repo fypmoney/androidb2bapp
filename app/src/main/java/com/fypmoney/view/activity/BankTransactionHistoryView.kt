@@ -176,7 +176,6 @@ class BankTransactionHistoryView :
         tr.add(R.id.container, fragment)
         tr.addToBackStack("TransactionHistoryDetails")
         tr.commit()
-        //mViewBinding.container.toVisible()
     }
 
     /*
