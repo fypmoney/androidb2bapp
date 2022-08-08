@@ -28,6 +28,7 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.bindingAdapters.setBackgroundDrawable
 import com.fypmoney.databinding.FragmentRotatingTreasureBinding
+import com.fypmoney.extension.toGone
 import com.fypmoney.extension.toInvisible
 import com.fypmoney.extension.toVisible
 import com.fypmoney.model.SpinWheelRotateResponseDetails
@@ -36,6 +37,7 @@ import com.fypmoney.view.arcadegames.adapter.TreasureAdapterUiModel
 import com.fypmoney.view.arcadegames.adapter.TreasurePagerAdapter
 import com.fypmoney.view.arcadegames.model.SectionListItem1
 import com.fypmoney.view.arcadegames.viewmodel.RotatingTreasureFragmentVM
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kotlinx.android.synthetic.main.dialog_rewards_insufficient.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlin.math.abs
@@ -111,7 +113,7 @@ class RotatingTreasureFragment :
                     mViewBinding!!.lottieRotatingVP.toInvisible()
 
                     mViewBinding!!.containerRotatingTreasureRewards.visibility = View.INVISIBLE
-                    mViewBinding!!.containerRotatingDefaultBanner.visibility = View.VISIBLE
+                    mViewBinding!!.ivBannerRotatingTreasures.visibility = View.VISIBLE
 
                     mViewBinding!!.ivBtnPlayAnimation.visibility = View.INVISIBLE
                     mViewBinding!!.progressBtnPlay.visibility = View.VISIBLE
@@ -134,7 +136,7 @@ class RotatingTreasureFragment :
                 mViewBinding!!.lottieRotatingVP.toInvisible()
 
                 mViewBinding!!.containerRotatingTreasureRewards.visibility = View.INVISIBLE
-                mViewBinding!!.containerRotatingDefaultBanner.visibility = View.VISIBLE
+                mViewBinding!!.ivBannerRotatingTreasures.visibility = View.VISIBLE
 
                 mViewBinding!!.ivBtnPlayAnimation.visibility = View.INVISIBLE
                 mViewBinding!!.progressBtnPlay.visibility = View.VISIBLE
@@ -377,7 +379,7 @@ class RotatingTreasureFragment :
 //        mViewBinding!!.progressBtnPlay.visibility = View.INVISIBLE
 
         mViewBinding!!.containerRotatingTreasureRewards.visibility = View.VISIBLE
-        mViewBinding!!.containerRotatingDefaultBanner.visibility = View.INVISIBLE
+        mViewBinding!!.ivBannerRotatingTreasures.visibility = View.INVISIBLE
 
         mViewBinding!!.lottieRewardConfetti.visibility = View.VISIBLE
         mViewBinding!!.lottieRewardConfetti.playAnimation()
@@ -545,7 +547,6 @@ class RotatingTreasureFragment :
                     it.treasureBoxItem.successResourceId,
                     mViewBinding!!.ivBannerRotatingTreasures
                 )
-
                 rotatingTreasureVM.myntsDisplay = it.treasureBoxItem.appDisplayText?.toInt()
 
                 mViewBinding?.loadingBurnMynts?.clearAnimation()
@@ -645,21 +646,26 @@ class RotatingTreasureFragment :
     }
 
     private fun decreaseCountAnimation(textScore: TextView, finalCount: Int) {
-        val animator = ValueAnimator.ofInt(
-            Integer.parseInt(textScore.text.toString()),
-            Integer.parseInt(textScore.text.toString()) - (finalCount)
-        )
-        animator.duration = 1500
-        animator.addUpdateListener { animation ->
-            textScore.text = animation.animatedValue.toString()
-        }
-        animator.start()
+        if(!textScore.text.isNullOrEmpty()){
+            mViewBinding!!.tvPointsApiError.toGone()
+            val animator = ValueAnimator.ofInt(
+                Integer.parseInt(textScore.text.toString()),
+                Integer.parseInt(textScore.text.toString()) - (finalCount)
+            )
+            animator.duration = 1500
+            animator.addUpdateListener { animation ->
+                textScore.text = animation.animatedValue.toString()
+            }
+            animator.start()
 
-        Handler(Looper.getMainLooper()).postDelayed({
-            setViewVisibility(mViewBinding!!.ivRotatingMynts, mViewBinding!!.ivRotatingMyntsAnim)
-//            setViewVisibility(mViewBinding!!.ivRotatingTicket, mViewBinding!!.ivRotatingTicketAnim)
-//            setViewVisibility(mViewBinding!!.ivRotatingCash, mViewBinding!!.ivRotatingCashAnim)
-        }, 1500)
+            Handler(Looper.getMainLooper()).postDelayed({
+                setViewVisibility(mViewBinding!!.ivRotatingMynts, mViewBinding!!.ivRotatingMyntsAnim)
+            }, 1500)
+        }else{
+            FirebaseCrashlytics.getInstance().recordException(Throwable("Unable to decrease mynts. ${textScore.text}"))
+            mViewBinding!!.tvPointsApiError.toVisible()
+        }
+
     }
 
     private fun increaseCountAnimation(
@@ -668,36 +674,59 @@ class RotatingTreasureFragment :
         finalCount: Int,
         via: String
     ) {
-        val animator: ValueAnimator = if (via == "Cash") {
-            ValueAnimator.ofInt(
-                Integer.parseInt(textScore.text.toString().split("₹")[1]),
-                Integer.parseInt(textScore.text.toString().split("₹")[1]) + (finalCount)
-            )
-        } else {
-            ValueAnimator.ofInt(
-                Integer.parseInt(textScore.text.toString()),
-                Integer.parseInt(textScore.text.toString()) + (finalCount)
-            )
-        }
-        animator.duration = animDuration
+        if(!textScore.text.isNullOrEmpty()){
+            mViewBinding!!.tvPointsApiError.toGone()
+            if (via == "Cash") {
+                val startPosition = (textScore.text.toString().split("₹")[1]).toIntOrNull()
+                val endPosition = (textScore.text.toString().split("₹")[1]).toIntOrNull()
+                if (startPosition == null || endPosition == null) {
+                    textScore.text = String.format(
+                        getString(R.string.arcade_cash_value),
+                        (textScore.text.toString().split("₹")[1]).toDouble() + finalCount
+                    )
+                } else {
+                    val animator: ValueAnimator =
+                        ValueAnimator.ofInt(
+                            (textScore.text.toString().split("₹")[1]).toInt(),
+                            (textScore.text.toString().split("₹")[1]).toInt() + (finalCount)
+                        )
 
-        animator.addUpdateListener { animation ->
-            if (via == "Cash")
-                textScore.text = String.format(
-                    getString(R.string.arcade_cash_value),
-                    animation.animatedValue.toString()
+                    animator.duration = animDuration
+                    animator.addUpdateListener { animation ->
+                        textScore.text = String.format(
+                            getString(R.string.arcade_cash_value),
+                            animation.animatedValue.toString()
+                        )
+                    }
+                    animator.start()
+                }
+            } else {
+                val animator: ValueAnimator = ValueAnimator.ofInt(
+                    Integer.parseInt(textScore.text.toString()),
+                    Integer.parseInt(textScore.text.toString()) + (finalCount)
                 )
-            else
-                textScore.text = animation.animatedValue.toString()
-        }
-        animator.start()
 
-        Handler(Looper.getMainLooper()).postDelayed({
-            setViewVisibility(mViewBinding!!.ivRotatingMynts, mViewBinding!!.ivRotatingMyntsAnim)
-            setViewVisibility(mViewBinding!!.ivRotatingTicket, mViewBinding!!.ivRotatingTicketAnim)
-            setViewVisibility(mViewBinding!!.ivRotatingCash, mViewBinding!!.ivRotatingCashAnim)
-            mViewBinding!!.lottieRewardConfetti.visibility = View.INVISIBLE
-        }, animDuration)
+                animator.duration = animDuration
+                animator.addUpdateListener { animation ->
+                    textScore.text = animation.animatedValue.toString()
+                }
+                animator.start()
+            }
+
+
+            Handler(Looper.getMainLooper()).postDelayed({
+                setViewVisibility(mViewBinding!!.ivRotatingMynts, mViewBinding!!.ivRotatingMyntsAnim)
+                setViewVisibility(mViewBinding!!.ivRotatingTicket, mViewBinding!!.ivRotatingTicketAnim)
+                setViewVisibility(mViewBinding!!.ivRotatingCash, mViewBinding!!.ivRotatingCashAnim)
+                mViewBinding!!.lottieRewardConfetti.visibility = View.INVISIBLE
+            }, animDuration)
+        }
+        else{
+            FirebaseCrashlytics.getInstance().recordException(Throwable("Unable to decrease mynts. ${textScore.text}"))
+            mViewBinding!!.tvPointsApiError.toVisible()
+
+        }
+
     }
 
     override fun onDestroyView() {

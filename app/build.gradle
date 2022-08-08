@@ -13,7 +13,7 @@ plugins {
 android {
     signingConfigs {
         config {
-            storeFile file('C:\\Users\\Tapan Yadav\\Desktop\\FypKeystore.jks')
+            storeFile file('C:\\Users\\Pawankumar\\Desktop\\FypKeystore.jks')
             storePassword 'WjfUzYjN8bem6bX6'
             keyAlias 'Fyp'
             keyPassword 'WjfUzYjN8bem6bX6'
@@ -26,8 +26,8 @@ android {
         ndk.abiFilters 'armeabi-v7a','arm64-v8a','x86','x86_64'
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 74
-        versionName "4.1.2"
+        versionCode 78
+        versionName "4.3.1"
         multiDexEnabled = true
         vectorDrawables.useSupportLibrary = true
         // Stops the Gradle plugin�s automatic rasterization of vectors
@@ -96,7 +96,7 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.6.0'
     implementation 'androidx.appcompat:appcompat:1.3.1'
     implementation 'com.google.android.material:material:1.4.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
     implementation "androidx.biometric:biometric-ktx:1.2.0-alpha03"
@@ -239,8 +239,8 @@ dependencies {
     implementation("com.moengage:rich-notification:2.3.00")
     implementation('com.github.simonpercic:oklog3:2.3.0')
     implementation 'com.amazonaws:ivs-player:1.6.0'
-
     implementation("com.squareup.okhttp3:okhttp-dnsoverhttps:4.9.0")
+    implementation "ru.tinkoff.scrollingpagerindicator:scrollingpagerindicator:1.0.6"
 
 
 }

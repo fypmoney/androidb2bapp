@@ -172,6 +172,9 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
                 7 -> {
                     callLogOutBottomSheet()
                 }
+                8->{
+                    addFragmentToActivity()
+                }
 
             }
 
@@ -181,6 +184,16 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
 
 
         setObserver()
+    }
+
+    private fun addFragmentToActivity(){
+        val fm = supportFragmentManager
+        val tr = fm.beginTransaction()
+        tr.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left,R.anim.slide_in_left,R.anim.slide_out_righ);
+        tr.add(R.id.container, FamilySettingsView())
+        tr.addToBackStack("family")
+        tr.commit()
+        //mViewBinding.container.toVisible()
     }
 
     override fun onStart() {
@@ -203,6 +216,13 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
                 postion = 1,
                 name = getString(R.string.privacy_settings),
                 icon = AppCompatResources.getDrawable(this, R.drawable.ic_profile_privacy_settings)
+            )
+        )
+        iconList.add(
+            ListUiModel(
+                postion = 8,
+                name = getString(R.string.family_settings_screen_title),
+                icon = AppCompatResources.getDrawable(this, R.drawable.ic_add_family_member)
             )
         )
        val discoredConnected=  SharedPrefUtils.getString(

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvTransactionItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/black10"
+        app:cardCornerRadius="@dimen/dp15"
+        app:cardElevation="@dimen/dp1"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true"
+        app:contentPadding="@dimen/dp5">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivCategory"
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40"
+                android:minWidth="@dimen/dp20"
+                android:minHeight="@dimen/dp20"
+                android:layout_marginStart="@dimen/dp5"
+                android:layout_marginVertical="@dimen/dp20"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:srcCompat="@drawable/ic_card_settings"/>
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvTransactionTitle"
+                style="@style/TextviewRegular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp10"
+                android:layout_marginTop="23dp"
+                android:lineHeight="21sp"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@+id/tvTransactionAmount"
+                app:layout_constraintStart_toEndOf="@+id/ivCategory"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Paid to Shiv dasjkda dasdas safhsdkj" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvTransactionDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextviewRegular"
+                android:layout_marginStart="@dimen/dp10"
+                android:textSize="14sp"
+                android:lineHeight="21sp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="@dimen/dp20"
+                android:textColor="@color/text_color_light"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTransactionTitle"
+                app:layout_constraintStart_toEndOf="@+id/ivCategory"
+                tools:text="Nov 24, 9:48AM"/>
+
+
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvTransactionAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextviewRegular"
+                android:layout_marginEnd="@dimen/dp10"
+                android:textSize="16sp"
+                android:lineHeight="21sp"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:text="- ₹ 50.00"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

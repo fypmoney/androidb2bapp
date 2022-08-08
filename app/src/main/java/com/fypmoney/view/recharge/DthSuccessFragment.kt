@@ -104,7 +104,7 @@ class DthSuccessFragment : BaseFragment<RechargeSuccessFragmentBinding, Recharge
                 val direction = DthSuccessFragmentDirections.navigateFromPaymentSuccessToHome()
                 findNavController().navigate(direction)
             }
-            null -> TODO()
+            null -> {}
         }
     }
 

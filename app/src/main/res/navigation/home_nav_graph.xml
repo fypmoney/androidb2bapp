@@ -92,10 +92,22 @@
     </fragment>
 
     <fragment
+        android:id="@+id/navigation_insights"
+        android:name="com.fypmoney.view.insights.view.InsightsFragment"
+        android:label="@string/insights"
+        tools:layout="@layout/fragment_insights">
+
+
+
+    </fragment>
+
+    <fragment
         android:id="@+id/navigation_fyper"
         android:name="com.fypmoney.view.activity.FamilySettingsView"
         android:label="@string/fyper_txt"
         tools:layout="@layout/view_family_settings" />
+
+
     <fragment
         android:id="@+id/navigation_card"
         android:name="com.fypmoney.view.card.view.CardFragment"
@@ -116,6 +128,14 @@
             android:defaultValue=""
             app:argType="string"
             app:nullable="true"/>
+
+        <action
+            android:id="@+id/action_explore_section_explore"
+            app:destination="@+id/navigation_section_explore"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ" />
     </fragment>
 
     <fragment
@@ -647,6 +667,49 @@
             app:popExitAnim="@anim/slide_out_righ"
             app:popUpTo="@id/navigation_home"
             app:popUpToInclusive="false" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_spend_and_income"
+        android:name="com.fypmoney.view.insights.view.SpendsAndIncomeFragment"
+        android:label="Spend and Income"
+        tools:layout="@layout/fragment_spends_and_income" >
+        <action
+            android:id="@+id/action_spend_and_income_to_category_wise_transaction_list"
+            app:destination="@+id/navigation_category_wise_transaction_list"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ"/>
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_category_wise_transaction_list"
+        android:name="com.fypmoney.view.insights.view.CategoryWaiseTransactionListFragment"
+        android:label="Category wise transaction list"
+        tools:layout="@layout/fragment_category_waise_transaction_list">
+
+        <action
+            android:id="@+id/action_category_txn_list_to_txn_details"
+            app:destination="@+id/navigation_category_transaction_details"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ"/>
+
+
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_category_transaction_details"
+        android:name="com.fypmoney.view.insights.view.CategoryWaiseTransactionDetailsFragment"
+        android:label="Category wise transaction Details"
+        tools:layout="@layout/fragment_category_waise_transaction_details">
+
+        <argument
+            android:name="txnDetail"
+            android:defaultValue="@null"
+            app:argType="com.fypmoney.view.insights.model.AllTxnItem"
+            app:nullable="true" />
 
     </fragment>
 

@@ -1,7 +1,6 @@
 package com.fypmoney.viewmodel
 
 import android.app.Application
-import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -18,11 +17,7 @@ import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.util.livedata.LiveEvent
 import com.fypmoney.view.adapter.AddMoneyUpiAdapter
-import com.fypmoney.view.adapter.SavedCardsAdapter
-import com.payu.india.Extras.PayUChecksum
 import com.payu.india.Model.PaymentParams
-import com.payu.india.Payu.PayuConstants
-import com.payu.paymentparamhelper.PostData
 import org.json.JSONObject
 
 class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(application),
@@ -220,8 +215,8 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
 
         mPaymentParams.email = ""
         mPaymentParams.txnId = resultData.txnId
-        mPaymentParams.surl = " https://payuresponse.firebaseapp.com/success"
-        mPaymentParams.furl = "https://payuresponse.firebaseapp.com/failure"
+        mPaymentParams.surl = "https://fypmoney.in/payu/"
+        mPaymentParams.furl = "https://fypmoney.in/payu/"
         mPaymentParams.udf1 = resultData.udf1
         mPaymentParams.udf2 = resultData.udf2
         mPaymentParams.udf3 = resultData.udf3

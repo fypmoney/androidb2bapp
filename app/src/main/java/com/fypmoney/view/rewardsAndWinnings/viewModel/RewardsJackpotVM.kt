@@ -12,6 +12,7 @@ import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.BaseRequest
 import com.fypmoney.model.FeedDetails
+import com.fypmoney.util.livedata.LiveEvent
 import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
 import com.fypmoney.view.rewardsAndWinnings.model.TotalJackpotResponse
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
@@ -44,7 +45,7 @@ class RewardsJackpotVM(application: Application) : BaseViewModel(application) {
     //Explore integration
     var rewardHistoryList: MutableLiveData<ArrayList<ExploreContentResponse>> = MutableLiveData()
 
-    var openBottomSheet: MutableLiveData<ArrayList<offerDetailResponse>> = MutableLiveData()
+    var openBottomSheet: MutableLiveData<ArrayList<offerDetailResponse>> = LiveEvent()
     var feedDetail: MutableLiveData<FeedDetails> = MutableLiveData()
 
     fun onSelectClicked() {

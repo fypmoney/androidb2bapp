@@ -30,10 +30,6 @@ import com.moengage.core.internal.MoEConstants.*
 class LoginSuccessViewModel(application: Application) : BaseViewModel(application) {
     var onApiSuccess = MutableLiveData<Boolean>()
 
-    init {
-
-    }
-
     /*
     * This method is used to handle click of continue
     * */
@@ -63,7 +59,9 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
             "SERVER_IS_UNDER_MAINTENANCE",
             "SERVER_MAINTENANCE_DESCRIPTION",
             "CASHBACK_RECHARGE_ALLOWED",
-            "MESSAGE_ON_RECHARGE"
+            "MESSAGE_ON_RECHARGE",
+            "HOME_SCREEN_BG",
+            "HOME_SCREEN_TEXT_COLOR"
         )
         WebApiCaller.getInstance().request(
             ApiRequest(
@@ -320,12 +318,43 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
                                     it.value
                                 )
                             }
+                            "HOME_SCREEN_BG"->{
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_HOME_SCREEN_BG,
+                                    it.value
+                                )
+                            }
+                            "HOME_SCREEN_TEXT_COLOR"->{
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_HOME_SCREEN_TEXT_COLOR,
+                                    it.value
+                                )
+                            }
 
 
                         }
                     }
+                    data.data.keyNotFoundList.forEach {
+                        when(it){
+                            "HOME_SCREEN_TEXT_COLOR"->{
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_HOME_SCREEN_TEXT_COLOR,
+                                    null
+                                )
+                            }
+                            "HOME_SCREEN_BG"->{
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_HOME_SCREEN_BG,
+                                    null
+                                )
+                            }
+                        }
+                    }
                 }
-
 
             }
             ApiConstant.REFERRAL_SCREEN_MESSAGES_API -> {

@@ -7,7 +7,6 @@ import com.google.gson.annotations.SerializedName
 data class MultipleJackpotNetworkResponse(
 
 	@field:SerializedName("data")
-//	val data: List<JackpotDetailsItem>
 	val data: DataJack? = null
 )
 

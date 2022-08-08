@@ -63,3 +63,4 @@ object SimpleTextDiffUtils : DiffUtil.ItemCallback<SimpleTextUiModel>() {
         return oldItem == newItem
     }
 }
+

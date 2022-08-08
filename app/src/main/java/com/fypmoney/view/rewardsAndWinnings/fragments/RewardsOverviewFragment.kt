@@ -169,22 +169,9 @@ class RewardsOverviewFragment :
         setRecyclerView()
         mViewmodel?.let { observeInput(it) }
 
-//        mViewBinding?.bootomPartCl?.setOnClickListener {
-//            val intent = Intent(requireContext(), CashBackWonHistoryActivity::class.java)
-//            startActivity(intent)
-//        }
-
-//        mViewBinding?.totalMyntsLayout?.setOnClickListener {
-//            //tabchangeListner.tabchange(0, getString(R.string.reward_history))
-//            findNavController().navigate(R.id.navigation_arcade)
-//        }
-//        mViewBinding?.goldenCardLayout?.setOnClickListener {
-//
-//            //tabchangeListner.tabchange(0, getString(R.string.jackpot))
-//            findNavController().navigate(R.id.navigation_jackpot)
-////            findNavController().navigate(R.id.navigation_multiple_jackpots)
-//
-//        }
+        mViewBinding?.transactionHistoryAiv?.setOnClickListener {
+            findNavController().navigate(R.id.navigation_rewards_history)
+        }
 
         mViewBinding?.chipCashView?.setOnClickListener {
             val intent = Intent(requireContext(), CashBackWonHistoryActivity::class.java)
@@ -311,44 +298,62 @@ class RewardsOverviewFragment :
                 redirectionResource?.let { uri ->
 
                     val redirectionResources = uri.split(",")[0]
-                    if (redirectionResources == AppConstants.FyperScreen) {
-                        findNavController().navigate(R.id.navigation_fyper)
-                    } else if (redirectionResources == AppConstants.JACKPOTTAB) {
-                        findNavController().navigate(R.id.navigation_jackpot)
-                    } else if (redirectionResources == AppConstants.CardScreen) {
-                        findNavController().navigate(R.id.navigation_card)
-                    } else if (redirectionResources == AppConstants.RewardHistory) {
-                        findNavController().navigate(R.id.navigation_rewards_history)
-                    } else if (redirectionResources == AppConstants.ARCADE) {
-                        findNavController().navigate(R.id.navigation_arcade)
-                    } else if (redirectionResources == AppConstants.GIFT_VOUCHER) {
-                        findNavController().navigate(
-                            Uri.parse("fypmoney://creategiftcard/${redirectionResource}"),
-                            navOptions {
-                                anim {
-                                    popEnter = R.anim.slide_in_left
-                                    popExit = R.anim.slide_out_righ
-                                    enter = R.anim.slide_in_right
-                                    exit = R.anim.slide_out_left
-                                }
-                            })
-                    } else if (redirectionResources == AppConstants.ARCADE) {
-                        findNavController().navigate(
-                            Uri.parse("https://www.fypmoney.in/leaderboard/${redirectionResource}"),
-                            navOptions {
-                                anim {
-                                    popEnter = R.anim.slide_in_left
-                                    popExit = R.anim.slide_out_righ
-                                    enter = R.anim.slide_in_right
-                                    exit = R.anim.slide_out_left
-                                }
-                            })
-                    } else {
-                        redirectionResources.let { it1 ->
-                            Utility.deeplinkRedirection(
-                                it1,
-                                requireContext()
-                            )
+                    when (redirectionResources) {
+                        AppConstants.FyperScreen -> {
+                            findNavController().navigate(R.id.navigation_fyper)
+                        }
+                        AppConstants.JACKPOTTAB -> {
+                            findNavController().navigate(R.id.navigation_jackpot)
+                        }
+                        AppConstants.CardScreen -> {
+                            findNavController().navigate(R.id.navigation_card)
+                        }
+                        AppConstants.RewardHistory -> {
+                            findNavController().navigate(R.id.navigation_rewards_history)
+                        }
+                        AppConstants.ARCADE -> {
+                            findNavController().navigate(R.id.navigation_arcade)
+                        }
+                        AppConstants.GIFT_VOUCHER -> {
+                            findNavController().navigate(
+                                Uri.parse("fypmoney://creategiftcard/${redirectionResource}"),
+                                navOptions {
+                                    anim {
+                                        popEnter = R.anim.slide_in_left
+                                        popExit = R.anim.slide_out_righ
+                                        enter = R.anim.slide_in_right
+                                        exit = R.anim.slide_out_left
+                                    }
+                                })
+                        }
+                        AppConstants.ARCADE -> {
+                            findNavController().navigate(
+                                Uri.parse("https://www.fypmoney.in/leaderboard/${redirectionResource}"),
+                                navOptions {
+                                    anim {
+                                        popEnter = R.anim.slide_in_left
+                                        popExit = R.anim.slide_out_righ
+                                        enter = R.anim.slide_in_right
+                                        exit = R.anim.slide_out_left
+                                    }
+                                })
+                        }
+                        AppConstants.F_Store -> {
+                            findNavController().navigate(R.id.navigation_explore)
+                        }
+                        AppConstants.REWARDS -> {
+                            findNavController().navigate(R.id.navigation_rewards)
+                        }
+                        AppConstants.INSIGHTS -> {
+                            findNavController().navigate(R.id.navigation_insights)
+                        }
+                        else -> {
+                            redirectionResources.let { it1 ->
+                                Utility.deeplinkRedirection(
+                                    it1,
+                                    requireContext()
+                                )
+                            }
                         }
                     }
                 }
@@ -479,7 +484,7 @@ class RewardsOverviewFragment :
                                 }
                             })
                     }
-                    null -> TODO()
+                    null -> {}
                 }
             }
         }

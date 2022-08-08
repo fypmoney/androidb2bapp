@@ -16,7 +16,16 @@ data class ExploreContentResponse(
     val sectionCode: String? = null,
     val id: Int? = null,
     val sectionDisplayText: String? = null,
-    val status: String? = null
+    val status: String? = null,
+    val titleColor:String? = null,
+    val subTitleColor:String? = null,
+    val backgroundImage:String? = null,
+    val bgWidth:String?= null,
+    val bgHeight:String? = null,
+    val sectionSubTitle:String? = null,
+    val scrolDisplay:String? = null,
+    val scrollColor:String? = null,
+    val topSpacing:String? = null
 ):Parcelable
 
 @Parcelize

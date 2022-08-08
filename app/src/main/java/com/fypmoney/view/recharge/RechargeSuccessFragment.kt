@@ -161,7 +161,7 @@ class RechargeSuccessFragment :
                 val direction = RechargeSuccessFragmentDirections.navigateFromPaymentSuccessToHome()
                 findNavController().navigate(direction)
             }
-            null -> TODO()
+            null -> {}
         }
     }
 

@@ -27,7 +27,7 @@ import com.google.gson.JsonParser
 
 class EnterMobileNumberRechargeFragmentVM(application: Application) : BaseViewModel(application) {
 
-    var openBottomSheet: MutableLiveData<ArrayList<offerDetailResponse>> = MutableLiveData()
+    var openBottomSheet: MutableLiveData<ArrayList<offerDetailResponse>> = LiveEvent()
 
     val state:LiveData<EnterMobileNumberRechargeState>
         get() = _state
@@ -115,11 +115,11 @@ class EnterMobileNumberRechargeFragmentVM(application: Application) : BaseViewMo
         _state.value = EnterMobileNumberRechargeState.RecentRechargeLoading
         WebApiCaller.getInstance().request(
             ApiRequest(
-                ApiConstant.API_RECENT_RECHARGE,
-                NetworkUtil.endURL(ApiConstant.API_RECENT_RECHARGE) +"?page=0&size=50&sort=createdDate,desc",
-                ApiUrl.GET,
-                BaseRequest(),
-                this, isProgressBar = false
+                purpose = ApiConstant.API_RECENT_RECHARGE,
+                endpoint = NetworkUtil.endURL(ApiConstant.API_RECENT_RECHARGE) +"?page=0&size=50&sort=createdDate,desc",
+                request_type = ApiUrl.GET,
+                param=BaseRequest(),
+                onResponse = this, isProgressBar = false
             )
         )
     }

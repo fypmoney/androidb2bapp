@@ -13,6 +13,7 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.BaseRequest
+import com.fypmoney.util.GIFT_CARD_IS_NOT_INITIALIZED
 import com.fypmoney.util.HOW_TO_REDEEM_LINK_EXCEPTION
 import com.fypmoney.util.HOW_TO_REDEEM_TXT_EXCEPTION
 import com.fypmoney.view.giftcard.model.GiftCardDetail
@@ -48,20 +49,26 @@ class GiftCardDetailsFragmentVM(application: Application) : BaseViewModel(applic
 
     }
     fun redeemNowClick(){
-        giftCardDetails.howToRedeem?.let { howToRedeem->
+        if(::giftCardDetails.isInitialized){
+            giftCardDetails.howToRedeem?.let { howToRedeem->
                 giftCardDetails.redeemLink?.let { redeemLink->
-                _event.value = GiftCardDetailsEvent.RedeemNow(howToRedeem,redeemLink)
-            }?: kotlin.run {
+                    _event.value = GiftCardDetailsEvent.RedeemNow(howToRedeem,redeemLink)
+                }?: kotlin.run {
                     FirebaseCrashlytics.getInstance().recordException(Throwable(HOW_TO_REDEEM_LINK_EXCEPTION))
                 }
-        }?: kotlin.run {
-                FirebaseCrashlytics.getInstance().recordException(Throwable(HOW_TO_REDEEM_TXT_EXCEPTION))
-            giftCardDetails.redeemLink?.let { redeemLink->
-                _event.value = GiftCardDetailsEvent.RedeemNowWithoutSteps(redeemLink)
             }?: kotlin.run {
-                FirebaseCrashlytics.getInstance().recordException(Throwable(HOW_TO_REDEEM_LINK_EXCEPTION))
+                FirebaseCrashlytics.getInstance().recordException(Throwable(HOW_TO_REDEEM_TXT_EXCEPTION))
+                giftCardDetails.redeemLink?.let { redeemLink->
+                    _event.value = GiftCardDetailsEvent.RedeemNowWithoutSteps(redeemLink)
+                }?: kotlin.run {
+                    FirebaseCrashlytics.getInstance().recordException(Throwable(HOW_TO_REDEEM_LINK_EXCEPTION))
+                }
             }
+        }else{
+            FirebaseCrashlytics.getInstance().recordException(Throwable(GIFT_CARD_IS_NOT_INITIALIZED))
+
         }
+
     }
 
     fun onShareClick(){

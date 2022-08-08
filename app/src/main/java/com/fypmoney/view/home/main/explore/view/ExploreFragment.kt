@@ -88,6 +88,9 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
 //        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
         setObserver()
+        binding.giftVoucherHistoryTv.setOnClickListener {
+            findNavController().navigate(R.id.navigation_gift_card_history)
+        }
 
     }
 
@@ -202,6 +205,15 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
                                 AppConstants.GIFT_VOUCHER -> {
                                     findNavController().navigate(Uri.parse("fypmoney://creategiftcard/${it.redirectionResource}"))
                                 }
+                                AppConstants.F_Store -> {
+                                    findNavController().navigate(R.id.navigation_explore)
+                                }
+                                AppConstants.REWARDS -> {
+                                    findNavController().navigate(R.id.navigation_rewards)
+                                }
+                                AppConstants.INSIGHTS -> {
+                                    findNavController().navigate(R.id.navigation_insights)
+                                }
                                 else -> {
                                     Utility.deeplinkRedirection(redirectionResources, requireContext())
                                 }
@@ -282,8 +294,8 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
                     "ARCADE"-> {
                         val type = it.rfu1?.let { rfu->it.redirectionResource?.let { it1 -> checkTheArcadeType(arcadeType = rfu, productCode = it1) } }
                         when(type){
-                            ArcadeType.NOTypeFound -> TODO()
-                            is ArcadeType.SCRATCH_CARD -> TODO()
+                            ArcadeType.NOTypeFound -> {}
+                            is ArcadeType.SCRATCH_CARD -> {}
                             is ArcadeType.SLOT -> {
                                 findNavController().navigate(Uri.parse("https://www.fypmoney.in/slot_machine/${type.productCode}/${null}"),
                                     navOptions {
@@ -317,7 +329,7 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
                                         }
                                     })
                             }
-                            null -> TODO()
+                            null -> {}
                         }
                     }
 

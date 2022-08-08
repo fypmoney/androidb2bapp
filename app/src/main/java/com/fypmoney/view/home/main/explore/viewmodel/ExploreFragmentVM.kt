@@ -10,6 +10,7 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.*
+import com.fypmoney.util.livedata.LiveEvent
 import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
 import com.google.gson.Gson
@@ -21,7 +22,7 @@ class ExploreFragmentVM(application: Application) : BaseViewModel(application) {
 
     var rewardHistoryList: MutableLiveData<ArrayList<ExploreContentResponse>> = MutableLiveData()
 
-    var openBottomSheet: MutableLiveData<ArrayList<offerDetailResponse>> = MutableLiveData()
+    var openBottomSheet: MutableLiveData<ArrayList<offerDetailResponse>> = LiveEvent()
     var feedDetail: MutableLiveData<FeedDetails> = MutableLiveData()
 
     init {
