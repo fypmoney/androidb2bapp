@@ -9,6 +9,7 @@ import android.media.MediaPlayer
 import android.view.ViewGroup
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.bumptech.glide.Glide
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.trackr
 import com.fypmoney.R
@@ -20,6 +21,8 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.*
+import com.fypmoney.util.Utility
+import com.fypmoney.util.livedata.LiveEvent
 import com.fypmoney.view.arcadegames.brandedcoupons.model.BrandedCouponResponse
 import com.fypmoney.view.arcadegames.brandedcoupons.model.COUPONItem
 import com.fypmoney.view.arcadegames.model.MultipleJackpotNetworkResponse
@@ -51,6 +54,8 @@ class BrandedCouponsFragmentVM(application: Application) : BaseViewModel(applica
     //live data variable to store frequency played count
     var remainFrequency: MutableLiveData<Int> = MutableLiveData()
 
+    var brandLogo: String? = null
+
     //To store total frequency data
     var frequency: Int? = 0
 
@@ -77,7 +82,7 @@ class BrandedCouponsFragmentVM(application: Application) : BaseViewModel(applica
 
     val stateMyntsBurn: LiveData<MyntsBurnState>
         get() = _stateMyntsBurn
-    private val _stateMyntsBurn = MutableLiveData<MyntsBurnState>()
+    private val _stateMyntsBurn = LiveEvent<MyntsBurnState>()
 
     val stateProductDetails: LiveData<BrandedProductResponseState>
         get() = _stateProductDetails
@@ -85,7 +90,7 @@ class BrandedCouponsFragmentVM(application: Application) : BaseViewModel(applica
 
     val statePlayOrder: LiveData<PlayOrderState>
         get() = _statePlayOrder
-    private val _statePlayOrder = MutableLiveData<PlayOrderState>()
+    private val _statePlayOrder = LiveEvent<PlayOrderState>()
 
     init {
         callMyntsSummaryApi()
@@ -212,7 +217,11 @@ class BrandedCouponsFragmentVM(application: Application) : BaseViewModel(applica
             ApiConstant.API_GET_BRANDED_COUPONS_PURPOSE -> {
                 if (responseData is BrandedCouponResponse) {
                     _stateBrandedProduct.value = responseData.data?.cOUPON?.get(0)
-                        ?.let { BrandedCouponDataState.BrandedCouponSuccess(it) }
+                        ?.let {
+                            BrandedCouponDataState.BrandedCouponSuccess(it)
+                        }
+
+                    brandLogo = responseData.data?.cOUPON?.get(0)?.detailResource
                 }
             }
 
@@ -319,9 +328,15 @@ class BrandedCouponsFragmentVM(application: Application) : BaseViewModel(applica
         dialogNoCoupons.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialogNoCoupons.window?.attributes = wlp
 
-        dialogNoCoupons.clicked?.setOnClickListener {
+        if (brandLogo != null) {
+            Utility.setImageUsingGlideWithShimmerPlaceholderWithoutNull(
+                context, brandLogo,
+                dialogNoCoupons.ivNoCouponBrandLogo
+            )
+        }
+        dialogNoCoupons.btnContinue?.setOnClickListener {
             trackr {
-                it.name = TrackrEvent.insufficient_mynts
+                it.name = TrackrEvent.no_more_coupon
             }
             dialogNoCoupons.dismiss()
         }

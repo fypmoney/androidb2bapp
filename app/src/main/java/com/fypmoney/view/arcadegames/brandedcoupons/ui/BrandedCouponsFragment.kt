@@ -3,7 +3,6 @@ package com.fypmoney.view.arcadegames.brandedcoupons.ui
 import android.animation.ValueAnimator
 import android.graphics.Color
 import android.media.MediaPlayer
-import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -11,10 +10,11 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.navigation.navOptions
 import com.bumptech.glide.Glide
 import com.fypmoney.BR
 import com.fypmoney.R
@@ -27,7 +27,6 @@ import com.fypmoney.extension.toVisible
 import com.fypmoney.util.Utility
 import com.fypmoney.view.arcadegames.brandedcoupons.viewmodel.BrandedCouponsFragmentVM
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import kotlinx.android.synthetic.main.feeds_row_layout_vertical.*
 import kotlinx.android.synthetic.main.toolbar.*
 
 class BrandedCouponsFragment :
@@ -294,7 +293,7 @@ class BrandedCouponsFragment :
 
                 brandedCouponsFragmentVM.callPlayOrderApi(it.coinsBurnedResponse.orderNo)
 
-                arcadeSounds("SLOT")
+//                arcadeSounds("SLOT")
 
                 decreaseCountAnimation(
                     binding.tvBrandedCouponsMyntsCount,
@@ -327,14 +326,18 @@ class BrandedCouponsFragment :
             BrandedCouponsFragmentVM.PlayOrderState.Loading -> {}
             is BrandedCouponsFragmentVM.PlayOrderState.PlayOrderSuccess -> {
 
-                findNavController().navigate(
-                    R.id.navigation_branded_coupons_details
-                )
+                Handler(Looper.getMainLooper()).postDelayed({
+                    val bundle = bundleOf("Coupon Code" to it.spinWheelResponseDetails.couponCode)
 
-                binding.ivBtnPlayAnimation.toVisible()
-                binding.progressBtnPlay.toInvisible()
+                    val transition =
+                        FragmentNavigatorExtras(binding.ivInitialCouponStage to "detailsBackTransition")
+                    findNavController().navigate(
+                        R.id.navigation_branded_coupons_details, bundle, null, transition
+                    )
 
-                Utility.showToast("CouponCode: " + it.spinWheelResponseDetails.couponCode)
+                    binding.ivBtnPlayAnimation.toVisible()
+                    binding.progressBtnPlay.toInvisible()
+                }, 500)
             }
         }
     }

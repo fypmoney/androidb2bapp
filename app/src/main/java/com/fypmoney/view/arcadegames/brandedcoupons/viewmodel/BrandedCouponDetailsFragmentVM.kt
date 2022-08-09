@@ -23,15 +23,12 @@ class BrandedCouponDetailsFragmentVM(application: Application) : BaseViewModel(a
 
     private val _stateBrandedCoupon = MutableLiveData<BrandedCouponDetailsState>()
 
-    init {
-        callRewardCouponsApi()
-    }
 
-    private fun callRewardCouponsApi() {
+    fun callRewardCouponsApi(code: String?) {
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_GET_COUPON_REWARD_DATA,
-                NetworkUtil.endURL(ApiConstant.API_GET_COUPON_REWARD_DATA),
+                NetworkUtil.endURL(ApiConstant.API_GET_COUPON_REWARD_DATA + code),
                 ApiUrl.GET,
                 BaseRequest(),
                 this, isProgressBar = false

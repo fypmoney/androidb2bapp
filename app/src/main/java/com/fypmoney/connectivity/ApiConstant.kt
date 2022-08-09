@@ -210,7 +210,7 @@ object ApiConstant {
 
     const val API_GET_LEADERBOARD_DATA = "services/PockketService/api/reward/leaderboard/"
 
-    const val API_GET_COUPON_REWARD_DATA = "services/PockketService/api/coupon/details/COMMON_COUPON_1/"
+    const val API_GET_COUPON_REWARD_DATA = "services/PockketService/api/coupon/details/"
 
 }
 

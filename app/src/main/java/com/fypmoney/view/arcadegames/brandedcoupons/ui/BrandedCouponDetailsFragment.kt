@@ -4,20 +4,29 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.navArgs
+import androidx.transition.TransitionInflater
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.FragmentBrandedCouponDetailsBinding
+import com.fypmoney.extension.toVisible
 import com.fypmoney.util.Utility
 import com.fypmoney.view.arcadegames.brandedcoupons.viewmodel.BrandedCouponDetailsFragmentVM
 import kotlinx.android.synthetic.main.toolbar.*
 
-class BrandedCouponDetailsFragment : BaseFragment<FragmentBrandedCouponDetailsBinding, BrandedCouponDetailsFragmentVM>() {
+class BrandedCouponDetailsFragment :
+    BaseFragment<FragmentBrandedCouponDetailsBinding, BrandedCouponDetailsFragmentVM>() {
 
     private val brandedCouponDetailsFragmentVM by viewModels<BrandedCouponDetailsFragmentVM> { defaultViewModelProviderFactory }
     private lateinit var binding: FragmentBrandedCouponDetailsBinding
-    private val navArgs by navArgs<BrandedCouponDetailsFragmentArgs>()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        activity?.window?.statusBarColor = Color.parseColor("#F4DE14")
+
+        sharedElementEnterTransition =
+            TransitionInflater.from(context).inflateTransition(android.R.transition.move)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -32,32 +41,53 @@ class BrandedCouponDetailsFragment : BaseFragment<FragmentBrandedCouponDetailsBi
             backArrowTint = Color.WHITE
         )
 
-        brandedCouponDetailsFragmentVM.couponCode = navArgs.couponCode
+        brandedCouponDetailsFragmentVM.couponCode = arguments?.getString("Coupon Code").toString()
+
+        brandedCouponDetailsFragmentVM.callRewardCouponsApi(brandedCouponDetailsFragmentVM.couponCode)
 
         setObserver()
 
     }
 
     private fun setObserver() {
-        brandedCouponDetailsFragmentVM.stateBrandedCoupon.observe(viewLifecycleOwner){
+        brandedCouponDetailsFragmentVM.stateBrandedCoupon.observe(viewLifecycleOwner) {
             handleCouponDetailsState(it)
         }
     }
 
     private fun handleCouponDetailsState(it: BrandedCouponDetailsFragmentVM.BrandedCouponDetailsState?) {
-        when(it){
+        when (it) {
             is BrandedCouponDetailsFragmentVM.BrandedCouponDetailsState.Error -> {}
+
             BrandedCouponDetailsFragmentVM.BrandedCouponDetailsState.Loading -> {}
+
             is BrandedCouponDetailsFragmentVM.BrandedCouponDetailsState.BrandedCouponDetailsSuccess -> {
 
-                Utility.setImageUsingGlideWithShimmerPlaceholderWithoutNull(this.context, it.couponDetailsData.brandLogo, binding.ivBrandLogo)
+                Utility.setImageUsingGlideWithShimmerPlaceholderWithoutNull(
+                    this.context,
+                    it.couponDetailsData.brandLogo,
+                    binding.ivBrandLogo
+                )
 
-                binding.tvBrandedTitle.text = it.couponDetailsData.title
+                binding.tvBrandedContent.text = it.couponDetailsData.title
 
                 binding.tvBrandedCouponCode.text = it.couponDetailsData.code
 
+                val array: Array<String>? =
+                    it.couponDetailsData.tnc?.toCharArray()?.map { it.toString() }?.toTypedArray()
 
+                if (array != null) {
+                    binding.cvCouponTerms.toVisible()
+                    for (item in array.indices) {
+                        val textdata: String = java.lang.String.join(",", array[item])
 
+                        binding.tvExpandCouponTerms.text = textdata
+
+                        Utility.showToast("List: $textdata")
+
+                    }
+
+                }
             }
         }
     }
@@ -68,6 +98,11 @@ class BrandedCouponDetailsFragment : BaseFragment<FragmentBrandedCouponDetailsBi
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_branded_coupon_details
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        activity?.window?.statusBarColor = context?.resources?.getColor(R.color.black)!!
     }
 
     override fun getViewModel(): BrandedCouponDetailsFragmentVM = brandedCouponDetailsFragmentVM

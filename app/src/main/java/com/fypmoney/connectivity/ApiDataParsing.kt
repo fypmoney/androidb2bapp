@@ -14,6 +14,7 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.model.*
 import com.fypmoney.view.addmoney.model.BankProfileDetailsNetworkResponse
+import com.fypmoney.view.arcadegames.brandedcoupons.model.BrandedCouponDetailsResponse
 import com.fypmoney.view.arcadegames.brandedcoupons.model.BrandedCouponResponse
 import com.fypmoney.view.arcadegames.model.*
 import com.fypmoney.view.giftcard.model.*
@@ -266,7 +267,7 @@ class ApiDataParsing {
                 }
 
                 ApiConstant.API_GET_COUPON_REWARD_DATA -> {
-//                    getObject(response, LeaderBoardResponse::class.java)
+                    getObject(response, BrandedCouponDetailsResponse::class.java)
                 }
 
                 ApiConstant.API_GET_ALL_JACKPOTS_PRODUCTWISE -> {

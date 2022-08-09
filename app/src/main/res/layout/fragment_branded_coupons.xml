@@ -380,6 +380,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/_4sdp"
+                    android:transitionName="couponTransition"
                     app:layout_constraintBottom_toBottomOf="@id/ivCouponFrame"
                     app:layout_constraintEnd_toEndOf="@+id/ivCouponFrame"
                     app:layout_constraintStart_toStartOf="@+id/ivCouponFrame"
