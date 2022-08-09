@@ -11,8 +11,6 @@ import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
-import android.os.VibrationEffect
-import android.os.Vibrator
 import android.provider.ContactsContract
 import android.provider.MediaStore
 import android.provider.Settings
@@ -23,6 +21,7 @@ import android.text.style.ClickableSpan
 import android.util.DisplayMetrics
 import android.util.Log
 import android.util.Patterns
+import android.view.HapticFeedbackConstants
 import android.view.View
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.widget.ImageView
@@ -1388,8 +1387,8 @@ object Utility {
         return dateFormat.format(date)
     }
 
-    fun hapticVibrate(context: Context) {
-        val vibration = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+    fun View.hapticFeedback() {
+        /*val vibration = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
         if (Build.VERSION.SDK_INT >= 26) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 vibration.vibrate(VibrationEffect.createOneShot(40, VibrationEffect.DEFAULT_AMPLITUDE))
@@ -1398,6 +1397,11 @@ object Utility {
             }
         } else {
             vibration.vibrate(40)
-        }
+        }*/
+        this.performHapticFeedback(
+            HapticFeedbackConstants.KEYBOARD_TAP,
+            HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING
+        )
+
     }
 }

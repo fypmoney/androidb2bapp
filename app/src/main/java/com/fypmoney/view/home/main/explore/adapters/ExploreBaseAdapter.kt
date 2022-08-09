@@ -17,7 +17,7 @@ import com.fypmoney.extension.setMargin
 import com.fypmoney.extension.toGone
 import com.fypmoney.extension.toVisible
 import com.fypmoney.util.AppConstants.YES
-import com.fypmoney.util.Utility
+import com.fypmoney.util.Utility.hapticFeedback
 import com.fypmoney.view.home.main.explore.`interface`.ExploreItemClickListener
 import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
 import com.fypmoney.view.home.main.explore.model.SectionContentItem
@@ -89,7 +89,6 @@ class ExploreBaseAdapter(
         if (items[position].sectionContent != null && items[position].sectionContent?.size!! > 1) {
             val itemClickListener2 = object : ExploreItemClickListener {
                 override fun onItemClicked(position: Int, sectionContentItem: SectionContentItem,exploreContentResponse: ExploreContentResponse?) {
-                    Utility.hapticVibrate(context)
                     clickInterface.onItemClicked(position, sectionContentItem,exploreContentResponse)
                 }
             }
@@ -140,7 +139,7 @@ class ExploreBaseAdapter(
             holder.viewItem.setOnClickListener {
 
                 items[position].sectionContent?.get(0)?.let { it1 ->
-                    Utility.hapticVibrate(context)
+                    it.hapticFeedback()
                     clickInterface.onItemClicked(
                         position,
                         it1,

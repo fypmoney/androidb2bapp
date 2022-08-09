@@ -21,7 +21,7 @@ import com.fypmoney.extension.toGone
 import com.fypmoney.extension.toVisible
 import com.fypmoney.listener.LocationListenerClass
 import com.fypmoney.util.SharedPrefUtils
-import com.fypmoney.util.Utility
+import com.fypmoney.util.Utility.hapticFeedback
 import com.fypmoney.view.home.main.home.view.HomeFragment
 import com.fypmoney.view.home.main.homescreen.viewmodel.HomeActivityVM
 import java.util.concurrent.atomic.AtomicBoolean
@@ -66,7 +66,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
         binding.bottomMenu.setItemSelected(R.id.navigation_home, true)
 
         binding.bottomMenu.setOnItemSelectedListener { id ->
-            Utility.hapticVibrate(this@HomeActivity)
+            binding.bottomMenu.hapticFeedback()
             onNavDestinationSelected(id, navHomeController)
         }
 

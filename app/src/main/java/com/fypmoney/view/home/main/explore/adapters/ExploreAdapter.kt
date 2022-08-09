@@ -53,10 +53,12 @@ class ExploreAdapter(
         private lateinit var mViewHelper: ExploreViewHelper
         override fun onBind(position: Int) {
             mViewHelper = ExploreViewHelper(
+                itemView,
                 position,
                 exploreList?.get(position),
                 onExploreItemClickListener,
-                exploreContentResponse = exploreContentResponse
+                exploreContentResponse = exploreContentResponse,
+
             )
             mRowItemBinding!!.viewHelper = mViewHelper
 
