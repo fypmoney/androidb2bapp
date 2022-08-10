@@ -347,6 +347,41 @@ class RewardsOverviewFragment :
                         AppConstants.INSIGHTS -> {
                             findNavController().navigate(R.id.navigation_insights)
                         }
+                        AppConstants.PREPAID_RECHARGE_REDIRECTION->{
+                            findNavController().navigate(Uri.parse("https://www.fypmoney.in/recharge/${AppConstants.PREPAID}"),
+                                navOptions {
+                                    anim {
+                                        popEnter = R.anim.slide_in_left
+                                        popExit = R.anim.slide_out_righ
+                                        enter = R.anim.slide_in_right
+                                        exit = R.anim.slide_out_left
+                                    }
+                                })
+                        }
+
+                        AppConstants.POSTPAID_RECHARGE_REDIRECTION->{
+                            findNavController().navigate(Uri.parse("https://www.fypmoney.in/recharge/${AppConstants.POSTPAID}"),
+                                navOptions {
+                                    anim {
+                                        popEnter = R.anim.slide_in_left
+                                        popExit = R.anim.slide_out_righ
+                                        enter = R.anim.slide_in_right
+                                        exit = R.anim.slide_out_left
+                                    }
+                                })
+                        }
+
+                        AppConstants.DTH_RECHARGE_REDIRECTION->{
+                            findNavController().navigate(Uri.parse("https://www.fypmoney.in/recharge/dth"),
+                                navOptions {
+                                    anim {
+                                        popEnter = R.anim.slide_in_left
+                                        popExit = R.anim.slide_out_righ
+                                        enter = R.anim.slide_in_right
+                                        exit = R.anim.slide_out_left
+                                    }
+                                })
+                        }
                         else -> {
                             redirectionResources.let { it1 ->
                                 Utility.deeplinkRedirection(
@@ -486,6 +521,42 @@ class RewardsOverviewFragment :
                     }
                     null -> {}
                 }
+            }
+
+            AppConstants.PREPAID_RECHARGE_REDIRECTION->{
+                findNavController().navigate(Uri.parse("https://www.fypmoney.in/recharge/${AppConstants.PREPAID}"),
+                    navOptions {
+                        anim {
+                            popEnter = R.anim.slide_in_left
+                            popExit = R.anim.slide_out_righ
+                            enter = R.anim.slide_in_right
+                            exit = R.anim.slide_out_left
+                        }
+                    })
+            }
+
+            AppConstants.POSTPAID_RECHARGE_REDIRECTION->{
+                findNavController().navigate(Uri.parse("https://www.fypmoney.in/recharge/${AppConstants.POSTPAID}"),
+                    navOptions {
+                        anim {
+                            popEnter = R.anim.slide_in_left
+                            popExit = R.anim.slide_out_righ
+                            enter = R.anim.slide_in_right
+                            exit = R.anim.slide_out_left
+                        }
+                    })
+            }
+
+            AppConstants.DTH_RECHARGE_REDIRECTION->{
+                findNavController().navigate(Uri.parse("https://www.fypmoney.in/recharge/dth"),
+                    navOptions {
+                        anim {
+                            popEnter = R.anim.slide_in_left
+                            popExit = R.anim.slide_out_righ
+                            enter = R.anim.slide_in_right
+                            exit = R.anim.slide_out_left
+                        }
+                    })
             }
         }
     }

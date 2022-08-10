@@ -247,6 +247,9 @@ object AppConstants {
     const val StoreshopsScreen = "Storeshopsscreen"
     const val GIFT_VOUCHER = "GIFT_VOUCHER"
     const val LEADERBOARD = "LEADERBOARD"
+    const val PREPAID_RECHARGE_REDIRECTION = "Recharge"
+    const val POSTPAID_RECHARGE_REDIRECTION = "Postpaid"
+    const val DTH_RECHARGE_REDIRECTION = "DTH"
 
     /* Home : "HomeView, 0"
 

@@ -182,13 +182,6 @@
         tools:layout="@layout/enter_mobile_number_recharge_fragment">
 
 
-        <argument
-            android:name="rechargeType"
-            android:defaultValue="@null"
-            app:argType="string"
-            app:nullable="true" />
-
-
         <action
             android:id="@+id/action_enter_mobile_no_to_postpaid_bill_details"
             app:destination="@+id/navigation_postpaid_bill"
@@ -196,6 +189,8 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_righ" />
+
+
         <action
             android:id="@+id/action_enter_mobile_to_mobile_no_info_recharge"
             app:destination="@+id/navigation_mobile_number_info_recharge"
@@ -203,8 +198,6 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_righ" />
-
-
         <action
             android:id="@+id/action_select_circle"
             app:destination="@+id/navigation_select_circle"
@@ -212,6 +205,7 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_righ" />
+
 
         <action
             android:id="@+id/action_enter_mobile_number_recharge_to_section_explore"
@@ -228,6 +222,16 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_righ" />
+
+        <argument
+            android:name="rechargeType"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+        <deepLink
+            android:id="@+id/deeplink_recharge_type"
+            android:autoVerify="true"
+            app:uri="https://www.fypmoney.in/recharge/{rechargeType}" />
 
     </fragment>
 
@@ -395,6 +399,10 @@
         android:label="select_recharge_home"
         tools:layout="@layout/dth_stores_list_fragment">
 
+        <deepLink
+            android:id="@+id/deeplink_dth"
+            android:autoVerify="true"
+            app:uri="https://www.fypmoney.in/recharge/dth" />
 
         <action
             android:id="@+id/action_dth_recharge_screen"

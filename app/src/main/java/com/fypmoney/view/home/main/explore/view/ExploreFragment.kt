@@ -53,8 +53,6 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
     private val exploreFragmentVM by viewModels<ExploreFragmentVM> { defaultViewModelProviderFactory }
     private lateinit var _binding: FragmentExploreBinding
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding
 
 
@@ -214,6 +212,42 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
                                 AppConstants.INSIGHTS -> {
                                     findNavController().navigate(R.id.navigation_insights)
                                 }
+                                AppConstants.PREPAID_RECHARGE_REDIRECTION->{
+                                    findNavController().navigate(Uri.parse("https://www.fypmoney.in/recharge/${AppConstants.PREPAID}"),
+                                        navOptions {
+                                            anim {
+                                                popEnter = R.anim.slide_in_left
+                                                popExit = R.anim.slide_out_righ
+                                                enter = R.anim.slide_in_right
+                                                exit = R.anim.slide_out_left
+                                            }
+                                        })
+                                }
+
+                                AppConstants.POSTPAID_RECHARGE_REDIRECTION->{
+                                    findNavController().navigate(Uri.parse("https://www.fypmoney.in/recharge/${AppConstants.POSTPAID}"),
+                                        navOptions {
+                                            anim {
+                                                popEnter = R.anim.slide_in_left
+                                                popExit = R.anim.slide_out_righ
+                                                enter = R.anim.slide_in_right
+                                                exit = R.anim.slide_out_left
+                                            }
+                                        })
+                                }
+
+                                AppConstants.DTH_RECHARGE_REDIRECTION->{
+                                    findNavController().navigate(Uri.parse("https://www.fypmoney.in/recharge/dth"),
+                                        navOptions {
+                                            anim {
+                                                popEnter = R.anim.slide_in_left
+                                                popExit = R.anim.slide_out_righ
+                                                enter = R.anim.slide_in_right
+                                                exit = R.anim.slide_out_left
+                                            }
+                                        })
+                                }
+
                                 else -> {
                                     Utility.deeplinkRedirection(redirectionResources, requireContext())
                                 }
@@ -332,7 +366,41 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
                             null -> {}
                         }
                     }
+                    AppConstants.PREPAID_RECHARGE_REDIRECTION->{
+                        findNavController().navigate(Uri.parse("https://www.fypmoney.in/recharge/${AppConstants.PREPAID}"),
+                            navOptions {
+                                anim {
+                                    popEnter = R.anim.slide_in_left
+                                    popExit = R.anim.slide_out_righ
+                                    enter = R.anim.slide_in_right
+                                    exit = R.anim.slide_out_left
+                                }
+                            })
+                    }
 
+                    AppConstants.POSTPAID_RECHARGE_REDIRECTION->{
+                        findNavController().navigate(Uri.parse("https://www.fypmoney.in/recharge/${AppConstants.POSTPAID}"),
+                            navOptions {
+                                anim {
+                                    popEnter = R.anim.slide_in_left
+                                    popExit = R.anim.slide_out_righ
+                                    enter = R.anim.slide_in_right
+                                    exit = R.anim.slide_out_left
+                                }
+                            })
+                    }
+
+                    AppConstants.DTH_RECHARGE_REDIRECTION->{
+                        findNavController().navigate(Uri.parse("https://www.fypmoney.in/recharge/dth"),
+                            navOptions {
+                                anim {
+                                    popEnter = R.anim.slide_in_left
+                                    popExit = R.anim.slide_out_righ
+                                    enter = R.anim.slide_in_right
+                                    exit = R.anim.slide_out_left
+                                }
+                            })
+                    }
                 }
 
 

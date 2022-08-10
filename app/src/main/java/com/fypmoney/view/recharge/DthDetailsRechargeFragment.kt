@@ -15,6 +15,7 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.navOptions
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.TrackrField
@@ -322,6 +323,42 @@ class DthDetailsRechargeFragment : BaseFragment<DthDetailsRechargeFragmentBindin
                         AppConstants.INSIGHTS -> {
                             findNavController().navigate(R.id.navigation_insights)
                         }
+                        AppConstants.PREPAID_RECHARGE_REDIRECTION->{
+                            findNavController().navigate(Uri.parse("https://www.fypmoney.in/recharge/${AppConstants.PREPAID}"),
+                                navOptions {
+                                    anim {
+                                        popEnter = R.anim.slide_in_left
+                                        popExit = R.anim.slide_out_righ
+                                        enter = R.anim.slide_in_right
+                                        exit = R.anim.slide_out_left
+                                    }
+                                })
+                        }
+
+                        AppConstants.POSTPAID_RECHARGE_REDIRECTION->{
+                            findNavController().navigate(Uri.parse("https://www.fypmoney.in/recharge/${AppConstants.POSTPAID}"),
+                                navOptions {
+                                    anim {
+                                        popEnter = R.anim.slide_in_left
+                                        popExit = R.anim.slide_out_righ
+                                        enter = R.anim.slide_in_right
+                                        exit = R.anim.slide_out_left
+                                    }
+                                })
+                        }
+
+                        AppConstants.DTH_RECHARGE_REDIRECTION->{
+                            findNavController().navigate(Uri.parse("https://www.fypmoney.in/recharge/dth"),
+                                navOptions {
+                                    anim {
+                                        popEnter = R.anim.slide_in_left
+                                        popExit = R.anim.slide_out_righ
+                                        enter = R.anim.slide_in_right
+                                        exit = R.anim.slide_out_left
+                                    }
+                                })
+                        }
+
                         else -> {
                             redirectionResources.let { it1 ->
                                 Utility.deeplinkRedirection(
@@ -383,7 +420,41 @@ class DthDetailsRechargeFragment : BaseFragment<DthDetailsRechargeFragmentBindin
                     dthDetailsRechargeFragmentVM.callFetchFeedsApi(redirectionResource)
 
                 }
+            }
+            AppConstants.PREPAID_RECHARGE_REDIRECTION->{
+                findNavController().navigate(Uri.parse("https://www.fypmoney.in/recharge/${AppConstants.PREPAID}"),
+                    navOptions {
+                        anim {
+                            popEnter = R.anim.slide_in_left
+                            popExit = R.anim.slide_out_righ
+                            enter = R.anim.slide_in_right
+                            exit = R.anim.slide_out_left
+                        }
+                    })
+            }
 
+            AppConstants.POSTPAID_RECHARGE_REDIRECTION->{
+                findNavController().navigate(Uri.parse("https://www.fypmoney.in/recharge/${AppConstants.POSTPAID}"),
+                    navOptions {
+                        anim {
+                            popEnter = R.anim.slide_in_left
+                            popExit = R.anim.slide_out_righ
+                            enter = R.anim.slide_in_right
+                            exit = R.anim.slide_out_left
+                        }
+                    })
+            }
+
+            AppConstants.DTH_RECHARGE_REDIRECTION->{
+                findNavController().navigate(Uri.parse("https://www.fypmoney.in/recharge/dth"),
+                    navOptions {
+                        anim {
+                            popEnter = R.anim.slide_in_left
+                            popExit = R.anim.slide_out_righ
+                            enter = R.anim.slide_in_right
+                            exit = R.anim.slide_out_left
+                        }
+                    })
             }
         }
     }
