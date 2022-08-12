@@ -28,6 +28,8 @@ class RotatingTreasureFragmentVM(application: Application) : BaseViewModel(appli
     //To store productId on redirection
     lateinit var productId: String
 
+    var isFirstTime: Boolean? = true
+
     var spinWheelRotateResponseDetails: SpinWheelRotateResponseDetails? = null
 
     var myntsDisplay: Int? = null
@@ -46,7 +48,10 @@ class RotatingTreasureFragmentVM(application: Application) : BaseViewModel(appli
     //Check user has play the arcade
     var isArcadeIsPlayed = false
 
-    var sectionId: Int? = null
+    //Check user has start the arcade
+    var isRotatingTreasureStarted = false
+
+    var sectionCode: Int? = null
     var frequency: Int? = 0
 
     val state: LiveData<RotatingTreasureState>
@@ -161,7 +166,7 @@ class RotatingTreasureFragmentVM(application: Application) : BaseViewModel(appli
         data class MyntsSuccess(val remainingMynts: Float?) : RotatingTreasureState()
 //        data class MyntsBurnSuccess(var coinsBurnedResponse: CoinsBurnedResponse) : RotatingTreasureState()
         data class CashSuccess(val totalCash: Int?) : RotatingTreasureState()
-        object Error : RotatingTreasureState()
+        data class Error(var errorResponseInfo: ErrorResponseInfo) : RotatingTreasureState()
     }
 
     override fun onSuccess(purpose: String, responseData: Any) {
@@ -256,6 +261,7 @@ class RotatingTreasureFragmentVM(application: Application) : BaseViewModel(appli
 
             ApiConstant.API_GET_TREASURE_DATA -> {
                 error.postValue(errorResponseInfo)
+                _state.value = RotatingTreasureState.Error(errorResponseInfo)
             }
 
             ApiConstant.API_REDEEM_REWARD -> {

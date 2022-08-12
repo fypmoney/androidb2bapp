@@ -13,7 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/bgcolor"
-        tools:context=".view.insights.view.CategoryWaiseTransactionDetailsFragment">
+        android:clickable="true"
+        tools:context=".view.insights.view.CategoryWaiseTransactionDetailsFragment"
+        android:focusable="true">
 
         <include
             android:id="@+id/layout_toolbar"

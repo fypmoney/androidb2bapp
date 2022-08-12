@@ -1,0 +1,631 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".view.arcadegames.ui.SlotMachineFragment">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bgcolor">
+
+        <include
+            android:id="@+id/layout_toolbar"
+            layout="@layout/toolbar" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/slotMachineContainer"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_toolbar">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/containerSlotMachineChips"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                app:layout_constraintVertical_bias="0"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/chipMyntsView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="6dp"
+                    android:paddingEnd="12dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <FrameLayout
+                        android:id="@+id/frameSlotMachineMynts"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivSlotMachineMynts"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:paddingStart="4dp"
+                            android:paddingTop="11dp"
+                            android:paddingEnd="1dp"
+                            android:paddingBottom="11dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/ic_mynt_coin" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivSlotMachineMyntsAnim"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:padding="10dp"
+                            android:visibility="invisible"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </FrameLayout>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvSlotMachineMyntsCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="4dp"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/color_dark_yellow"
+                        android:textSize="14sp"
+                        app:fontFamily="@font/product_sans_bold"
+                        app:layout_constraintBottom_toBottomOf="@id/frameSlotMachineMynts"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/frameSlotMachineMynts"
+                        app:layout_constraintTop_toTopOf="@id/frameSlotMachineMynts"
+                        tools:text="@string/dummy_amount" />
+
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:id="@+id/loadingMynts"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="2dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/frameSlotMachineMynts"
+                        app:layout_constraintStart_toEndOf="@+id/frameSlotMachineMynts"
+                        app:layout_constraintTop_toTopOf="@+id/frameSlotMachineMynts"
+                        app:lottie_autoPlay="true"
+                        app:lottie_loop="true"
+                        app:lottie_rawRes="@raw/three_dot_amount_loader"
+                        tools:visibility="visible" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/chipTicketView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/chipMyntsView"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <FrameLayout
+                        android:id="@+id/frameSlotMachineTicket"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivSlotMachineTicket"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="2dp"
+                            android:paddingStart="1dp"
+                            android:paddingTop="13dp"
+                            android:paddingEnd="1dp"
+                            android:paddingBottom="13dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/ticket" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivSlotMachineTicketAnim"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:visibility="invisible"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+
+                    </FrameLayout>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvSlotMachineTicketsCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="4dp"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/yellow10"
+                        android:textSize="14sp"
+                        app:fontFamily="@font/product_sans_bold"
+                        app:layout_constraintBottom_toBottomOf="@id/frameSlotMachineTicket"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/frameSlotMachineTicket"
+                        app:layout_constraintTop_toTopOf="@id/frameSlotMachineTicket"
+                        tools:text="@string/dummy_amount" />
+
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:id="@+id/loadingTickets"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="2dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/frameSlotMachineTicket"
+                        app:layout_constraintStart_toEndOf="@+id/frameSlotMachineTicket"
+                        app:layout_constraintTop_toTopOf="@+id/frameSlotMachineTicket"
+                        app:lottie_autoPlay="true"
+                        app:lottie_loop="true"
+                        app:lottie_rawRes="@raw/three_dot_amount_loader"
+                        tools:visibility="visible" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/chipCashView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/chipTicketView"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <FrameLayout
+                        android:id="@+id/frameSlotMachineCash"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivSlotMachineCash"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="2dp"
+                            android:paddingStart="1dp"
+                            android:paddingTop="13dp"
+                            android:paddingEnd="1dp"
+                            android:paddingBottom="13dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/cash" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivSlotMachineCashAnim"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:visibility="invisible"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+
+                    </FrameLayout>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvSlotMachineCashCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginEnd="4dp"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/green_winnings"
+                        android:textSize="14sp"
+                        app:fontFamily="@font/product_sans_bold"
+                        app:layout_constraintBottom_toBottomOf="@id/frameSlotMachineCash"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/frameSlotMachineCash"
+                        app:layout_constraintTop_toTopOf="@id/frameSlotMachineCash"
+                        tools:text="@string/dummy_amount1" />
+
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:id="@+id/loadingCash"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="2dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/frameSlotMachineCash"
+                        app:layout_constraintStart_toEndOf="@+id/frameSlotMachineCash"
+                        app:layout_constraintTop_toTopOf="@+id/frameSlotMachineCash"
+                        app:lottie_autoPlay="true"
+                        app:lottie_loop="true"
+                        app:lottie_rawRes="@raw/three_dot_amount_loader"
+                        tools:visibility="visible" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvPointsApiError"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/TextviewRegular"
+                android:textColor="@color/red1"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:layout_marginTop="@dimen/dp16"
+                android:layout_marginHorizontal="@dimen/dp16"
+                app:layout_constraintTop_toBottomOf="@+id/containerSlotMachineChips"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="@string/unable_to_fetch_points_please_check_reward_history_after_playing"/>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cvJackpot"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                app:cardBackgroundColor="@color/back_surface_color"
+                app:cardCornerRadius="18dp"
+                app:layout_constraintBottom_toTopOf="@id/luckyLayout"
+                app:layout_constraintDimensionRatio="2.5:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvPointsApiError">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/containerSlotMachineDefaultBanner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="visible">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivBannerSlotMachine"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/containerSlotMachineRewards"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="invisible">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvYouWon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:fontFamily="@font/product_sans_bold"
+                        android:text="@string/you_have_won"
+                        android:textColor="@color/yellow_won_color"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toTopOf="@+id/ivSlotRewards"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivSlotRewards"
+                        android:layout_width="@dimen/_48sdp"
+                        android:layout_height="@dimen/_48sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        app:layout_constraintBottom_toTopOf="@+id/tvWinRewardsValue"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvYouWon"
+                        app:srcCompat="@drawable/ic_mynt_rewards" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvWinRewardsValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:layout_marginBottom="@dimen/_12sdp"
+                        android:fontFamily="@font/product_sans_bold"
+                        android:textColor="@color/color_orange"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/ivSlotRewards"
+                        tools:text="@string/_100_mynts" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerLayoutSpinWheel"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:layout_marginBottom="@dimen/_18sdp"
+                app:layout_constraintBottom_toTopOf="@+id/chipMyntsBurnView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cvJackpot">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <View
+                            android:id="@+id/viewMiddleContent"
+                            android:layout_width="@dimen/_230sdp"
+                            android:layout_height="@dimen/_160sdp"
+                            android:layout_marginStart="@dimen/_52sdp"
+                            android:layout_marginTop="@dimen/_24sdp"
+                            android:layout_marginEnd="@dimen/_52sdp"
+                            android:layout_marginBottom="@dimen/_24sdp"
+                            android:background="@color/editTextStrokeColor"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <View
+                            android:id="@+id/heading"
+                            style="@style/TextviewRegular"
+                            android:layout_width="@dimen/_120sdp"
+                            android:layout_height="@dimen/_12sdp"
+                            android:layout_marginTop="@dimen/_52sdp"
+                            android:background="@color/editTextStrokeColor"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/viewMiddleContent" />
+
+                        <View
+                            android:id="@+id/btnPlay"
+                            style="@style/TextviewRegular"
+                            android:layout_width="@dimen/_162sdp"
+                            android:layout_height="@dimen/_52sdp"
+                            android:layout_marginTop="@dimen/_18sdp"
+                            android:background="@color/editTextStrokeColor"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/heading" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </LinearLayout>
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/luckyLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toTopOf="@+id/ivSlotMachineEllipse"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cvJackpot">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivSlotMachine"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/slot_machine"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
+
+                <FrameLayout
+                    android:id="@+id/layout_bar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:padding="32dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivSlotMachine"
+                    app:layout_constraintEnd_toEndOf="@+id/ivSlotMachine"
+                    app:layout_constraintStart_toStartOf="@+id/ivSlotMachine">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="76dp"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="11dp"
+                        android:layout_marginEnd="12dp"
+                        android:layout_marginBottom="17dp"
+                        android:orientation="horizontal"
+                        tools:ignore="UselessParent">
+
+                        <com.fypmoney.view.arcadegames.SlotMachineImageViewScrollHelper
+                            android:id="@+id/image"
+                            android:layout_width="42dp"
+                            android:layout_height="match_parent" />
+
+                        <com.fypmoney.view.arcadegames.SlotMachineImageViewScrollHelper
+                            android:id="@+id/image1"
+                            android:layout_width="42dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="32dp" />
+
+                        <com.fypmoney.view.arcadegames.SlotMachineImageViewScrollHelper
+                            android:id="@+id/image2"
+                            android:layout_width="42dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="28dp" />
+
+                    </LinearLayout>
+
+                </FrameLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivSlotMachineEllipse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:layout_marginTop="@dimen/_minus8sdp"
+                app:layout_constraintBottom_toTopOf="@+id/frameBtnContainer"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/luckyLayout"
+                app:srcCompat="@drawable/slot_machine_bottom_ellipse" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvSlotMachineAttemptsLeft"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_32sdp"
+                android:fontFamily="@font/product_sans_regular"
+                android:textColor="@color/text_body_grey"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toTopOf="@+id/frameBtnContainer"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ivSlotMachineEllipse"
+                tools:text="@string/attempts_left" />
+
+            <FrameLayout
+                android:id="@+id/frameBtnContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_18sdp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toTopOf="@+id/chipMyntsBurnView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvSlotMachineAttemptsLeft">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivBtnPlayAnimation"
+                    android:layout_width="@dimen/_162sdp"
+                    android:layout_height="@dimen/_54sdp"
+                    android:visibility="visible" />
+
+                <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:id="@+id/progressBtnPlay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:indeterminate="true"
+                    android:visibility="invisible"
+                    app:indicatorColor="@color/color_orange" />
+
+            </FrameLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/chipMyntsBurnView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginBottom="@dimen/_24sdp"
+                android:paddingStart="@dimen/_3sdp"
+                android:paddingTop="@dimen/_3sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_3sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/frameBtnContainer"
+                app:layout_constraintVertical_bias="0.0">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivMyntsRequired"
+                    android:layout_width="@dimen/_18sdp"
+                    android:layout_height="@dimen/_18sdp"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:padding="@dimen/_2sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_mynt_coin" />
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/loadingBurnMynts"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivMyntsRequired"
+                    app:layout_constraintStart_toEndOf="@+id/ivMyntsRequired"
+                    app:layout_constraintTop_toTopOf="@+id/ivMyntsRequired"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"
+                    app:lottie_rawRes="@raw/three_dot_amount_loader"
+                    tools:visibility="visible" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvSlotMachineBurnMyntsCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_4sdp"
+                    android:textColor="@color/color_dark_yellow"
+                    android:textSize="14sp"
+                    app:fontFamily="@font/product_sans_bold"
+                    app:layout_constraintBottom_toBottomOf="@id/ivMyntsRequired"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/ivMyntsRequired"
+                    app:layout_constraintTop_toTopOf="@id/ivMyntsRequired"
+                    tools:text="@string/default_burn_mynts" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottieRewardConfetti"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_rawRes="@raw/arcade_confetti" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

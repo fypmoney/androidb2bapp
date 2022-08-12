@@ -69,9 +69,11 @@ class MultipleJackpotsFragment :
         multipleJackpotVM.state.observe(viewLifecycleOwner) {
             handleState(it)
         }
+
         multipleJackpotVM.stateMynts.observe(viewLifecycleOwner) {
             handleStateMynts(it)
         }
+
         multipleJackpotVM.stateCash.observe(viewLifecycleOwner) {
             handleStateCash(it)
         }
@@ -82,6 +84,7 @@ class MultipleJackpotsFragment :
             is MultipleJackpotFragmentVM.CashState.Success -> {
                 mViewBinding?.loadingCash?.clearAnimation()
                 mViewBinding?.loadingCash?.visibility = View.INVISIBLE
+
                 mViewBinding?.tvMultipleJackpotsCashCount?.text = String.format(
                     getString(R.string.arcade_cash_value),
                     Utility.convertToRs(it.totalCash.toString())
@@ -102,6 +105,7 @@ class MultipleJackpotsFragment :
                 if (it.remainingMynts != null) {
                     mViewBinding?.loadingMynts?.clearAnimation()
                     mViewBinding?.loadingMynts?.visibility = View.INVISIBLE
+
                     mViewBinding?.tvMultipleJackpotsMyntsCount?.text =
                         String.format("%.0f", it.remainingMynts)
                 }

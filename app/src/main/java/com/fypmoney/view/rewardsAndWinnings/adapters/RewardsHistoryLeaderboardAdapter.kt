@@ -143,8 +143,6 @@ class RewardsHistoryLeaderboardAdapter(
 
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
-
         var card = view
         var desc = view.desc
         var won_tv = view.won_tv

@@ -26,8 +26,8 @@ android {
         ndk.abiFilters 'armeabi-v7a','arm64-v8a','x86','x86_64'
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 78
-        versionName "4.3.1"
+        versionCode 80
+        versionName "4.3.3"
         multiDexEnabled = true
         vectorDrawables.useSupportLibrary = true
         // Stops the Gradle plugin�s automatic rasterization of vectors
@@ -239,8 +239,8 @@ dependencies {
     implementation("com.moengage:rich-notification:2.3.00")
     implementation('com.github.simonpercic:oklog3:2.3.0')
     implementation 'com.amazonaws:ivs-player:1.6.0'
-
     implementation("com.squareup.okhttp3:okhttp-dnsoverhttps:4.9.0")
+    implementation "ru.tinkoff.scrollingpagerindicator:scrollingpagerindicator:1.0.6"
 
 
 }

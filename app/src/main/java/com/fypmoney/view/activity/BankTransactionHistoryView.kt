@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fypmoney.BR
@@ -15,6 +16,8 @@ import com.fypmoney.databinding.ViewBankTransactionHistoryBinding
 import com.fypmoney.model.BankTransactionHistoryResponseDetails
 import com.fypmoney.util.AppConstants
 import com.fypmoney.view.fragment.FilterByDateFragment
+import com.fypmoney.view.insights.model.AllTxnItem
+import com.fypmoney.view.insights.view.CategoryWaiseTransactionDetailsFragment
 import com.fypmoney.viewmodel.BankTransactionHistoryViewModel
 import kotlinx.android.synthetic.main.toolbar.toolbar
 import kotlinx.android.synthetic.main.toolbar_bank_history.*
@@ -51,7 +54,10 @@ class BankTransactionHistoryView :
         setToolbarAndTitle(
             context = this@BankTransactionHistoryView,
             toolbar = toolbar,
-            isBackArrowVisible = true, toolbarTitle = getString(R.string.trans_history_heading)
+            isBackArrowVisible = true,
+            toolbarTitle = getString(R.string.trans_history_heading),
+            backArrowTint = Color.WHITE,
+            titleColor = Color.WHITE
         )
 
         toolbarImage.setOnClickListener { callFilterByDateBottomSheet() }
@@ -140,10 +146,36 @@ class BankTransactionHistoryView :
      */
     private fun setObserver() {
         mViewModel.onItemClicked.observe(this) {
-            intentToActivity(PayUSuccessView::class.java, it)
+            val allTxnItemModel = AllTxnItem(
+                amount = it.amount,
+                paymentMode = it.paymentMode,
+                accReferenceNumber = it.accReferenceNumber,
+                mrn = it.mrn,
+                mobileNo = it.mobileNo,
+                categoryCode = it.categoryCode,
+                message = it.message,
+                userName = it.userName,
+                transactionDate = it.transactionDate,
+                transactionType = it.transactionType,
+                bankReferenceNumber = it.bankReferenceNumber,
+                iconLink = it.iconLink,
+                category = it.category
+            )
+            addFragmentToActivity(allTxnItemModel)
         }
 
 
+    }
+
+    private fun addFragmentToActivity(allTxnItem: AllTxnItem){
+        val fm = supportFragmentManager
+        val tr = fm.beginTransaction()
+        tr.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left,R.anim.slide_in_left,R.anim.slide_out_righ);
+        val fragment = CategoryWaiseTransactionDetailsFragment()
+        fragment.arguments = bundleOf(Pair("txnDetail",allTxnItem))
+        tr.add(R.id.container, fragment)
+        tr.addToBackStack("TransactionHistoryDetails")
+        tr.commit()
     }
 
     /*

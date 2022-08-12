@@ -21,6 +21,7 @@ import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+import android.view.HapticFeedbackConstants;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
@@ -147,28 +148,6 @@ public class PielView extends View {
     public void setBorderWidth(int width) {
         mEdgeWidth = width;
         invalidate();
-    }
-
-    public void vibrateDevice(Context context) {
-        VibrationEffect vibrationEffect;
-
-        // this is the only type of the vibration which requires system version Oreo (API 26)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            // this effect creates the vibration of default amplitude for 1000ms(1 sec)
-
-            Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-//            val vibrator = this.context?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-            vibrationEffect = VibrationEffect.createOneShot(1000, VibrationEffect.DEFAULT_AMPLITUDE);
-//            vibrationEffect = VibrationEffect.createPredefined(VibrationEffect.EFFECT_TICK)
-//            vibrationEffect = VibrationEffect.createPredefined(VibrationEffect.EFFECT_HEAVY_CLICK)
-//            vibrationEffect = VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK);
-//            vibrationEffect = VibrationEffect.createPredefined(VibrationEffect.EFFECT_DOUBLE_CLICK)
-
-
-            // it is safe to cancel other vibrations currently taking place
-            vibrator.cancel();
-            vibrator.vibrate(vibrationEffect);
-        }
     }
 
     public void setPieTextColor(int color) {
@@ -301,7 +280,7 @@ public class PielView extends View {
 //                x + imgWidth, y + imgWidth / 2);
 
         Rect rect = new Rect(x - imgWidth, y - imgWidth / 2 - 60,
-                x + imgWidth, y + imgWidth / 2 + 10 );
+                x + imgWidth, y + imgWidth / 2 + 10);
 
         int arraySize = mLuckyItemList.size();
 

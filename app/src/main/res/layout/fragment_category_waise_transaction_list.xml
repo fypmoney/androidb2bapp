@@ -27,6 +27,7 @@
             android:id="@+id/flList"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:paddingBottom="@dimen/dp50"
             android:layout_marginHorizontal="@dimen/dp10"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

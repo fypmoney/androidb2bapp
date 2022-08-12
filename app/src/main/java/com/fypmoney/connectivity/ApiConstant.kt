@@ -190,10 +190,16 @@ object ApiConstant {
     const val API_BANK_DETAILS = "/services/PockketService/api/bank-details"
     const val API_GET_REWARD_SINGLE_PRODUCTS =
         "services/PockketService/api/list/reward-product/"
+
     const val API_GET_REWARD_SINGLE_PRODUCTS_PURPOSE =
         "reward-product"
 
+    const val API_GET_REWARD_SLOT_MACHINE_PURPOSE = "reward-product/slot"
+
     const val API_GET_TREASURE_DATA =
+        "services/PockketService/api/list/reward-product"
+
+    const val API_GET_SLOT_MACHINE_DATA =
         "services/PockketService/api/list/reward-product"
 
     const val API_GET_ALL_JACKPOTS_PRODUCTWISE =

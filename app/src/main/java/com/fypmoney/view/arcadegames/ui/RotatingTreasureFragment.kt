@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.media.MediaPlayer
 import android.os.*
+import android.view.HapticFeedbackConstants
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -107,6 +108,8 @@ class RotatingTreasureFragment :
         mViewBinding!!.ivBtnPlayAnimation.setOnClickListener {
             if (rotatingTreasureVM.productId == null || rotatingTreasureVM.productId == "null") {
                 if (rotatingTreasureVM.remainFrequency.value!! > 0) {
+                    rotatingTreasureVM.isRotatingTreasureStarted = true
+
                     mViewBinding!!.lottieRotatingVP.toInvisible()
 
                     mViewBinding!!.containerRotatingTreasureRewards.visibility = View.INVISIBLE
@@ -120,8 +123,6 @@ class RotatingTreasureFragment :
                         mViewBinding!!.ivRotatingMynts
                     )
 
-                    vibrateDevice()
-
                     rotatingTreasureVM.callMyntsBurnApi(rotatingTreasureVM.productCode)
                 } else {
                     val limitOverBottomSheet = LimitOverBottomSheet()
@@ -129,6 +130,9 @@ class RotatingTreasureFragment :
                     limitOverBottomSheet.show(childFragmentManager, "LimitOverBottomSheet")
                 }
             } else {
+
+                rotatingTreasureVM.isRotatingTreasureStarted = true
+
                 mViewBinding!!.lottieRotatingVP.toInvisible()
 
                 mViewBinding!!.containerRotatingTreasureRewards.visibility = View.INVISIBLE
@@ -137,7 +141,7 @@ class RotatingTreasureFragment :
                 mViewBinding!!.ivBtnPlayAnimation.visibility = View.INVISIBLE
                 mViewBinding!!.progressBtnPlay.visibility = View.VISIBLE
 
-                vibrateDevice()
+                mViewBinding!!.tvRotatingAttemptsLeft.toInvisible()
 
                 rotatingTreasureVM.callProductsDetailsApi(rotatingTreasureVM.productId)
 
@@ -150,14 +154,18 @@ class RotatingTreasureFragment :
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    if (rotatingTreasureVM.isArcadeIsPlayed) {
-                        findNavController().previousBackStackEntry?.savedStateHandle?.set(
-                            "arcade_is_played",
-                            true
-                        )
-                        findNavController().popBackStack()
+                    if (rotatingTreasureVM.isRotatingTreasureStarted) {
+                        Utility.showToast("Your reward is being processed")
                     } else {
-                        findNavController().navigateUp()
+                        if (rotatingTreasureVM.isArcadeIsPlayed) {
+                            findNavController().previousBackStackEntry?.savedStateHandle?.set(
+                                "arcade_is_played",
+                                true
+                            )
+                            findNavController().popBackStack()
+                        } else {
+                            findNavController().navigateUp()
+                        }
                     }
                 }
             }
@@ -167,6 +175,14 @@ class RotatingTreasureFragment :
             OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
+                if (rotatingTreasureVM.isFirstTime == false)
+                    mViewBinding?.vpTreasuryBox?.performHapticFeedback(
+                        HapticFeedbackConstants.KEYBOARD_TAP,
+                        HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING
+                    )
+
+                rotatingTreasureVM.isFirstTime = false
+
                 if (adapter!!.imagesList[position].isSelected) {
                     sliderHandler.removeCallbacks(sliderRunnable)
                     mViewBinding!!.lottieRotatingVP.setAnimation(adapter!!.imagesList[position].boxImage)
@@ -245,6 +261,9 @@ class RotatingTreasureFragment :
         viewModel.error.observe(
             viewLifecycleOwner
         ) { list ->
+
+            rotatingTreasureVM.isRotatingTreasureStarted = false
+
             if (list.errorCode == "PKT_2051") {
                 callInsufficientDialog(list.msg)
                 mViewBinding!!.ivBtnPlayAnimation.visibility = View.VISIBLE
@@ -295,9 +314,34 @@ class RotatingTreasureFragment :
                     rotatingTreasureVM.myntsDisplay!!
                 )
 
-                rotatingTreasureVM.sectionId = list.sectionId
+                rotatingTreasureVM.sectionCode = list.sectionCode?.toInt()
 
                 rotatingTreasureVM.callSpinWheelApi(list.orderNo)
+
+                val listOfBoxes = arrayListOf<TreasureAdapterUiModel>()
+                listOfBoxes.add(
+                    TreasureAdapterUiModel(
+                        R.raw.silver_box_open,
+                        rotatingTreasureVM.sectionCode == 1
+                    )
+                )
+                listOfBoxes.add(
+                    TreasureAdapterUiModel(
+                        R.raw.wood_box_open,
+                        rotatingTreasureVM.sectionCode == 2
+                    )
+                )
+                listOfBoxes.add(
+                    TreasureAdapterUiModel(
+                        R.raw.gold_box_open,
+                        rotatingTreasureVM.sectionCode == 3
+                    )
+                )
+                listOfBoxes.add(TreasureAdapterUiModel(R.raw.silver_box_open, false))
+                listOfBoxes.add(TreasureAdapterUiModel(R.raw.wood_box_open, false))
+                listOfBoxes.add(TreasureAdapterUiModel(R.raw.gold_box_open, false))
+                adapter!!.newTreasureImages = listOfBoxes
+                sliderHandler.postDelayed(sliderRunnable, 200)
 
             }
 
@@ -305,35 +349,11 @@ class RotatingTreasureFragment :
 
         viewModel.spinWheelResponseList.observe(viewLifecycleOwner) {
             rotatingTreasureVM.spinWheelRotateResponseDetails = it
-            val listOfBoxes = arrayListOf<TreasureAdapterUiModel>()
-            listOfBoxes.add(
-                TreasureAdapterUiModel(
-                    R.raw.silver_box_open,
-                    rotatingTreasureVM.sectionId == 1
-                )
-            )
-            listOfBoxes.add(
-                TreasureAdapterUiModel(
-                    R.raw.wood_box_open,
-                    rotatingTreasureVM.sectionId == 2
-                )
-            )
-            listOfBoxes.add(
-                TreasureAdapterUiModel(
-                    R.raw.gold_box_open,
-                    rotatingTreasureVM.sectionId == 3
-                )
-            )
-            listOfBoxes.add(TreasureAdapterUiModel(R.raw.silver_box_open, false))
-            listOfBoxes.add(TreasureAdapterUiModel(R.raw.wood_box_open, false))
-            listOfBoxes.add(TreasureAdapterUiModel(R.raw.gold_box_open, false))
-            adapter!!.newTreasureImages = listOfBoxes
-            sliderHandler.postDelayed(sliderRunnable, 200)
 
         }
 
         viewModel.redeemCallBackResponse.observe(viewLifecycleOwner) {
-            rotatingTreasureVM.sectionId = it.sectionId
+            rotatingTreasureVM.sectionCode = it.sectionCode?.toInt()
 
             rotatingTreasureVM.callSpinWheelApi(rotatingTreasureVM.productId)
 
@@ -427,6 +447,8 @@ class RotatingTreasureFragment :
             )
         }
 
+        rotatingTreasureVM.isRotatingTreasureStarted = false
+
         if (rotatingTreasureVM.productId == null || rotatingTreasureVM.productId == "null") {
             mViewBinding!!.ivBtnPlayAnimation.visibility = View.VISIBLE
             mViewBinding!!.progressBtnPlay.visibility = View.INVISIBLE
@@ -446,19 +468,10 @@ class RotatingTreasureFragment :
         invisibleImage.visibility = View.INVISIBLE
     }
 
-    private fun vibrateDevice() {
-        val vibrationEffect: VibrationEffect
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val vibrator = this.context?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-            vibrationEffect = VibrationEffect.createOneShot(1000, VibrationEffect.DEFAULT_AMPLITUDE)
-            vibrator.cancel()
-            vibrator.vibrate(vibrationEffect)
-        }
-
-    }
-
     private fun arcadeSounds(from: String) {
+
+        rotatingTreasureVM.mp?.stop()
+
         when (from) {
             "MYNTS" -> {
                 rotatingTreasureVM.mp = MediaPlayer.create(
@@ -490,7 +503,8 @@ class RotatingTreasureFragment :
 
     private fun handleState(it: RotatingTreasureFragmentVM.RotatingTreasureState?) {
         when (it) {
-            RotatingTreasureFragmentVM.RotatingTreasureState.Error -> {
+            is RotatingTreasureFragmentVM.RotatingTreasureState.Error -> {
+                rotatingTreasureVM.isRotatingTreasureStarted = false
             }
 
             RotatingTreasureFragmentVM.RotatingTreasureState.Loading -> {

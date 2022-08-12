@@ -83,6 +83,7 @@ object AppConstants {
     const val NO = "NO"
     const val PRODUCT_SPIN = "SPIN_WHEEL"
     const val PRODUCT_TREASURE_BOX = "TREASURE_BOX"
+    const val PRODUCT_SLOT_MACHINE = "SLOT"
     const val PRODUCT_SCRATCH = "SCRATCH_CARD"
     const val CUSTOMER_INFO_RESPONSE = "customer_info_response"
     const val SPLASH_TIME = 4000L
@@ -246,6 +247,9 @@ object AppConstants {
     const val StoreshopsScreen = "Storeshopsscreen"
     const val GIFT_VOUCHER = "GIFT_VOUCHER"
     const val LEADERBOARD = "LEADERBOARD"
+    const val PREPAID_RECHARGE_REDIRECTION = "Recharge"
+    const val POSTPAID_RECHARGE_REDIRECTION = "Postpaid"
+    const val DTH_RECHARGE_REDIRECTION = "DTH"
 
     /* Home : "HomeView, 0"
 

@@ -34,14 +34,15 @@ class BottomNavigationBehavior<V : View>(context: Context, attrs: AttributeSet) 
     override fun onStartNestedScroll(
         coordinatorLayout: CoordinatorLayout, child: V, directTargetChild: View, target: View, axes: Int, type: Int
     ): Boolean {
-        if (axes != ViewCompat.SCROLL_AXIS_VERTICAL)
+        return axes == ViewCompat.SCROLL_AXIS_VERTICAL
+        /*if (axes != ViewCompat.SCROLL_AXIS_VERTICAL)
             return false
 
         lastStartedType = type
 
         offsetAnimator?.cancel()
 
-        return true
+        return true*/
     }
 
     @RequiresApi(Build.VERSION_CODES.N)

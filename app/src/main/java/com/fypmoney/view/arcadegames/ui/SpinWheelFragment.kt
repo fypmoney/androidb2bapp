@@ -66,6 +66,7 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, SpinWheelFragme
             titleColor = Color.WHITE,
             backArrowTint = Color.WHITE
         )
+
         spinWheelFragmentVM.productCode = navArgs.productCode
         spinWheelFragmentVM.productId = navArgs.orderId.toString()
 
@@ -83,6 +84,9 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, SpinWheelFragme
 
             if (spinWheelFragmentVM.productId == null || spinWheelFragmentVM.productId == "null") {
                 if (spinWheelFragmentVM.remainFrequency.value!! > 0) {
+
+                    spinWheelFragmentVM.isSpinWheelStarted = true
+
                     mViewBinding!!.containerSpinWheelRewards.visibility = View.INVISIBLE
                     mViewBinding!!.ivBannerSpinWheel.visibility = View.VISIBLE
 
@@ -105,11 +109,15 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, SpinWheelFragme
                 }
             } else {
 
+                spinWheelFragmentVM.isSpinWheelStarted = true
+
                 mViewBinding!!.containerSpinWheelRewards.visibility = View.INVISIBLE
                 mViewBinding!!.ivBannerSpinWheel.visibility = View.VISIBLE
 
                 mViewBinding!!.ivBtnPlayAnimation.visibility = View.INVISIBLE
                 mViewBinding!!.progressBtnPlay.visibility = View.VISIBLE
+
+                mViewBinding!!.tvSpinWheelAttemptsLeft.toInvisible()
 
                 spinWheelFragmentVM.callProductsDetailsApi(spinWheelFragmentVM.productId)
 
@@ -119,18 +127,21 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, SpinWheelFragme
 
         dialogInsufficientMynts = Dialog(this.requireContext())
 
-
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    if (spinWheelFragmentVM.isArcadeIsPlayed) {
-                        findNavController().previousBackStackEntry?.savedStateHandle?.set(
-                            "arcade_is_played",
-                            true
-                        )
-                        findNavController().popBackStack()
+                    if (spinWheelFragmentVM.isSpinWheelStarted) {
+                        Utility.showToast("Your reward is being processed")
                     } else {
-                        findNavController().navigateUp()
+                        if (spinWheelFragmentVM.isArcadeIsPlayed) {
+                            findNavController().previousBackStackEntry?.savedStateHandle?.set(
+                                "arcade_is_played",
+                                true
+                            )
+                            findNavController().popBackStack()
+                        } else {
+                            findNavController().navigateUp()
+                        }
                     }
                 }
             }
@@ -165,7 +176,7 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, SpinWheelFragme
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val vibrator = this.context?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-            vibrationEffect = VibrationEffect.createOneShot(1000, VibrationEffect.DEFAULT_AMPLITUDE)
+            vibrationEffect = VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE)
             vibrator.cancel()
             vibrator.vibrate(vibrationEffect)
         }
@@ -244,6 +255,8 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, SpinWheelFragme
             )
         }
 
+        spinWheelFragmentVM.isSpinWheelStarted = false
+
         if (spinWheelFragmentVM.productId == null || spinWheelFragmentVM.productId == "null") {
             mViewBinding!!.ivBtnPlayAnimation.visibility = View.VISIBLE
             mViewBinding!!.progressBtnPlay.visibility = View.INVISIBLE
@@ -269,6 +282,9 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, SpinWheelFragme
         viewModel.error.observe(
             viewLifecycleOwner
         ) { list ->
+
+            spinWheelFragmentVM.isSpinWheelStarted = false
+
             if (list.errorCode == "PKT_2051") {
                 callInsufficientDialog(list.msg)
                 mViewBinding!!.ivBtnPlayAnimation.visibility = View.VISIBLE
@@ -317,7 +333,10 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, SpinWheelFragme
                 spinWheelFragmentVM.remainFrequency.value =
                     spinWheelFragmentVM.remainFrequency.value?.minus(1)
 
-                decreaseCountAnimation(mViewBinding!!.tvSpinWheelMyntsCount, spinWheelFragmentVM.myntsDisplay!!)
+                decreaseCountAnimation(
+                    mViewBinding!!.tvSpinWheelMyntsCount,
+                    spinWheelFragmentVM.myntsDisplay!!
+                )
 
                 sectionId = list.sectionId
 
@@ -362,6 +381,9 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, SpinWheelFragme
     }
 
     private fun arcadeSounds(from: String) {
+
+        spinWheelFragmentVM.mp?.stop()
+
         when (from) {
             "MYNTS" -> {
                 spinWheelFragmentVM.mp = MediaPlayer.create(
@@ -393,8 +415,8 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, SpinWheelFragme
 
     private fun handleState(it: SpinWheelFragmentVM.SpinWheelState?) {
         when (it) {
-            SpinWheelFragmentVM.SpinWheelState.Error -> {
-
+            is SpinWheelFragmentVM.SpinWheelState.Error -> {
+                spinWheelFragmentVM.isSpinWheelStarted = false
             }
             SpinWheelFragmentVM.SpinWheelState.Loading -> {
 //                mViewBinding!!.spinWheelContainer.visibility = View.INVISIBLE

@@ -14,11 +14,7 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.model.*
 import com.fypmoney.view.addmoney.model.BankProfileDetailsNetworkResponse
-import com.fypmoney.view.arcadegames.model.LeaderBoardResponse
-import com.fypmoney.view.giftcard.model.*
-import com.fypmoney.view.arcadegames.model.MultipleJackpotNetworkResponse
-import com.fypmoney.view.arcadegames.model.SingleSpinWheelProductNetworkResponse
-import com.fypmoney.view.arcadegames.model.TreasureBoxNetworkResponse
+import com.fypmoney.view.arcadegames.model.*
 import com.fypmoney.view.giftcard.model.*
 import com.fypmoney.view.home.main.home.model.networkmodel.CallToActionNetworkResponse
 import com.fypmoney.view.ordercard.model.UserOfferCardResponse
@@ -254,6 +250,12 @@ class ApiDataParsing {
                 ApiConstant.API_GET_TREASURE_DATA -> {
                     getObject(response, TreasureBoxNetworkResponse::class.java)
                 }
+                ApiConstant.API_GET_REWARD_SLOT_MACHINE_PURPOSE -> {
+                    getObject(response, SlotMachineResponse::class.java)
+                }
+//                ApiConstant.API_GET_SLOT_MACHINE_DATA -> {
+//                    getObject(response, SlotMachineResponse::class.java)
+//                }
                 ApiConstant.API_GET_LEADERBOARD_DATA -> {
                     getObject(response, LeaderBoardResponse::class.java)
                 }

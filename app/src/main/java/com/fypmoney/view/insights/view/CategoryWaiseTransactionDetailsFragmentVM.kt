@@ -107,18 +107,24 @@ class CategoryWaiseTransactionDetailsFragmentVM(application: Application) : Base
             txnName = txnItem.userName,
             txnUserMobileNumber = txnItem.mobileNo,
             txnAmount = String.format(PockketApplication.instance.getString(R.string.amount_with_currency),Utility.convertToRs(txnItem.amount)),
-            txnStatusDateAndTime = if(txnItem.transactionType=="Debited") String.format(PockketApplication.instance.getString(R.string.sent_with_time),
+            txnStatusDateAndTime = if(txnItem.transactionType=="Debited") {String.format(PockketApplication.instance.getString(R.string.sent_with_time),
                 Utility.parseDateTimeWithPlusFiveThirty(txnItem.transactionDate?.replace("+05:30","Z"),
                 AppConstants.SERVER_DATE_TIME_FORMAT3,
                 AppConstants.CHANGED_DATE_TIME_FORMAT3
-            ),) else if(txnItem.transactionType.equals("Credited",false)) String.format(PockketApplication.instance.getString(R.string.reccived_with_time),
+            ),)}
+            else if(txnItem.transactionType.equals("Credited",true)){ String.format(PockketApplication.instance.getString(R.string.reccived_with_time),
                 Utility.parseDateTimeWithPlusFiveThirty(txnItem.transactionDate?.replace("+05:30","Z"),
                     AppConstants.SERVER_DATE_TIME_FORMAT3,
                     AppConstants.CHANGED_DATE_TIME_FORMAT3
-                ),)
-                    else{
-                        ""
-            },
+                ),)}
+            else if(txnItem.transactionType.equals("Load",true)){ String.format(PockketApplication.instance.getString(R.string.reccived_with_time),
+                Utility.parseDateTimeWithPlusFiveThirty(txnItem.transactionDate,
+                    AppConstants.SERVER_DATE_TIME_FORMAT1,
+                    AppConstants.CHANGED_DATE_TIME_FORMAT3
+                ),)}
+            else{
+                ""
+                },
             txnCategory = txnItem.category,
             txnFypTxnId = txnItem.accReferenceNumber,
             bankTxnId = txnItem.bankReferenceNumber,

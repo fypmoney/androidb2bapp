@@ -21,6 +21,7 @@ import android.text.style.ClickableSpan
 import android.util.DisplayMetrics
 import android.util.Log
 import android.util.Patterns
+import android.view.HapticFeedbackConstants
 import android.view.View
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.widget.ImageView
@@ -1384,5 +1385,23 @@ object Utility {
         val date = Date()
         Log.d("Month", dateFormat.format(date))
         return dateFormat.format(date)
+    }
+
+    fun View.hapticFeedback() {
+        /*val vibration = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        if (Build.VERSION.SDK_INT >= 26) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                vibration.vibrate(VibrationEffect.createOneShot(40, VibrationEffect.DEFAULT_AMPLITUDE))
+            }else{
+                vibration.vibrate(VibrationEffect.createOneShot(40, VibrationEffect.DEFAULT_AMPLITUDE))
+            }
+        } else {
+            vibration.vibrate(40)
+        }*/
+        this.performHapticFeedback(
+            HapticFeedbackConstants.KEYBOARD_TAP,
+            HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING
+        )
+
     }
 }

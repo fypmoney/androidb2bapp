@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navOptions
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fypmoney.BR
 import com.fypmoney.R
@@ -52,8 +53,6 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
     private val exploreFragmentVM by viewModels<ExploreFragmentVM> { defaultViewModelProviderFactory }
     private lateinit var _binding: FragmentExploreBinding
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding
 
 
@@ -213,6 +212,42 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
                                 AppConstants.INSIGHTS -> {
                                     findNavController().navigate(R.id.navigation_insights)
                                 }
+                                AppConstants.PREPAID_RECHARGE_REDIRECTION->{
+                                    findNavController().navigate(Uri.parse("https://www.fypmoney.in/recharge/${AppConstants.PREPAID}"),
+                                        navOptions {
+                                            anim {
+                                                popEnter = R.anim.slide_in_left
+                                                popExit = R.anim.slide_out_righ
+                                                enter = R.anim.slide_in_right
+                                                exit = R.anim.slide_out_left
+                                            }
+                                        })
+                                }
+
+                                AppConstants.POSTPAID_RECHARGE_REDIRECTION->{
+                                    findNavController().navigate(Uri.parse("https://www.fypmoney.in/recharge/${AppConstants.POSTPAID}"),
+                                        navOptions {
+                                            anim {
+                                                popEnter = R.anim.slide_in_left
+                                                popExit = R.anim.slide_out_righ
+                                                enter = R.anim.slide_in_right
+                                                exit = R.anim.slide_out_left
+                                            }
+                                        })
+                                }
+
+                                AppConstants.DTH_RECHARGE_REDIRECTION->{
+                                    findNavController().navigate(Uri.parse("https://www.fypmoney.in/recharge/dth"),
+                                        navOptions {
+                                            anim {
+                                                popEnter = R.anim.slide_in_left
+                                                popExit = R.anim.slide_out_righ
+                                                enter = R.anim.slide_in_right
+                                                exit = R.anim.slide_out_left
+                                            }
+                                        })
+                                }
+
                                 else -> {
                                     Utility.deeplinkRedirection(redirectionResources, requireContext())
                                 }
@@ -280,24 +315,92 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
                         findNavController().navigate(Uri.parse("fypmoney://creategiftcard/${it.redirectionResource}"))
                     }
                     AppConstants.LEADERBOARD -> {
-                        findNavController().navigate(Uri.parse("https://www.fypmoney.in/leaderboard/${it.redirectionResource}"))
+                        findNavController().navigate(Uri.parse("https://www.fypmoney.in/leaderboard/${it.redirectionResource}"),
+                            navOptions {
+                                anim {
+                                    popEnter = R.anim.slide_in_left
+                                    popExit = R.anim.slide_out_righ
+                                    enter = R.anim.slide_in_right
+                                    exit = R.anim.slide_out_left
+                                }
+                            })
                     }
                     "ARCADE"-> {
                         val type = it.rfu1?.let { rfu->it.redirectionResource?.let { it1 -> checkTheArcadeType(arcadeType = rfu, productCode = it1) } }
                         when(type){
                             ArcadeType.NOTypeFound -> {}
                             is ArcadeType.SCRATCH_CARD -> {}
-                            is ArcadeType.SLOT -> {}
+                            is ArcadeType.SLOT -> {
+                                findNavController().navigate(Uri.parse("https://www.fypmoney.in/slot_machine/${type.productCode}/${null}"),
+                                    navOptions {
+                                    anim {
+                                        popEnter = R.anim.slide_in_left
+                                        popExit = R.anim.slide_out_righ
+                                        enter = R.anim.slide_in_right
+                                        exit = R.anim.slide_out_left
+                                    }
+                                })
+                            }
                             is ArcadeType.SPIN_WHEEL -> {
-                                findNavController().navigate(Uri.parse("https://www.fypmoney.in/spinwheel/${type.productCode}/${null}"))
+                                findNavController().navigate(Uri.parse("https://www.fypmoney.in/spinwheel/${type.productCode}/${null}"),
+                                    navOptions {
+                                        anim {
+                                            popEnter = R.anim.slide_in_left
+                                            popExit = R.anim.slide_out_righ
+                                            enter = R.anim.slide_in_right
+                                            exit = R.anim.slide_out_left
+                                        }
+                                    })
                             }
                             is ArcadeType.TREASURE_BOX -> {
-                                findNavController().navigate(Uri.parse("https://www.fypmoney.in/rotating_treasure/${type.productCode}/${null}"))
+                                findNavController().navigate(Uri.parse("https://www.fypmoney.in/rotating_treasure/${type.productCode}/${null}"),
+                                    navOptions {
+                                        anim {
+                                            popEnter = R.anim.slide_in_left
+                                            popExit = R.anim.slide_out_righ
+                                            enter = R.anim.slide_in_right
+                                            exit = R.anim.slide_out_left
+                                        }
+                                    })
                             }
                             null -> {}
                         }
                     }
+                    AppConstants.PREPAID_RECHARGE_REDIRECTION->{
+                        findNavController().navigate(Uri.parse("https://www.fypmoney.in/recharge/${AppConstants.PREPAID}"),
+                            navOptions {
+                                anim {
+                                    popEnter = R.anim.slide_in_left
+                                    popExit = R.anim.slide_out_righ
+                                    enter = R.anim.slide_in_right
+                                    exit = R.anim.slide_out_left
+                                }
+                            })
+                    }
 
+                    AppConstants.POSTPAID_RECHARGE_REDIRECTION->{
+                        findNavController().navigate(Uri.parse("https://www.fypmoney.in/recharge/${AppConstants.POSTPAID}"),
+                            navOptions {
+                                anim {
+                                    popEnter = R.anim.slide_in_left
+                                    popExit = R.anim.slide_out_righ
+                                    enter = R.anim.slide_in_right
+                                    exit = R.anim.slide_out_left
+                                }
+                            })
+                    }
+
+                    AppConstants.DTH_RECHARGE_REDIRECTION->{
+                        findNavController().navigate(Uri.parse("https://www.fypmoney.in/recharge/dth"),
+                            navOptions {
+                                anim {
+                                    popEnter = R.anim.slide_in_left
+                                    popExit = R.anim.slide_out_righ
+                                    enter = R.anim.slide_in_right
+                                    exit = R.anim.slide_out_left
+                                }
+                            })
+                    }
                 }
 
 

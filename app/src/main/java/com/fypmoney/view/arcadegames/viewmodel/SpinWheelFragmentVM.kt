@@ -65,6 +65,9 @@ class SpinWheelFragmentVM(application: Application) : BaseViewModel(application)
     //Check user has play the arcade
     var isArcadeIsPlayed = false
 
+    //Check user has start the arcade
+    var isSpinWheelStarted = false
+
     //Observe spin wheel data using sealed class reward-product(SPIN_WHEEL_1000)
     val state: LiveData<SpinWheelState>
         get() = _state
@@ -293,6 +296,7 @@ class SpinWheelFragmentVM(application: Application) : BaseViewModel(application)
 
             ApiConstant.API_GET_REWARD_SINGLE_PRODUCTS_PURPOSE -> {
                 error.postValue(errorResponseInfo)
+                _state.value = SpinWheelState.Error(errorResponseInfo)
             }
 
             ApiConstant.PLAY_ORDER_API -> {
@@ -307,7 +311,7 @@ class SpinWheelFragmentVM(application: Application) : BaseViewModel(application)
         data class TicketSuccess(val totalTickets: Int?) : SpinWheelState()
         data class MyntsSuccess(val remainingMynts: Float?) : SpinWheelState()
         data class CashSuccess(val totalCash: Int?) : SpinWheelState()
-        object Error : SpinWheelState()
+        data class Error(var errorResponseInfo: ErrorResponseInfo) : SpinWheelState()
     }
 
 }

@@ -88,8 +88,6 @@ class MultipleJackpotFragmentVM(application: Application) : BaseViewModel(applic
 
                 _stateCash.value = CashState.Success(array.amount)
 
-
-
             }
 
             ApiConstant.API_REWARD_SUMMARY -> {
@@ -99,10 +97,7 @@ class MultipleJackpotFragmentVM(application: Application) : BaseViewModel(applic
                     json.get("data").toString(),
                     RewardPointsSummaryResponse::class.java
                 )
-
                 _stateMynts.value = MyntsState.Success(array.remainingPoints)
-
-
 
             }
 

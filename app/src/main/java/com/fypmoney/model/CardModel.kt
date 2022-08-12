@@ -77,6 +77,9 @@ data class BankTransactionHistoryResponseDetails(
     @SerializedName("transactionDate") val transactionDate: String,
     @SerializedName("userName") val userName: String,
     @SerializedName("mobileNo") val mobileNo: String,
+    @SerializedName("iconLink") val iconLink: String,
+    @SerializedName("category") val category: String,
+    @SerializedName("categoryCode") val categoryCode: String,
     @SerializedName("accReferenceNumber") val accReferenceNumber: String
 ) : Serializable
 @Keep
