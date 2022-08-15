@@ -3,13 +3,12 @@ package com.fypmoney.view.arcadegames.brandedcoupons.viewmodel
 import android.app.Application
 import android.app.Dialog
 import android.content.Context
-import android.graphics.Color
+import android.graphics.*
 import android.graphics.drawable.ColorDrawable
 import android.media.MediaPlayer
 import android.view.ViewGroup
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.bumptech.glide.Glide
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.trackr
 import com.fypmoney.R
@@ -32,7 +31,7 @@ import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import kotlinx.android.synthetic.main.dialog_no_coupon.*
 import kotlinx.android.synthetic.main.dialog_rewards_insufficient.*
-import kotlinx.android.synthetic.main.dialog_rewards_insufficient.clicked
+
 
 class BrandedCouponsFragmentVM(application: Application) : BaseViewModel(application) {
 
@@ -386,6 +385,21 @@ class BrandedCouponsFragmentVM(application: Application) : BaseViewModel(applica
         data class Error(var errorResponseInfo: ErrorResponseInfo) : PlayOrderState()
         data class PlayOrderSuccess(var spinWheelResponseDetails: SpinWheelRotateResponseDetails) :
             PlayOrderState()
+    }
+
+    fun addGradient(originalBitmap: Bitmap): Bitmap? {
+        val width = originalBitmap.width
+        val height = originalBitmap.height
+        val updatedBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(updatedBitmap)
+        canvas.drawBitmap(originalBitmap, 0F, 0F, null)
+        val paint = Paint()
+        val shader =
+            LinearGradient(0F, 0F, 0F, height.toFloat(), -0xf2dae, -0xf8cfb, Shader.TileMode.CLAMP)
+        paint.shader = shader
+        paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
+        canvas.drawRect(0F, 0F, width.toFloat(), height.toFloat(), paint)
+        return updatedBitmap
     }
 
 }

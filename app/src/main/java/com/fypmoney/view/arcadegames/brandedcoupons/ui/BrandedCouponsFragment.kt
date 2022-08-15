@@ -1,7 +1,12 @@
 package com.fypmoney.view.arcadegames.brandedcoupons.ui
 
+import android.animation.Animator
 import android.animation.ValueAnimator
 import android.graphics.Color
+import android.graphics.LinearGradient
+import android.graphics.Shader
+import android.graphics.drawable.ShapeDrawable
+import android.graphics.drawable.shapes.RectShape
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
@@ -9,6 +14,8 @@ import android.os.Looper
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
+import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
@@ -74,11 +81,36 @@ class BrandedCouponsFragment :
             binding.ivBtnPlayAnimation.toInvisible()
             binding.progressBtnPlay.toVisible()
 
-            setViewVisibility(binding.ivBrandedCouponsMyntsAnim, binding.ivBrandedCouponsMynts)
+            if (brandedCouponsFragmentVM.productId == "null") {
 
-            brandedCouponsFragmentVM.callMyntsBurnApi(brandedCouponsFragmentVM.productCode)
+                setViewVisibility(binding.ivBrandedCouponsMyntsAnim, binding.ivBrandedCouponsMynts)
+                brandedCouponsFragmentVM.callMyntsBurnApi(brandedCouponsFragmentVM.productCode)
 
+            } else {
+                brandedCouponsFragmentVM.callProductsDetailsApi(brandedCouponsFragmentVM.productId)
+
+            }
         }
+
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if (brandedCouponsFragmentVM.isBrandedCouponStarted) {
+                        Utility.showToast("Your reward is being processed")
+                    } else {
+                        if (brandedCouponsFragmentVM.isArcadeIsPlayed) {
+                            findNavController().previousBackStackEntry?.savedStateHandle?.set(
+                                "arcade_is_played",
+                                true
+                            )
+                            findNavController().popBackStack()
+                        } else {
+                            findNavController().navigateUp()
+                        }
+                    }
+                }
+            }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
     }
 
@@ -253,6 +285,15 @@ class BrandedCouponsFragment :
                 Glide.with(this).load(it.couponItem.detailResource)
                     .into(binding.ivBrandedLogo)
 
+//                binding.ivInitialCouponStage.backgroundGradientDrawable(
+//                    resources.getColor(R.color.back_surface_color),
+//                    resources.getColor(R.color.editTextStrokeColor))
+
+//                val myBitmap = (binding.ivInitialCouponStage.drawable as BitmapDrawable).bitmap
+//
+//                val newBitmap: Bitmap? = brandedCouponsFragmentVM.addGradient(myBitmap)
+//                binding.ivInitialCouponStage.setImageDrawable(BitmapDrawable(resources, newBitmap))
+
                 binding.shimmerLayoutBrandedCoupons.toInvisible()
 
                 binding.frameBtnContainer.toVisible()
@@ -289,6 +330,7 @@ class BrandedCouponsFragment :
                 }
             }
             BrandedCouponsFragmentVM.MyntsBurnState.Loading -> {}
+
             is BrandedCouponsFragmentVM.MyntsBurnState.MyntsBurnSuccess -> {
 
                 brandedCouponsFragmentVM.callPlayOrderApi(it.coinsBurnedResponse.orderNo)
@@ -302,6 +344,11 @@ class BrandedCouponsFragment :
 
                 binding.motionLayoutCoupons.transitionToEnd()
 
+                Handler(Looper.getMainLooper()).postDelayed({
+                    binding.lottieRewardConfetti.toVisible()
+                    binding.lottieRewardConfetti.playAnimation()
+                }, 1500)
+
             }
         }
     }
@@ -312,8 +359,16 @@ class BrandedCouponsFragment :
                 errorCode()
             }
             BrandedCouponsFragmentVM.BrandedProductResponseState.Loading -> {}
-            is BrandedCouponsFragmentVM.BrandedProductResponseState.Success -> {
 
+            is BrandedCouponsFragmentVM.BrandedProductResponseState.Success -> {
+                binding.motionLayoutCoupons.transitionToEnd()
+
+                brandedCouponsFragmentVM.callPlayOrderApi(brandedCouponsFragmentVM.productId)
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    binding.lottieRewardConfetti.toVisible()
+                    binding.lottieRewardConfetti.playAnimation()
+                }, 1500)
             }
         }
     }
@@ -326,18 +381,38 @@ class BrandedCouponsFragment :
             BrandedCouponsFragmentVM.PlayOrderState.Loading -> {}
             is BrandedCouponsFragmentVM.PlayOrderState.PlayOrderSuccess -> {
 
-                Handler(Looper.getMainLooper()).postDelayed({
-                    val bundle = bundleOf("Coupon Code" to it.spinWheelResponseDetails.couponCode)
+                binding.lottieRewardConfetti.addAnimatorListener(object :
+                    Animator.AnimatorListener {
+                    override fun onAnimationStart(animation: Animator) {
+                    }
 
-                    val transition =
-                        FragmentNavigatorExtras(binding.ivInitialCouponStage to "detailsBackTransition")
-                    findNavController().navigate(
-                        R.id.navigation_branded_coupons_details, bundle, null, transition
-                    )
+                    override fun onAnimationEnd(animation: Animator) {
+                        binding.lottieRewardConfetti.toGone()
+                        binding.lottieRewardConfetti.cancelAnimation()
+                        val bundle =
+                            bundleOf("Coupon Code" to it.spinWheelResponseDetails.couponCode)
 
-                    binding.ivBtnPlayAnimation.toVisible()
-                    binding.progressBtnPlay.toInvisible()
-                }, 500)
+                        val transition =
+                            FragmentNavigatorExtras(binding.ivInitialCouponStage to "detailsBackTransition")
+                        findNavController().navigate(
+                            R.id.navigation_branded_coupons_details, bundle, null, transition
+                        )
+
+                        binding.ivBtnPlayAnimation.toVisible()
+                        binding.progressBtnPlay.toInvisible()
+
+                        brandedCouponsFragmentVM.isBrandedCouponStarted = false
+
+                    }
+
+                    override fun onAnimationCancel(animation: Animator) {
+                    }
+
+                    override fun onAnimationRepeat(animation: Animator) {
+                    }
+
+                })
+
             }
         }
     }
@@ -360,6 +435,19 @@ class BrandedCouponsFragment :
             binding.ivBrandedCouponsTicket,
             binding.ivBrandedCouponsTicketAnim
         )
+    }
+
+    private fun View.backgroundGradientDrawable(
+        @ColorInt startColor: Int,
+        @ColorInt endColor: Int
+    ) {
+        val h = this.height.toFloat()
+        val shapeDrawable = ShapeDrawable(RectShape())
+        shapeDrawable.paint.shader =
+            LinearGradient(0f, 0f, 0f, h, startColor, endColor, Shader.TileMode.REPEAT)
+//        this.foregroundTintMode = shapeDrawable
+//        this.setColorFilter(ContextCompat.getColor(context, R.color.COLOR_YOUR_COLOR), android.graphics.PorterDuff.Mode.MULTIPLY);
+        this.background = shapeDrawable
     }
 
     private fun arcadeSounds(from: String) {
@@ -402,6 +490,7 @@ class BrandedCouponsFragment :
 
     private fun decreaseCountAnimation(textScore: TextView, finalCount: Int) {
         if (!textScore.text.isNullOrEmpty()) {
+            binding.tvPointsApiError.toGone()
             val animator = ValueAnimator.ofInt(
                 Integer.parseInt(textScore.text.toString()),
                 Integer.parseInt(textScore.text.toString()) - (finalCount)
@@ -422,6 +511,7 @@ class BrandedCouponsFragment :
             FirebaseCrashlytics.getInstance()
                 .recordException(Throwable("Unable to decrease mynts. ${textScore.text}"))
             Utility.showToast("Please check history")
+            binding.tvPointsApiError.toVisible()
         }
     }
 

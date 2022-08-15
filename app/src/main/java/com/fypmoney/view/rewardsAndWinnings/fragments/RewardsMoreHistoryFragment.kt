@@ -227,6 +227,19 @@ class RewardsMoreHistoryFragment :
                             }
                         })
                     }
+                    AppConstants.PRODUCT_COUPON_CODE -> {
+                        val productId = historyItem.orderNumber.toString()
+                        val productCode = historyItem.productCode.toString()
+                        findNavController().navigate(Uri.parse("https://www.fypmoney.in/branded_coupons/${productCode}/${productId}"), navOptions {
+                            anim {
+                                popEnter = R.anim.slide_in_left
+                                popExit = R.anim.slide_out_righ
+                                enter = R.anim.slide_in_right
+                                exit = R.anim.slide_out_left
+                            }
+                        })
+                    }
+
                     else -> {
                         rewardsHistoryVM.callProductsDetailsApi(historyItem.orderNumber)
 

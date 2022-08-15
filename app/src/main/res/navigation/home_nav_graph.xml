@@ -941,6 +941,7 @@
 
 
     </fragment>
+
     <fragment
         android:id="@+id/navigation_branded_coupons_details"
         android:name="com.fypmoney.view.arcadegames.brandedcoupons.ui.BrandedCouponDetailsFragment"
@@ -957,6 +958,13 @@
             android:id="@+id/arcade_slot_machine_deep_link"
             android:autoVerify="true"
             app:uri="https://www.fypmoney.in/branded_coupons_details/{couponCode}" />
+
+        <action
+            android:id="@+id/action_navigation_branded_coupons_details_to_navigation_rewards"
+            app:destination="@id/navigation_rewards"
+            app:popUpTo="@id/navigation_rewards"
+            app:popUpToInclusive="true"/>
+
 
     </fragment>
 

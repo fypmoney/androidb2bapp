@@ -1294,6 +1294,7 @@ Coming really soon!
     <string name="no_coupon_available">No Coupons Available!</string>
     <string name="please_try_again_next_time">Please try again next time!</string>
 
+    <string name="unable_to_fetch_points_please_check_reward_history_after_playing">Unable to fetch points, please check Reward History after playing!</string>
 
     <string-array name="person_category_array">
         <item>Minor</item>

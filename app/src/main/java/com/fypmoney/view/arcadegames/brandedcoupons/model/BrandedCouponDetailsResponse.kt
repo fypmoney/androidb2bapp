@@ -1,13 +1,16 @@
 package com.fypmoney.view.arcadegames.brandedcoupons.model
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
+@Keep
 data class BrandedCouponDetailsResponse(
 
 	@field:SerializedName("data")
 	val data: CouponDetailsData? = null
 )
 
+@Keep
 data class CouponDetailsData(
 
 	@field:SerializedName("image")

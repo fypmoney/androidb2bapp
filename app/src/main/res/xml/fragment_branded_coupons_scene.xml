@@ -8,6 +8,7 @@
             android:id="@+id/ivCouponFrame"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_52sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -30,7 +31,29 @@
             app:layout_constraintBottom_toBottomOf="@id/ivCouponFrame"
             app:layout_constraintEnd_toEndOf="@+id/ivCouponFrame"
             app:layout_constraintStart_toStartOf="@+id/ivCouponFrame"
+            app:srcCompat="@drawable/branded_coupon" />
+
+        <Constraint
+            android:id="@+id/ivBrandedLogo"
+            android:layout_width="@dimen/_52sdp"
+            android:layout_height="@dimen/_72sdp"
+            android:layout_marginHorizontal="18dp"
+            android:layout_marginBottom="18dp"
+            app:layout_constraintBottom_toBottomOf="@+id/ivInitialCouponStage"
+            app:layout_constraintEnd_toEndOf="@+id/ivInitialCouponStage"
+            app:layout_constraintStart_toStartOf="@+id/ivInitialCouponStage"
+            app:layout_constraintTop_toTopOf="@+id/ivInitialCouponStage"
             app:srcCompat="@drawable/ticket" />
+
+        <Constraint
+            android:id="@+id/viewTicketBlack"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/bgcolor"
+            app:layout_constraintBottom_toTopOf="@id/ivCouponFrame"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </ConstraintSet>
 
@@ -66,12 +89,34 @@
             app:layout_constraintTop_toBottomOf="@+id/iv_top_frame"
             app:srcCompat="@drawable/ticket" />
 
+        <Constraint
+            android:id="@+id/ivBrandedLogo"
+            android:layout_width="@dimen/_52sdp"
+            android:layout_height="@dimen/_72sdp"
+            android:layout_marginHorizontal="18dp"
+            android:layout_marginBottom="18dp"
+            app:layout_constraintBottom_toBottomOf="@+id/ivInitialCouponStage"
+            app:layout_constraintEnd_toEndOf="@+id/ivInitialCouponStage"
+            app:layout_constraintStart_toStartOf="@+id/ivInitialCouponStage"
+            app:layout_constraintTop_toTopOf="@+id/ivInitialCouponStage"
+            app:srcCompat="@drawable/ticket" />
+
+        <Constraint
+            android:id="@+id/viewTicketBlack"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/bgcolor"
+            app:layout_constraintBottom_toTopOf="@id/ivCouponFrame"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
     </ConstraintSet>
 
     <Transition
         app:constraintSetEnd="@id/end"
         app:constraintSetStart="@+id/start"
-        app:duration="700"
+        app:duration="1500"
         app:motionInterpolator="linear" />
 
 </MotionScene>
