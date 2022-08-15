@@ -510,7 +510,6 @@ class BrandedCouponsFragment :
         } else {
             FirebaseCrashlytics.getInstance()
                 .recordException(Throwable("Unable to decrease mynts. ${textScore.text}"))
-            Utility.showToast("Please check history")
             binding.tvPointsApiError.toVisible()
         }
     }
