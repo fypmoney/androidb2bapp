@@ -18,6 +18,10 @@ class BrandedCouponDetailsFragmentVM(application: Application) : BaseViewModel(a
 
     lateinit var couponCode: String
 
+    lateinit var startColor: String
+
+    lateinit var endColor: String
+
     val stateBrandedCoupon: LiveData<BrandedCouponDetailsState>
         get() = _stateBrandedCoupon
 

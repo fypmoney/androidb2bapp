@@ -13,6 +13,7 @@ import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.*
 import com.fypmoney.util.livedata.LiveEvent
+import com.fypmoney.view.arcadegames.brandedcoupons.model.BrandedCouponCountResponse
 import com.fypmoney.view.arcadegames.model.MultipleJackpotNetworkResponse
 import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
 import com.fypmoney.view.rewardsAndWinnings.model.TotalJackpotResponse
@@ -47,6 +48,9 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
         get() = _state
     private val _state = MutableLiveData<RewardsTicket>()
 
+    val stateCouponCount: LiveData<CouponCountState>
+        get() = _stateCouponCount
+    private val _stateCouponCount = MutableLiveData<CouponCountState>()
 
     var orderNumber = MutableLiveData("")
 
@@ -76,8 +80,20 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
         callExplporeContent()
         callTotalRewardsEarnings()
         callTotalJackpotCards()
+        callBrandedActiveCount()
     }
 
+    private fun callBrandedActiveCount() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_GET_ACTIVE_COUPON_COUNT_DATA,
+                NetworkUtil.endURL(ApiConstant.API_GET_ACTIVE_COUPON_COUNT_DATA),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = false
+            )
+        )
+    }
 
     fun callExplporeContent() {
         WebApiCaller.getInstance().request(
@@ -233,7 +249,15 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
                 openBottomSheet.postValue(arrayList)
 
 
-            }/*
+            }
+
+            ApiConstant.API_GET_ACTIVE_COUPON_COUNT_DATA -> {
+                if (responseData is BrandedCouponCountResponse) {
+                    _stateCouponCount.value = CouponCountState.CouponCountSuccess(responseData.data?.amount)
+                }
+            }
+
+            /*
             ApiConstant.API_FETCH_ALL_FEEDS -> {
                 var feeds = getObject(responseData.toString(), FeedResponseModel::class.java)
                 if (feeds is FeedResponseModel) {
@@ -339,8 +363,16 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
         super.onError(purpose, errorResponseInfo)
         loading.postValue(false)
         when (purpose) {
-
+            ApiConstant.API_GET_ACTIVE_COUPON_COUNT_DATA -> {
+                _stateCouponCount.value = CouponCountState.Error(errorResponseInfo)
+            }
         }
+    }
+
+    sealed class CouponCountState {
+        object Loading : CouponCountState()
+        data class Error(var errorResponseInfo: ErrorResponseInfo) : CouponCountState()
+        data class CouponCountSuccess(var amount: Int?) : CouponCountState()
     }
 
     sealed class RewardsTicket {

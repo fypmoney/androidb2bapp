@@ -33,6 +33,17 @@
             app:layout_constraintStart_toStartOf="@+id/ivCouponFrame"
             app:srcCompat="@drawable/branded_coupon" />
 
+<!--        <Constraint-->
+<!--            android:id="@+id/rlCouponBorder"-->
+<!--            android:layout_width="@dimen/_132sdp"-->
+<!--            android:layout_height="@dimen/_210sdp"-->
+<!--            android:layout_margin="@dimen/dp24"-->
+<!--            android:background="@drawable/curved_border_ticket"-->
+<!--            app:layout_constraintBottom_toBottomOf="@id/ivInitialCouponStage"-->
+<!--            app:layout_constraintEnd_toEndOf="@+id/ivInitialCouponStage"-->
+<!--            app:layout_constraintStart_toStartOf="@+id/ivInitialCouponStage"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/ivInitialCouponStage" />-->
+
         <Constraint
             android:id="@+id/ivBrandedLogo"
             android:layout_width="@dimen/_52sdp"
@@ -88,6 +99,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_top_frame"
             app:srcCompat="@drawable/ticket" />
+
+<!--        <Constraint-->
+<!--            android:id="@+id/rlCouponBorder"-->
+<!--            android:layout_width="@dimen/_132sdp"-->
+<!--            android:layout_height="@dimen/_210sdp"-->
+<!--            android:layout_margin="@dimen/dp24"-->
+<!--            android:background="@drawable/curved_border_ticket"-->
+<!--            app:layout_constraintBottom_toBottomOf="@id/ivInitialCouponStage"-->
+<!--            app:layout_constraintEnd_toEndOf="@+id/ivInitialCouponStage"-->
+<!--            app:layout_constraintStart_toStartOf="@+id/ivInitialCouponStage"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/ivInitialCouponStage" />-->
 
         <Constraint
             android:id="@+id/ivBrandedLogo"

@@ -212,6 +212,10 @@ object ApiConstant {
 
     const val API_GET_COUPON_REWARD_DATA = "services/PockketService/api/coupon/details/"
 
+    const val API_GET_ACTIVE_COUPON_DATA = "services/PockketService/api/list/active-coupons/"
+
+    const val API_GET_ACTIVE_COUPON_COUNT_DATA = "services/PockketService/api/active-coupon-count/"
+
 }
 
 

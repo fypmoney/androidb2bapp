@@ -10,7 +10,7 @@
         android:layout_height="@dimen/_72sdp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/_24sdp"
-        android:background="@color/editTextStrokeColor"
+        android:background="@color/shimmerViewColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -21,7 +21,7 @@
         android:layout_height="@dimen/_16sdp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/_24sdp"
-        android:background="@color/editTextStrokeColor"
+        android:background="@color/shimmerViewColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewBrandLogo" />
@@ -32,7 +32,7 @@
         android:layout_height="@dimen/_8sdp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/_14sdp"
-        android:background="@color/editTextStrokeColor"
+        android:background="@color/shimmerViewColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewTitle" />
@@ -43,7 +43,7 @@
         android:layout_height="@dimen/_8sdp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/_6sdp"
-        android:background="@color/editTextStrokeColor"
+        android:background="@color/shimmerViewColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewContent" />
@@ -55,7 +55,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginHorizontal="@dimen/dp24"
         android:layout_marginTop="@dimen/_26sdp"
-        android:background="@color/editTextStrokeColor"
+        android:background="@color/shimmerViewColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewContent2" />
@@ -67,7 +67,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginHorizontal="@dimen/dp24"
         android:layout_marginTop="@dimen/_26sdp"
-        android:background="@color/editTextStrokeColor"
+        android:background="@color/shimmerViewColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewContent3" />
@@ -79,7 +79,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginHorizontal="@dimen/dp24"
         android:layout_marginTop="@dimen/_12sdp"
-        android:background="@color/editTextStrokeColor"
+        android:background="@color/shimmerViewColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewContent4" />
@@ -91,7 +91,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginHorizontal="@dimen/dp24"
         android:layout_marginTop="@dimen/_12sdp"
-        android:background="@color/editTextStrokeColor"
+        android:background="@color/shimmerViewColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewContent5" />
@@ -103,7 +103,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginHorizontal="@dimen/dp24"
         android:layout_marginBottom="@dimen/dp32"
-        android:background="@color/editTextStrokeColor"
+        android:background="@color/shimmerViewColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -116,7 +116,7 @@
         android:layout_marginHorizontal="@dimen/dp54"
         android:layout_marginTop="@dimen/_12sdp"
         android:layout_marginBottom="@dimen/_16sdp"
-        android:background="@color/editTextStrokeColor"
+        android:background="@color/shimmerViewColor"
         app:layout_constraintBottom_toTopOf="@+id/viewContent7"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

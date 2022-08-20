@@ -16,6 +16,7 @@ import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.*
 import com.fypmoney.util.Utility
 import com.fypmoney.util.livedata.LiveEvent
+import com.fypmoney.view.arcadegames.brandedcoupons.model.BrandedCouponCountResponse
 import com.fypmoney.view.arcadegames.model.MultipleJackpotNetworkResponse
 import com.fypmoney.view.arcadegames.model.SectionListItem
 import com.fypmoney.view.arcadegames.model.SingleSpinWheelProductNetworkResponse
@@ -73,6 +74,10 @@ class SpinWheelFragmentVM(application: Application) : BaseViewModel(application)
         get() = _state
     private val _state = MutableLiveData<SpinWheelState>()
 
+    val stateCouponCount: LiveData<CouponCountState>
+        get() = _stateCouponCount
+    private val _stateCouponCount = MutableLiveData<CouponCountState>()
+
     init {
         remainFrequency.value = 0
         myntsCount = 0f
@@ -80,6 +85,8 @@ class SpinWheelFragmentVM(application: Application) : BaseViewModel(application)
         callRewardSummary()
         callTotalRewardsEarnings()
         callTotalJackpotCards()
+        callBrandedActiveCount()
+
     }
 
     /*
@@ -201,6 +208,18 @@ class SpinWheelFragmentVM(application: Application) : BaseViewModel(application)
         )
     }
 
+    private fun callBrandedActiveCount() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_GET_ACTIVE_COUPON_COUNT_DATA,
+                NetworkUtil.endURL(ApiConstant.API_GET_ACTIVE_COUPON_COUNT_DATA),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = false
+            )
+        )
+    }
+
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
 
@@ -263,6 +282,12 @@ class SpinWheelFragmentVM(application: Application) : BaseViewModel(application)
 
             }
 
+            ApiConstant.API_GET_ACTIVE_COUPON_COUNT_DATA -> {
+                if (responseData is BrandedCouponCountResponse) {
+                    _stateCouponCount.value = CouponCountState.CouponCountSuccess(responseData.data?.amount)
+                }
+            }
+
             ApiConstant.REWARD_PRODUCT_DETAILS -> {
                 val json = JsonParser.parseString(responseData.toString()) as JsonObject
                 val spinDetails = Gson().fromJson(
@@ -302,6 +327,9 @@ class SpinWheelFragmentVM(application: Application) : BaseViewModel(application)
             ApiConstant.PLAY_ORDER_API -> {
                 error.postValue(errorResponseInfo)
             }
+            ApiConstant.API_GET_ACTIVE_COUPON_COUNT_DATA -> {
+                _stateCouponCount.value = CouponCountState.Error(errorResponseInfo)
+            }
         }
     }
 
@@ -312,6 +340,12 @@ class SpinWheelFragmentVM(application: Application) : BaseViewModel(application)
         data class MyntsSuccess(val remainingMynts: Float?) : SpinWheelState()
         data class CashSuccess(val totalCash: Int?) : SpinWheelState()
         data class Error(var errorResponseInfo: ErrorResponseInfo) : SpinWheelState()
+    }
+
+    sealed class CouponCountState {
+        object Loading : CouponCountState()
+        data class Error(var errorResponseInfo: ErrorResponseInfo) : CouponCountState()
+        data class CouponCountSuccess(var amount: Int?) : CouponCountState()
     }
 
 }

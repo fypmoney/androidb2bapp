@@ -1316,4 +1316,11 @@ object Utility {
         }
 
     }
+
+    fun splitStringByDelimiters(delimiterString : String?, delimiter: String) : Array<String>? {
+
+        val lstValues: List<String>? = delimiterString?.split(delimiter)?.map { it.trim() }
+
+        return lstValues?.toTypedArray()
+    }
 }

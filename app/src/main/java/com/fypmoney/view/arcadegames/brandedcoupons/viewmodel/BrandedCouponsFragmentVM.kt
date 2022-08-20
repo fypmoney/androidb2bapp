@@ -22,6 +22,7 @@ import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.*
 import com.fypmoney.util.Utility
 import com.fypmoney.util.livedata.LiveEvent
+import com.fypmoney.view.arcadegames.brandedcoupons.model.BrandedCouponCountResponse
 import com.fypmoney.view.arcadegames.brandedcoupons.model.BrandedCouponResponse
 import com.fypmoney.view.arcadegames.brandedcoupons.model.COUPONItem
 import com.fypmoney.view.arcadegames.model.MultipleJackpotNetworkResponse
@@ -49,6 +50,10 @@ class BrandedCouponsFragmentVM(application: Application) : BaseViewModel(applica
 
     //To store mynts that will be required to play games
     var myntsDisplay: Int? = null
+
+    lateinit var startColor: String
+
+    lateinit var endColor: String
 
     //live data variable to store frequency played count
     var remainFrequency: MutableLiveData<Int> = MutableLiveData()
@@ -83,6 +88,10 @@ class BrandedCouponsFragmentVM(application: Application) : BaseViewModel(applica
         get() = _stateMyntsBurn
     private val _stateMyntsBurn = LiveEvent<MyntsBurnState>()
 
+    val stateCouponCount: LiveData<CouponCountState>
+        get() = _stateCouponCount
+    private val _stateCouponCount = MutableLiveData<CouponCountState>()
+
     val stateProductDetails: LiveData<BrandedProductResponseState>
         get() = _stateProductDetails
     private val _stateProductDetails = MutableLiveData<BrandedProductResponseState>()
@@ -95,6 +104,7 @@ class BrandedCouponsFragmentVM(application: Application) : BaseViewModel(applica
         callMyntsSummaryApi()
         callTotalCashRewardsEarnings()
         callTotalJackpotCards()
+        callBrandedActiveCount()
     }
 
     private fun callMyntsSummaryApi() {
@@ -152,6 +162,18 @@ class BrandedCouponsFragmentVM(application: Application) : BaseViewModel(applica
                 ApiConstant.API_REDEEM_REWARD,
                 NetworkUtil.endURL(ApiConstant.API_REDEEM_REWARD) + code,
                 ApiUrl.POST,
+                BaseRequest(),
+                this, isProgressBar = false
+            )
+        )
+    }
+
+    private fun callBrandedActiveCount() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_GET_ACTIVE_COUPON_COUNT_DATA,
+                NetworkUtil.endURL(ApiConstant.API_GET_ACTIVE_COUPON_COUNT_DATA),
+                ApiUrl.GET,
                 BaseRequest(),
                 this, isProgressBar = false
             )
@@ -256,6 +278,14 @@ class BrandedCouponsFragmentVM(application: Application) : BaseViewModel(applica
 
                 _stateProductDetails.value = BrandedProductResponseState.Success(spinDetails)
             }
+
+
+            ApiConstant.API_GET_ACTIVE_COUPON_COUNT_DATA -> {
+                if (responseData is BrandedCouponCountResponse) {
+                    _stateCouponCount.value = CouponCountState.CouponCountSuccess(responseData.data?.amount)
+                }
+            }
+
         }
 
     }
@@ -284,6 +314,9 @@ class BrandedCouponsFragmentVM(application: Application) : BaseViewModel(applica
             }
             ApiConstant.PLAY_ORDER_API -> {
                 _statePlayOrder.value = PlayOrderState.Error(errorResponseInfo)
+            }
+            ApiConstant.API_GET_ACTIVE_COUPON_COUNT_DATA -> {
+                _stateCouponCount.value = CouponCountState.Error(errorResponseInfo)
             }
         }
 
@@ -385,6 +418,12 @@ class BrandedCouponsFragmentVM(application: Application) : BaseViewModel(applica
         data class Error(var errorResponseInfo: ErrorResponseInfo) : PlayOrderState()
         data class PlayOrderSuccess(var spinWheelResponseDetails: SpinWheelRotateResponseDetails) :
             PlayOrderState()
+    }
+
+    sealed class CouponCountState {
+        object Loading : CouponCountState()
+        data class Error(var errorResponseInfo: ErrorResponseInfo) : CouponCountState()
+        data class CouponCountSuccess(var amount: Int?) : CouponCountState()
     }
 
     fun addGradient(originalBitmap: Bitmap): Bitmap? {

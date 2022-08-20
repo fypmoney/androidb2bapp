@@ -17,211 +17,261 @@
             android:layout_height="wrap_content"
             android:paddingBottom="96dp">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/containerRewardsChips"
+            <HorizontalScrollView
+                android:id="@+id/hsvContainerRewardsChips"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_4sdp"
-                android:layout_marginEnd="@dimen/_8sdp"
-                android:layout_marginTop="12dp"
-                android:orientation="horizontal"
-                app:layout_constraintHorizontal_bias="0"
+                android:layout_marginTop="@dimen/_8sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/chipMyntsView"
-                    android:layout_width="0dp"
+                    android:id="@+id/containerRewardsChips"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_12sdp"
-                    android:paddingStart="@dimen/_4sdp"
-                    android:paddingEnd="@dimen/_8sdp"
-                    app:layout_constraintEnd_toStartOf="@+id/chipTicketsView"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    android:paddingHorizontal="@dimen/dp12"
+                    android:gravity="center_horizontal">
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/ivRewardsMynts"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_gravity="center_vertical"
-                        android:paddingStart="1dp"
-                        android:paddingTop="10dp"
-                        android:paddingEnd="1dp"
-                        android:paddingBottom="10dp"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/chipMyntsView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="@dimen/_2sdp"
+                        android:paddingEnd="@dimen/_6sdp"
+                        android:layout_marginStart="@dimen/dp8"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_mynt_coin" />
+                        app:layout_constraintTop_toTopOf="parent">
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/tvRewardsMyntsCount"
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivRewardsMynts"
+                            android:layout_width="@dimen/dp36"
+                            android:layout_height="@dimen/dp36"
+                            android:layout_gravity="center_vertical"
+                            android:paddingStart="4dp"
+                            android:paddingTop="9dp"
+                            android:paddingEnd="1dp"
+                            android:paddingBottom="9dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/ic_mynt_coin" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvRewardsMyntsCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_marginEnd="4dp"
+                            android:gravity="center_vertical"
+                            android:textColor="@color/color_dark_yellow"
+                            android:textSize="13sp"
+                            app:fontFamily="@font/product_sans_bold"
+                            app:layout_constraintBottom_toBottomOf="@id/ivRewardsMynts"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/ivRewardsMynts"
+                            app:layout_constraintTop_toTopOf="@id/ivRewardsMynts"
+                            tools:text="@string/dummy_amount" />
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/loadingMynts"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="2dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/ivRewardsMynts"
+                            app:layout_constraintStart_toEndOf="@+id/ivRewardsMynts"
+                            app:layout_constraintTop_toTopOf="@+id/ivRewardsMynts"
+                            app:lottie_autoPlay="true"
+                            app:lottie_loop="true"
+                            app:lottie_rawRes="@raw/three_dot_amount_loader"
+                            tools:visibility="visible" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/chipTicketsView"
                         android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_marginStart="2dp"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginEnd="4dp"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/color_dark_yellow"
-                        android:textSize="14sp"
-                        app:layout_constraintHorizontal_bias="0"
-                        app:fontFamily="@font/product_sans_bold"
-                        app:layout_constraintBottom_toBottomOf="@id/ivRewardsMynts"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/ivRewardsMynts"
-                        app:layout_constraintTop_toTopOf="@id/ivRewardsMynts"
-                        tools:text="@string/dummy_amount" />
-
-                    <com.airbnb.lottie.LottieAnimationView
-                        android:id="@+id/loadingMynts"
-                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="2dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/tvRewardsMyntsCount"
-                        app:layout_constraintStart_toEndOf="@+id/ivRewardsMynts"
-                        app:layout_constraintTop_toTopOf="@+id/tvRewardsMyntsCount"
-                        app:lottie_autoPlay="true"
-                        app:lottie_loop="true"
-                        app:lottie_rawRes="@raw/three_dot_amount_loader"
-                        tools:visibility="visible" />
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:paddingStart="@dimen/_6sdp"
+                        android:paddingEnd="@dimen/_6sdp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/chipMyntsView"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivRewardsTicket"
+                            android:layout_width="@dimen/dp36"
+                            android:layout_height="@dimen/dp36"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="2dp"
+                            android:paddingStart="1dp"
+                            android:paddingTop="11dp"
+                            android:paddingEnd="1dp"
+                            android:paddingBottom="11dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/ticket" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvRewardsTicketsCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_marginEnd="4dp"
+                            android:gravity="center_vertical"
+                            android:textColor="@color/yellow10"
+                            android:textSize="13sp"
+                            app:fontFamily="@font/product_sans_bold"
+                            app:layout_constraintBottom_toBottomOf="@id/ivRewardsTicket"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/ivRewardsTicket"
+                            app:layout_constraintTop_toTopOf="@id/ivRewardsTicket"
+                            tools:text="@string/dummy_amount" />
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/loadingTickets"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="2dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/ivRewardsTicket"
+                            app:layout_constraintStart_toEndOf="@+id/ivRewardsTicket"
+                            app:layout_constraintTop_toTopOf="@+id/ivRewardsTicket"
+                            app:lottie_autoPlay="true"
+                            app:lottie_loop="true"
+                            app:lottie_rawRes="@raw/three_dot_amount_loader"
+                            tools:visibility="visible" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/chipCashView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:paddingStart="@dimen/_6sdp"
+                        android:paddingEnd="@dimen/_6sdp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/chipTicketsView"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivRewardsCash"
+                            android:layout_width="@dimen/dp36"
+                            android:layout_height="@dimen/dp36"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="2dp"
+                            android:paddingStart="1dp"
+                            android:paddingTop="11dp"
+                            android:paddingEnd="1dp"
+                            android:paddingBottom="11dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/cash" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvRewardCashCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_marginEnd="4dp"
+                            android:gravity="center_vertical"
+                            android:textColor="@color/green_winnings"
+                            android:textSize="13sp"
+                            app:fontFamily="@font/product_sans_bold"
+                            app:layout_constraintBottom_toBottomOf="@id/ivRewardsCash"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/ivRewardsCash"
+                            app:layout_constraintTop_toTopOf="@id/ivRewardsCash"
+                            tools:text="@string/dummy_amount1" />
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/loadingCash"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="2dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/ivRewardsCash"
+                            app:layout_constraintStart_toEndOf="@+id/ivRewardsCash"
+                            app:layout_constraintTop_toTopOf="@+id/ivRewardsCash"
+                            app:lottie_autoPlay="true"
+                            app:lottie_loop="true"
+                            app:lottie_rawRes="@raw/three_dot_amount_loader"
+                            tools:visibility="visible" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/chipCouponActiveView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:paddingStart="@dimen/_6sdp"
+                        android:paddingEnd="@dimen/_6sdp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/chipCashView"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivBrandedActiveCoupons"
+                            android:layout_width="@dimen/dp36"
+                            android:layout_height="@dimen/dp36"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="2dp"
+                            android:paddingStart="1dp"
+                            android:paddingTop="8dp"
+                            android:paddingEnd="1dp"
+                            android:paddingBottom="8dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/ic_arcade_voucher" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvBrandedActiveCouponsCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_marginEnd="8dp"
+                            android:gravity="center_vertical"
+                            android:textColor="@color/color_pink"
+                            android:textSize="13sp"
+                            app:fontFamily="@font/product_sans_bold"
+                            app:layout_constraintBottom_toBottomOf="@id/ivBrandedActiveCoupons"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/ivBrandedActiveCoupons"
+                            app:layout_constraintTop_toTopOf="@id/ivBrandedActiveCoupons"
+                            tools:text="0" />
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/loadingActiveBrandedCoupon"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="2dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/ivBrandedActiveCoupons"
+                            app:layout_constraintStart_toEndOf="@+id/ivBrandedActiveCoupons"
+                            app:layout_constraintTop_toTopOf="@+id/ivBrandedActiveCoupons"
+                            app:lottie_autoPlay="true"
+                            app:lottie_loop="true"
+                            app:lottie_rawRes="@raw/three_dot_amount_loader"
+                            tools:visibility="visible" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/chipTicketsView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_12sdp"
-                    android:paddingStart="@dimen/_8sdp"
-                    android:paddingEnd="@dimen/_8sdp"
-                    app:flow_firstHorizontalBias="0"
-                    app:layout_constraintEnd_toStartOf="@id/chipCashView"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/chipMyntsView"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/ivRewardsTicket"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_gravity="center_vertical"
-                        android:paddingStart="4dp"
-                        android:paddingTop="12dp"
-                        android:paddingEnd="6dp"
-                        android:paddingBottom="12dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ticket" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/tvRewardsTicketsCount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginEnd="4dp"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/yellow10"
-                        android:textSize="14sp"
-                        app:layout_constraintHorizontal_bias="0"
-                        app:fontFamily="@font/product_sans_bold"
-                        app:layout_constraintBottom_toBottomOf="@id/ivRewardsTicket"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/ivRewardsTicket"
-                        app:layout_constraintTop_toTopOf="@id/ivRewardsTicket"
-                        tools:text="@string/dummy_amount" />
-
-                    <com.airbnb.lottie.LottieAnimationView
-                        android:id="@+id/loadingTickets"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginBottom="2dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/tvRewardsTicketsCount"
-                        app:layout_constraintStart_toEndOf="@+id/ivRewardsTicket"
-                        app:layout_constraintTop_toTopOf="@+id/tvRewardsTicketsCount"
-                        app:lottie_autoPlay="true"
-                        app:lottie_loop="true"
-                        app:lottie_rawRes="@raw/three_dot_amount_loader"
-                        tools:visibility="visible" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/chipCashView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_12sdp"
-                    android:paddingStart="@dimen/_8sdp"
-                    android:paddingEnd="@dimen/_8sdp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/chipTicketsView"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/ivRewardsCash"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:paddingStart="6dp"
-                        android:paddingTop="12dp"
-                        android:paddingEnd="6dp"
-                        android:paddingBottom="12dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/cash" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/tvRewardCashCount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginEnd="4dp"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/green_winnings"
-                        android:textSize="14sp"
-                        app:layout_constraintHorizontal_bias="0"
-                        app:fontFamily="@font/product_sans_bold"
-                        app:layout_constraintBottom_toBottomOf="@id/ivRewardsCash"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/ivRewardsCash"
-                        app:layout_constraintTop_toTopOf="@id/ivRewardsCash"
-                        tools:text="@string/dummy_amount1" />
-
-                    <com.airbnb.lottie.LottieAnimationView
-                        android:id="@+id/loadingCash"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginBottom="2dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/tvRewardCashCount"
-                        app:layout_constraintStart_toEndOf="@+id/ivRewardsCash"
-                        app:layout_constraintTop_toTopOf="@+id/tvRewardCashCount"
-                        app:lottie_autoPlay="true"
-                        app:lottie_loop="true"
-                        app:lottie_rawRes="@raw/three_dot_amount_loader"
-                        tools:visibility="visible" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </HorizontalScrollView>
 
             <FrameLayout
                 android:id="@+id/explore_cl"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/containerRewardsChips"
+                android:layout_below="@+id/hsvContainerRewardsChips"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
-                app:layout_constraintTop_toBottomOf="@+id/containerRewardsChips"
+                app:layout_constraintTop_toBottomOf="@+id/hsvContainerRewardsChips"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
 

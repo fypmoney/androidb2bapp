@@ -968,4 +968,10 @@
 
     </fragment>
 
+    <fragment
+        android:id="@+id/navigation_active_coupon_fragment"
+        android:name="com.fypmoney.view.arcadegames.brandedcoupons.ui.ActiveCouponFragment"
+        android:label="Active Coupon Fragment"
+        tools:layout="@layout/fragment_active_coupon" />
+
 </navigation>

@@ -86,7 +86,11 @@ data class COUPONItem(
 	val noOfJackpotTicket: Int? = null,
 
 	@field:SerializedName("startDate")
-	val startDate: String? = null
+	val startDate: String? = null,
+
+	@field:SerializedName("rewardColor")
+	val rewardColor: String? = null
+
 )
 
 @Keep

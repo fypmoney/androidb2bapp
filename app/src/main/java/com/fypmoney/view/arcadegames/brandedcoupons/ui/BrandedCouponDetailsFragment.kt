@@ -4,9 +4,12 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
+import androidx.annotation.ColorInt
+import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -22,6 +25,7 @@ import com.fypmoney.util.Utility
 import com.fypmoney.view.StoreWebpageOpener2
 import com.fypmoney.view.arcadegames.brandedcoupons.adapter.CouponDetailsTitleAdapter
 import com.fypmoney.view.arcadegames.brandedcoupons.adapter.CouponDetailsTitleUiModel
+import com.fypmoney.view.arcadegames.brandedcoupons.utils.startCircularReveal
 import com.fypmoney.view.arcadegames.brandedcoupons.viewmodel.BrandedCouponDetailsFragmentVM
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
 import kotlinx.android.synthetic.main.toolbar.*
@@ -34,18 +38,26 @@ class BrandedCouponDetailsFragment :
     private lateinit var binding: FragmentBrandedCouponDetailsBinding
     private var listOfCouponDetailsTitle = arrayListOf<CouponDetailsTitleUiModel>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        activity?.window?.statusBarColor = Color.parseColor("#F4DE14")
-
-        sharedElementEnterTransition =
-            TransitionInflater.from(context).inflateTransition(android.R.transition.move)
-    }
+    private var revealX: Int = 0
+    private var revealY: Int = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding = getViewDataBinding()
+
+        if (arguments?.getString("startColor") != null && arguments?.getString("endColor") != null) {
+            brandedCouponDetailsFragmentVM.startColor =
+                arguments?.getString("startColor").toString()
+            brandedCouponDetailsFragmentVM.endColor = arguments?.getString("endColor").toString()
+            backgroundGradientDrawable(
+                Color.parseColor(brandedCouponDetailsFragmentVM.startColor),
+                Color.parseColor(brandedCouponDetailsFragmentVM.endColor)
+            )
+            activity?.window?.statusBarColor =
+                Color.parseColor(brandedCouponDetailsFragmentVM.startColor)
+
+        }
 
         setToolbarAndTitle(
             context = requireContext(),
@@ -57,14 +69,27 @@ class BrandedCouponDetailsFragment :
 
         brandedCouponDetailsFragmentVM.couponCode = arguments?.getString("Coupon Code").toString()
 
+        revealX = arguments?.getInt("REVEAL_X")!!
+        revealY = arguments?.getInt("REVEAL_Y")!!
+
         brandedCouponDetailsFragmentVM.callRewardCouponsApi(brandedCouponDetailsFragmentVM.couponCode)
+
+        if (revealX > 0 && revealY > 0) {
+
+            sharedElementEnterTransition =
+                TransitionInflater.from(context).inflateTransition(android.R.transition.move)
+            view.startCircularReveal(revealX, revealY)
+        }
 
         setObserver()
 
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    findNavController().navigate(R.id.action_navigation_branded_coupons_details_to_navigation_rewards)
+                    if (revealX > 0 && revealY > 0)
+                        findNavController().navigate(R.id.action_navigation_branded_coupons_details_to_navigation_rewards)
+                    else
+                        findNavController().navigateUp()
                 }
             }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
@@ -89,6 +114,7 @@ class BrandedCouponDetailsFragment :
 
             is BrandedCouponDetailsFragmentVM.BrandedCouponDetailsState.BrandedCouponDetailsSuccess -> {
 
+                setBackColor(it)
                 binding.nestedBrandedCouponContainer.toVisible()
                 binding.clBrandedCouponBottom.toVisible()
                 binding.shimmerCouponDetails.toGone()
@@ -162,12 +188,6 @@ class BrandedCouponDetailsFragment :
                     offerDetailsArray.add(jsonArr2[i] as String)
                 }
 
-//                val tncArray: List<String>? = it.couponDetailsData.tnc?.split("\",\"")
-//                val howToRedeemArray: List<String>? =
-//                    it.couponDetailsData.howToRedeem?.split("\",\"")
-//                val offerDetailsArray: List<String>? =
-//                    it.couponDetailsData.description?.split("\",\"")
-
                 listOfCouponDetailsTitle.add(
                     CouponDetailsTitleUiModel(
                         "How to redeem?",
@@ -205,6 +225,41 @@ class BrandedCouponDetailsFragment :
         binding.rvCouponDetailsTitle.adapter = adapter
     }
 
+    private fun setBackColor(brandedCouponDetailsState: BrandedCouponDetailsFragmentVM.BrandedCouponDetailsState.BrandedCouponDetailsSuccess) {
+        val arr = Utility.splitStringByDelimiters(
+            brandedCouponDetailsState.couponDetailsData.rewardColor,
+            ","
+        )
+
+        if (arr?.size!! > 1) {
+            backgroundGradientDrawable(
+                Color.parseColor(arr[0]),
+                Color.parseColor(arr[1])
+            )
+            activity?.window?.statusBarColor =
+                Color.parseColor(arr[0])
+
+        }
+    }
+
+    private fun backgroundGradientDrawable(
+        @ColorInt startColor: Int,
+        @ColorInt endColor: Int
+    ) {
+
+        val gradientDrawable = GradientDrawable(
+            GradientDrawable.Orientation.TOP_BOTTOM,
+            intArrayOf(
+                startColor,
+                endColor
+            )
+        )
+        gradientDrawable.cornerRadius = 0f
+
+        binding.clCouponsDetailedContainer.background = gradientDrawable
+
+    }
+
     override fun getBindingVariable(): Int {
         return BR.viewModel
     }
@@ -215,7 +270,8 @@ class BrandedCouponDetailsFragment :
 
     override fun onDestroy() {
         super.onDestroy()
-        activity?.window?.statusBarColor = context?.resources?.getColor(R.color.black)!!
+        activity?.window?.statusBarColor =
+            ContextCompat.getColor(this.requireContext(), R.color.black)
     }
 
     override fun getViewModel(): BrandedCouponDetailsFragmentVM = brandedCouponDetailsFragmentVM

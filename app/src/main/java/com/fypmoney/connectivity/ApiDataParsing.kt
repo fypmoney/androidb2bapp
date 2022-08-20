@@ -16,6 +16,8 @@ import com.fypmoney.model.*
 import com.fypmoney.view.addmoney.model.BankProfileDetailsNetworkResponse
 import com.fypmoney.view.arcadegames.brandedcoupons.model.BrandedCouponDetailsResponse
 import com.fypmoney.view.arcadegames.brandedcoupons.model.BrandedCouponResponse
+import com.fypmoney.view.arcadegames.brandedcoupons.model.BrandedActiveCouponResponse
+import com.fypmoney.view.arcadegames.brandedcoupons.model.BrandedCouponCountResponse
 import com.fypmoney.view.arcadegames.model.*
 import com.fypmoney.view.giftcard.model.*
 import com.fypmoney.view.home.main.home.model.networkmodel.CallToActionNetworkResponse
@@ -268,6 +270,14 @@ class ApiDataParsing {
 
                 ApiConstant.API_GET_COUPON_REWARD_DATA -> {
                     getObject(response, BrandedCouponDetailsResponse::class.java)
+                }
+
+                ApiConstant.API_GET_ACTIVE_COUPON_DATA -> {
+                    getObject(response, BrandedActiveCouponResponse::class.java)
+                }
+
+                ApiConstant.API_GET_ACTIVE_COUPON_COUNT_DATA -> {
+                    getObject(response, BrandedCouponCountResponse::class.java)
                 }
 
                 ApiConstant.API_GET_ALL_JACKPOTS_PRODUCTWISE -> {

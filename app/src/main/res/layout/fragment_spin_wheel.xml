@@ -26,253 +26,323 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layout_toolbar">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/containerSpinWheelChips"
+            <HorizontalScrollView
+                android:id="@+id/hsvContainerSpinWheelChips"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_8sdp"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/chipMyntsView"
+                    android:id="@+id/containerSpinWheelChips"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingStart="6dp"
-                    android:paddingEnd="12dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    android:paddingHorizontal="@dimen/dp12"
+                    android:gravity="center_horizontal">
 
-                    <FrameLayout
-                        android:id="@+id/frameSpinWheelMynts"
-                        android:layout_width="42dp"
-                        android:layout_height="42dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/ivSpinWheelMynts"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center_vertical"
-                            android:paddingStart="4dp"
-                            android:paddingTop="11dp"
-                            android:paddingEnd="1dp"
-                            android:paddingBottom="11dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_mynt_coin" />
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/ivSpinWheelMyntsAnim"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center_vertical"
-                            android:padding="10dp"
-                            android:visibility="invisible"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                    </FrameLayout>
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/tvSpinWheelMyntsCount"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/chipMyntsView"
                         android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginEnd="4dp"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/color_dark_yellow"
-                        android:textSize="14sp"
-                        app:fontFamily="@font/product_sans_bold"
-                        app:layout_constraintBottom_toBottomOf="@id/frameSpinWheelMynts"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/frameSpinWheelMynts"
-                        app:layout_constraintTop_toTopOf="@id/frameSpinWheelMynts"
-                        tools:text="@string/dummy_amount" />
-
-                    <com.airbnb.lottie.LottieAnimationView
-                        android:id="@+id/loadingMynts"
-                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="2dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/frameSpinWheelMynts"
-                        app:layout_constraintStart_toEndOf="@+id/frameSpinWheelMynts"
-                        app:layout_constraintTop_toTopOf="@+id/frameSpinWheelMynts"
-                        app:lottie_autoPlay="true"
-                        app:lottie_loop="true"
-                        app:lottie_rawRes="@raw/three_dot_amount_loader"
-                        tools:visibility="visible" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/chipTicketView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="12dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/chipMyntsView"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <FrameLayout
-                        android:id="@+id/frameSpinWheelTicket"
-                        android:layout_width="42dp"
-                        android:layout_height="42dp"
+                        android:paddingStart="@dimen/_2sdp"
+                        android:paddingEnd="@dimen/_6sdp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/ivSpinWheelTicket"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginTop="2dp"
-                            android:paddingStart="1dp"
-                            android:paddingTop="13dp"
-                            android:paddingEnd="1dp"
-                            android:paddingBottom="13dp"
+                        <FrameLayout
+                            android:id="@+id/frameSpinWheelMynts"
+                            android:layout_width="@dimen/dp36"
+                            android:layout_height="@dimen/dp36"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ticket" />
+                            app:layout_constraintTop_toTopOf="parent">
 
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/ivSpinWheelTicketAnim"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center_vertical"
-                            android:visibility="invisible"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/ivSpinWheelMynts"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center_vertical"
+                                android:paddingStart="4dp"
+                                android:paddingTop="9dp"
+                                android:paddingEnd="1dp"
+                                android:paddingBottom="9dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:srcCompat="@drawable/ic_mynt_coin" />
 
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/ivSpinWheelMyntsAnim"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center_vertical"
+                                android:padding="8dp"
+                                android:visibility="invisible"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
 
-                    </FrameLayout>
+                        </FrameLayout>
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/tvSpinWheelTicketsCount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginEnd="4dp"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/yellow10"
-                        android:textSize="14sp"
-                        app:fontFamily="@font/product_sans_bold"
-                        app:layout_constraintBottom_toBottomOf="@id/frameSpinWheelTicket"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/frameSpinWheelTicket"
-                        app:layout_constraintTop_toTopOf="@id/frameSpinWheelTicket"
-                        tools:text="@string/dummy_amount" />
-
-                    <com.airbnb.lottie.LottieAnimationView
-                        android:id="@+id/loadingTickets"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="2dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/frameSpinWheelTicket"
-                        app:layout_constraintStart_toEndOf="@+id/frameSpinWheelTicket"
-                        app:layout_constraintTop_toTopOf="@+id/frameSpinWheelTicket"
-                        app:lottie_autoPlay="true"
-                        app:lottie_loop="true"
-                        app:lottie_rawRes="@raw/three_dot_amount_loader"
-                        tools:visibility="visible" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/chipCashView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="12dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/chipTicketView"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <FrameLayout
-                        android:id="@+id/frameSpinWheelCash"
-                        android:layout_width="42dp"
-                        android:layout_height="42dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/ivSpinWheelCash"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginTop="2dp"
-                            android:paddingStart="1dp"
-                            android:paddingTop="13dp"
-                            android:paddingEnd="1dp"
-                            android:paddingBottom="13dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/cash" />
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/ivSpinWheelCashAnim"
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvSpinWheelMyntsCount"
                             android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_marginEnd="4dp"
+                            android:gravity="center_vertical"
+                            android:textColor="@color/color_dark_yellow"
+                            android:textSize="13sp"
+                            app:fontFamily="@font/product_sans_bold"
+                            app:layout_constraintBottom_toBottomOf="@id/frameSpinWheelMynts"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/frameSpinWheelMynts"
+                            app:layout_constraintTop_toTopOf="@id/frameSpinWheelMynts"
+                            tools:text="@string/dummy_amount" />
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/loadingMynts"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:visibility="invisible"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="2dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/frameSpinWheelMynts"
+                            app:layout_constraintStart_toEndOf="@+id/frameSpinWheelMynts"
+                            app:layout_constraintTop_toTopOf="@+id/frameSpinWheelMynts"
+                            app:lottie_autoPlay="true"
+                            app:lottie_loop="true"
+                            app:lottie_rawRes="@raw/three_dot_amount_loader"
+                            tools:visibility="visible" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/chipTicketView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:paddingStart="@dimen/_6sdp"
+                        android:paddingEnd="@dimen/_6sdp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/chipMyntsView"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <FrameLayout
+                            android:id="@+id/frameSpinWheelTicket"
+                            android:layout_width="@dimen/dp36"
+                            android:layout_height="@dimen/dp36"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent">
 
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/ivSpinWheelTicket"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginTop="2dp"
+                                android:paddingStart="1dp"
+                                android:paddingTop="11dp"
+                                android:paddingEnd="1dp"
+                                android:paddingBottom="11dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:srcCompat="@drawable/ticket" />
 
-                    </FrameLayout>
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/ivSpinWheelTicketAnim"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center_vertical"
+                                android:visibility="invisible"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/tvSpinWheelCashCount"
+                        </FrameLayout>
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvSpinWheelTicketsCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_marginEnd="4dp"
+                            android:gravity="center_vertical"
+                            android:textColor="@color/yellow10"
+                            android:textSize="13sp"
+                            app:fontFamily="@font/product_sans_bold"
+                            app:layout_constraintBottom_toBottomOf="@id/frameSpinWheelTicket"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/frameSpinWheelTicket"
+                            app:layout_constraintTop_toTopOf="@id/frameSpinWheelTicket"
+                            tools:text="@string/dummy_amount" />
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/loadingTickets"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="2dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/frameSpinWheelTicket"
+                            app:layout_constraintStart_toEndOf="@+id/frameSpinWheelTicket"
+                            app:layout_constraintTop_toTopOf="@+id/frameSpinWheelTicket"
+                            app:lottie_autoPlay="true"
+                            app:lottie_loop="true"
+                            app:lottie_rawRes="@raw/three_dot_amount_loader"
+                            tools:visibility="visible" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/chipCashView"
                         android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginEnd="4dp"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/green_winnings"
-                        android:textSize="14sp"
-                        app:fontFamily="@font/product_sans_bold"
-                        app:layout_constraintBottom_toBottomOf="@id/frameSpinWheelCash"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/frameSpinWheelCash"
-                        app:layout_constraintTop_toTopOf="@id/frameSpinWheelCash"
-                        tools:text="@string/dummy_amount1" />
-
-                    <com.airbnb.lottie.LottieAnimationView
-                        android:id="@+id/loadingCash"
-                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="2dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/frameSpinWheelCash"
-                        app:layout_constraintStart_toEndOf="@+id/frameSpinWheelCash"
-                        app:layout_constraintTop_toTopOf="@+id/frameSpinWheelCash"
-                        app:lottie_autoPlay="true"
-                        app:lottie_loop="true"
-                        app:lottie_rawRes="@raw/three_dot_amount_loader"
-                        tools:visibility="visible" />
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:paddingStart="@dimen/_6sdp"
+                        android:paddingEnd="@dimen/_6sdp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/chipTicketView"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <FrameLayout
+                            android:id="@+id/frameSpinWheelCash"
+                            android:layout_width="@dimen/dp36"
+                            android:layout_height="@dimen/dp36"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/ivSpinWheelCash"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginTop="2dp"
+                                android:paddingStart="1dp"
+                                android:paddingTop="11dp"
+                                android:paddingEnd="1dp"
+                                android:paddingBottom="11dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:srcCompat="@drawable/cash" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/ivSpinWheelCashAnim"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:visibility="invisible"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+
+                        </FrameLayout>
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvSpinWheelCashCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_marginEnd="4dp"
+                            android:gravity="center_vertical"
+                            android:textColor="@color/green_winnings"
+                            android:textSize="13sp"
+                            app:fontFamily="@font/product_sans_bold"
+                            app:layout_constraintBottom_toBottomOf="@id/frameSpinWheelCash"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/frameSpinWheelCash"
+                            app:layout_constraintTop_toTopOf="@id/frameSpinWheelCash"
+                            tools:text="@string/dummy_amount1" />
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/loadingCash"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="2dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/frameSpinWheelCash"
+                            app:layout_constraintStart_toEndOf="@+id/frameSpinWheelCash"
+                            app:layout_constraintTop_toTopOf="@+id/frameSpinWheelCash"
+                            app:lottie_autoPlay="true"
+                            app:lottie_loop="true"
+                            app:lottie_rawRes="@raw/three_dot_amount_loader"
+                            tools:visibility="visible" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/chipCouponCountView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:paddingStart="@dimen/_6sdp"
+                        android:paddingEnd="@dimen/_6sdp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/chipCashView"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <FrameLayout
+                            android:id="@+id/frameBrandedActiveCoupons"
+                            android:layout_width="@dimen/dp36"
+                            android:layout_height="@dimen/dp36"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/ivBrandedActiveCoupons"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginTop="2dp"
+                                android:paddingStart="1dp"
+                                android:paddingTop="8dp"
+                                android:paddingEnd="1dp"
+                                android:paddingBottom="8dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:srcCompat="@drawable/ic_arcade_voucher" />
+
+                        </FrameLayout>
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvBrandedActiveCouponsCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_marginEnd="8dp"
+                            android:gravity="center_vertical"
+                            android:textColor="@color/color_pink"
+                            android:textSize="13sp"
+                            app:fontFamily="@font/product_sans_bold"
+                            app:layout_constraintBottom_toBottomOf="@id/frameBrandedActiveCoupons"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/frameBrandedActiveCoupons"
+                            app:layout_constraintTop_toTopOf="@id/frameBrandedActiveCoupons"
+                            tools:text="0" />
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/loadingActiveBrandedCoupon"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="2dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/frameBrandedActiveCoupons"
+                            app:layout_constraintStart_toEndOf="@+id/frameBrandedActiveCoupons"
+                            app:layout_constraintTop_toTopOf="@+id/frameBrandedActiveCoupons"
+                            app:lottie_autoPlay="true"
+                            app:lottie_loop="true"
+                            app:lottie_rawRes="@raw/three_dot_amount_loader"
+                            tools:visibility="visible" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </HorizontalScrollView>
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cvJackpot"
@@ -287,7 +357,7 @@
                 app:layout_constraintDimensionRatio="2.5:1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/containerSpinWheelChips">
+                app:layout_constraintTop_toBottomOf="@+id/hsvContainerSpinWheelChips">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/containerSpinWheelDefaultBanner"

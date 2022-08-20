@@ -10,7 +10,6 @@ import android.os.Looper
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
@@ -22,6 +21,7 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.bindingAdapters.setBackgroundDrawable
 import com.fypmoney.databinding.FragmentSlotMachineBinding
+import com.fypmoney.extension.toGone
 import com.fypmoney.extension.toInvisible
 import com.fypmoney.extension.toVisible
 import com.fypmoney.model.SpinWheelRotateResponseDetails
@@ -194,6 +194,15 @@ class SlotMachineFragment : BaseFragment<FragmentSlotMachineBinding, SlotMachine
                 0f,
                 false
             )
+
+            setBackgroundDrawable(
+                it.chipCouponCountView,
+                ContextCompat.getColor(this.requireContext(), R.color.back_surface_color),
+                58f,
+                ContextCompat.getColor(this.requireContext(), R.color.back_surface_color),
+                0f,
+                false
+            )
         }
     }
 
@@ -234,6 +243,28 @@ class SlotMachineFragment : BaseFragment<FragmentSlotMachineBinding, SlotMachine
             handlePlayOrderState(it)
         }
 
+        slotMachineFragmentVM.stateCouponCount.observe(viewLifecycleOwner) {
+            handleCouponCountState(it)
+        }
+
+    }
+
+    private fun handleCouponCountState(it: SlotMachineFragmentVM.CouponCountState?) {
+        when (it) {
+
+            is SlotMachineFragmentVM.CouponCountState.CouponCountSuccess -> {
+                binding.loadingActiveBrandedCoupon.clearAnimation()
+                binding.loadingActiveBrandedCoupon.toGone()
+
+                binding.tvBrandedActiveCouponsCount.text = it.amount?.toString()
+
+            }
+            is SlotMachineFragmentVM.CouponCountState.Error -> {}
+
+            SlotMachineFragmentVM.CouponCountState.Loading -> {}
+
+            null -> {}
+        }
     }
 
     private fun handleProductState(it: SlotMachineFragmentVM.SlotMachineProductResponseState?) {
@@ -718,7 +749,7 @@ class SlotMachineFragment : BaseFragment<FragmentSlotMachineBinding, SlotMachine
             }
 
         } else {
-            Toast.makeText(context, "Please check history", Toast.LENGTH_SHORT).show()
+            Utility.showToast("Please check history")
         }
 
         slotMachineFragmentVM.isSlotMachineStarted = false

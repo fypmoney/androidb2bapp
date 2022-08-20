@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".view.arcadegames.brandedcoupons.ui.BrandedCouponsFragmen">
+    tools:context=".view.arcadegames.brandedcoupons.ui.BrandedCouponsFragment">
 
     <data>
 
@@ -26,269 +26,340 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layout_toolbar">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/containerBrandedCouponsChips"
+            <HorizontalScrollView
+                android:id="@+id/hsvContainerBrandedCouponsChips"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_8sdp"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/chipMyntsView"
+                    android:id="@+id/containerBrandedCouponsChips"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingStart="6dp"
-                    android:paddingEnd="12dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    android:gravity="center_horizontal"
+                    android:paddingHorizontal="@dimen/dp12">
 
-                    <FrameLayout
-                        android:id="@+id/frameBrandedCouponsMynts"
-                        android:layout_width="42dp"
-                        android:layout_height="42dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/ivBrandedCouponsMynts"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center_vertical"
-                            android:paddingStart="4dp"
-                            android:paddingTop="11dp"
-                            android:paddingEnd="1dp"
-                            android:paddingBottom="11dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_mynt_coin" />
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/ivBrandedCouponsMyntsAnim"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center_vertical"
-                            android:padding="10dp"
-                            android:visibility="invisible"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                    </FrameLayout>
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/tvBrandedCouponsMyntsCount"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/chipMyntsView"
                         android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginEnd="4dp"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/color_dark_yellow"
-                        android:textSize="14sp"
-                        app:fontFamily="@font/product_sans_bold"
-                        app:layout_constraintBottom_toBottomOf="@id/frameBrandedCouponsMynts"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/frameBrandedCouponsMynts"
-                        app:layout_constraintTop_toTopOf="@id/frameBrandedCouponsMynts"
-                        tools:text="@string/dummy_amount" />
-
-                    <com.airbnb.lottie.LottieAnimationView
-                        android:id="@+id/loadingMynts"
-                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="2dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/frameBrandedCouponsMynts"
-                        app:layout_constraintStart_toEndOf="@+id/frameBrandedCouponsMynts"
-                        app:layout_constraintTop_toTopOf="@+id/frameBrandedCouponsMynts"
-                        app:lottie_autoPlay="true"
-                        app:lottie_loop="true"
-                        app:lottie_rawRes="@raw/three_dot_amount_loader"
-                        tools:visibility="visible" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/chipTicketView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="12dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/chipMyntsView"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <FrameLayout
-                        android:id="@+id/frameBrandedCouponsTicket"
-                        android:layout_width="42dp"
-                        android:layout_height="42dp"
+                        android:paddingStart="@dimen/_2sdp"
+                        android:paddingEnd="@dimen/_6sdp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/ivBrandedCouponsTicket"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginTop="2dp"
-                            android:paddingStart="1dp"
-                            android:paddingTop="13dp"
-                            android:paddingEnd="1dp"
-                            android:paddingBottom="13dp"
+                        <FrameLayout
+                            android:id="@+id/frameBrandedCouponsMynts"
+                            android:layout_width="@dimen/dp36"
+                            android:layout_height="@dimen/dp36"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ticket" />
+                            app:layout_constraintTop_toTopOf="parent">
 
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/ivBrandedCouponsTicketAnim"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center_vertical"
-                            android:visibility="invisible"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/ivBrandedCouponsMynts"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center_vertical"
+                                android:paddingStart="4dp"
+                                android:paddingTop="9dp"
+                                android:paddingEnd="1dp"
+                                android:paddingBottom="9dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:srcCompat="@drawable/ic_mynt_coin" />
 
-                    </FrameLayout>
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/ivBrandedCouponsMyntsAnim"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center_vertical"
+                                android:padding="8dp"
+                                android:visibility="invisible"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/tvBrandedCouponsTicketsCount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginEnd="4dp"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/yellow10"
-                        android:textSize="14sp"
-                        app:fontFamily="@font/product_sans_bold"
-                        app:layout_constraintBottom_toBottomOf="@id/frameBrandedCouponsTicket"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/frameBrandedCouponsTicket"
-                        app:layout_constraintTop_toTopOf="@id/frameBrandedCouponsTicket"
-                        tools:text="@string/dummy_amount" />
+                        </FrameLayout>
 
-                    <com.airbnb.lottie.LottieAnimationView
-                        android:id="@+id/loadingTickets"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="2dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/frameBrandedCouponsTicket"
-                        app:layout_constraintStart_toEndOf="@+id/frameBrandedCouponsTicket"
-                        app:layout_constraintTop_toTopOf="@+id/frameBrandedCouponsTicket"
-                        app:lottie_autoPlay="true"
-                        app:lottie_loop="true"
-                        app:lottie_rawRes="@raw/three_dot_amount_loader"
-                        tools:visibility="visible" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/chipCashView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="12dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/chipTicketView"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <FrameLayout
-                        android:id="@+id/frameBrandedCouponsCash"
-                        android:layout_width="42dp"
-                        android:layout_height="42dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/ivBrandedCouponsCash"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginTop="2dp"
-                            android:paddingStart="1dp"
-                            android:paddingTop="13dp"
-                            android:paddingEnd="1dp"
-                            android:paddingBottom="13dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/cash" />
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/ivBrandedCouponsCashAnim"
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvBrandedCouponsMyntsCount"
                             android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_marginEnd="4dp"
+                            android:gravity="center_vertical"
+                            android:textColor="@color/color_dark_yellow"
+                            android:textSize="13sp"
+                            app:fontFamily="@font/product_sans_bold"
+                            app:layout_constraintBottom_toBottomOf="@id/frameBrandedCouponsMynts"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/frameBrandedCouponsMynts"
+                            app:layout_constraintTop_toTopOf="@id/frameBrandedCouponsMynts"
+                            tools:text="@string/dummy_amount" />
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/loadingMynts"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:visibility="invisible"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="2dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/frameBrandedCouponsMynts"
+                            app:layout_constraintStart_toEndOf="@+id/frameBrandedCouponsMynts"
+                            app:layout_constraintTop_toTopOf="@+id/frameBrandedCouponsMynts"
+                            app:lottie_autoPlay="true"
+                            app:lottie_loop="true"
+                            app:lottie_rawRes="@raw/three_dot_amount_loader"
+                            tools:visibility="visible" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/chipTicketView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:paddingStart="@dimen/_6sdp"
+                        android:paddingEnd="@dimen/_6sdp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/chipMyntsView"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <FrameLayout
+                            android:id="@+id/frameBrandedCouponsTicket"
+                            android:layout_width="@dimen/dp36"
+                            android:layout_height="@dimen/dp36"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent">
 
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/ivBrandedCouponsTicket"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginTop="2dp"
+                                android:paddingStart="1dp"
+                                android:paddingTop="11dp"
+                                android:paddingEnd="1dp"
+                                android:paddingBottom="11dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:srcCompat="@drawable/ticket" />
 
-                    </FrameLayout>
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/ivBrandedCouponsTicketAnim"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center_vertical"
+                                android:visibility="invisible"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/tvBrandedCouponsCashCount"
+                        </FrameLayout>
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvBrandedCouponsTicketsCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_marginEnd="4dp"
+                            android:gravity="center_vertical"
+                            android:textColor="@color/yellow10"
+                            android:textSize="13sp"
+                            app:fontFamily="@font/product_sans_bold"
+                            app:layout_constraintBottom_toBottomOf="@id/frameBrandedCouponsTicket"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/frameBrandedCouponsTicket"
+                            app:layout_constraintTop_toTopOf="@id/frameBrandedCouponsTicket"
+                            tools:text="@string/dummy_amount" />
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/loadingTickets"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="2dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/frameBrandedCouponsTicket"
+                            app:layout_constraintStart_toEndOf="@+id/frameBrandedCouponsTicket"
+                            app:layout_constraintTop_toTopOf="@+id/frameBrandedCouponsTicket"
+                            app:lottie_autoPlay="true"
+                            app:lottie_loop="true"
+                            app:lottie_rawRes="@raw/three_dot_amount_loader"
+                            tools:visibility="visible" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/chipCashView"
                         android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginEnd="4dp"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/green_winnings"
-                        android:textSize="14sp"
-                        app:fontFamily="@font/product_sans_bold"
-                        app:layout_constraintBottom_toBottomOf="@id/frameBrandedCouponsCash"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/frameBrandedCouponsCash"
-                        app:layout_constraintTop_toTopOf="@id/frameBrandedCouponsCash"
-                        tools:text="@string/dummy_amount1" />
-
-                    <com.airbnb.lottie.LottieAnimationView
-                        android:id="@+id/loadingCash"
-                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="2dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/frameBrandedCouponsCash"
-                        app:layout_constraintStart_toEndOf="@+id/frameBrandedCouponsCash"
-                        app:layout_constraintTop_toTopOf="@+id/frameBrandedCouponsCash"
-                        app:lottie_autoPlay="true"
-                        app:lottie_loop="true"
-                        app:lottie_rawRes="@raw/three_dot_amount_loader"
-                        tools:visibility="visible" />
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:paddingStart="@dimen/_6sdp"
+                        android:paddingEnd="@dimen/_6sdp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/chipTicketView"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <FrameLayout
+                            android:id="@+id/frameBrandedCouponsCash"
+                            android:layout_width="@dimen/dp36"
+                            android:layout_height="@dimen/dp36"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/ivBrandedCouponsCash"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginTop="2dp"
+                                android:paddingStart="1dp"
+                                android:paddingTop="11dp"
+                                android:paddingEnd="1dp"
+                                android:paddingBottom="11dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:srcCompat="@drawable/cash" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/ivBrandedCouponsCashAnim"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:visibility="invisible"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+
+                        </FrameLayout>
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvBrandedCouponsCashCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_marginEnd="4dp"
+                            android:gravity="center_vertical"
+                            android:textColor="@color/green_winnings"
+                            android:textSize="13sp"
+                            app:fontFamily="@font/product_sans_bold"
+                            app:layout_constraintBottom_toBottomOf="@id/frameBrandedCouponsCash"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/frameBrandedCouponsCash"
+                            app:layout_constraintTop_toTopOf="@id/frameBrandedCouponsCash"
+                            tools:text="@string/dummy_amount1" />
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/loadingCash"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="2dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/frameBrandedCouponsCash"
+                            app:layout_constraintStart_toEndOf="@+id/frameBrandedCouponsCash"
+                            app:layout_constraintTop_toTopOf="@+id/frameBrandedCouponsCash"
+                            app:lottie_autoPlay="true"
+                            app:lottie_loop="true"
+                            app:lottie_rawRes="@raw/three_dot_amount_loader"
+                            tools:visibility="visible" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/chipCouponCountView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:paddingStart="@dimen/_6sdp"
+                        android:paddingEnd="@dimen/_6sdp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/chipCashView"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <FrameLayout
+                            android:id="@+id/frameBrandedActiveCoupons"
+                            android:layout_width="@dimen/dp36"
+                            android:layout_height="@dimen/dp36"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/ivBrandedActiveCoupons"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginTop="2dp"
+                                android:paddingStart="1dp"
+                                android:paddingTop="8dp"
+                                android:paddingEnd="1dp"
+                                android:paddingBottom="8dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:srcCompat="@drawable/ic_arcade_voucher" />
+
+                        </FrameLayout>
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvBrandedActiveCouponsCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_marginEnd="8dp"
+                            android:gravity="center_vertical"
+                            android:textColor="@color/color_pink"
+                            android:textSize="13sp"
+                            app:fontFamily="@font/product_sans_bold"
+                            app:layout_constraintBottom_toBottomOf="@id/frameBrandedActiveCoupons"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/frameBrandedActiveCoupons"
+                            app:layout_constraintTop_toTopOf="@id/frameBrandedActiveCoupons"
+                            tools:text="0" />
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/loadingActiveBrandedCoupon"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="2dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/frameBrandedActiveCoupons"
+                            app:layout_constraintStart_toEndOf="@+id/frameBrandedActiveCoupons"
+                            app:layout_constraintTop_toTopOf="@+id/frameBrandedActiveCoupons"
+                            app:lottie_autoPlay="true"
+                            app:lottie_loop="true"
+                            app:lottie_rawRes="@raw/three_dot_amount_loader"
+                            tools:visibility="visible" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </HorizontalScrollView>
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tvPointsApiError"
+                style="@style/TextviewRegular"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/TextviewRegular"
+                android:layout_marginHorizontal="@dimen/dp16"
+                android:layout_marginTop="@dimen/dp16"
+                android:gravity="center"
+                android:text="@string/unable_to_fetch_points_please_check_reward_history_after_playing"
+                android:textAlignment="center"
                 android:textColor="@color/red1"
                 android:visibility="gone"
-                tools:visibility="visible"
-                android:gravity="center"
-                android:textAlignment="center"
-                android:layout_marginTop="@dimen/dp16"
-                android:layout_marginHorizontal="@dimen/dp16"
-                app:layout_constraintTop_toBottomOf="@+id/containerBrandedCouponsChips"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                android:text="@string/unable_to_fetch_points_please_check_reward_history_after_playing"/>
+                app:layout_constraintTop_toBottomOf="@+id/hsvContainerBrandedCouponsChips"
+                tools:visibility="visible" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cvJackpot"
@@ -403,6 +474,17 @@
                     app:layout_constraintStart_toStartOf="@+id/ivCouponFrame"
                     app:srcCompat="@drawable/branded_coupon" />
 
+                <RelativeLayout
+                    android:id="@+id/rlCouponBorder"
+                    android:layout_width="@dimen/_82sdp"
+                    android:layout_height="@dimen/_122sdp"
+                    android:layout_marginBottom="@dimen/_22sdp"
+                    android:background="@drawable/curved_border_ticket"
+                    app:layout_constraintBottom_toBottomOf="@id/ivInitialCouponStage"
+                    app:layout_constraintEnd_toEndOf="@+id/ivInitialCouponStage"
+                    app:layout_constraintStart_toStartOf="@+id/ivInitialCouponStage"
+                    app:layout_constraintTop_toTopOf="@+id/ivInitialCouponStage" />
+
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/ivBrandedLogo"
                     android:layout_width="@dimen/_52sdp"
@@ -516,9 +598,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/_16sdp"
                 android:visibility="invisible"
+                app:layout_constraintBottom_toTopOf="@+id/chipMyntsBurnView"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/chipMyntsBurnView">
+                app:layout_constraintStart_toStartOf="parent">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/ivBtnPlayAnimation"

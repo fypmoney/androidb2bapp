@@ -1,4 +1,4 @@
-package com.fypmoney.view.arcadegames.viewmodel
+package com.fypmoney.view.arcadegames.brandedcoupons.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.LiveData
@@ -12,23 +12,24 @@ import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.BaseRequest
 import com.fypmoney.model.RewardPointsSummaryResponse
+import com.fypmoney.view.arcadegames.brandedcoupons.model.ActiveCouponsListItem
+import com.fypmoney.view.arcadegames.brandedcoupons.model.BrandedActiveCouponResponse
 import com.fypmoney.view.arcadegames.brandedcoupons.model.BrandedCouponCountResponse
-import com.fypmoney.view.arcadegames.model.JackpotDetailsItem
 import com.fypmoney.view.arcadegames.model.MultipleJackpotNetworkResponse
 import com.fypmoney.view.rewardsAndWinnings.model.totalRewardsResponse
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 
-class MultipleJackpotFragmentVM(application: Application) : BaseViewModel(application) {
-
-    val state: LiveData<MultipleJackpotsState>
-        get() = _state
-    private val _state = MutableLiveData<MultipleJackpotsState>()
+class BrandedActiveCouponsFragmentVM(application: Application) : BaseViewModel(application) {
 
     val stateMynts: LiveData<MyntsState>
         get() = _stateMynts
     private val _stateMynts = MutableLiveData<MyntsState>()
+
+    val stateTickets: LiveData<TicketState>
+        get() = _stateTickets
+    private val _stateTickets = MutableLiveData<TicketState>()
 
     val stateCash: LiveData<CashState>
         get() = _stateCash
@@ -38,15 +39,19 @@ class MultipleJackpotFragmentVM(application: Application) : BaseViewModel(applic
         get() = _stateCouponCount
     private val _stateCouponCount = MutableLiveData<CouponCountState>()
 
-    init {
-        callRewardSummary()
-        callTotalRewardsEarnings()
-        callMultipleJackpotsProduct()
-        callBrandedActiveCount()
+    val stateBrandedActiveCoupons: LiveData<BrandedActiveCouponDataState>
+        get() = _stateBrandedActiveCoupons
+    private val _stateBrandedActiveCoupons = MutableLiveData<BrandedActiveCouponDataState>()
 
+    init {
+        callMyntsSummaryApi()
+        callTotalCashRewardsEarnings()
+        callTotalJackpotCards()
+        callBrandedActiveCount()
+        callBrandedActiveCouponData()
     }
 
-    private fun callRewardSummary() {
+    private fun callMyntsSummaryApi() {
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_REWARD_SUMMARY,
@@ -58,7 +63,7 @@ class MultipleJackpotFragmentVM(application: Application) : BaseViewModel(applic
         )
     }
 
-    private fun callTotalRewardsEarnings() {
+    private fun callTotalCashRewardsEarnings() {
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_GET_REWARD_EARNINGS,
@@ -70,8 +75,7 @@ class MultipleJackpotFragmentVM(application: Application) : BaseViewModel(applic
         )
     }
 
-    private fun callMultipleJackpotsProduct() {
-        _state.postValue(MultipleJackpotsState.Loading)
+    private fun callTotalJackpotCards() {
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_GET_ALL_JACKPOTS_PRODUCTWISE,
@@ -95,19 +99,30 @@ class MultipleJackpotFragmentVM(application: Application) : BaseViewModel(applic
         )
     }
 
+    private fun callBrandedActiveCouponData() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_GET_ACTIVE_COUPON_DATA,
+                NetworkUtil.endURL(ApiConstant.API_GET_ACTIVE_COUPON_DATA),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = false
+            )
+        )
+    }
+
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
 
         when (purpose) {
+
             ApiConstant.API_GET_REWARD_EARNINGS -> {
                 val json = JsonParser.parseString(responseData.toString()) as JsonObject
                 val array = Gson().fromJson(
                     json.get("data").toString(),
                     totalRewardsResponse::class.java
                 )
-
-                _stateCash.value = CashState.Success(array.amount)
-
+                _stateCash.value = CashState.CashSuccess(array.amount)
             }
 
             ApiConstant.API_REWARD_SUMMARY -> {
@@ -117,16 +132,13 @@ class MultipleJackpotFragmentVM(application: Application) : BaseViewModel(applic
                     json.get("data").toString(),
                     RewardPointsSummaryResponse::class.java
                 )
-                _stateMynts.value = MyntsState.Success(array.remainingPoints)
+                _stateMynts.value = MyntsState.MyntsSuccess(array.remainingPoints)
 
             }
 
             ApiConstant.API_GET_ALL_JACKPOTS_PRODUCTWISE -> {
                 if (responseData is MultipleJackpotNetworkResponse) {
-                    _state.value = MultipleJackpotsState.Success(
-                        responseData.data?.jackpotDetails,
-                        responseData.data?.totalTickets
-                    )
+                    _stateTickets.value = TicketState.TicketSuccess(responseData.data?.totalTickets)
                 }
             }
 
@@ -135,37 +147,58 @@ class MultipleJackpotFragmentVM(application: Application) : BaseViewModel(applic
                     _stateCouponCount.value = CouponCountState.CouponCountSuccess(responseData.data?.amount)
                 }
             }
+
+            ApiConstant.API_GET_ACTIVE_COUPON_DATA -> {
+                if (responseData is BrandedActiveCouponResponse) {
+                    _stateBrandedActiveCoupons.value = BrandedActiveCouponDataState.BrandedCouponSuccess(responseData.data?.activeCouponsList)
+                }
+            }
+
         }
     }
 
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         super.onError(purpose, errorResponseInfo)
-        when(purpose){
+
+        when (purpose) {
+
+            ApiConstant.API_REWARD_SUMMARY -> {
+                _stateMynts.value = MyntsState.Error(errorResponseInfo)
+            }
+            ApiConstant.API_GET_REWARD_EARNINGS -> {
+                _stateCash.value = CashState.Error(errorResponseInfo)
+            }
+            ApiConstant.API_GET_ALL_JACKPOTS_PRODUCTWISE -> {
+                _stateTickets.value = TicketState.Error(errorResponseInfo)
+            }
             ApiConstant.API_GET_ACTIVE_COUPON_COUNT_DATA -> {
                 _stateCouponCount.value = CouponCountState.Error(errorResponseInfo)
             }
+            ApiConstant.API_GET_ACTIVE_COUPON_DATA -> {
+                _stateBrandedActiveCoupons.value =
+                    BrandedActiveCouponDataState.Error(errorResponseInfo)
+            }
+
         }
+
     }
 
-    sealed class MultipleJackpotsState {
-        object Loading : MultipleJackpotsState()
-        data class Success(
-            val listOfJackpotDetailsItem: List<JackpotDetailsItem?>?,
-            val totalTickets: Int?
-        ) : MultipleJackpotsState()
-        object Error : MultipleJackpotsState()
+    sealed class TicketState {
+        object Loading : TicketState()
+        data class Error(var errorResponseInfo: ErrorResponseInfo) : TicketState()
+        data class TicketSuccess(val totalTickets: Int?) : TicketState()
     }
 
-    sealed class CashState{
-        object Loading : CashState()
-        object Error : CashState()
-        data class Success(val totalCash: Int?) : CashState()
-    }
-
-    sealed class MyntsState{
+    sealed class MyntsState {
         object Loading : MyntsState()
-        object Error : MyntsState()
-        data class Success(val remainingMynts: Float?) : MyntsState()
+        data class Error(var errorResponseInfo: ErrorResponseInfo) : MyntsState()
+        data class MyntsSuccess(val remainingMynts: Float?) : MyntsState()
+    }
+
+    sealed class CashState {
+        object Loading : CashState()
+        data class Error(var errorResponseInfo: ErrorResponseInfo) : CashState()
+        data class CashSuccess(val totalCash: Int?) : CashState()
     }
 
     sealed class CouponCountState {
@@ -174,4 +207,10 @@ class MultipleJackpotFragmentVM(application: Application) : BaseViewModel(applic
         data class CouponCountSuccess(var amount: Int?) : CouponCountState()
     }
 
+    sealed class BrandedActiveCouponDataState {
+        object Loading : BrandedActiveCouponDataState()
+        data class Error(var errorResponseInfo: ErrorResponseInfo) : BrandedActiveCouponDataState()
+        data class BrandedCouponSuccess(var activeCouponsListItem: List<ActiveCouponsListItem?>?) :
+            BrandedActiveCouponDataState()
+    }
 }
