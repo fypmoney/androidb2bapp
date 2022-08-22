@@ -452,7 +452,7 @@ class BrandedCouponsFragment :
 
                         val bundle =
                             bundleOf(
-                                "Coupon Code" to it.spinWheelResponseDetails.couponCode,
+                                "coupon_code" to it.spinWheelResponseDetails.couponCode,
                                 "REVEAL_X" to location[0], "REVEAL_Y" to location[1],
                                 "startColor" to brandedCouponsFragmentVM.startColor,
                                 "endColor" to brandedCouponsFragmentVM.endColor,

@@ -179,7 +179,7 @@ class ActiveCouponFragment :
         val activeCouponsAdapter = BrandedActiveCouponsAdapter(onActiveCouponClick = {
             val bundle =
                 bundleOf(
-                    "Coupon Code" to it
+                    "coupon_code" to it
                 )
             findNavController().navigate(
                 R.id.navigation_branded_coupons_details,

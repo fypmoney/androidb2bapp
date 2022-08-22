@@ -25,6 +25,7 @@ import com.fypmoney.util.Utility
 import com.fypmoney.view.StoreWebpageOpener2
 import com.fypmoney.view.arcadegames.brandedcoupons.adapter.CouponDetailsTitleAdapter
 import com.fypmoney.view.arcadegames.brandedcoupons.adapter.CouponDetailsTitleUiModel
+import com.fypmoney.view.arcadegames.brandedcoupons.adapter.OnDetailsClicked
 import com.fypmoney.view.arcadegames.brandedcoupons.utils.startCircularReveal
 import com.fypmoney.view.arcadegames.brandedcoupons.viewmodel.BrandedCouponDetailsFragmentVM
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
@@ -32,7 +33,8 @@ import kotlinx.android.synthetic.main.toolbar.*
 import org.json.JSONArray
 
 class BrandedCouponDetailsFragment :
-    BaseFragment<FragmentBrandedCouponDetailsBinding, BrandedCouponDetailsFragmentVM>() {
+    BaseFragment<FragmentBrandedCouponDetailsBinding, BrandedCouponDetailsFragmentVM>(),
+    OnDetailsClicked {
 
     private val brandedCouponDetailsFragmentVM by viewModels<BrandedCouponDetailsFragmentVM> { defaultViewModelProviderFactory }
     private lateinit var binding: FragmentBrandedCouponDetailsBinding
@@ -67,7 +69,7 @@ class BrandedCouponDetailsFragment :
             backArrowTint = Color.WHITE
         )
 
-        brandedCouponDetailsFragmentVM.couponCode = arguments?.getString("Coupon Code").toString()
+        brandedCouponDetailsFragmentVM.couponCode = arguments?.getString("coupon_code").toString()
 
         revealX = arguments?.getInt("REVEAL_X")!!
         revealY = arguments?.getInt("REVEAL_Y")!!
@@ -191,19 +193,25 @@ class BrandedCouponDetailsFragment :
                 listOfCouponDetailsTitle.add(
                     CouponDetailsTitleUiModel(
                         "How to redeem?",
-                        R.drawable.icon_discount
+                        R.drawable.icon_discount,
+                        howToRedeemArray,
+                        false
                     )
                 )
                 listOfCouponDetailsTitle.add(
                     CouponDetailsTitleUiModel(
                         "Offer details",
-                        R.drawable.ic_receipt_search
+                        R.drawable.ic_receipt_search,
+                        offerDetailsArray,
+                        false
                     )
                 )
                 listOfCouponDetailsTitle.add(
                     CouponDetailsTitleUiModel(
                         "Terms & Condition",
-                        R.drawable.ic_receipt_item
+                        R.drawable.ic_receipt_item,
+                        tncArray,
+                        false
                     )
                 )
                 setRecyclerView(tncArray, howToRedeemArray, offerDetailsArray)
@@ -220,9 +228,21 @@ class BrandedCouponDetailsFragment :
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         binding.rvCouponDetailsTitle.layoutManager = layoutManager
 
-        val adapter = CouponDetailsTitleAdapter(array, howToRedeemArray, offerDetailsArray)
-        adapter.submitList(listOfCouponDetailsTitle)
+        val adapter = CouponDetailsTitleAdapter(this@BrandedCouponDetailsFragment)
         binding.rvCouponDetailsTitle.adapter = adapter
+        adapter.submitList(listOfCouponDetailsTitle)
+    }
+
+    private fun updatedList(it: CouponDetailsTitleUiModel) {
+        listOfCouponDetailsTitle.map { it1 ->
+            it1.isExpended = it1.couponDetailsTitle == it.couponDetailsTitle
+        }
+        (binding.rvCouponDetailsTitle.adapter as CouponDetailsTitleAdapter).submitList(
+            null
+        )
+        (binding.rvCouponDetailsTitle.adapter as CouponDetailsTitleAdapter).submitList(
+            listOfCouponDetailsTitle
+        )
     }
 
     private fun setBackColor(brandedCouponDetailsState: BrandedCouponDetailsFragmentVM.BrandedCouponDetailsState.BrandedCouponDetailsSuccess) {
@@ -277,5 +297,8 @@ class BrandedCouponDetailsFragment :
     override fun getViewModel(): BrandedCouponDetailsFragmentVM = brandedCouponDetailsFragmentVM
 
     override fun onTryAgainClicked() {}
+    override fun expendDetails(copounDetailsItem: CouponDetailsTitleUiModel) {
+        updatedList(copounDetailsItem)
+    }
 
 }
