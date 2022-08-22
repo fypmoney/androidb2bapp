@@ -15,8 +15,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
-        android:background="@color/white">
+        android:background="@color/bgcolor">
 
         <include
             android:id="@+id/layout"
@@ -84,12 +83,16 @@
                 android:layout_marginTop="@dimen/_30sdp"
                 android:paddingLeft="@dimen/_34sdp"
                 android:paddingRight="@dimen/_34sdp"
-                android:textColor="#9CA3A5"
+                android:textColor="@color/text_color_light"
                 android:gravity="center"
                 android:text="@string/no_savings_yet_start_transaction_to_save_now"
                 android:layout_height="wrap_content" />
         </RelativeLayout>
 
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
     </RelativeLayout>
 </layout>
 

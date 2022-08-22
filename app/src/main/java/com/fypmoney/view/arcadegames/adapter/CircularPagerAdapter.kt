@@ -23,7 +23,7 @@ class CircularPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycl
      * Default implementation works for collections that don't add, move, remove items.
      *
      *
-     * TODO(b/122670460): add lint rule
+     *
      * When overriding, also override [.getItemId]
      */
     override fun containsItem(itemId: Long): Boolean {

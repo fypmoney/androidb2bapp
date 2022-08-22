@@ -127,5 +127,13 @@
     <color name="rewardLeaderBoardSilver">#A8D5E2</color>
     <color name="rewardLeaderBoardBronze">#DB8A1D</color>
 <!--    <color name="yellow_text_mynts_color">#F4DE14</color>-->
+    <color name="orange11">#FFDA9C</color>
+    <color name="black10">#333333</color>
+    <color name="black11">#0E141C</color>
+    <color name="black12">#231F20</color>
+    <color name="black13">#262B32</color>
+    <color name="sky1">#A7E5FF</color>
+    <color name="green1">#79D181</color>
+    <color name="orange1">#FDEECF</color>
 
 </resources>

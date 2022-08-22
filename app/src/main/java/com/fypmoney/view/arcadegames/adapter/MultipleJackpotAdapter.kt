@@ -109,14 +109,18 @@ object MultipleJackpotDiffUtils : DiffUtil.ItemCallback<MultipleJackpotUiModel>(
         oldItem: MultipleJackpotUiModel,
         newItem: MultipleJackpotUiModel
     ): Boolean {
-        TODO("Not yet implemented")
+        return (oldItem ==  newItem)
     }
 
     override fun areContentsTheSame(
         oldItem: MultipleJackpotUiModel,
         newItem: MultipleJackpotUiModel
     ): Boolean {
-        TODO("Not yet implemented")
+        return ((oldItem.jackpotImage ==  newItem.jackpotImage) &&
+                (oldItem.isExpired == newItem.isExpired) &&
+                (oldItem.jackpotName == newItem.jackpotName)&&
+                (oldItem.jackpotDuration == newItem.jackpotDuration) &&
+                (oldItem.jackpotTicketValue == newItem.jackpotTicketValue))
     }
 
 

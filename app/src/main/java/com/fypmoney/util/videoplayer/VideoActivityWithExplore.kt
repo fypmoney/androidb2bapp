@@ -78,13 +78,12 @@ class VideoActivityWithExplore : BaseActivity<ActivityVideoXploreBinding, VideoE
 
             setRecyclerView(mViewBinding!!, list)
         }
-        viewModel?.openBottomSheet.observe(
+        viewModel.openBottomSheet.observe(
             this
         ) { list ->
             if (list.size > 0) {
                 callOfferDetailsSheeet(list[0])
             }
-
         }
 
         viewModel?.feedDetail.observe(
@@ -330,25 +329,40 @@ class VideoActivityWithExplore : BaseActivity<ActivityVideoXploreBinding, VideoE
                 when (it.redirectionType) {
                     AppConstants.EXPLORE_IN_APP -> {
                         it.redirectionResource?.let { uri ->
-
                             val redirectionResources = uri?.split(",")?.get(0)
-                            if (redirectionResources == AppConstants.FyperScreen) {
-                                navController?.navigate(R.id.navigation_fyper)
-                            } else if (redirectionResources == AppConstants.JACKPOTTAB) {
-                                navController?.navigate(R.id.navigation_jackpot)
-                            } else if (redirectionResources == AppConstants.CardScreen) {
-                                navController?.navigate(R.id.navigation_card)
-                            } else if (redirectionResources == AppConstants.RewardHistory) {
-                                navController?.navigate(R.id.navigation_rewards_history)
-                            }else if (redirectionResources == AppConstants.ARCADE) {
-                                navController?.navigate(R.id.navigation_arcade)
-                            } else {
+                            when (redirectionResources) {
+                                AppConstants.FyperScreen -> {
+                                    navController?.navigate(R.id.navigation_fyper)
+                                }
+                                AppConstants.JACKPOTTAB -> {
+                                    navController?.navigate(R.id.navigation_jackpot)
+                                }
+                                AppConstants.CardScreen -> {
+                                    navController?.navigate(R.id.navigation_card)
+                                }
+                                AppConstants.RewardHistory -> {
+                                    navController?.navigate(R.id.navigation_rewards_history)
+                                }
+                                AppConstants.ARCADE -> {
+                                    navController?.navigate(R.id.navigation_arcade)
+                                }
+                                AppConstants.F_Store -> {
+                                    navController?.navigate(R.id.navigation_explore)
+                                }
+                                AppConstants.REWARDS -> {
+                                    navController?.navigate(R.id.navigation_rewards)
+                                }
+                                AppConstants.INSIGHTS -> {
+                                    navController?.navigate(R.id.navigation_insights)
+                                }
+                                else -> {
 
-                                redirectionResources?.let { it1 ->
-                                    Utility.deeplinkRedirection(
-                                        it1,
-                                        this@VideoActivityWithExplore
-                                    )
+                                    redirectionResources.let { it1 ->
+                                        Utility.deeplinkRedirection(
+                                            it1,
+                                            this@VideoActivityWithExplore
+                                        )
+                                    }
                                 }
                             }
 

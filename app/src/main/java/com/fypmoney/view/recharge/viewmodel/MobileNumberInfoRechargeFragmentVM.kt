@@ -34,7 +34,7 @@ class MobileNumberInfoRechargeFragmentVM(application: Application) : BaseViewMod
 
     var mobileNumberInfoModel: MobileNumberInfoUiModel? = null
 
-    var openBottomSheet: MutableLiveData<ArrayList<offerDetailResponse>> = MutableLiveData()
+    var openBottomSheet: MutableLiveData<ArrayList<offerDetailResponse>> = LiveEvent()
     var feedDetail: MutableLiveData<FeedDetails> = LiveEvent()
 
     val state: LiveData<EnterMobileNumberInfoRechargeState>

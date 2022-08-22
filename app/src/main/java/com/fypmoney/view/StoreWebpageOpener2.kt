@@ -220,7 +220,7 @@ class StoreWebpageOpener2 : BaseActivity<ActivityWebview2Binding, CardDetailsVie
         contentDisposition: String?,
         userAgent: String?
     ) {
-        TODO("Not yet implemented")
+
     }
 
     override fun onExternalPageRequest(url: String?) {

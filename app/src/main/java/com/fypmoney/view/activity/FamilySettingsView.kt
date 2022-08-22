@@ -22,6 +22,7 @@ import com.fypmoney.view.fragment.LeaveFamilyBottomSheet
 import com.fypmoney.view.fragment.UpdateFamilyNameBottomSheet
 import com.fypmoney.view.interfaces.HomeTabChangeClickListener
 import com.fypmoney.viewmodel.FamilySettingsViewModel
+import kotlinx.android.synthetic.main.toolbar.*
 
 
 /*
@@ -52,6 +53,14 @@ class FamilySettingsView(val tabchangeListner: HomeTabChangeClickListener? = nul
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mViewBinding = getViewDataBinding()
+
+        setToolbarAndTitle(
+            context = requireContext(),
+            toolbar = toolbar, backArrowTint = Color.BLACK,
+            titleColor = Color.BLACK,
+            isBackArrowVisible = true,
+            toolbarTitle = getString(R.string.family)
+        )
         setObserver()
     }
 

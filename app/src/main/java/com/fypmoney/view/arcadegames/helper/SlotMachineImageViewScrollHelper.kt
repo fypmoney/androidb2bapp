@@ -29,8 +29,8 @@ class SlotMachineImageViewScrollHelper(context: Context, attributeSet: Attribute
         private const val ANIMATION_DURATION = 100
     }
 
-    val value: Int
-        get() = Integer.parseInt(nextImage.tag.toString())
+//    val value: Int
+//        get() = Integer.parseInt(nextImage.tag.toString())
 
     @JvmName("setEventEnd1")
     fun setEventEnd(eventEnd: SlotMachineImageEventEnd) {

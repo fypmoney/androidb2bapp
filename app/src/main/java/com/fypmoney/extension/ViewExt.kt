@@ -61,3 +61,8 @@ val Number.toPx get() = TypedValue.applyDimension(
 
 val Float.dp: Int
     get() = (this * Resources.getSystem().displayMetrics.density).roundToInt()
+
+val Int.dp: Float
+    get() = (this / Resources.getSystem().displayMetrics.density)
+val Int.px: Int
+    get() = (this * Resources.getSystem().displayMetrics.density).toInt()

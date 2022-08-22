@@ -101,14 +101,14 @@ object LeaderBoardDiffUtils : DiffUtil.ItemCallback<LeaderBoardUiModel>() {
         oldItem: LeaderBoardUiModel,
         newItem: LeaderBoardUiModel
     ): Boolean {
-        TODO("Not yet implemented")
+        return (oldItem ==  newItem)
     }
 
     override fun areContentsTheSame(
         oldItem: LeaderBoardUiModel,
         newItem: LeaderBoardUiModel
     ): Boolean {
-        TODO("Not yet implemented")
+        return ((oldItem.userName ==  newItem.userName) && (oldItem.userPosition == newItem.userPosition) && (oldItem.userTicketsCount == oldItem.userTicketsCount))
     }
 
 }

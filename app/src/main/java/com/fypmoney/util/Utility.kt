@@ -21,6 +21,7 @@ import android.text.style.ClickableSpan
 import android.util.DisplayMetrics
 import android.util.Log
 import android.util.Patterns
+import android.view.HapticFeedbackConstants
 import android.view.View
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.widget.ImageView
@@ -28,6 +29,7 @@ import android.widget.TextView
 import android.widget.TextView.BufferType
 import android.widget.Toast
 import androidx.annotation.ColorInt
+import androidx.annotation.Keep
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatEditText
@@ -75,6 +77,7 @@ import kotlinx.coroutines.withContext
 import java.io.IOException
 import java.io.InputStream
 import java.nio.charset.Charset
+import java.text.DateFormat
 import java.text.DecimalFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -1312,8 +1315,93 @@ object Utility {
             shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
             context.startActivity(Intent.createChooser(shareIntent, "Share"))
         }else{
-            FirebaseCrashlytics.getInstance().recordException(throw Exception("Bitmap path is ${bitmapPath}"))
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.type = "text/plain"
+            intent.putExtra(Intent.EXTRA_TEXT, text)
+            context.startActivity(Intent.createChooser(intent, "Share Link"))
         }
+
+    }
+
+    fun getStartDateAndEndDateOfMonth(month:Int,outputFormat: String):Pair<String,String>{
+        val calendar = getInstance()
+        if(month!=0){
+            calendar.add(MONTH, -month)
+        }else{
+            calendar.add(MONTH, month)
+        }
+        calendar[DATE] = calendar.getActualMinimum(DAY_OF_MONTH)
+        val monthFirstDay = calendar.time
+        calendar[DATE] = calendar.getActualMaximum(DAY_OF_MONTH)
+        val monthLastDay = calendar.time
+        System.out.println("startDate $monthFirstDay")
+        System.out.println("endDate $monthLastDay")
+        val smdf = SimpleDateFormat(outputFormat,Locale.getDefault())
+        val firstDate  = smdf.format(monthFirstDay)
+        val lastDate  = smdf.format(monthLastDay)
+        System.out.println("startDate formated$firstDate")
+        System.out.println("endDate formated$lastDate")
+        return Pair(firstDate,lastDate)
+    }
+
+    fun getLast12Months(currentMonth:String):List<Last12MonthItem>{
+        val previous12Months: MutableList<Last12MonthItem> = ArrayList()
+        val monthSortDate = SimpleDateFormat("MMM",Locale.getDefault())
+        val monthFullDate = SimpleDateFormat("MMMM",Locale.getDefault())
+        val cal = getInstance()
+        cal.time = monthSortDate.parse(currentMonth)!!
+        for (i in 1..12) {
+            println("full date ${monthFullDate.format(cal.time)}")
+            println("sort date ${monthSortDate.format(cal.time)}")
+            previous12Months.add(Last12MonthItem(monthFullName = monthFullDate.format(cal.time), monthSortName = monthSortDate.format(cal.time)))
+            cal.add(MONTH, -1)
+        }
+        println(previous12Months)
+        return previous12Months
+    }
+
+    @Keep
+    data class Last12MonthItem(
+        var monthFullName:String,
+        var monthSortName:String,
+    )
+    /*fun getMonth(month:Int){
+        val calendar = getInstance()
+        calendar.add(MONTH, month)
+        calendar[DATE] = calendar.getActualMinimum(DAY_OF_MONTH)
+        val monthFirstDay = calendar.time
+        calendar[DATE] = calendar.getActualMaximum(DAY_OF_MONTH)
+        val monthLastDay = calendar.time
+        System.out.println("startDate $monthFirstDay")
+        System.out.println("endDate $monthLastDay")
+        val smdf = SimpleDateFormat(outputFormat,Locale.getDefault())
+        val firstDate  = smdf.format(monthFirstDay)
+        val lastDate  = smdf.format(monthLastDay)
+        System.out.println("startDate formated$firstDate")
+        System.out.println("endDate formated$lastDate")
+    }*/
+    fun getCurrentMonth():String{
+        val dateFormat: DateFormat = SimpleDateFormat("MMM", Locale.getDefault())
+        val date = Date()
+        Log.d("Month", dateFormat.format(date))
+        return dateFormat.format(date)
+    }
+
+    fun View.hapticFeedback() {
+        /*val vibration = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        if (Build.VERSION.SDK_INT >= 26) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                vibration.vibrate(VibrationEffect.createOneShot(40, VibrationEffect.DEFAULT_AMPLITUDE))
+            }else{
+                vibration.vibrate(VibrationEffect.createOneShot(40, VibrationEffect.DEFAULT_AMPLITUDE))
+            }
+        } else {
+            vibration.vibrate(40)
+        }*/
+        this.performHapticFeedback(
+            HapticFeedbackConstants.KEYBOARD_TAP,
+            HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING
+        )
 
     }
 

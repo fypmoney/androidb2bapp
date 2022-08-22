@@ -6,10 +6,12 @@ import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.TrackrField
 import com.fyp.trackr.models.trackr
@@ -17,6 +19,7 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseFragment
+import com.fypmoney.bindingAdapters.loadImage
 import com.fypmoney.databinding.FragmentHomeBinding
 import com.fypmoney.extension.toGone
 import com.fypmoney.extension.toInvisible
@@ -29,13 +32,16 @@ import com.fypmoney.util.AppConstants.FyperScreen
 import com.fypmoney.util.AppConstants.NO
 import com.fypmoney.util.AppConstants.YES
 import com.fypmoney.util.SharedPrefUtils
+import com.fypmoney.util.SharedPrefUtils.Companion.SF_HOME_SCREEN_BG
 import com.fypmoney.util.SharedPrefUtils.Companion.SF_MESSAGE_ON_RECHARGE
 import com.fypmoney.util.Utility
 import com.fypmoney.util.Utility.deeplinkRedirection
 import com.fypmoney.util.videoplayer.VideoActivity2
 import com.fypmoney.util.videoplayer.VideoActivityWithExplore
 import com.fypmoney.view.StoreWebpageOpener2
+import com.fypmoney.view.activity.NotificationView
 import com.fypmoney.view.activity.UserFeedsDetailView
+import com.fypmoney.view.activity.UserProfileView
 import com.fypmoney.view.addmoney.NewAddMoneyActivity
 import com.fypmoney.view.arcadegames.model.ArcadeType
 import com.fypmoney.view.arcadegames.model.checkTheArcadeType
@@ -105,13 +111,40 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
         checkForRechargeCashback()
     }
 
+    override fun onResume() {
+        super.onResume()
+        loadProfile(homeFragmentVM.userProfileUrl)
+        showNewMessage()
+    }
+
+    private fun loadProfile(url: String?) {
+        url?.let {
+            loadImage(
+                binding.myProfileIv,
+                it,
+                ContextCompat.getDrawable(requireContext(), R.drawable.ic_profile_img),
+                true
+            )
+        }
+    }
+
     private fun checkForRechargeCashback() {
         SharedPrefUtils.getString(requireContext(), SF_MESSAGE_ON_RECHARGE)?.let {
-            if (it.isEmpty()) {
+            if(it.isEmpty()){
                 binding.cashbackAmountTv.toInvisible()
-            } else {
+            }else{
                 binding.cashbackAmountTv.text = it
                 binding.cashbackAmountTv.toVisible()
+            }
+        }
+    }
+    private fun checkForHomeScreenBackground(){
+        SharedPrefUtils.getString(requireContext(), SF_HOME_SCREEN_BG)?.let {
+            if(it.isEmpty()){
+                binding.clMainLayout.setBackgroundColor(resources.getColor(R.color.white))
+            }else{
+                Glide.with(requireContext()).load(it)
+                    .into(binding.ivBackgroundImage)
             }
         }
     }
@@ -119,6 +152,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = getViewDataBinding()
+        checkForHomeScreenBackground()
         setupRecyclerView()
         //setRecyclerView(_binding)
         setObserver()
@@ -126,19 +160,28 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
         homeFragmentVM.callToAction()
         checkForErrorNotice()
         rechargeVisbility()
-
+        binding.help.setOnClickListener {
+            callFreshChat(requireContext())
+        }
 
     }
 
     private fun rechargeVisbility() {
-        SharedPrefUtils.getString(requireContext(), SharedPrefUtils.SF_SHOW_RECHARGE_IN_HOME_SCREEN)
-            ?.let {
-                if (it == YES) {
-                    binding.rechargeSectionCl.toVisible()
-                } else if (it == NO) {
-                    binding.rechargeSectionCl.toGone()
-                }
+        SharedPrefUtils.getString(requireContext(),SharedPrefUtils.SF_SHOW_RECHARGE_IN_HOME_SCREEN)?.let {
+            if(it==YES){
+                binding.rechargeSectionCl.toVisible()
+            }else if(it==NO){
+                binding.rechargeSectionCl.toGone()
             }
+        }
+    }
+
+    private fun showNewMessage() {
+        if (homeFragmentVM.isUnreadNotificationAvailable.isNullOrEmpty()) {
+            binding.newNotification.toGone()
+        } else {
+            binding.newNotification.toVisible()
+        }
     }
 
     private fun checkForErrorNotice() {
@@ -180,7 +223,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
     }
 
     private fun handelState(it: HomeFragmentVM.HomeFragmentState?) {
-        when (it) {
+        when(it){
             HomeFragmentVM.HomeFragmentState.ErrorBalanceState -> {
                 //binding.loadingBalanceHdp.toGone()
 
@@ -195,13 +238,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
                 binding.loadingBalanceHdp.clearAnimation()
                 binding.loadingBalanceHdp.toGone()
                 binding.walletBalanceTv.toVisible()
-                binding.walletBalanceTv.text =
-                    """${getString(R.string.Rs)}${Utility.convertToRs(it.balance.toString())}"""
+                binding.walletBalanceTv.text = """${getString(R.string.Rs)}${Utility.convertToRs(it.balance.toString())}"""
             }
             is HomeFragmentVM.HomeFragmentState.LowBalanceAlertState -> {
-                if (it.balanceIsLow) {
+                if(it.balanceIsLow){
                     binding.lowBalanceTv.toVisible()
-                } else {
+                }else{
                     binding.lowBalanceTv.toGone()
                 }
             }
@@ -211,7 +253,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
                     binding.callToActionTv.text = it.sectionTitle
                     binding.callToActionRv.toVisible()
                     binding.callToActionCl.toVisible()
-                } else {
+                }else{
                     binding.callToActionRv.toGone()
                     binding.callToActionCl.toGone()
                 }
@@ -226,32 +268,32 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
                 loadMoneyBottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
                 loadMoneyBottomSheet.show(childFragmentManager, "LoadMoneySheet")
             }*/
+            HomeFragmentVM.HomeFragmentState.ShowLoadMoneySheetState -> {
+
+            }
+            null -> {}
         }
     }
 
     private fun handelEvents(it: HomeFragmentVM.HomeFragmentEvent?) {
-        when (it) {
+        when(it){
             HomeFragmentVM.HomeFragmentEvent.ViewCardDetails -> {
                 findNavController().navigate(R.id.navigation_card)
-
             }
             HomeFragmentVM.HomeFragmentEvent.AddAction -> {
                 Utility.getCustomerDataFromPreference()?.let {
-                    if (it.postKycScreenCode.isNullOrEmpty()) {
+                    if(it.postKycScreenCode.isNullOrEmpty()){
                         val completeKYCBottomSheet = CompleteKYCBottomSheet(completeKycClicked = {
-                            val intent =
-                                Intent(requireActivity(), PanAdhaarSelectionActivity::class.java)
+                            val intent = Intent(requireActivity(), PanAdhaarSelectionActivity::class.java)
                             startActivity(intent)
                         })
                         completeKYCBottomSheet.dialog?.window?.setBackgroundDrawable(
                             ColorDrawable(
-                                Color.RED
-                            )
+                                Color.RED)
                         )
                         completeKYCBottomSheet.show(childFragmentManager, "Completekyc")
-                    } else {
-                        val intent =
-                            Intent(requireActivity(), NewAddMoneyActivity::class.java).apply { }
+                    }else{
+                        val intent = Intent(requireActivity(), NewAddMoneyActivity::class.java).apply {  }
                         startActivity(intent)
                     }
                 }
@@ -259,27 +301,20 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
             }
             HomeFragmentVM.HomeFragmentEvent.PayAction -> {
                 Utility.getCustomerDataFromPreference()?.let {
-                    if (it.postKycScreenCode.isNullOrEmpty()) {
+                    if(it.postKycScreenCode.isNullOrEmpty()){
                         val completeKYCBottomSheet = CompleteKYCBottomSheet(completeKycClicked = {
-                            val intent =
-                                Intent(requireActivity(), PanAdhaarSelectionActivity::class.java)
+                            val intent = Intent(requireActivity(), PanAdhaarSelectionActivity::class.java)
                             startActivity(intent)
                         })
                         completeKYCBottomSheet.dialog?.window?.setBackgroundDrawable(
                             ColorDrawable(
-                                Color.RED
-                            )
+                                Color.RED)
                         )
                         completeKYCBottomSheet.show(childFragmentManager, "Completekyc")
-                    } else {
+                    }else{
                         val intent = Intent(requireActivity(), PayToContactsActivity::class.java)
-                        intent.putExtra(
-                            CONTACT_ACTIVITY_UI_MODEL, ContactsActivityUiModel(
-                                toolBarTitle = getString(R.string.pay),
-                                showLoadingBalance = true,
-                                contactClickAction = ContactActivityActionEvent.PayToContact
-                            )
-                        )
+                        intent.putExtra(CONTACT_ACTIVITY_UI_MODEL, ContactsActivityUiModel(toolBarTitle = getString(R.string.pay),
+                            showLoadingBalance = true,contactClickAction = ContactActivityActionEvent.PayToContact))
                         startActivity(intent)
                     }
                 }
@@ -297,28 +332,62 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
                 intent.putExtra(ARG_WEB_URL_TO_OPEN, BROADBAND_RECHARGE_URL)
                 startActivity(intent)
             }
-            HomeFragmentVM.HomeFragmentEvent.DthRechargeEvent -> {
-                val directions =
+            HomeFragmentVM.HomeFragmentEvent.DthRechargeEvent ->{
+                /*val directions =
                     HomeFragmentDirections.actionRechargeHome()
-                directions.let { it1 -> findNavController().navigate(it1) }
+                directions.let { it1 -> findNavController().navigate(it1) }*/
+                findNavController().navigate(Uri.parse("https://www.fypmoney.in/recharge/dth"),
+                    navOptions {
+                        anim {
+                            popEnter = R.anim.slide_in_left
+                            popExit = R.anim.slide_out_righ
+                            enter = R.anim.slide_in_right
+                            exit = R.anim.slide_out_left
+                        }
+                    })
             }
             is HomeFragmentVM.HomeFragmentEvent.PostpaidRechargeEvent -> {
-                if (findNavController().currentDestination?.id == R.id.navigation_home) {
+                /*if(findNavController().currentDestination?.id == R.id.navigation_home){
                     val directions =
                         HomeFragmentDirections.actionRechargeScreen(rechargeType = AppConstants.POSTPAID)
                     directions.let { it1 -> findNavController().navigate(it1) }
-                }
+                }*/
+                findNavController().navigate(Uri.parse("https://www.fypmoney.in/recharge/${AppConstants.POSTPAID}"),
+                    navOptions {
+                        anim {
+                            popEnter = R.anim.slide_in_left
+                            popExit = R.anim.slide_out_righ
+                            enter = R.anim.slide_in_right
+                            exit = R.anim.slide_out_left
+                        }
+                    })
 
             }
             is HomeFragmentVM.HomeFragmentEvent.PrepaidRechargeEvent -> {
-                if (findNavController().currentDestination?.id == R.id.navigation_home) {
+                /*if(findNavController().currentDestination?.id == R.id.navigation_home){
                     val directions =
                         HomeFragmentDirections.actionRechargeScreen(rechargeType = AppConstants.PREPAID)
                     directions.let { it1 -> findNavController().navigate(it1) }
-                }
+                }*/
+                findNavController().navigate(Uri.parse("https://www.fypmoney.in/recharge/${AppConstants.PREPAID}"),
+                    navOptions {
+                        anim {
+                            popEnter = R.anim.slide_in_left
+                            popExit = R.anim.slide_out_righ
+                            enter = R.anim.slide_in_right
+                            exit = R.anim.slide_out_left
+                        }
+                    })
 
             }
             null -> {
+
+            }
+            HomeFragmentVM.HomeFragmentEvent.NotificationClicked -> {
+                startActivity(Intent(requireActivity(), NotificationView::class.java))
+            }
+            HomeFragmentVM.HomeFragmentEvent.ProfileClicked -> {
+                startActivity(Intent(requireActivity(), UserProfileView::class.java))
 
             }
         }
@@ -331,45 +400,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
             setRecyclerView(_binding, list)
         }
 
-
-        /* _binding.toInterestScreen.setOnClickListener {
-             var intent = Intent(requireContext(), ChooseInterestHomeView::class.java)
-
-             startActivity(intent)
-         }*/
-/*
-        homeFragmentVM.offerList.observe(viewLifecycleOwner) {
-            if (it != null) {
-                itemsArrayList.clear()
-                itemsArrayList.addAll(it)
-
-                if (itemsArrayList.size > 0) {
-
-                    itemsArrayList.add(offerDetailResponse())
-                    //set Offers  for you title dynamic
-                    _binding.shimmerLayoutLightening.visibility = View.GONE
-                    if (!itemsArrayList[0].rfu2.isNullOrEmpty()) {
-                        _binding.lighteningDealsTitle.text = itemsArrayList[0].rfu2
-                    }
-                    _binding.lighteningDealsTitle.visibility = View.VISIBLE
-
-                    _binding.lighteningDealsRv.visibility = View.VISIBLE
-                    _binding.toInterestScreen.visibility = View.GONE
-                } else {
-                    _binding.shimmerLayoutLightening.visibility = View.GONE
-                    _binding.toInterestScreen.visibility = View.VISIBLE
-//                _binding.lighteningDealsTitle.visibility = View.VISIBLE
-                    _binding.lighteningDealsRv.visibility = View.GONE
-                }
-                typeAdapter?.notifyDataSetChanged()
-            } else {
-                _binding.shimmerLayoutLightening.visibility = View.GONE
-                _binding.toInterestScreen.visibility = View.VISIBLE
-//                _binding.lighteningDealsTitle.visibility = View.VISIBLE
-                _binding.lighteningDealsRv.visibility = View.GONE
-            }
-        }
-*/
 
         homeFragmentVM.openBottomSheet.observe(
             viewLifecycleOwner
@@ -405,29 +435,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
 
     }
 
-    /*private fun setRecyclerView(root: FragmentHomeBinding) {
-        val itemClickListener2 = object : ListOfferClickListener {
-            override fun onItemClicked(pos: offerDetailResponse, position: String) {
-                if (position == "middle") {
-                    callOfferDetailsSheeet(pos)
-                } else {
-                    val intent = Intent(requireContext(), OffersScreen::class.java)
-                    intent.putExtra(AppConstants.FROM_WHICH_SCREEN, AppConstants.OfferScreen)
-                    startActivity(intent)
-                }
-
-            }
-        }
-        val layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        root.lighteningDealsRv.layoutManager = layoutManager
-
-        typeAdapter = OffersHomeAdapter(itemsArrayList, requireContext(), itemClickListener2)
-        root.lighteningDealsRv.adapter = typeAdapter
-
-    }*/
-
-
     private fun setRecyclerView(
         root: FragmentHomeBinding,
         list: ArrayList<ExploreContentResponse>
@@ -446,11 +453,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
             }
         }
         val exploreClickListener2 = object : ExploreItemClickListener {
-            override fun onItemClicked(
-                position: Int,
-                sectionContentItem: SectionContentItem,
-                exploreContentResponse: ExploreContentResponse?
-            ) {
+            override fun onItemClicked(position: Int, sectionContentItem: SectionContentItem,exploreContentResponse: ExploreContentResponse?) {
                 trackr {
                     it.name = TrackrEvent.home_explore_click
                     it.add(TrackrField.explore_content_id, sectionContentItem.id)
@@ -471,7 +474,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
             requireContext(),
             exploreClickListener2,
             scale,
-            Color.BLACK
+            Color.parseColor(homeFragmentVM.textColor.value)
         )
         root.exploreHomeRv.adapter = typeAdapter
     }
@@ -498,17 +501,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
             AppConstants.EXPLORE_SECTION_EXPLORE -> {
                 Firebase.analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
                     sectionContentItem.redirectionResource?.let {
-                        param(
-                            FirebaseAnalytics.Param.SCREEN_NAME,
+                        param(FirebaseAnalytics.Param.SCREEN_NAME,
                             it
                         )
                     }
                     param(FirebaseAnalytics.Param.SCREEN_CLASS, HomeFragment::class.java.simpleName)
                 }
-                val directions = HomeFragmentDirections.actionHomeToSectionExplore(
-                    sectionExploreItem = sectionContentItem,
-                    sectionExploreName = exploreContentResponse?.sectionDisplayText
-                )
+                val directions = HomeFragmentDirections.actionHomeToSectionExplore(sectionExploreItem = sectionContentItem,
+                        sectionExploreName= exploreContentResponse?.sectionDisplayText)
 
                 directions.let { it1 -> findNavController().navigate(it1) }
             }
@@ -533,6 +533,50 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
                         }
                         AppConstants.GIFT_VOUCHER -> {
                             findNavController().navigate(Uri.parse("fypmoney://creategiftcard/${redirectionResources}"))
+                        }
+                        AppConstants.F_Store -> {
+                            findNavController().navigate(R.id.navigation_explore)
+                        }
+                        AppConstants.REWARDS -> {
+                            findNavController().navigate(R.id.navigation_rewards)
+                        }
+                        AppConstants.INSIGHTS -> {
+                            findNavController().navigate(R.id.navigation_insights)
+                        }
+                        AppConstants.PREPAID_RECHARGE_REDIRECTION->{
+                            findNavController().navigate(Uri.parse("https://www.fypmoney.in/recharge/${AppConstants.PREPAID}"),
+                                navOptions {
+                                    anim {
+                                        popEnter = R.anim.slide_in_left
+                                        popExit = R.anim.slide_out_righ
+                                        enter = R.anim.slide_in_right
+                                        exit = R.anim.slide_out_left
+                                    }
+                                })
+                        }
+
+                        AppConstants.POSTPAID_RECHARGE_REDIRECTION->{
+                            findNavController().navigate(Uri.parse("https://www.fypmoney.in/recharge/${AppConstants.POSTPAID}"),
+                                navOptions {
+                                    anim {
+                                        popEnter = R.anim.slide_in_left
+                                        popExit = R.anim.slide_out_righ
+                                        enter = R.anim.slide_in_right
+                                        exit = R.anim.slide_out_left
+                                    }
+                                })
+                        }
+
+                        AppConstants.DTH_RECHARGE_REDIRECTION->{
+                            findNavController().navigate(Uri.parse("https://www.fypmoney.in/recharge/dth"),
+                                navOptions {
+                                    anim {
+                                        popEnter = R.anim.slide_in_left
+                                        popExit = R.anim.slide_out_righ
+                                        enter = R.anim.slide_in_right
+                                        exit = R.anim.slide_out_left
+                                    }
+                                })
                         }
                         else -> {
                             redirectionResources.let { it1 ->
@@ -597,7 +641,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
 
             }
             AppConstants.GIFT_VOUCHER -> {
-                findNavController().navigate(Uri.parse("fypmoney://creategiftcard/${redirectionResource}"))
+                findNavController().navigate(Uri.parse("fypmoney://creategiftcard/${redirectionResource}"),
+                    navOptions {
+                    anim {
+                        popEnter = R.anim.slide_in_left
+                        popExit = R.anim.slide_out_righ
+                        enter = R.anim.slide_in_right
+                        exit = R.anim.slide_out_left
+                    }
+                })
             }
 
             AppConstants.LEADERBOARD -> {
@@ -657,8 +709,43 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
                                 }
                             })
                     }
-                    null -> TODO()
+                    null -> {}
                 }
+            }
+            AppConstants.PREPAID_RECHARGE_REDIRECTION->{
+                findNavController().navigate(Uri.parse("https://www.fypmoney.in/recharge/${AppConstants.PREPAID}"),
+                    navOptions {
+                        anim {
+                            popEnter = R.anim.slide_in_left
+                            popExit = R.anim.slide_out_righ
+                            enter = R.anim.slide_in_right
+                            exit = R.anim.slide_out_left
+                        }
+                    })
+            }
+
+            AppConstants.POSTPAID_RECHARGE_REDIRECTION->{
+                findNavController().navigate(Uri.parse("https://www.fypmoney.in/recharge/${AppConstants.POSTPAID}"),
+                    navOptions {
+                        anim {
+                            popEnter = R.anim.slide_in_left
+                            popExit = R.anim.slide_out_righ
+                            enter = R.anim.slide_in_right
+                            exit = R.anim.slide_out_left
+                        }
+                    })
+            }
+
+            AppConstants.DTH_RECHARGE_REDIRECTION->{
+                findNavController().navigate(Uri.parse("https://www.fypmoney.in/recharge/dth"),
+                    navOptions {
+                        anim {
+                            popEnter = R.anim.slide_in_left
+                            popExit = R.anim.slide_out_righ
+                            enter = R.anim.slide_in_right
+                            exit = R.anim.slide_out_left
+                        }
+                    })
             }
         }
     }
@@ -762,7 +849,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
 
     private fun callOfferDetailsSheeet(redeemDetails: offerDetailResponse) {
 
-        var bottomSheetMessage = OfferDetailsBottomSheet(redeemDetails)
+        val bottomSheetMessage = OfferDetailsBottomSheet(redeemDetails)
         bottomSheetMessage.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomSheetMessage.show(childFragmentManager, "TASKMESSAGE")
     }

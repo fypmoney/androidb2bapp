@@ -17,6 +17,7 @@ import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.BaseRequest
 import com.fypmoney.model.FeedDetails
+import com.fypmoney.util.livedata.LiveEvent
 import com.fypmoney.util.setListener
 import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
@@ -32,7 +33,7 @@ class VideoVM(
     private var player: MediaPlayer? = null
     private var playerListener: Player.Listener? = null
     var rewardHistoryList: MutableLiveData<ArrayList<ExploreContentResponse>> = MutableLiveData()
-    var openBottomSheet: MutableLiveData<ArrayList<offerDetailResponse>> = MutableLiveData()
+    var openBottomSheet: MutableLiveData<ArrayList<offerDetailResponse>> = LiveEvent()
     var feedDetail: MutableLiveData<FeedDetails> = MutableLiveData()
 
     val TAG = "VideoActivtyEXPLOREVM"

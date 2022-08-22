@@ -154,6 +154,7 @@ enum class TrackrEvent(name: String) {
     tab_explore_click ("tab_explore_click"),
     tab_reward_click ("tab_reward_click"),
     tab_family_click ("tab_family_click"),
+    tab_insights_click ("tab_insights_click"),
     tab_home_click ("tab_home_click"),
     increase_limit_clicked("increase_limit_clicked"),
     upgrade_your_kyc_clicked("upgrade_your_kyc_clicked"),

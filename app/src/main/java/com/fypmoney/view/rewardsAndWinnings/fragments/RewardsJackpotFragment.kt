@@ -269,6 +269,16 @@ class RewardsJackpotFragment : BaseFragment<FragmentJackpotOverviewBinding, Rewa
                                 AppConstants.GIFT_VOUCHER -> {
                                     findNavController().navigate(Uri.parse("fypmoney://creategiftcard/${it.redirectionResource}"))
                                 }
+                                AppConstants.F_Store -> {
+                                    findNavController().navigate(R.id.navigation_explore)
+                                }
+                                AppConstants.REWARDS -> {
+                                    findNavController().navigate(R.id.navigation_rewards)
+                                }
+                                AppConstants.INSIGHTS -> {
+                                    findNavController().navigate(R.id.navigation_insights)
+                                }
+
                                 else -> {
                                     Utility.deeplinkRedirection(redirectionResources, requireContext())
                                 }

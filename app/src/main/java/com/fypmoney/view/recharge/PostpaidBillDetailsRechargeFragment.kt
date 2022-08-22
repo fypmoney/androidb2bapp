@@ -145,7 +145,7 @@ class PostpaidBillDetailsRechargeFragment : BaseFragment<PostpaidBillDetailsRech
                     rechargeType = POSTPAID)
                 findNavController().navigate(directions)
             }
-            null -> TODO()
+            null -> {}
             PostpaidBillDetailsFragmentVM.PostpaidBilDetailsEvent.OnPayClickEvent -> {
                 askForDevicePassword()
             }
@@ -201,7 +201,7 @@ class PostpaidBillDetailsRechargeFragment : BaseFragment<PostpaidBillDetailsRech
                 binding.billErrorTv.toGone()
                 binding.continueBtn.setBusy(true)
             }
-            null -> TODO()
+            null -> {}
             is PostpaidBillDetailsFragmentVM.PostpaidBillDetailsState.BalanceSuccess -> {
                 binding.continueBtn.setBusy(false)
             }

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fypmoney.BR
@@ -14,7 +15,8 @@ import com.fypmoney.base.PaginationListener
 import com.fypmoney.databinding.CashbackWonActivityBinding
 import com.fypmoney.model.BankTransactionHistoryResponseDetails
 import com.fypmoney.util.AppConstants
-import com.fypmoney.view.activity.PayUSuccessViewCashbackWon
+import com.fypmoney.view.insights.model.AllTxnItem
+import com.fypmoney.view.insights.view.CategoryWaiseTransactionDetailsFragment
 import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsCashbackwonVM
 import kotlinx.android.synthetic.main.cashback_won_activity.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -27,9 +29,6 @@ class CashBackWonHistoryActivity :
     private var mViewBinding: Int? = null
     var mViewModel: RewardsCashbackwonVM? = null
 
-    companion object {
-
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,20 +39,14 @@ class CashBackWonHistoryActivity :
             context = this,
             toolbar = toolbar,
             isBackArrowVisible = true, toolbarTitle = getString(R.string.cash_back_won_history),
-            titleColor = Color.BLACK,
-            backArrowTint = Color.BLACK
+            titleColor = Color.WHITE,
+            backArrowTint = Color.WHITE
         )
         setRecylerView()
 
 
     }
 
-
-    override fun onStart() {
-        super.onStart()
-
-
-    }
 
 
     override fun getBindingVariable(): Int {
@@ -123,7 +116,23 @@ class CashBackWonHistoryActivity :
 
         }
         mViewModel.onItemClicked.observe(this) {
-            intentToActivity(PayUSuccessViewCashbackWon::class.java, it)
+
+            val allTxnItemModel = AllTxnItem(
+                amount = it.amount,
+                paymentMode = it.paymentMode,
+                accReferenceNumber = it.accReferenceNumber,
+                mrn = it.mrn,
+                mobileNo = it.mobileNo,
+                categoryCode = it.categoryCode,
+                message = it.message,
+                userName = it.userName,
+                transactionDate = it.transactionDate,
+                transactionType = it.transactionType,
+                bankReferenceNumber = it.bankReferenceNumber,
+                iconLink = it.iconLink,
+                category = it.category
+            )
+            addFragmentToActivity(allTxnItemModel)
         }
     }
 
@@ -145,6 +154,17 @@ class CashBackWonHistoryActivity :
         mViewModel?.callRewardHistory(page)
 
 
+    }
+
+    private fun addFragmentToActivity(allTxnItem: AllTxnItem){
+        val fm = supportFragmentManager
+        val tr = fm.beginTransaction()
+        tr.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left,R.anim.slide_in_left,R.anim.slide_out_righ);
+        val fragment = CategoryWaiseTransactionDetailsFragment()
+        fragment.arguments = bundleOf(Pair("txnDetail",allTxnItem))
+        tr.add(R.id.container, fragment)
+        tr.addToBackStack("TransactionHistoryDetails")
+        tr.commit()
     }
 
 }

@@ -9,6 +9,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.navOptions
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.TrackrField
@@ -151,7 +152,7 @@ class MobileNumberInfoRechargeFragment:BaseFragment<MobileNumberInfoRechargeFrag
 
                 directions.let { it1 -> findNavController().navigate(it1) }
             }
-            null -> TODO()
+            null -> {}
             is MobileNumberInfoRechargeFragmentVM.EnterMobileNumberInfoRechargeEvent.ShowPlanScreen -> {
                 val directions = mViewModel.mobileNumberInfoModel?.circle?.let { it1 ->
                     MobileNumberInfoRechargeFragmentDirections.actionSelectRechargePlans(
@@ -193,7 +194,7 @@ class MobileNumberInfoRechargeFragment:BaseFragment<MobileNumberInfoRechargeFrag
             MobileNumberInfoRechargeFragmentVM.EnterMobileNumberInfoRechargeState.Loading -> {
                 mViewBinding.shimmerLayout.toVisible()
             }
-            null -> TODO()
+            null -> {}
         }
     }
 
@@ -275,22 +276,77 @@ class MobileNumberInfoRechargeFragment:BaseFragment<MobileNumberInfoRechargeFrag
                 redirectionResource?.let { uri ->
 
                     val redirectionResources = uri.split(",").get(0)
-                    if (redirectionResources == AppConstants.FyperScreen) {
-                        findNavController().navigate(R.id.navigation_fyper)
-                    } else if (redirectionResources == AppConstants.JACKPOTTAB) {
-                        findNavController().navigate(R.id.navigation_jackpot)
-                    } else if (redirectionResources == AppConstants.CardScreen) {
-                        findNavController().navigate(R.id.navigation_card)
-                    } else if (redirectionResources == AppConstants.RewardHistory) {
-                        findNavController().navigate(R.id.navigation_rewards_history)
-                    } else if (redirectionResources == AppConstants.ARCADE) {
-                        findNavController().navigate(R.id.navigation_arcade)
-                    } else {
-                        redirectionResources.let { it1 ->
-                            Utility.deeplinkRedirection(
-                                it1,
-                                requireContext()
-                            )
+                    when (redirectionResources) {
+                        AppConstants.FyperScreen -> {
+                            findNavController().navigate(R.id.navigation_fyper)
+                        }
+                        AppConstants.JACKPOTTAB -> {
+                            findNavController().navigate(R.id.navigation_jackpot)
+                        }
+                        AppConstants.CardScreen -> {
+                            findNavController().navigate(R.id.navigation_card)
+                        }
+                        AppConstants.RewardHistory -> {
+                            findNavController().navigate(R.id.navigation_rewards_history)
+                        }
+                        AppConstants.ARCADE -> {
+                            findNavController().navigate(R.id.navigation_arcade)
+                        }
+                        AppConstants.GIFT_VOUCHER -> {
+                            findNavController().navigate(Uri.parse("fypmoney://creategiftcard/${redirectionResource}"))
+                        }
+                        AppConstants.F_Store -> {
+                            findNavController().navigate(R.id.navigation_explore)
+                        }
+                        AppConstants.REWARDS -> {
+                            findNavController().navigate(R.id.navigation_rewards)
+                        }
+                        AppConstants.INSIGHTS -> {
+                            findNavController().navigate(R.id.navigation_insights)
+                        }
+                        AppConstants.PREPAID_RECHARGE_REDIRECTION->{
+                            findNavController().navigate(Uri.parse("https://www.fypmoney.in/recharge/${AppConstants.PREPAID}"),
+                                navOptions {
+                                    anim {
+                                        popEnter = R.anim.slide_in_left
+                                        popExit = R.anim.slide_out_righ
+                                        enter = R.anim.slide_in_right
+                                        exit = R.anim.slide_out_left
+                                    }
+                                })
+                        }
+
+                        AppConstants.POSTPAID_RECHARGE_REDIRECTION->{
+                            findNavController().navigate(Uri.parse("https://www.fypmoney.in/recharge/${AppConstants.POSTPAID}"),
+                                navOptions {
+                                    anim {
+                                        popEnter = R.anim.slide_in_left
+                                        popExit = R.anim.slide_out_righ
+                                        enter = R.anim.slide_in_right
+                                        exit = R.anim.slide_out_left
+                                    }
+                                })
+                        }
+
+                        AppConstants.DTH_RECHARGE_REDIRECTION->{
+                            findNavController().navigate(Uri.parse("https://www.fypmoney.in/recharge/dth"),
+                                navOptions {
+                                    anim {
+                                        popEnter = R.anim.slide_in_left
+                                        popExit = R.anim.slide_out_righ
+                                        enter = R.anim.slide_in_right
+                                        exit = R.anim.slide_out_left
+                                    }
+                                })
+                        }
+
+                        else -> {
+                            redirectionResources.let { it1 ->
+                                Utility.deeplinkRedirection(
+                                    it1,
+                                    requireContext()
+                                )
+                            }
                         }
                     }
 
@@ -347,6 +403,41 @@ class MobileNumberInfoRechargeFragment:BaseFragment<MobileNumberInfoRechargeFrag
 
                 }
 
+            }
+            AppConstants.PREPAID_RECHARGE_REDIRECTION->{
+                findNavController().navigate(Uri.parse("https://www.fypmoney.in/recharge/${AppConstants.PREPAID}"),
+                    navOptions {
+                        anim {
+                            popEnter = R.anim.slide_in_left
+                            popExit = R.anim.slide_out_righ
+                            enter = R.anim.slide_in_right
+                            exit = R.anim.slide_out_left
+                        }
+                    })
+            }
+
+            AppConstants.POSTPAID_RECHARGE_REDIRECTION->{
+                findNavController().navigate(Uri.parse("https://www.fypmoney.in/recharge/${AppConstants.POSTPAID}"),
+                    navOptions {
+                        anim {
+                            popEnter = R.anim.slide_in_left
+                            popExit = R.anim.slide_out_righ
+                            enter = R.anim.slide_in_right
+                            exit = R.anim.slide_out_left
+                        }
+                    })
+            }
+
+            AppConstants.DTH_RECHARGE_REDIRECTION->{
+                findNavController().navigate(Uri.parse("https://www.fypmoney.in/recharge/dth"),
+                    navOptions {
+                        anim {
+                            popEnter = R.anim.slide_in_left
+                            popExit = R.anim.slide_out_righ
+                            enter = R.anim.slide_in_right
+                            exit = R.anim.slide_out_left
+                        }
+                    })
             }
         }
     }

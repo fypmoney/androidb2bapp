@@ -138,7 +138,7 @@ class NewAddMoneyActivity : BaseActivity<ActivityNewAddMoneyBinding, NewAddMoney
                 binding.clPayModeDetailsCl.toGone()
                 binding.shimmerLayout.toVisible()
             }
-            null -> TODO()
+            null -> {}
             is NewAddMoneyActivityVM.BankDetailsState.QRCodeGenerated -> {
                 binding.icQrcode.setImageBitmap(it.qrCode)
             }
@@ -170,7 +170,7 @@ class NewAddMoneyActivity : BaseActivity<ActivityNewAddMoneyBinding, NewAddMoney
                 }
                 startActivity(intent)
             }
-            null -> TODO()
+            null -> {}
             NewAddMoneyActivityVM.BankDetailsEvent.HowItWorks -> {
                 SharedPrefUtils.getString(
                     this,
