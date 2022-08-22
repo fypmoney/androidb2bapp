@@ -1297,7 +1297,6 @@ Coming really soon!
 
     <string name="active_coupon_expiry">Valid till %1$s</string>
 
-    <string name="unable_to_fetch_points_please_check_reward_history_after_playing">Unable to fetch points, please check Reward History after playing!</string>
 
     <string-array name="person_category_array">
         <item>Minor</item>
