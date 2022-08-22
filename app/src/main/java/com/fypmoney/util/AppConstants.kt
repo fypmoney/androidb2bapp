@@ -85,6 +85,7 @@ object AppConstants {
     const val PRODUCT_TREASURE_BOX = "TREASURE_BOX"
     const val PRODUCT_SLOT_MACHINE = "SLOT"
     const val PRODUCT_SCRATCH = "SCRATCH_CARD"
+    const val PRODUCT_COUPON_CODE = "COUPON"
     const val CUSTOMER_INFO_RESPONSE = "customer_info_response"
     const val SPLASH_TIME = 4000L
     const val FROM_WHICH_SCREEN = "from_which_screen"

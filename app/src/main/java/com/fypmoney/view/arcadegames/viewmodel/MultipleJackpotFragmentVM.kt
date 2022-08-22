@@ -6,11 +6,13 @@ import androidx.lifecycle.MutableLiveData
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiUrl
+import com.fypmoney.connectivity.ErrorResponseInfo
 import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.BaseRequest
 import com.fypmoney.model.RewardPointsSummaryResponse
+import com.fypmoney.view.arcadegames.brandedcoupons.model.BrandedCouponCountResponse
 import com.fypmoney.view.arcadegames.model.JackpotDetailsItem
 import com.fypmoney.view.arcadegames.model.MultipleJackpotNetworkResponse
 import com.fypmoney.view.rewardsAndWinnings.model.totalRewardsResponse
@@ -32,10 +34,16 @@ class MultipleJackpotFragmentVM(application: Application) : BaseViewModel(applic
         get() = _stateCash
     private val _stateCash = MutableLiveData<CashState>()
 
+    val stateCouponCount: LiveData<CouponCountState>
+        get() = _stateCouponCount
+    private val _stateCouponCount = MutableLiveData<CouponCountState>()
+
     init {
         callRewardSummary()
         callTotalRewardsEarnings()
         callMultipleJackpotsProduct()
+        callBrandedActiveCount()
+
     }
 
     private fun callRewardSummary() {
@@ -68,6 +76,18 @@ class MultipleJackpotFragmentVM(application: Application) : BaseViewModel(applic
             ApiRequest(
                 ApiConstant.API_GET_ALL_JACKPOTS_PRODUCTWISE,
                 NetworkUtil.endURL(ApiConstant.API_GET_ALL_JACKPOTS_PRODUCTWISE),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = false
+            )
+        )
+    }
+
+    private fun callBrandedActiveCount() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_GET_ACTIVE_COUPON_COUNT_DATA,
+                NetworkUtil.endURL(ApiConstant.API_GET_ACTIVE_COUPON_COUNT_DATA),
                 ApiUrl.GET,
                 BaseRequest(),
                 this, isProgressBar = false
@@ -109,6 +129,21 @@ class MultipleJackpotFragmentVM(application: Application) : BaseViewModel(applic
                     )
                 }
             }
+
+            ApiConstant.API_GET_ACTIVE_COUPON_COUNT_DATA -> {
+                if (responseData is BrandedCouponCountResponse) {
+                    _stateCouponCount.value = CouponCountState.CouponCountSuccess(responseData.data?.amount)
+                }
+            }
+        }
+    }
+
+    override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
+        super.onError(purpose, errorResponseInfo)
+        when(purpose){
+            ApiConstant.API_GET_ACTIVE_COUPON_COUNT_DATA -> {
+                _stateCouponCount.value = CouponCountState.Error(errorResponseInfo)
+            }
         }
     }
 
@@ -131,6 +166,12 @@ class MultipleJackpotFragmentVM(application: Application) : BaseViewModel(applic
         object Loading : MyntsState()
         object Error : MyntsState()
         data class Success(val remainingMynts: Float?) : MyntsState()
+    }
+
+    sealed class CouponCountState {
+        object Loading : CouponCountState()
+        data class Error(var errorResponseInfo: ErrorResponseInfo) : CouponCountState()
+        data class CouponCountSuccess(var amount: Int?) : CouponCountState()
     }
 
 }

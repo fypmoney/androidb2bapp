@@ -378,6 +378,28 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, SpinWheelFragme
             spinWheelFragmentVM.callSpinWheelApi(spinWheelFragmentVM.productId)
 
         }
+
+        viewModel.stateCouponCount.observe(viewLifecycleOwner) {
+            handleCouponCountState(it)
+        }
+    }
+
+    private fun handleCouponCountState(it: SpinWheelFragmentVM.CouponCountState?) {
+        when (it) {
+
+            is SpinWheelFragmentVM.CouponCountState.CouponCountSuccess -> {
+                mViewBinding?.loadingActiveBrandedCoupon?.clearAnimation()
+                mViewBinding?.loadingActiveBrandedCoupon?.toGone()
+
+                mViewBinding?.tvBrandedActiveCouponsCount?.text = it.amount?.toString()
+
+            }
+            is SpinWheelFragmentVM.CouponCountState.Error -> {}
+
+            SpinWheelFragmentVM.CouponCountState.Loading -> {}
+
+            null -> {}
+        }
     }
 
     private fun arcadeSounds(from: String) {
@@ -571,6 +593,15 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, SpinWheelFragme
 
             setBackgroundDrawable(
                 it.chipMyntsBurnView,
+                ContextCompat.getColor(this.requireContext(), R.color.back_surface_color),
+                58f,
+                ContextCompat.getColor(this.requireContext(), R.color.back_surface_color),
+                0f,
+                false
+            )
+
+            setBackgroundDrawable(
+                it.chipCouponCountView,
                 ContextCompat.getColor(this.requireContext(), R.color.back_surface_color),
                 58f,
                 ContextCompat.getColor(this.requireContext(), R.color.back_surface_color),

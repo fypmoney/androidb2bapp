@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".view.arcadegames.brandedcoupons.ui.BrandedCouponDetailsFragment">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clCouponsDetailedContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bgcolor"
+        android:transitionName="detailsBackTransition">
+
+        <include
+            android:id="@+id/layout_toolbar"
+            layout="@layout/toolbar" />
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmerCouponDetails"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <include layout="@layout/shimmer_branded_coupon_details" />
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedBrandedCouponContainer"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/clBrandedCouponBottom"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_toolbar">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="@dimen/dp12">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivBrandLogo"
+                    android:layout_width="@dimen/_62sdp"
+                    android:layout_height="@dimen/_62sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@drawable/myntra_logo" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvBrandedTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp20"
+                    android:layout_marginTop="@dimen/dp12"
+                    android:text="@string/congratulations"
+                    android:textColor="@color/bgcolor"
+                    android:textSize="22sp"
+                    app:fontFamily="@font/product_sans_bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ivBrandLogo" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvBrandedContent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp20"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="@dimen/dp12"
+                    android:layout_marginEnd="32dp"
+                    android:textColor="@color/bgcolor"
+                    android:textSize="16sp"
+                    app:fontFamily="@font/product_sans_regular"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvBrandedTitle"
+                    tools:text="Get 70% on Myntra\'s End of Reason Sale" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvBrandedCouponCodeText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp20"
+                    android:layout_marginStart="@dimen/dp20"
+                    android:layout_marginTop="@dimen/dp32"
+                    android:layout_marginEnd="32dp"
+                    android:text="@string/coupon_code"
+                    android:textColor="@color/black_grey_txt_color"
+                    android:textSize="14sp"
+                    app:fontFamily="@font/product_sans_regular"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvBrandedContent" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clCouponCode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp20"
+                    android:layout_marginTop="@dimen/dp12"
+                    android:background="@drawable/dotted_rectangle_coupon_code"
+                    android:paddingVertical="@dimen/dp10"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvBrandedCouponCodeText">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvBrandedCouponCode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/dp20"
+                        android:textColor="@color/bgcolor"
+                        android:textSize="17sp"
+                        app:fontFamily="@font/product_sans_bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="FYP654C546565HUH" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivCouponCodeCopy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/dp18"
+                        android:padding="@dimen/dp6"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_branded_coupon_code_copy" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvCouponDetailsTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp20"
+                    android:layout_marginTop="@dimen/dp24"
+                    android:paddingVertical="@dimen/dp16"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/clCouponCode" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clBrandedCouponBottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/dp12"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnCouponRedeemNow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/product_sans_bold"
+                android:paddingVertical="@dimen/dp18"
+                android:text="@string/redeem_now"
+                android:textColor="@color/my_profile_background_color"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dp20"
+                android:layout_marginTop="@dimen/dp8"
+                android:layout_marginBottom="@dimen/dp32"
+                android:text="@string/proceeding_terms_condition"
+                android:textColor="#393939"
+                app:fontFamily="@font/product_sans_regular"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnCouponRedeemNow" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

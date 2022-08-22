@@ -196,6 +196,10 @@ object ApiConstant {
 
     const val API_GET_REWARD_SLOT_MACHINE_PURPOSE = "reward-product/slot"
 
+    const val API_GET_BRANDED_COUPONS_PURPOSE = "reward-product/branded"
+
+    const val API_GET_BRANDED_COUPONS = "services/PockketService/api/list/reward-product"
+
     const val API_GET_TREASURE_DATA =
         "services/PockketService/api/list/reward-product"
 
@@ -208,6 +212,12 @@ object ApiConstant {
     const val API_GET_LEADERBOARD_DATA = "services/PockketService/api/reward/leaderboard/"
     const val API_GET_MERCHANT_CATEGORY = "/services/PockketService/api/fetch/data-for/ALL_MCC_CATEGORY"
     const val API_CHANGE_TXN_CATEGORY = "/services/PockketService/api/account-transaction/icon"
+
+    const val API_GET_COUPON_REWARD_DATA = "services/PockketService/api/coupon/details/"
+
+    const val API_GET_ACTIVE_COUPON_DATA = "services/PockketService/api/list/active-coupons/"
+
+    const val API_GET_ACTIVE_COUPON_COUNT_DATA = "services/PockketService/api/active-coupon-count/"
 
 }
 

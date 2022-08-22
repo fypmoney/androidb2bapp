@@ -2,11 +2,12 @@ package com.fypmoney.view.arcadegames.ui
 
 import android.animation.ValueAnimator
 import android.app.Dialog
-import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.media.MediaPlayer
-import android.os.*
+import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.HapticFeedbackConstants
 import android.view.View
 import android.view.ViewGroup
@@ -359,6 +360,10 @@ class RotatingTreasureFragment :
 
         }
 
+        viewModel.stateCouponCount.observe(viewLifecycleOwner) {
+            handleCouponCountState(it)
+        }
+
     }
 
     private fun setTreasureViewPagerData(spinWheelRotateResponseDetails: SpinWheelRotateResponseDetails?) {
@@ -590,6 +595,24 @@ class RotatingTreasureFragment :
         }
     }
 
+    private fun handleCouponCountState(it: RotatingTreasureFragmentVM.CouponCountState?) {
+        when (it) {
+
+            is RotatingTreasureFragmentVM.CouponCountState.CouponCountSuccess -> {
+                mViewBinding?.loadingActiveBrandedCoupon?.clearAnimation()
+                mViewBinding?.loadingActiveBrandedCoupon?.toGone()
+
+                mViewBinding?.tvBrandedActiveCouponsCount?.text = it.amount?.toString()
+
+            }
+            is RotatingTreasureFragmentVM.CouponCountState.Error -> {}
+
+            RotatingTreasureFragmentVM.CouponCountState.Loading -> {}
+
+            null -> {}
+        }
+    }
+
     override fun onTryAgainClicked() {
 
     }
@@ -636,6 +659,15 @@ class RotatingTreasureFragment :
 
             setBackgroundDrawable(
                 it.chipMyntsBurnView,
+                ContextCompat.getColor(this.requireContext(), R.color.back_surface_color),
+                58f,
+                ContextCompat.getColor(this.requireContext(), R.color.back_surface_color),
+                0f,
+                false
+            )
+
+            setBackgroundDrawable(
+                it.chipCouponCountView,
                 ContextCompat.getColor(this.requireContext(), R.color.back_surface_color),
                 58f,
                 ContextCompat.getColor(this.requireContext(), R.color.back_surface_color),

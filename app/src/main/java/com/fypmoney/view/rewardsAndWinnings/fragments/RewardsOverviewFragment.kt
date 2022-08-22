@@ -20,6 +20,7 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.bindingAdapters.setBackgroundDrawable
 import com.fypmoney.databinding.FragmentRewardsOverviewBinding
+import com.fypmoney.extension.toGone
 import com.fypmoney.model.CustomerInfoResponseDetails
 import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
@@ -191,6 +192,17 @@ class RewardsOverviewFragment :
 
         mViewBinding?.chipTicketsView?.setOnClickListener {
             findNavController().navigate(R.id.navigation_multiple_jackpots, null, navOptions {
+                anim {
+                    popEnter = R.anim.slide_in_left
+                    popExit = R.anim.slide_out_righ
+                    enter = R.anim.slide_in_right
+                    exit = R.anim.slide_out_left
+                }
+            })
+        }
+
+        mViewBinding?.chipCouponActiveView?.setOnClickListener {
+            findNavController().navigate(R.id.navigation_active_coupon_fragment, null, navOptions {
                 anim {
                     popEnter = R.anim.slide_in_left
                     popExit = R.anim.slide_out_righ
@@ -482,7 +494,8 @@ class RewardsOverviewFragment :
                     ArcadeType.NOTypeFound -> {
 
                     }
-                    is ArcadeType.SCRATCH_CARD -> TODO()
+                    is ArcadeType.SCRATCH_CARD -> {Utility.showToast("Scratch card")}
+
                     is ArcadeType.SLOT -> {
                         findNavController().navigate(
                             Uri.parse("https://www.fypmoney.in/slot_machine/${type.productCode}/${null}"),
@@ -519,7 +532,22 @@ class RewardsOverviewFragment :
                                 }
                             })
                     }
-                    null -> {}
+
+                    is ArcadeType.BRANDED_COUPONS -> {
+                        findNavController().navigate(
+                            Uri.parse("https://www.fypmoney.in/branded_coupons/${type.productCode}/${null}"),
+                            navOptions {
+                                anim {
+                                    popEnter = R.anim.slide_in_left
+                                    popExit = R.anim.slide_out_righ
+                                    enter = R.anim.slide_in_right
+                                    exit = R.anim.slide_out_left
+                                }
+                            })
+                    }
+                    null -> {
+
+                    }
                 }
             }
 
@@ -704,6 +732,29 @@ class RewardsOverviewFragment :
                 }
             }
         }
+
+        viewModel.stateCouponCount.observe(viewLifecycleOwner) {
+            handleCouponCountState(it)
+        }
+
+    }
+
+    private fun handleCouponCountState(it: RewardsAndVM.CouponCountState?) {
+        when (it) {
+
+            is RewardsAndVM.CouponCountState.CouponCountSuccess -> {
+                mViewBinding?.loadingActiveBrandedCoupon?.clearAnimation()
+                mViewBinding?.loadingActiveBrandedCoupon?.toGone()
+
+                mViewBinding?.tvBrandedActiveCouponsCount?.text = it.amount?.toString()
+
+            }
+            is RewardsAndVM.CouponCountState.Error -> {}
+
+            RewardsAndVM.CouponCountState.Loading -> {}
+
+            null -> {}
+        }
     }
 
     private fun setBackgrounds() {
@@ -728,6 +779,15 @@ class RewardsOverviewFragment :
 
             setBackgroundDrawable(
                 it.chipCashView,
+                ContextCompat.getColor(this.requireContext(), R.color.back_surface_color),
+                68f,
+                ContextCompat.getColor(this.requireContext(), R.color.back_surface_color),
+                0f,
+                false
+            )
+
+            setBackgroundDrawable(
+                it.chipCouponActiveView,
                 ContextCompat.getColor(this.requireContext(), R.color.back_surface_color),
                 68f,
                 ContextCompat.getColor(this.requireContext(), R.color.back_surface_color),

@@ -13,6 +13,7 @@ import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.*
 import com.fypmoney.util.livedata.LiveEvent
+import com.fypmoney.view.arcadegames.brandedcoupons.model.BrandedCouponCountResponse
 import com.fypmoney.view.arcadegames.model.MultipleJackpotNetworkResponse
 import com.fypmoney.view.arcadegames.model.TreasureBoxItem
 import com.fypmoney.view.arcadegames.model.TreasureBoxNetworkResponse
@@ -58,12 +59,18 @@ class RotatingTreasureFragmentVM(application: Application) : BaseViewModel(appli
         get() = _state
     private val _state = MutableLiveData<RotatingTreasureState>()
 
+    val stateCouponCount: LiveData<CouponCountState>
+        get() = _stateCouponCount
+    private val _stateCouponCount = MutableLiveData<CouponCountState>()
+
+
     init {
         remainFrequency.value = 0
 
         callRewardSummary()
         callTotalRewardsEarnings()
         callTotalJackpotCards()
+        callBrandedActiveCount()
     }
 
     private fun callRewardSummary() {
@@ -95,6 +102,18 @@ class RotatingTreasureFragmentVM(application: Application) : BaseViewModel(appli
             ApiRequest(
                 ApiConstant.API_GET_ALL_JACKPOTS_PRODUCTWISE,
                 NetworkUtil.endURL(ApiConstant.API_GET_ALL_JACKPOTS_PRODUCTWISE),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = false
+            )
+        )
+    }
+
+    private fun callBrandedActiveCount() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_GET_ACTIVE_COUPON_COUNT_DATA,
+                NetworkUtil.endURL(ApiConstant.API_GET_ACTIVE_COUPON_COUNT_DATA),
                 ApiUrl.GET,
                 BaseRequest(),
                 this, isProgressBar = false
@@ -169,6 +188,12 @@ class RotatingTreasureFragmentVM(application: Application) : BaseViewModel(appli
         data class Error(var errorResponseInfo: ErrorResponseInfo) : RotatingTreasureState()
     }
 
+    sealed class CouponCountState {
+        object Loading : CouponCountState()
+        data class Error(var errorResponseInfo: ErrorResponseInfo) : CouponCountState()
+        data class CouponCountSuccess(var amount: Int?) : CouponCountState()
+    }
+
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
 
@@ -213,6 +238,12 @@ class RotatingTreasureFragmentVM(application: Application) : BaseViewModel(appli
 
                 coinsBurned.postValue(array)
 
+            }
+
+            ApiConstant.API_GET_ACTIVE_COUPON_COUNT_DATA -> {
+                if (responseData is BrandedCouponCountResponse) {
+                    _stateCouponCount.value = CouponCountState.CouponCountSuccess(responseData.data?.amount)
+                }
             }
 
             ApiConstant.PLAY_ORDER_API -> {
@@ -274,6 +305,10 @@ class RotatingTreasureFragmentVM(application: Application) : BaseViewModel(appli
 
             ApiConstant.PLAY_ORDER_API -> {
                 error.postValue(errorResponseInfo)
+            }
+
+            ApiConstant.API_GET_ACTIVE_COUPON_COUNT_DATA -> {
+                _stateCouponCount.value = CouponCountState.Error(errorResponseInfo)
             }
         }
     }

@@ -987,4 +987,62 @@
 
     </fragment>
 
+    <fragment
+        android:id="@+id/navigation_branded_coupons"
+        android:name="com.fypmoney.view.arcadegames.brandedcoupons.ui.BrandedCouponsFragment"
+        android:label="Branded Coupons Fragment"
+        tools:layout="@layout/fragment_branded_coupons">
+
+        <argument
+            android:name="productCode"
+            android:defaultValue=""
+            app:argType="string"
+            app:nullable="false" />
+
+        <argument
+            android:name="orderId"
+            android:defaultValue=""
+            app:argType="string"
+            app:nullable="true" />
+
+        <deepLink
+            android:id="@+id/arcade_branded_coupons_deep_link"
+            android:autoVerify="true"
+            app:uri="https://www.fypmoney.in/branded_coupons/{productCode}/{orderId}" />
+
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_branded_coupons_details"
+        android:name="com.fypmoney.view.arcadegames.brandedcoupons.ui.BrandedCouponDetailsFragment"
+        android:label="Branded Coupons Details Fragment"
+        tools:layout="@layout/fragment_branded_coupon_details" >
+
+        <argument
+            android:name="couponCode"
+            android:defaultValue=""
+            app:argType="string"
+            app:nullable="false" />
+
+        <deepLink
+            android:id="@+id/arcade_slot_machine_deep_link"
+            android:autoVerify="true"
+            app:uri="https://www.fypmoney.in/branded_coupons_details/{couponCode}" />
+
+        <action
+            android:id="@+id/action_navigation_branded_coupons_details_to_navigation_rewards"
+            app:destination="@id/navigation_rewards"
+            app:popUpTo="@id/navigation_rewards"
+            app:popUpToInclusive="true"/>
+
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_active_coupon_fragment"
+        android:name="com.fypmoney.view.arcadegames.brandedcoupons.ui.ActiveCouponFragment"
+        android:label="Active Coupon Fragment"
+        tools:layout="@layout/fragment_active_coupon" />
+
 </navigation>

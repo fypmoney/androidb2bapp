@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/layoutServicePrice"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:weightSum="2"
+    app:cardCornerRadius="@dimen/card_corner_radius"
+    app:cardElevation="@dimen/card_elevation"
+    app:cardUseCompatPadding="true"
+    app:layout_constraintTop_toTopOf="parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp12"
+        android:layout_marginTop="@dimen/dp16"
+        android:background="@color/bgcolor">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivActiveBackContainer"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_active_coupons_back" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivActiveBrandLogo"
+            android:layout_width="@dimen/_32sdp"
+            android:layout_height="@dimen/_32sdp"
+            android:layout_marginTop="@dimen/dp24"
+            app:tint="@color/cb_grey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/ivActiveBackContainer"
+            tools:src="@drawable/myntra_logo" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvActiveBrandedTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dp20"
+            android:layout_marginTop="@dimen/dp18"
+            android:textAlignment="center"
+            android:textColor="@color/cb_grey"
+            android:background="@color/cb_grey"
+            android:textSize="16sp"
+            app:fontFamily="@font/product_sans_regular"
+            app:layout_constraintBottom_toTopOf="@+id/tvActiveBrandedCouponExpiry"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivActiveBrandLogo"
+            app:layout_constraintVertical_bias="0"
+            tools:text="@string/congratulations" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvActiveBrandedCouponExpiry"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dp20"
+            android:layout_marginBottom="@dimen/dp18"
+            android:textAlignment="center"
+            android:textColor="@color/cb_grey"
+            android:background="@color/cb_grey"
+            android:textSize="14sp"
+            app:fontFamily="@font/product_sans_regular"
+            app:layout_constraintBottom_toTopOf="@+id/guideline2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="Valid till 31/08/2022" />
+
+        <View
+            android:id="@+id/viewActiveBrandCoupon"
+            android:layout_width="0dp"
+            android:layout_height="3dp"
+            android:alpha="0.5"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:background="@drawable/dotted_line"
+            app:layout_constraintEnd_toEndOf="@+id/ivActiveBackContainer"
+            app:layout_constraintStart_toStartOf="@+id/ivActiveBackContainer"
+            app:layout_constraintTop_toTopOf="@+id/guideline2" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvActiveBrandedRedeemNow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp24"
+            android:layout_marginTop="@dimen/dp12"
+            android:drawableEnd="@drawable/ic_baseline_arrow_right"
+            android:drawablePadding="@dimen/dp4"
+            android:paddingStart="@dimen/dp12"
+            android:paddingTop="@dimen/dp12"
+            android:paddingEnd="@dimen/dp1"
+            android:paddingBottom="@dimen/dp1"
+            android:text="@string/redeem_now"
+            android:textAlignment="center"
+            android:textColor="@color/cb_grey"
+            android:background="@color/cb_grey"
+            android:textSize="16sp"
+            app:fontFamily="@font/product_sans_bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/viewActiveBrandCoupon" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.7" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp12"
+        android:layout_marginTop="@dimen/dp16"
+        android:background="@color/bgcolor">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivActiveBackContainer1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_active_coupons_back" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivActiveBrandLogo1"
+            android:layout_width="@dimen/_32sdp"
+            android:layout_height="@dimen/_32sdp"
+            android:layout_marginTop="@dimen/dp24"
+            app:tint="@color/cb_grey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/ivActiveBackContainer1"
+            tools:src="@drawable/myntra_logo" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvActiveBrandedTitle1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dp20"
+            android:layout_marginTop="@dimen/dp18"
+            android:textAlignment="center"
+            android:textColor="@color/cb_grey"
+            android:background="@color/cb_grey"
+            android:textSize="16sp"
+            app:fontFamily="@font/product_sans_regular"
+            app:layout_constraintBottom_toTopOf="@+id/tvActiveBrandedCouponExpiry1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivActiveBrandLogo1"
+            app:layout_constraintVertical_bias="0"
+            tools:text="@string/congratulations" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvActiveBrandedCouponExpiry1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dp20"
+            android:layout_marginBottom="@dimen/dp18"
+            android:textAlignment="center"
+            android:textColor="@color/cb_grey"
+            android:background="@color/cb_grey"
+            android:textSize="14sp"
+            app:fontFamily="@font/product_sans_regular"
+            app:layout_constraintBottom_toTopOf="@+id/guideline1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="Valid till 31/08/2022" />
+
+        <View
+            android:id="@+id/viewActiveBrandCoupon1"
+            android:layout_width="0dp"
+            android:layout_height="3dp"
+            android:alpha="0.5"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:background="@drawable/dotted_line"
+            app:layout_constraintEnd_toEndOf="@+id/ivActiveBackContainer1"
+            app:layout_constraintStart_toStartOf="@+id/ivActiveBackContainer1"
+            app:layout_constraintTop_toTopOf="@+id/guideline1" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvActiveBrandedRedeemNow1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp24"
+            android:layout_marginTop="@dimen/dp12"
+            android:drawableEnd="@drawable/ic_baseline_arrow_right"
+            android:drawablePadding="@dimen/dp4"
+            android:paddingStart="@dimen/dp12"
+            android:paddingTop="@dimen/dp12"
+            android:paddingEnd="@dimen/dp1"
+            android:paddingBottom="@dimen/dp1"
+            android:text="@string/redeem_now"
+            android:textAlignment="center"
+            android:textColor="@color/cb_grey"
+            android:background="@color/cb_grey"
+            android:textSize="16sp"
+            app:fontFamily="@font/product_sans_bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/viewActiveBrandCoupon1" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.7" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</LinearLayout>

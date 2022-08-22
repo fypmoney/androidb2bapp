@@ -14,6 +14,7 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.bindingAdapters.setBackgroundDrawable
 import com.fypmoney.databinding.FragmentMultipleJackpotsBinding
+import com.fypmoney.extension.toGone
 import com.fypmoney.extension.toInvisible
 import com.fypmoney.extension.toVisible
 import com.fypmoney.util.Utility
@@ -76,6 +77,10 @@ class MultipleJackpotsFragment :
 
         multipleJackpotVM.stateCash.observe(viewLifecycleOwner) {
             handleStateCash(it)
+        }
+
+        multipleJackpotVM.stateCouponCount.observe(viewLifecycleOwner) {
+            handleCouponCountState(it)
         }
     }
 
@@ -159,6 +164,24 @@ class MultipleJackpotsFragment :
         }
     }
 
+    private fun handleCouponCountState(it: MultipleJackpotFragmentVM.CouponCountState?) {
+        when (it) {
+
+            is MultipleJackpotFragmentVM.CouponCountState.CouponCountSuccess -> {
+                mViewBinding?.loadingActiveBrandedCoupon?.clearAnimation()
+                mViewBinding?.loadingActiveBrandedCoupon?.toGone()
+
+                mViewBinding?.tvBrandedActiveCouponsCount?.text = it.amount?.toString()
+
+            }
+            is MultipleJackpotFragmentVM.CouponCountState.Error -> {}
+
+            MultipleJackpotFragmentVM.CouponCountState.Loading -> {}
+
+            null -> {}
+        }
+    }
+
     private fun setBackgrounds() {
         mViewBinding?.let {
             setBackgroundDrawable(
@@ -181,6 +204,15 @@ class MultipleJackpotsFragment :
 
             setBackgroundDrawable(
                 it.chipCashView,
+                ContextCompat.getColor(this.requireContext(), R.color.back_surface_color),
+                58f,
+                ContextCompat.getColor(this.requireContext(), R.color.back_surface_color),
+                0f,
+                false
+            )
+
+            setBackgroundDrawable(
+                it.chipCouponActiveView,
                 ContextCompat.getColor(this.requireContext(), R.color.back_surface_color),
                 58f,
                 ContextCompat.getColor(this.requireContext(), R.color.back_surface_color),

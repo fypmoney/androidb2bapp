@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clCouponExpandRedeemRules"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/dp12">
+
+        <View
+            android:id="@+id/dot"
+            android:layout_width="5dp"
+            android:layout_height="5dp"
+            android:layout_marginStart="@dimen/dp10"
+            android:layout_marginBottom="@dimen/dp18"
+            android:background="@drawable/circular_red"
+            android:backgroundTint="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvExpandRedeemContent"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/dp18"
+           android:paddingStart="@dimen/dp8"
+            android:paddingEnd="@dimen/dp4"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/dot"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Get 3 months of Audible Premium Plus membership." />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -20,6 +20,7 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.*
+import com.fypmoney.view.arcadegames.brandedcoupons.model.BrandedCouponCountResponse
 import com.fypmoney.view.arcadegames.model.MultipleJackpotNetworkResponse
 import com.fypmoney.view.arcadegames.model.SLOTItem
 import com.fypmoney.view.arcadegames.model.SlotMachineResponse
@@ -94,8 +95,11 @@ class SlotMachineFragmentVM(application: Application) : BaseViewModel(applicatio
 
     val statePlayOrder: LiveData<PlayOrderSuccessState>
         get() = _statePlayOrder
-
     private val _statePlayOrder = MutableLiveData<PlayOrderSuccessState>()
+
+    val stateCouponCount: LiveData<CouponCountState>
+        get() = _stateCouponCount
+    private val _stateCouponCount = MutableLiveData<CouponCountState>()
 
 
     init {
@@ -105,6 +109,8 @@ class SlotMachineFragmentVM(application: Application) : BaseViewModel(applicatio
         callMyntsSummaryApi()
         callTotalCashRewardsEarnings()
         callTotalJackpotCards()
+        callBrandedActiveCount()
+
     }
 
     private fun callMyntsSummaryApi() {
@@ -136,6 +142,18 @@ class SlotMachineFragmentVM(application: Application) : BaseViewModel(applicatio
             ApiRequest(
                 ApiConstant.API_GET_ALL_JACKPOTS_PRODUCTWISE,
                 NetworkUtil.endURL(ApiConstant.API_GET_ALL_JACKPOTS_PRODUCTWISE),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = false
+            )
+        )
+    }
+
+    private fun callBrandedActiveCount() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_GET_ACTIVE_COUPON_COUNT_DATA,
+                NetworkUtil.endURL(ApiConstant.API_GET_ACTIVE_COUPON_COUNT_DATA),
                 ApiUrl.GET,
                 BaseRequest(),
                 this, isProgressBar = false
@@ -255,6 +273,12 @@ class SlotMachineFragmentVM(application: Application) : BaseViewModel(applicatio
 
             }
 
+            ApiConstant.API_GET_ACTIVE_COUPON_COUNT_DATA -> {
+                if (responseData is BrandedCouponCountResponse) {
+                    _stateCouponCount.value = CouponCountState.CouponCountSuccess(responseData.data?.amount)
+                }
+            }
+
             ApiConstant.REWARD_PRODUCT_DETAILS -> {
                 val json = JsonParser.parseString(responseData.toString()) as JsonObject
                 val spinDetails = Gson().fromJson(
@@ -292,6 +316,9 @@ class SlotMachineFragmentVM(application: Application) : BaseViewModel(applicatio
             }
             ApiConstant.REWARD_PRODUCT_DETAILS -> {
                 _stateProductDetails.value = SlotMachineProductResponseState.Error(errorResponseInfo)
+            }
+            ApiConstant.API_GET_ACTIVE_COUPON_COUNT_DATA -> {
+                _stateCouponCount.value = CouponCountState.Error(errorResponseInfo)
             }
         }
     }
@@ -348,6 +375,12 @@ class SlotMachineFragmentVM(application: Application) : BaseViewModel(applicatio
         object Loading : CashSuccessState()
         data class Error(var errorResponseInfo: ErrorResponseInfo) : CashSuccessState()
         data class CashSuccess(val totalCash: Int?) : CashSuccessState()
+    }
+
+    sealed class CouponCountState {
+        object Loading : CouponCountState()
+        data class Error(var errorResponseInfo: ErrorResponseInfo) : CouponCountState()
+        data class CouponCountSuccess(var amount: Int?) : CouponCountState()
     }
 
     fun callInsufficientDialog(msg: String, context: Context) {

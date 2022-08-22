@@ -20,7 +20,8 @@ data class aRewardProductResponse(
     val sectionCode: String? = null,
     val appDisplayTextColor: String? = null,
     val backgroundColor: String? = null,
-    val noOfJackpotTicket: Int? = null
+    val noOfJackpotTicket: Int? = null,
+    val rewardColor: String? = null
 )
 
 @Keep
