@@ -87,7 +87,7 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_righ"/>
+            app:popExitAnim="@anim/slide_out_righ" />
 
     </fragment>
 
@@ -96,7 +96,6 @@
         android:name="com.fypmoney.view.insights.view.InsightsFragment"
         android:label="@string/insights"
         tools:layout="@layout/fragment_insights">
-
 
 
     </fragment>
@@ -127,7 +126,7 @@
             android:name="sectionExploreName"
             android:defaultValue=""
             app:argType="string"
-            app:nullable="true"/>
+            app:nullable="true" />
 
         <action
             android:id="@+id/action_explore_section_explore"
@@ -150,7 +149,7 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_righ"/>
+            app:popExitAnim="@anim/slide_out_righ" />
     </fragment>
 
     <fragment
@@ -682,14 +681,14 @@
         android:id="@+id/navigation_spend_and_income"
         android:name="com.fypmoney.view.insights.view.SpendsAndIncomeFragment"
         android:label="Spend and Income"
-        tools:layout="@layout/fragment_spends_and_income" >
+        tools:layout="@layout/fragment_spends_and_income">
         <action
             android:id="@+id/action_spend_and_income_to_category_wise_transaction_list"
             app:destination="@+id/navigation_category_wise_transaction_list"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_righ"/>
+            app:popExitAnim="@anim/slide_out_righ" />
     </fragment>
     <fragment
         android:id="@+id/navigation_category_wise_transaction_list"
@@ -703,7 +702,7 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_righ"/>
+            app:popExitAnim="@anim/slide_out_righ" />
 
 
     </fragment>
@@ -890,11 +889,11 @@
         android:id="@+id/navigation_multiple_jackpots"
         android:name="com.fypmoney.view.arcadegames.ui.MultipleJackpotsFragment"
         android:label="Multiple Jackpots Screen"
-        tools:layout="@layout/fragment_multiple_jackpots"
         app:enterAnim="@anim/slide_in_right"
         app:exitAnim="@anim/slide_out_left"
         app:popEnterAnim="@anim/slide_in_left"
-        app:popExitAnim="@anim/slide_out_righ"/>
+        app:popExitAnim="@anim/slide_out_righ"
+        tools:layout="@layout/fragment_multiple_jackpots" />
     <fragment
         android:id="@+id/navigation_rotating_treasure"
         android:name="com.fypmoney.view.arcadegames.ui.RotatingTreasureFragment"
@@ -923,11 +922,11 @@
         android:id="@+id/navigation_leaderboard"
         android:name="com.fypmoney.view.arcadegames.ui.LeaderBoardFragment"
         android:label="LeaderBoard Fragment"
-        tools:layout="@layout/fragment_leader_board"
         app:enterAnim="@anim/slide_in_right"
         app:exitAnim="@anim/slide_out_left"
         app:popEnterAnim="@anim/slide_in_left"
-        app:popExitAnim="@anim/slide_out_righ">
+        app:popExitAnim="@anim/slide_out_righ"
+        tools:layout="@layout/fragment_leader_board">
 
         <argument
             android:name="productCode"
@@ -952,21 +951,21 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_righ"/>
+            app:popExitAnim="@anim/slide_out_righ" />
         <action
             android:id="@+id/action_navigation_more_history_to_navigation_rotating_treasure"
             app:destination="@id/navigation_rotating_treasure"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_righ"/>
+            app:popExitAnim="@anim/slide_out_righ" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_slot_machine"
         android:name="com.fypmoney.view.arcadegames.ui.SlotMachineFragment"
         android:label="Slot Machine Fragment"
-        tools:layout="@layout/fragment_slot_machine" >
+        tools:layout="@layout/fragment_slot_machine">
 
         <argument
             android:name="productCode"
@@ -1017,7 +1016,7 @@
         android:id="@+id/navigation_branded_coupons_details"
         android:name="com.fypmoney.view.arcadegames.brandedcoupons.ui.BrandedCouponDetailsFragment"
         android:label="Branded Coupons Details Fragment"
-        tools:layout="@layout/fragment_branded_coupon_details" >
+        tools:layout="@layout/fragment_branded_coupon_details">
 
         <argument
             android:name="couponCode"
@@ -1034,7 +1033,7 @@
             android:id="@+id/action_navigation_branded_coupons_details_to_navigation_rewards"
             app:destination="@id/navigation_rewards"
             app:popUpTo="@id/navigation_rewards"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
 
 
     </fragment>
@@ -1044,5 +1043,10 @@
         android:name="com.fypmoney.view.arcadegames.brandedcoupons.ui.ActiveCouponFragment"
         android:label="Active Coupon Fragment"
         tools:layout="@layout/fragment_active_coupon" />
+    <fragment
+        android:id="@+id/navigation_notification_settings_fragment"
+        android:name="com.fypmoney.view.whatsappnoti.ui.NotificationSettingsFragment"
+        android:label="Whatsapp Notification Fragment"
+        tools:layout="@layout/fragment_notification_settings" />
 
 </navigation>

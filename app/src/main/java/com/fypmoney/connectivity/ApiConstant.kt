@@ -219,6 +219,7 @@ object ApiConstant {
 
     const val API_GET_ACTIVE_COUPON_COUNT_DATA = "services/PockketService/api/active-coupon-count/"
 
+    const val API_POST_OPT_STATUS_DATA = "services/NotificationService/services/NotificationService/api/whatsapp/opt/"
 }
 
 

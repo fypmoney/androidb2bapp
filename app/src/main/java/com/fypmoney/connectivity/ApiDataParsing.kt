@@ -23,6 +23,7 @@ import com.fypmoney.view.giftcard.model.*
 import com.fypmoney.view.home.main.home.model.networkmodel.CallToActionNetworkResponse
 import com.fypmoney.view.ordercard.model.UserOfferCardResponse
 import com.fypmoney.view.recharge.model.RecentRechargesResponse
+import com.fypmoney.view.whatsappnoti.model.WhatsAppNotificationResponse
 import com.google.gson.Gson
 import com.payu.india.Payu.PayuConstants
 import okhttp3.ResponseBody
@@ -282,6 +283,10 @@ class ApiDataParsing {
 
                 ApiConstant.API_GET_ALL_JACKPOTS_PRODUCTWISE -> {
                     getObject(response, MultipleJackpotNetworkResponse::class.java)
+                }
+
+                ApiConstant.API_POST_OPT_STATUS_DATA -> {
+                    getObject(response, WhatsAppNotificationResponse::class.java)
                 }
 
                 ApiConstant.PAYU_PRODUCTION_URL -> {

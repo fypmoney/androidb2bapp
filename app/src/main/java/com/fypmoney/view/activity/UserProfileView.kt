@@ -33,6 +33,7 @@ import com.fypmoney.view.discord.DiscordProfileActivity
 import com.fypmoney.view.fragment.LogoutBottomSheet
 import com.fypmoney.view.register.PanAdhaarSelectionActivity
 import com.fypmoney.view.upgradetokyc.UpgradeToKycInfoActivity
+import com.fypmoney.view.whatsappnoti.ui.NotificationSettingsFragment
 import com.fypmoney.viewmodel.UserProfileViewModel
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
@@ -116,12 +117,12 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
         mViewBinding.profileList.adapter = GlobalListAdapter(this@UserProfileView,
             onListItemClicked = {
             when (it.postion) {
-                1 -> {
+                2 -> {
                     Utility.goToAppSettings(applicationContext)
                 }
 
 
-                0 -> {
+                1 -> {
                     startActivity(
                         Intent(
                             this@UserProfileView,
@@ -130,7 +131,13 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
                     )
                 }
 
-                2 -> {
+                0 ->{
+                    val mainFragment = NotificationSettingsFragment()
+                    supportFragmentManager.beginTransaction().add(R.id.container, mainFragment)
+                        .commit()
+                }
+
+                3 -> {
                     val dicordconnected =
                         SharedPrefUtils.getString(
                             application,
@@ -149,30 +156,30 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
                     }
                     }
 
-                3 -> {
+                4 -> {
                     intentToActivityMain(this@UserProfileView, SocialCommunityActivity::class.java)
                 }
-                4 -> {
+                5 -> {
                     openWebPageFor(
                         getString(R.string.privacy_policy),
                         "https://www.fypmoney.in/fyp/privacy-policy/"
                     )
                 }
-                5 -> {
+                6 -> {
                     openWebPageFor(
                         getString(R.string.terms_and_conditions),
                         "https://www.fypmoney.in/fyp/terms-of-use/"
                     )
                 }
 
-                6 -> {
+                7 -> {
                     callFreshChat(applicationContext)
                 }
 
-                7 -> {
+                8 -> {
                     callLogOutBottomSheet()
                 }
-                8->{
+                9->{
                     addFragmentToActivity()
                 }
 
@@ -207,20 +214,27 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
         iconList.add(
             ListUiModel(
                 postion = 0,
+                name = getString(R.string.notification_settings),
+                icon = AppCompatResources.getDrawable(this, R.drawable.ic_whats_app)
+            )
+        )
+        iconList.add(
+            ListUiModel(
+                postion = 1,
                 name = getString(R.string.trans_history_heading),
                 icon = AppCompatResources.getDrawable(this, R.drawable.ic_account_statement)
             )
         )
         iconList.add(
             ListUiModel(
-                postion = 1,
+                postion = 2,
                 name = getString(R.string.privacy_settings),
                 icon = AppCompatResources.getDrawable(this, R.drawable.ic_profile_privacy_settings)
             )
         )
         iconList.add(
             ListUiModel(
-                postion = 8,
+                postion = 9,
                 name = getString(R.string.family_settings_screen_title),
                 icon = AppCompatResources.getDrawable(this, R.drawable.ic_add_family_member)
             )
@@ -232,7 +246,7 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
         if(!discoredConnected.isNullOrEmpty() && (discoredConnected == "connected")){
             iconList.add(
                 ListUiModel(
-                    postion = 2,
+                    postion = 3,
                     name = getString(R.string.discord_profile),
                     icon = AppCompatResources.getDrawable(this, R.drawable.ic_discord_profile)
                 )
@@ -240,7 +254,7 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
         }else{
             iconList.add(
                 ListUiModel(
-                    postion = 2,
+                    postion = 3,
                     name = getString(R.string.connect_to_discord),
                     icon = AppCompatResources.getDrawable(this, R.drawable.ic_discord_profile)
                 )
@@ -249,35 +263,35 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
 
         iconList.add(
             ListUiModel(
-                postion = 3,
+                postion = 4,
                 name = getString(R.string.community_settings),
                 icon = AppCompatResources.getDrawable(this, R.drawable.ic_community)
             )
         )
         iconList.add(
             ListUiModel(
-                postion = 4,
+                postion = 5,
                 name = getString(R.string.privacy_policy),
                 icon = AppCompatResources.getDrawable(this, R.drawable.ic_privacy)
             )
         )
         iconList.add(
             ListUiModel(
-                postion = 5,
+                postion = 6,
                 name = getString(R.string.t_n_c),
                 icon = AppCompatResources.getDrawable(this, R.drawable.ic_term_and_condition)
             )
         )
         iconList.add(
             ListUiModel(
-                postion = 6,
+                postion = 7,
                 name = getString(R.string.help),
                 icon = AppCompatResources.getDrawable(this, R.drawable.ic_help)
             )
         )
         iconList.add(
             ListUiModel(
-                postion = 7,
+                postion = 8,
                 name = getString(R.string.log_out),
                 icon = AppCompatResources.getDrawable(this, R.drawable.ic_log_out)
             )

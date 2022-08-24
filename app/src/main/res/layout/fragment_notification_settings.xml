@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".view.whatsappnoti.ui.NotificationSettingsFragment">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bgcolor">
+
+        <include
+            android:id="@+id/whatsapp_layout_toolbar"
+            layout="@layout/toolbar" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/linear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="16dp"
+            android:layout_marginStart="@dimen/dp16"
+            android:layout_marginEnd="@dimen/dp16"
+            app:cardBackgroundColor="#262B32"
+            app:cardCornerRadius="18dp"
+            app:cardElevation="2dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/whatsapp_layout_toolbar">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="12dp">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivWhatsApp"
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:layout_marginStart="@dimen/dp8"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_whats_app" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvWhatsAppText"
+                    style="@style/TextviewRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:text="@string/whatsapp_updates"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    app:fontFamily="@font/product_sans_regular"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/smWhatsAppNotification"
+                    app:layout_constraintStart_toEndOf="@+id/ivWhatsApp"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/smWhatsAppNotification"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp12"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tvWhatsAppText"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:thumb="@drawable/custom_thumb"
+                    app:track="@drawable/custom_track" />
+
+<!--                <com.google.android.material.switchmaterial.SwitchMaterial-->
+<!--                    android:id="@+id/smWhatsAppNotification"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="0dp"-->
+<!--                    android:textOff="@string/off"-->
+<!--                    android:textOn="@string/on"-->
+<!--                    android:layout_marginEnd="@dimen/dp12"-->
+<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintStart_toEndOf="@+id/tvWhatsAppText"-->
+<!--                    app:layout_constraintTop_toTopOf="parent"-->
+<!--                    app:track="@drawable/custom_track" />-->
+
+                <!--                <FrameLayout-->
+                <!--                    android:id="@+id/flWhatsapp"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+                <!--                    app:layout_constraintEnd_toEndOf="parent"-->
+                <!--                    app:layout_constraintStart_toEndOf="@+id/tvWhatsAppText"-->
+                <!--                    app:layout_constraintTop_toTopOf="parent">-->
+
+                <!--                    <com.google.android.material.switchmaterial.SwitchMaterial-->
+                <!--                        android:id="@+id/smWhatsAppNotification"-->
+                <!--                        android:layout_width="wrap_content"-->
+                <!--                        android:layout_height="0dp"-->
+                <!--                        app:track="@drawable/custom_track"-->
+                <!--                        android:textOff="@string/off"-->
+                <!--                        android:textOn="@string/on"-->
+                <!--                        app:switchMinWidth="@dimen/dp42"-->
+                <!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+                <!--                        app:layout_constraintEnd_toEndOf="parent"-->
+                <!--                        app:layout_constraintStart_toEndOf="@+id/tvWhatsAppText"-->
+                <!--                        app:layout_constraintTop_toTopOf="parent" />-->
+
+                <!--                    <androidx.appcompat.widget.AppCompatTextView-->
+                <!--                        android:id="@+id/tvSwitchOff"-->
+                <!--                        android:layout_width="wrap_content"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:text="@string/off"-->
+                <!--                        app:fontFamily="@font/product_sans_bold"-->
+                <!--                        android:textColor="#9CA3A5"-->
+                <!--                        android:textSize="8sp"-->
+                <!--                        android:layout_marginTop="@dimen/dp1"-->
+                <!--                        android:layout_marginEnd="@dimen/dp8"-->
+                <!--                        app:layout_constraintEnd_toEndOf="@+id/smWhatsAppNotification"-->
+                <!--                        app:layout_constraintTop_toTopOf="@+id/smWhatsAppNotification"-->
+                <!--                        app:layout_constraintBottom_toBottomOf="@+id/smWhatsAppNotification"/>-->
+
+                <!--                    <androidx.appcompat.widget.AppCompatTextView-->
+                <!--                        android:id="@+id/tvSwitchOn"-->
+                <!--                        android:layout_width="wrap_content"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:text="@string/on"-->
+                <!--                        app:fontFamily="@font/product_sans_bold"-->
+                <!--                        android:textColor="@color/white"-->
+                <!--                        android:textSize="8sp"-->
+                <!--                        android:layout_marginTop="@dimen/_1sdp"-->
+                <!--                        android:layout_marginStart="@dimen/dp8"-->
+                <!--                        app:layout_constraintStart_toStartOf="@+id/smWhatsAppNotification"-->
+                <!--                        app:layout_constraintTop_toTopOf="@+id/smWhatsAppNotification"-->
+                <!--                        app:layout_constraintBottom_toBottomOf="@+id/smWhatsAppNotification"/>-->
+
+                <!--                </FrameLayout>-->
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
