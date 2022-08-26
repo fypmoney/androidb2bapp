@@ -1,14 +1,6 @@
 package com.fypmoney.connectivity
 
 object ApiConstant {
-    /* const val BASE_URL = "https://stage.services.dreamfolkstech.in"
-     const val CLIENT_ID = "wTYi02TtRcRt53Dd"
-     const val CLIENT_SECRET = "kba3BXrUPPwfcO4TFzGttoopWVyYduLV"
-     const val APP_ID = "WEBAPP"
-     const val GRANT_TYPE = "client_credentials"*/
-//  const val BASE_URL = "http://54.84.197.170:9300"
-
-    //const val BASE_URL = "https://techservices.fyp-e.in"
     const val PAYU_BASE_URL = "https://info.payu.in"
     const val CLIENT_ID = "web_app"
     const val CLIENT_SECRET = "user"

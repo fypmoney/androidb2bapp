@@ -32,6 +32,7 @@ import com.fypmoney.extension.toInvisible
 import com.fypmoney.extension.toVisible
 import com.fypmoney.model.SpinWheelRotateResponseDetails
 import com.fypmoney.util.Utility
+import com.fypmoney.util.spinwheel.LuckyWheelView
 import com.fypmoney.view.arcadegames.model.SectionListItem
 import com.fypmoney.view.arcadegames.viewmodel.SpinWheelFragmentVM
 import com.google.firebase.crashlytics.FirebaseCrashlytics
@@ -350,16 +351,19 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, SpinWheelFragme
 
         viewModel.spinWheelResponseList.observe(viewLifecycleOwner) { spinWheelRotation ->
             try {
-                luckySpinWheelView.setLuckyRoundItemSelectedListener {
-                    sectionArrayList.forEach { item ->
-                        if (item.id == sectionId.toString()) {
-                            if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
-                                setSelectionOnCard(spinWheelRotation)
+                luckySpinWheelView.setLuckyRoundItemSelectedListener(object :LuckyWheelView.LuckyRoundItemSelectedListener{
+                    override fun LuckyRoundItemSelected(index: Int) {
+                        sectionArrayList.forEach { item ->
+                            if (item.id == sectionId.toString()) {
+                                if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+                                    setSelectionOnCard(spinWheelRotation)
+                                }
+                                return@forEach
                             }
-                            return@forEach
                         }
                     }
-                }
+
+                })
             } catch (e: Exception) {
                 Toast.makeText(this.requireContext(), "Ex: $e", Toast.LENGTH_SHORT).show()
                 Log.d("Spin", "Ex: $e")

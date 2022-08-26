@@ -13,6 +13,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import com.fypmoney.R
 import com.fypmoney.util.autoCleared
+import com.fypmoney.view.activity.LoginView
 import com.fypmoney.view.activity.SplashView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -62,8 +63,8 @@ abstract class BaseBottomSheetFragment <VDB : ViewDataBinding> : BottomSheetDial
     }
 
     private fun navigateToLogin() {
-        val intent = Intent(requireContext(), SplashView::class.java)
-        requireActivity().finishAffinity()
+        val intent = Intent(requireContext(), LoginView::class.java)
         startActivity(intent)
+        requireActivity().finishAffinity()
     }
 }

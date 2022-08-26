@@ -36,6 +36,10 @@ import androidx.annotation.NonNull
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatEditText
 import com.bumptech.glide.Glide
+import com.facebook.FacebookSdk.getApplicationContext
+import com.freshchat.consumer.sdk.Freshchat
+import com.fyp.trackr.models.UserTrackr
+import com.fyp.trackr.models.logOut
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.bindingAdapters.shimmerColorDrawable
@@ -779,6 +783,8 @@ object Utility {
             SharedPrefUtils.SF_CARD_PROMO_CODE_APPLIED,
             false
         )
+        Freshchat.resetUser(PockketApplication.instance)
+        UserTrackr.logOut()
     }
 
     /*

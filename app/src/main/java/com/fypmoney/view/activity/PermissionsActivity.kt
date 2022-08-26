@@ -19,7 +19,7 @@ import com.fypmoney.databinding.ViewPermissionActivityBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.util.textview.ClickableSpanListener
-import com.fypmoney.util.textview.MyStoreClickableSpan
+import com.fypmoney.util.textview.FYPClickableSpan
 import com.fypmoney.view.home.main.homescreen.view.HomeActivity
 import com.fypmoney.viewmodel.PermissionViewModel
 import kotlinx.android.synthetic.main.view_permission_activity.*
@@ -142,7 +142,7 @@ class PermissionsActivity : BaseActivity<ViewPermissionActivityBinding, Permissi
         val ss = SpannableString(text);
         ss.setSpan(
 
-            MyStoreClickableSpan(pos = 1, clickableSpanListener = object : ClickableSpanListener {
+            FYPClickableSpan(pos = 1, clickableSpanListener = object : ClickableSpanListener {
                 override fun onPositionClicked(pos: Int) {
                     openWebPageFor(
                         getString(R.string.privacy_policy),
@@ -156,7 +156,7 @@ class PermissionsActivity : BaseActivity<ViewPermissionActivityBinding, Permissi
             Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
         )
         ss.setSpan(
-            MyStoreClickableSpan(pos = 2, clickableSpanListener = object : ClickableSpanListener {
+            FYPClickableSpan(pos = 2, clickableSpanListener = object : ClickableSpanListener {
                 override fun onPositionClicked(pos: Int) {
                     openWebPageFor(
                         getString(R.string.terms_and_conditions),

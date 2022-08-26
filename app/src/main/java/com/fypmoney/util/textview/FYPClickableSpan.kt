@@ -4,7 +4,7 @@ import android.text.TextPaint
 import android.text.style.ClickableSpan
 import android.view.View
 
-open class MyStoreClickableSpan(
+open class FYPClickableSpan(
     var color:Int?=null,
     var pos: Int,
     var clickableSpanListener: ClickableSpanListener

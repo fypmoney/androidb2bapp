@@ -108,7 +108,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                         .setLargeIcon(
                             BitmapFactory.decodeResource(
                                 resources,
-                                R.mipmap.ic_launcher_foreground
+                                R.drawable.ic_notification_png
                             )
                         )
                         .setTicker(resources.getString(R.string.app_name))

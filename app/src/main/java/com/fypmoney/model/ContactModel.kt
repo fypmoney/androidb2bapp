@@ -4,11 +4,7 @@ import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-class ContactModel(
-    var name: String? = null,
-    var number: String? = null,
-    var isSelected: Boolean? = false,
-)
+
 @Keep
 data class ContactRequest(
     @SerializedName("userPhoneContact") val contactRequestDetails: List<ContactRequestDetails>

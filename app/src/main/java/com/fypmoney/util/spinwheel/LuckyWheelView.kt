@@ -1,191 +1,177 @@
-package com.fypmoney.util.spinwheel;
+package com.fypmoney.util.spinwheel
 
-import android.content.Context;
-import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
-import android.util.AttributeSet;
-import android.view.HapticFeedbackConstants;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.content.Context
+import android.graphics.drawable.Drawable
+import android.util.AttributeSet
+import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.view.View
+import android.view.ViewGroup
+import android.widget.FrameLayout
+import android.widget.ImageView
+import android.widget.RelativeLayout
+import com.fypmoney.R
+import com.fypmoney.model.LuckyItem
+import com.fypmoney.util.spinwheel.LuckyWheelUtils.convertDpToPixel
+import com.fypmoney.util.spinwheel.PielView.PieRotateListener
+import java.util.*
 
-import com.fypmoney.R;
-import com.fypmoney.model.LuckyItem;
-
-
-import java.util.List;
-import java.util.Random;
-
-public class LuckyWheelView extends RelativeLayout implements PielView.PieRotateListener {
-    private int mBackgroundColor;
-    private int mTextColor;
-    private int mTopTextSize;
-    private int mSecondaryTextSize;
-    private int mBorderColor;
-    private int mTopTextPadding;
-    private int mEdgeWidth;
-    private Drawable mCenterImage;
-    private Drawable mCursorImage;
-
-    private PielView pielView;
-    private ImageView ivCursorView;
-
-    private LuckyRoundItemSelectedListener mLuckyRoundItemSelectedListener;
-
-    @Override
-    public void rotateDone(int index) {
+class LuckyWheelView : RelativeLayout, PieRotateListener {
+    private var mBackgroundColor = 0
+    private var mTextColor = 0
+    private var mTopTextSize = 0
+    private var mSecondaryTextSize = 0
+    private var mBorderColor = 0
+    private var mTopTextPadding = 0
+    private var mEdgeWidth = 0
+    private var mCenterImage: Drawable? = null
+    private var mCursorImage: Drawable? = null
+    private var pielView: PielView? = null
+    private var ivCursorView: ImageView? = null
+    private var mLuckyRoundItemSelectedListener: LuckyRoundItemSelectedListener? = null
+    override fun rotateDone(index: Int) {
         if (mLuckyRoundItemSelectedListener != null) {
-            mLuckyRoundItemSelectedListener.LuckyRoundItemSelected(index);
+            mLuckyRoundItemSelectedListener!!.LuckyRoundItemSelected(index)
         }
     }
 
-    public interface LuckyRoundItemSelectedListener {
-        void LuckyRoundItemSelected(int index);
+    interface LuckyRoundItemSelectedListener {
+        fun LuckyRoundItemSelected(index: Int)
     }
 
-    public void setLuckyRoundItemSelectedListener(LuckyRoundItemSelectedListener listener) {
-        this.mLuckyRoundItemSelectedListener = listener;
+    fun setLuckyRoundItemSelectedListener(listener: LuckyRoundItemSelectedListener) {
+        mLuckyRoundItemSelectedListener = listener
     }
 
-    public LuckyWheelView(Context context) {
-        super(context);
-        init(context, null);
+    constructor(context: Context) : super(context) {
+        init(context, null)
     }
 
-    public LuckyWheelView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init(context, attrs);
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
+        init(context, attrs)
     }
 
     /**
      * @param ctx
      * @param attrs
      */
-    private void init(Context ctx, AttributeSet attrs) {
+    private fun init(ctx: Context, attrs: AttributeSet?) {
         if (attrs != null) {
-            TypedArray typedArray = ctx.obtainStyledAttributes(attrs, R.styleable.LuckyWheelView);
-            mBackgroundColor = typedArray.getColor(R.styleable.LuckyWheelView_lkwBackgroundColor, 0xffcc0000);
-            mTopTextSize = typedArray.getDimensionPixelSize(R.styleable.LuckyWheelView_lkwTopTextSize, (int) LuckyWheelUtils.convertDpToPixel(10f, getContext()));
-            mSecondaryTextSize = typedArray.getDimensionPixelSize(R.styleable.LuckyWheelView_lkwSecondaryTextSize, (int) LuckyWheelUtils.convertDpToPixel(20f, getContext()));
-            mTextColor = typedArray.getColor(R.styleable.LuckyWheelView_lkwTopTextColor, 0);
-            mTopTextPadding = typedArray.getDimensionPixelSize(R.styleable.LuckyWheelView_lkwTopTextPadding, (int) LuckyWheelUtils.convertDpToPixel(4f, getContext())) + (int) LuckyWheelUtils.convertDpToPixel(4f, getContext());
-            mCursorImage = typedArray.getDrawable(R.styleable.LuckyWheelView_lkwCursor);
-            mCenterImage = typedArray.getDrawable(R.styleable.LuckyWheelView_lkwCenterImage);
-            mEdgeWidth = typedArray.getInt(R.styleable.LuckyWheelView_lkwEdgeWidth, 10);
-            mBorderColor = typedArray.getColor(R.styleable.LuckyWheelView_lkwEdgeColor, 0);
-            typedArray.recycle();
+            val typedArray = ctx.obtainStyledAttributes(attrs, R.styleable.LuckyWheelView)
+            mBackgroundColor =
+                typedArray.getColor(R.styleable.LuckyWheelView_lkwBackgroundColor, -0x340000)
+            mTopTextSize = typedArray.getDimensionPixelSize(
+                R.styleable.LuckyWheelView_lkwTopTextSize,
+                convertDpToPixel(10f, context).toInt()
+            )
+            mSecondaryTextSize = typedArray.getDimensionPixelSize(
+                R.styleable.LuckyWheelView_lkwSecondaryTextSize,
+                convertDpToPixel(20f, context).toInt()
+            )
+            mTextColor = typedArray.getColor(R.styleable.LuckyWheelView_lkwTopTextColor, 0)
+            mTopTextPadding = typedArray.getDimensionPixelSize(
+                R.styleable.LuckyWheelView_lkwTopTextPadding,
+                convertDpToPixel(4f, context).toInt()
+            ) + convertDpToPixel(4f, context).toInt()
+            mCursorImage = typedArray.getDrawable(R.styleable.LuckyWheelView_lkwCursor)
+            mCenterImage = typedArray.getDrawable(R.styleable.LuckyWheelView_lkwCenterImage)
+            mEdgeWidth = typedArray.getInt(R.styleable.LuckyWheelView_lkwEdgeWidth, 10)
+            mBorderColor = typedArray.getColor(R.styleable.LuckyWheelView_lkwEdgeColor, 0)
+            typedArray.recycle()
         }
-
-        LayoutInflater inflater = LayoutInflater.from(getContext());
-        FrameLayout frameLayout = (FrameLayout) inflater.inflate(R.layout.lucky_wheel_layout, this, false);
-
-        pielView = frameLayout.findViewById(R.id.pieView);
-        ivCursorView = frameLayout.findViewById(R.id.cursorView);
-
-        pielView.setPieRotateListener(this);
-        pielView.setPieBackgroundColor(mBackgroundColor);
-        pielView.setTopTextPadding(mTopTextPadding);
-        pielView.setTopTextSize(mTopTextSize);
-        pielView.setSecondaryTextSizeSize(mSecondaryTextSize);
-        pielView.setPieCenterImage(mCenterImage);
-        pielView.setBorderColor(mBorderColor);
-        pielView.setBorderWidth(mEdgeWidth);
-//        pielView.vibrateDevice(getContext());
-
-
-
-
-        if (mTextColor != 0)
-            pielView.setPieTextColor(mTextColor);
+        val inflater = LayoutInflater.from(context)
+        val frameLayout = inflater.inflate(R.layout.lucky_wheel_layout, this, false) as FrameLayout
+        pielView = frameLayout.findViewById(R.id.pieView)
+        ivCursorView = frameLayout.findViewById(R.id.cursorView)
+        pielView?.setPieRotateListener(this)
+        pielView?.setPieBackgroundColor(mBackgroundColor)
+        pielView?.setTopTextPadding(mTopTextPadding)
+        pielView?.setTopTextSize(mTopTextSize)
+        pielView?.setSecondaryTextSizeSize(mSecondaryTextSize)
+        pielView?.setPieCenterImage(mCenterImage)
+        pielView?.setBorderColor(mBorderColor)
+        pielView?.setBorderWidth(mEdgeWidth)
+        //        pielView.vibrateDevice(getContext());
+        if (mTextColor != 0) pielView?.setPieTextColor(mTextColor)
 
         //ivCursorView.setImageDrawable(mCursorImage);
-
-        addView(frameLayout);
+        addView(frameLayout)
     }
 
+   /* var isTouchEnabled: Boolean
+        get() = pielView!!.isTouchEnabled()
+        set(touchEnabled) {
+            pielView!!.isTouchEnabled = touchEnabled
+        }*/
 
-    public boolean isTouchEnabled() {
-        return pielView.isTouchEnabled();
-    }
-
-    public void setTouchEnabled(boolean touchEnabled) {
-        pielView.setTouchEnabled(touchEnabled);
-    }
-
-
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
+    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
         //This is to control that the touch events triggered are only going to the PieView
-        for (int i = 0; i < getChildCount(); i++) {
+        for (i in 0 until childCount) {
             if (isPielView(getChildAt(i))) {
-                return super.dispatchTouchEvent(ev);
+                return super.dispatchTouchEvent(ev)
             }
         }
-        return false;
+        return false
     }
 
-    private boolean isPielView(View view) {
-        if (view instanceof ViewGroup) {
-            for (int i = 0; i < getChildCount(); i++) {
-                if (isPielView(((ViewGroup) view).getChildAt(i))) {
-                    return true;
+    private fun isPielView(view: View): Boolean {
+        if (view is ViewGroup) {
+            for (i in 0 until childCount) {
+                if (isPielView(view.getChildAt(i))) {
+                    return true
                 }
             }
         }
-        return view instanceof PielView;
+        return view is PielView
     }
 
-    public void setLuckyWheelBackgrouldColor(int color) {
-        pielView.setPieBackgroundColor(color);
+    fun setLuckyWheelBackgrouldColor(color: Int) {
+        pielView!!.setPieBackgroundColor(color)
     }
 
-    public void setLuckyWheelCursorImage(int drawable) {
-        ivCursorView.setBackgroundResource(drawable);
+    fun setLuckyWheelCursorImage(drawable: Int) {
+        ivCursorView!!.setBackgroundResource(drawable)
     }
 
-    public void setLuckyWheelCenterImage(Drawable drawable) {
-        pielView.setPieCenterImage(drawable);
+    fun setLuckyWheelCenterImage(drawable: Drawable?) {
+        pielView!!.setPieCenterImage(drawable)
     }
 
-    public void setBorderColor(int color) {
-        pielView.setBorderColor(color);
+    fun setBorderColor(color: Int) {
+        pielView!!.setBorderColor(color)
     }
 
-    public void setLuckyWheelTextColor(int color) {
-        pielView.setPieTextColor(color);
+    fun setLuckyWheelTextColor(color: Int) {
+        pielView!!.setPieTextColor(color)
     }
 
     /**
      * @param data
      */
-    public void setData(List<LuckyItem> data) {
-        pielView.setData(data);
+    fun setData(data: List<LuckyItem>?) {
+        pielView!!.setData(data)
     }
 
     /**
      * @param numberOfRound
      */
-    public void setRound(int numberOfRound) {
-        pielView.setRound(numberOfRound);
+    fun setRound(numberOfRound: Int) {
+        pielView!!.setRound(numberOfRound)
     }
 
     /**
      * @param fixedNumber
      */
-    public void setPredeterminedNumber(int fixedNumber) {
-        pielView.setPredeterminedNumber(fixedNumber);
+    fun setPredeterminedNumber(fixedNumber: Int) {
+        pielView!!.setPredeterminedNumber(fixedNumber)
     }
 
-    public void startLuckyWheelWithTargetIndex(int index) {
-        pielView.rotateTo(index);
+    fun startLuckyWheelWithTargetIndex(index: Int) {
+        pielView!!.rotateTo(index)
     }
 
-    public void startLuckyWheelWithRandomTarget() {
-        Random r = new Random();
-        pielView.rotateTo(r.nextInt(pielView.getLuckyItemListSize() - 1));
+    fun startLuckyWheelWithRandomTarget() {
+        val r = Random()
+        pielView!!.rotateTo(r.nextInt(pielView!!.getLuckyItemListSize() - 1))
     }
 }

@@ -301,9 +301,6 @@
             android:name=".view.storeoffers.OffersScreen"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.activity.AgeAllowedActivationView"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".view.rewardsAndWinnings.activity.ScratchCardActivity"
             android:screenOrientation="portrait" />
         <activity

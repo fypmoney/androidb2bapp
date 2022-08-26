@@ -11,6 +11,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
 import com.fypmoney.R
 import com.fypmoney.util.autoCleared
+import com.fypmoney.view.activity.LoginView
 import com.fypmoney.view.activity.SplashView
 
 abstract class BaseDialogFragment<VDB : ViewDataBinding> : DialogFragment() {
@@ -49,9 +50,10 @@ abstract class BaseDialogFragment<VDB : ViewDataBinding> : DialogFragment() {
     }*/
 
     private fun navigateToLogin() {
-        val intent = Intent(requireContext(), SplashView::class.java)
-        requireActivity().finishAffinity()
+        val intent = Intent(requireContext(), LoginView::class.java)
         startActivity(intent)
+        requireActivity().finishAffinity()
+
     }
 
     override fun onResume() {

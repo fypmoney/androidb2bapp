@@ -17,7 +17,6 @@ object NotificationUtils {
      const val PROMOTIONAL_CHANNEL_ID = "fyp_promotional_channel"
      const val FESTIVAL_PROMOTIONAL_CHANNEL_ID = "fyp_festival_promotional_channel"
      const val GENRAL_CHANNEL_ID = "fyp_general_channel"
-     const val RICH_CONTENT_CHANNEL_ID = "moe_rich_content"
 
     fun createNotificationChannel(applicationContext:Application,
                                           channelId:String,

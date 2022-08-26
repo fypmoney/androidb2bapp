@@ -3,10 +3,7 @@ package com.fypmoney.model
 import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
-@Keep
-data class GetRewardsResponse(
-    @SerializedName("data") val getRewardsResponseDetails: GetRewardsResponseDetails,
-) : Serializable
+
 @Keep
 data class GetRewardsResponseDetails(
     @SerializedName("uaaId") var uaaId: String?,
@@ -24,10 +21,6 @@ data class Rewards(
     @SerializedName("sectionValue") var sectionValue: String?,
     @SerializedName("playedOn") var playedOn: String?,
     @SerializedName("rewardType") var rewardType: String?
-) : Serializable
-@Keep
-data class SpinWheelResponse(
-    @SerializedName("data") val spinWheelResponseDetails: SpinWheelResponseDetails
 ) : Serializable
 
 @Keep
@@ -50,10 +43,7 @@ data class SpinWheelRotateResponseDetails(
 
 ) : Serializable
 
-@Keep
-data class GetRewardsHistoryResponse(
-    @SerializedName("data") val getRewardsResponseDetails: List<GetRewardsHistoryResponseDetails>
-) : Serializable
+
 
 @Keep
 data class GetRewardsHistoryResponseDetails(

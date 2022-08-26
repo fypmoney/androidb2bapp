@@ -34,7 +34,7 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.util.AppConstants.DTH
 import com.fypmoney.util.Utility
 import com.fypmoney.util.textview.ClickableSpanListener
-import com.fypmoney.util.textview.MyStoreClickableSpan
+import com.fypmoney.util.textview.FYPClickableSpan
 import com.fypmoney.util.videoplayer.VideoActivity2
 import com.fypmoney.util.videoplayer.VideoActivityWithExplore
 import com.fypmoney.view.StoreWebpageOpener2
@@ -508,7 +508,7 @@ class DthDetailsRechargeFragment : BaseFragment<DthDetailsRechargeFragmentBindin
         val privacyPolicyEndIndex = privacyPolicyStarIndex + privacyPolicyText.length
         val ss = SpannableString(text)
         ss.setSpan(
-            MyStoreClickableSpan(
+            FYPClickableSpan(
                 color = resources.getColor(R.color.add_money_amount_color),
                 pos = 1,
                 clickableSpanListener = object : ClickableSpanListener {

@@ -12,7 +12,7 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewFirstScreenBinding
 import com.fypmoney.util.textview.ClickableSpanListener
-import com.fypmoney.util.textview.MyStoreClickableSpan
+import com.fypmoney.util.textview.FYPClickableSpan
 import com.fypmoney.viewmodel.FirstScreenViewModel
 
 
@@ -134,7 +134,7 @@ class FirstScreenView : BaseActivity<ViewFirstScreenBinding, FirstScreenViewMode
         val ss = SpannableString(text);
         ss.setSpan(
 
-            MyStoreClickableSpan(pos = 1, clickableSpanListener = object : ClickableSpanListener {
+            FYPClickableSpan(pos = 1, clickableSpanListener = object : ClickableSpanListener {
                 override fun onPositionClicked(pos: Int) {
                     openWebPageFor(getString(R.string.privacy_policy),"https://www.fypmoney.in/fyp/privacy-policy/")
 
@@ -145,7 +145,7 @@ class FirstScreenView : BaseActivity<ViewFirstScreenBinding, FirstScreenViewMode
             Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
         )
         ss.setSpan(
-            MyStoreClickableSpan(pos = 2, clickableSpanListener = object : ClickableSpanListener {
+            FYPClickableSpan(pos = 2, clickableSpanListener = object : ClickableSpanListener {
                 override fun onPositionClicked(pos: Int) {
                     openWebPageFor(getString(R.string.terms_and_conditions),"https://www.fypmoney.in/fyp/terms-of-use/")
                 }

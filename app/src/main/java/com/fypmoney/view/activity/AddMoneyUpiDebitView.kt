@@ -43,8 +43,7 @@ import com.payu.paymentparamhelper.PaymentParams
 import kotlinx.android.synthetic.main.toolbar.*
 
 
-class AddMoneyUpiDebitView :
-    BaseActivity<ViewAddMoneyUpiDebitBinding, AddMoneyUpiDebitViewModel>(),
+class AddMoneyUpiDebitView : BaseActivity<ViewAddMoneyUpiDebitBinding, AddMoneyUpiDebitViewModel>(),
     AddNewCardBottomSheet.OnAddNewCardClickListener,
     TransactionFailBottomSheet.OnBottomSheetClickListener, AddUpiBottomSheet.OnAddUpiClickListener {
     private lateinit var mViewModel: AddMoneyUpiDebitViewModel

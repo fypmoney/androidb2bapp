@@ -401,7 +401,7 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
             fresh.user = user
         }
         val faqOptions = FaqOptions()
-            .showFaqCategoriesAsGrid(false)
+            .showFaqCategoriesAsGrid(true)
             .showContactUsOnAppBar(true)
             .showContactUsOnFaqScreens(true)
             .showContactUsOnFaqNotHelpful(true)

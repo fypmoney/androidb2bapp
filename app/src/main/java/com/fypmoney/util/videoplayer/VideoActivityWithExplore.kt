@@ -72,7 +72,7 @@ class VideoActivityWithExplore : BaseActivity<ActivityVideoXploreBinding, VideoE
         )
         viewModel.callExplporeContent(ACTIONFLAG)
 
-        viewModel?.rewardHistoryList.observe(
+        viewModel.rewardHistoryList.observe(
             this
         ) { list ->
 
@@ -86,29 +86,29 @@ class VideoActivityWithExplore : BaseActivity<ActivityVideoXploreBinding, VideoE
             }
         }
 
-        viewModel?.feedDetail.observe(
-            this,
-            { list ->
+        viewModel.feedDetail.observe(
+            this
+        ) { list ->
 
-                when (list.displayCard) {
+            when (list.displayCard) {
 
-                    AppConstants.FEED_TYPE_BLOG -> {
+                AppConstants.FEED_TYPE_BLOG -> {
 
-                        intentToActivitytoBlog(
-                            UserFeedsDetailView::class.java,
-                            list,
-                            AppConstants.FEED_TYPE_BLOG
-                        )
-                    }
-                    AppConstants.FEED_TYPE_STORIES -> {
+                    intentToActivitytoBlog(
+                        UserFeedsDetailView::class.java,
+                        list,
+                        AppConstants.FEED_TYPE_BLOG
+                    )
+                }
+                AppConstants.FEED_TYPE_STORIES -> {
 
-                        callDiduKnowBottomSheet(list.resourceArr)
-                    }
-
+                    callDiduKnowBottomSheet(list.resourceArr)
                 }
 
+            }
 
-            })
+
+        }
 
         surface_view.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
             if (left != oldLeft || top != oldTop || right != oldRight || bottom != oldBottom) {

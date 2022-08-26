@@ -27,8 +27,6 @@ import de.hdodenhof.circleimageview.CircleImageView
 */
 class BindingAdapter {
     companion object {
-
-
         /**
          *  Method to Bind image in with the image view
          */
@@ -224,38 +222,6 @@ class BindingAdapter {
 
         }
 
-        @BindingAdapter("SET_IMAGE_STORE")
-        @JvmStatic
-        fun SET_IMAGE_STORE(imageView: AppCompatImageView, position: Int) {
-            if (position == 0) {
-                imageView.setImageResource(R.drawable.amazon_logo)
-            } else if (position == 1) {
-                imageView.setImageResource(R.drawable.myntra_logo)
-            } else if (position == 2) {
-                imageView.setImageResource(R.drawable.zara_logo)
-            } else if (position == 3) {
-                imageView.setImageResource(R.drawable.nykaa_logo)
-            } else if (position == 4) {
-                imageView.setImageResource(R.drawable.bewakoof_logo)
-            }
-            // imageView.setImageResource(imageUrl)
-
-        }
-
-        @BindingAdapter("SET_IMAGE_RECHARGES")
-        @JvmStatic
-        fun SET_IMAGE_RECHARGES(imageView: AppCompatImageView, position: Int) {
-            if (position == 0) {
-                imageView.setImageResource(R.drawable.airtel_logo)
-            } else if (position == 1) {
-                imageView.setImageResource(R.drawable.vi_logo)
-            } else if (position == 2) {
-                imageView.setImageResource(R.drawable.jio_logo)
-            }
-            // imageView.setImageResource(imageUrl)
-
-        }
-
         /**
          *  Method to Bind image in with the image view
          */
@@ -281,18 +247,7 @@ class BindingAdapter {
         @BindingAdapter(value = ["position", "imageUrl"], requireAll = false)
         @JvmStatic
         fun setImageInUPI(imageView: AppCompatImageView, position: Int, imageUrl: Drawable?) {
-            /*when (position) {
-                *//*1 -> {
-                    imageView.setImageResource(R.drawable.ic_google_pay)
-
-                }*//*
-                else -> {
-                    imageView.setImageDrawable(imageUrl)
-
-                }
-            }*/
             imageView.setImageDrawable(imageUrl)
-
 
         }
 
@@ -372,52 +327,6 @@ class BindingAdapter {
                     }
                     imageView.setImageResource(R.drawable.ic_deliverd)
                 }
-            }
-        }
-
-        @BindingAdapter(value = ["SET_IMAGE_IN_CHORES_STATUS", "IS_DONE"], requireAll = false)
-        @JvmStatic
-        fun setImageInChoresStatus(
-            imageView: AppCompatImageView,
-            status: String?,
-            isDone: String?
-        ) {
-
-            when (status) {
-                AppConstants.NEW -> {
-                    if (isDone == AppConstants.YES) {
-                        imageView.setImageResource(R.drawable.ic_check_green_tick)
-                    } else {
-                        imageView.setImageResource(R.drawable.ic_chores_unselected)
-                    }
-                }
-                AppConstants.Accepted -> {
-                    if (isDone == AppConstants.YES) {
-
-                        imageView.setImageResource(R.drawable.ic_check_green_tick)
-                    } else {
-                        imageView.setImageResource(R.drawable.ic_chores_unselected)
-                    }
-
-                }
-                AppConstants.Completed -> {
-                    if (isDone == AppConstants.YES) {
-
-                        imageView.setImageResource(R.drawable.ic_check_green_tick)
-                    } else {
-                        imageView.setImageResource(R.drawable.ic_chores_unselected)
-                    }
-                }
-                AppConstants.Pay -> {
-                    if (isDone == AppConstants.YES) {
-
-                        imageView.setImageResource(R.drawable.ic_check_green_tick)
-                    } else {
-                        imageView.setImageResource(R.drawable.ic_chores_unselected)
-                    }
-                }
-
-
             }
         }
 
