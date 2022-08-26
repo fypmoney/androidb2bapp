@@ -14,6 +14,8 @@ import android.os.Build
 import android.provider.ContactsContract
 import android.provider.MediaStore
 import android.provider.Settings
+import android.telephony.SubscriptionManager
+import android.telephony.TelephonyManager
 import android.text.*
 import android.text.InputFilter.LengthFilter
 import android.text.method.LinkMovementMethod
@@ -1304,7 +1306,7 @@ object Utility {
 
     fun shareScreenShotContent(bitmap: Bitmap,context: Context,text:String) {
         val bitmapPath = MediaStore.Images.Media.insertImage(
-            context.contentResolver, bitmap, "title", ""
+            context.contentResolver, bitmap, "title ${System.currentTimeMillis()}", ""
         )
         if(bitmapPath!=null){
             val uri: Uri = Uri.parse(bitmapPath)
@@ -1365,21 +1367,8 @@ object Utility {
         var monthFullName:String,
         var monthSortName:String,
     )
-    /*fun getMonth(month:Int){
-        val calendar = getInstance()
-        calendar.add(MONTH, month)
-        calendar[DATE] = calendar.getActualMinimum(DAY_OF_MONTH)
-        val monthFirstDay = calendar.time
-        calendar[DATE] = calendar.getActualMaximum(DAY_OF_MONTH)
-        val monthLastDay = calendar.time
-        System.out.println("startDate $monthFirstDay")
-        System.out.println("endDate $monthLastDay")
-        val smdf = SimpleDateFormat(outputFormat,Locale.getDefault())
-        val firstDate  = smdf.format(monthFirstDay)
-        val lastDate  = smdf.format(monthLastDay)
-        System.out.println("startDate formated$firstDate")
-        System.out.println("endDate formated$lastDate")
-    }*/
+
+
     fun getCurrentMonth():String{
         val dateFormat: DateFormat = SimpleDateFormat("MMM", Locale.getDefault())
         val date = Date()
@@ -1388,16 +1377,6 @@ object Utility {
     }
 
     fun View.hapticFeedback() {
-        /*val vibration = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-        if (Build.VERSION.SDK_INT >= 26) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                vibration.vibrate(VibrationEffect.createOneShot(40, VibrationEffect.DEFAULT_AMPLITUDE))
-            }else{
-                vibration.vibrate(VibrationEffect.createOneShot(40, VibrationEffect.DEFAULT_AMPLITUDE))
-            }
-        } else {
-            vibration.vibrate(40)
-        }*/
         this.performHapticFeedback(
             HapticFeedbackConstants.KEYBOARD_TAP,
             HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING
@@ -1410,5 +1389,12 @@ object Utility {
         val lstValues: List<String>? = delimiterString?.split(delimiter)?.map { it.trim() }
 
         return lstValues?.toTypedArray()
+    }
+    @Keep
+    data class PhoneStateInfo(
+        var androidDeviceId:String,
+    )
+    fun getPhoneStateInfo(context: Context):PhoneStateInfo{
+        return PhoneStateInfo(androidDeviceId = Settings.Secure.getString(context.contentResolver,Settings.Secure.ANDROID_ID))
     }
 }

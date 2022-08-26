@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
@@ -21,6 +22,7 @@ import com.fypmoney.extension.toGone
 import com.fypmoney.extension.toVisible
 import com.fypmoney.listener.LocationListenerClass
 import com.fypmoney.util.SharedPrefUtils
+import com.fypmoney.util.Utility
 import com.fypmoney.util.Utility.hapticFeedback
 import com.fypmoney.view.home.main.home.view.HomeFragment
 import com.fypmoney.view.home.main.homescreen.viewmodel.HomeActivityVM
@@ -32,7 +34,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
     private lateinit var binding: ActivityHomeBinding
     private val homeActivityVM by viewModels<HomeActivityVM> { defaultViewModelProviderFactory }
     private val doubleBackPressed = AtomicBoolean(false)
-
+    private val TAG = HomeActivity::class.java.simpleName
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = getViewDataBinding()
@@ -161,7 +163,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
     override fun onStart() {
         super.onStart()
         //showNewMessage()
-
+        Log.d(TAG,"phone data ${Utility.getPhoneStateInfo(this)}")
     }
     override fun onResume() {
         super.onResume()

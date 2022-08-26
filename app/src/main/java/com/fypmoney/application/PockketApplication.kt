@@ -31,14 +31,13 @@ import com.vanniktech.emoji.google.GoogleEmojiProvider
 
 class PockketApplication : Application() {
 
-    var appUpdateRequired: Boolean = false
-     var freshchat: Freshchat? = null
+        var appUpdateRequired: Boolean = false
+        var freshchat: Freshchat? = null
 
     companion object {
         lateinit var instance: PockketApplication
         var homeScreenErrorMsg: String? = null
         var isNewFeedAvailableData: KeysFound? = null
-        //var isLoadMoneyPopupIsShown = false
 
     }
 
@@ -88,7 +87,7 @@ class PockketApplication : Application() {
                 BuildConfig.ADJUST_PROD_KEY,
                 BuildConfig.MOENAGE_KEY,
                 R.drawable.ic_notification,
-                R.mipmap.ic_launcher_round,
+                R.drawable.ic_notification,
                 R.color.colorPrimary
             )
         } else {
@@ -96,8 +95,8 @@ class PockketApplication : Application() {
                 this,
                 BuildConfig.ADJUST_PROD_KEY,
                 BuildConfig.MOENAGE_KEY,
-                R.drawable.ic_notification_png,
-                R.mipmap.ic_launcher_foreground,
+                R.drawable.ic_notification,
+                R.drawable.ic_notification,
                 R.color.colorPrimary
             )
 
@@ -173,15 +172,15 @@ class PockketApplication : Application() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             notificationConfig = FreshchatNotificationConfig().apply {
                 smallIcon = R.drawable.ic_notification
-                largeIcon = R.mipmap.ic_launcher_round
+                largeIcon = R.drawable.ic_notification
                 isNotificationSoundEnabled = true
                 notificationSound = soundUri
                 importance = NotificationManagerCompat.IMPORTANCE_MAX
             }
         } else {
             notificationConfig = FreshchatNotificationConfig().apply {
-                smallIcon = R.drawable.ic_notification_png
-                largeIcon = R.mipmap.ic_launcher_foreground
+                smallIcon = R.drawable.ic_notification
+                largeIcon = R.drawable.ic_notification
                 isNotificationSoundEnabled = true
                 notificationSound = soundUri
                 importance = NotificationManagerCompat.IMPORTANCE_MAX

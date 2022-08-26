@@ -50,7 +50,6 @@ class RewardsOverviewFragment :
     BaseFragment<FragmentRewardsOverviewBinding, RewardsAndVM>(),
     FeedsAdapter.OnFeedItemClickListener {
 
-    private var mLastClickTime: Long = 0
 
     companion object {
         var page = 0
@@ -62,15 +61,6 @@ class RewardsOverviewFragment :
 
     private var mViewBinding: FragmentRewardsOverviewBinding? = null
     private var mViewmodel: RewardsAndVM? = null
-
-//    val startForResult =
-//        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-//            if (result.resultCode == 99) {
-//                mViewmodel?.totalMynts?.postValue(true)
-//            }
-//
-//        }
-    //private var feedsRewardsAdapter: FeedsRewardsAdapter? = null
 
     override fun getBindingVariable(): Int {
         return BR.viewModel
@@ -90,10 +80,6 @@ class RewardsOverviewFragment :
     }
 
     override fun onFeedClick(position: Int, feedDetails: FeedDetails) {
-        if (SystemClock.elapsedRealtime() - mLastClickTime < 1200) {
-            return
-        }
-        mLastClickTime = SystemClock.elapsedRealtime()
         when (feedDetails.displayCard) {
             AppConstants.FEED_TYPE_DEEPLINK -> {
                 feedDetails.action?.url?.let {
