@@ -1010,6 +1010,16 @@
             android:autoVerify="true"
             app:uri="https://www.fypmoney.in/branded_coupons/{productCode}/{orderId}" />
 
+        <action
+            android:id="@+id/action_navigation_branded_coupons_to_navigation_branded_coupons_details"
+            app:destination="@id/navigation_branded_coupons_details" />
+        <action
+            android:id="@+id/action_navigation_branded_coupons_to_navigation_active_coupon_fragment"
+            app:destination="@id/navigation_active_coupon_fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ"/>
 
     </fragment>
 
@@ -1018,12 +1028,6 @@
         android:name="com.fypmoney.view.arcadegames.brandedcoupons.ui.BrandedCouponDetailsFragment"
         android:label="Branded Coupons Details Fragment"
         tools:layout="@layout/fragment_branded_coupon_details" >
-
-        <argument
-            android:name="couponCode"
-            android:defaultValue=""
-            app:argType="string"
-            app:nullable="false" />
 
         <deepLink
             android:id="@+id/arcade_slot_machine_deep_link"
@@ -1036,6 +1040,12 @@
             app:popUpTo="@id/navigation_rewards"
             app:popUpToInclusive="true"/>
 
+        <argument
+            android:name="brandedCouponDetailsData"
+            app:argType="com.fypmoney.view.arcadegames.brandedcoupons.model.BrandedCouponDetailsUiModel"
+            android:defaultValue="@null"
+            app:nullable="true" />
+
 
     </fragment>
 
@@ -1043,6 +1053,19 @@
         android:id="@+id/navigation_active_coupon_fragment"
         android:name="com.fypmoney.view.arcadegames.brandedcoupons.ui.ActiveCouponFragment"
         android:label="Active Coupon Fragment"
-        tools:layout="@layout/fragment_active_coupon" />
+        tools:layout="@layout/fragment_active_coupon" >
+        <action
+            android:id="@+id/action_navigation_active_coupon_fragment_to_navigation_branded_coupons_details"
+            app:destination="@id/navigation_branded_coupons_details" />
+        <action
+            android:id="@+id/action_navigation_active_coupon_fragment_to_navigation_rewards"
+            app:destination="@id/navigation_rewards"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ"
+            app:popUpTo="@id/navigation_rewards"
+            app:popUpToInclusive="true"/>
+    </fragment>
 
 </navigation>

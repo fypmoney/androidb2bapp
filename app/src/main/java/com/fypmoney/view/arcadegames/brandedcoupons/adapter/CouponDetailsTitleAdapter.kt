@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.fypmoney.R
 import com.fypmoney.databinding.ItemCouponDetailsTitleBinding
 import com.fypmoney.extension.toGone
 import com.fypmoney.extension.toVisible
@@ -93,6 +95,7 @@ private val onItemExpendedClick:OnDetailsClicked
                 CouponDetailsContentUiModel(it)
             }
 
+            Glide.with(binding.ivExpandRedeemRules.context).load(R.drawable.ic_vector_down).into(binding.ivExpandRedeemRules)
 //                binding.rvCouponDetailsContent.startAnimation(animationExpanded)
 
 //                binding.ivExpandRedeemRules.animate().setDuration(400).rotation(90F)
@@ -102,10 +105,10 @@ private val onItemExpendedClick:OnDetailsClicked
             adapter.submitList(redeemArray)
             binding.rvCouponDetailsContent.toVisible()
 
-
         }
         else{
             binding.rvCouponDetailsContent.toGone()
+            Glide.with(binding.ivExpandRedeemRules.context).load(R.drawable.ic_arrow_right_black).into(binding.ivExpandRedeemRules)
 //                binding.cvCouponRedeemRules.startAnimation(animationCollapse)
 //                binding.ivExpandRedeemRules.animate().setDuration(400).rotation(0F)
         }

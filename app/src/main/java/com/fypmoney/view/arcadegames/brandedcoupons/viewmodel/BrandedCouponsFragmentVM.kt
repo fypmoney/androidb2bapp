@@ -3,7 +3,7 @@ package com.fypmoney.view.arcadegames.brandedcoupons.viewmodel
 import android.app.Application
 import android.app.Dialog
 import android.content.Context
-import android.graphics.*
+import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.media.MediaPlayer
 import android.view.ViewGroup
@@ -22,9 +22,7 @@ import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.*
 import com.fypmoney.util.Utility
 import com.fypmoney.util.livedata.LiveEvent
-import com.fypmoney.view.arcadegames.brandedcoupons.model.BrandedCouponCountResponse
-import com.fypmoney.view.arcadegames.brandedcoupons.model.BrandedCouponResponse
-import com.fypmoney.view.arcadegames.brandedcoupons.model.COUPONItem
+import com.fypmoney.view.arcadegames.brandedcoupons.model.*
 import com.fypmoney.view.arcadegames.model.MultipleJackpotNetworkResponse
 import com.fypmoney.view.rewardsAndWinnings.model.totalRewardsResponse
 import com.google.gson.Gson
@@ -54,6 +52,8 @@ class BrandedCouponsFragmentVM(application: Application) : BaseViewModel(applica
     lateinit var startColor: String
 
     lateinit var endColor: String
+
+    var couponData: CouponDetails? = null
 
     //live data variable to store frequency played count
     var remainFrequency: MutableLiveData<Int> = MutableLiveData()
@@ -100,7 +100,13 @@ class BrandedCouponsFragmentVM(application: Application) : BaseViewModel(applica
         get() = _statePlayOrder
     private val _statePlayOrder = LiveEvent<PlayOrderState>()
 
+    val stateBrandedCoupon: LiveData<BrandedCouponDetailsState>
+        get() = _stateBrandedCoupon
+    private val _stateBrandedCoupon = MutableLiveData<BrandedCouponDetailsState>()
+
     init {
+        remainFrequency.value = 0
+
         callMyntsSummaryApi()
         callTotalCashRewardsEarnings()
         callTotalJackpotCards()
@@ -205,6 +211,18 @@ class BrandedCouponsFragmentVM(application: Application) : BaseViewModel(applica
         )
     }
 
+    fun callRewardCouponsApi(code: String?) {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_GET_COUPON_REWARD_DATA,
+                NetworkUtil.endURL(ApiConstant.API_GET_COUPON_REWARD_DATA + code),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = false
+            )
+        )
+    }
+
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
 
@@ -242,6 +260,15 @@ class BrandedCouponsFragmentVM(application: Application) : BaseViewModel(applica
                             BrandedCouponDataState.BrandedCouponSuccess(it)
                         }
 
+
+//                    _stateBrandedProduct.value = responseData.data?.cOUPON?.get(0)?.let {
+//                        responseData.data.cOUPON[0]!!.couponDetails?.let { it1 ->
+//                            BrandedCouponDataState.BrandedCouponSuccess(
+//                                it,
+//                                it1
+//                            )
+//                        }
+//                    }
                     brandLogo = responseData.data?.cOUPON?.get(0)?.detailResource
                 }
             }
@@ -279,10 +306,21 @@ class BrandedCouponsFragmentVM(application: Application) : BaseViewModel(applica
                 _stateProductDetails.value = BrandedProductResponseState.Success(spinDetails)
             }
 
-
             ApiConstant.API_GET_ACTIVE_COUPON_COUNT_DATA -> {
                 if (responseData is BrandedCouponCountResponse) {
                     _stateCouponCount.value = CouponCountState.CouponCountSuccess(responseData.data?.amount)
+                }
+            }
+
+            ApiConstant.API_GET_COUPON_REWARD_DATA -> {
+                if (responseData is BrandedCouponDetailsResponse) {
+
+                    _stateBrandedCoupon.value =
+                        responseData.data?.let {
+                            BrandedCouponDetailsState.BrandedCouponDetailsSuccess(
+                                it
+                            )
+                        }
                 }
             }
 
@@ -317,6 +355,9 @@ class BrandedCouponsFragmentVM(application: Application) : BaseViewModel(applica
             }
             ApiConstant.API_GET_ACTIVE_COUPON_COUNT_DATA -> {
                 _stateCouponCount.value = CouponCountState.Error(errorResponseInfo)
+            }
+            ApiConstant.API_GET_COUPON_REWARD_DATA -> {
+                _stateBrandedCoupon.value = BrandedCouponDetailsState.Error(errorResponseInfo)
             }
         }
 
@@ -426,19 +467,11 @@ class BrandedCouponsFragmentVM(application: Application) : BaseViewModel(applica
         data class CouponCountSuccess(var amount: Int?) : CouponCountState()
     }
 
-    fun addGradient(originalBitmap: Bitmap): Bitmap? {
-        val width = originalBitmap.width
-        val height = originalBitmap.height
-        val updatedBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(updatedBitmap)
-        canvas.drawBitmap(originalBitmap, 0F, 0F, null)
-        val paint = Paint()
-        val shader =
-            LinearGradient(0F, 0F, 0F, height.toFloat(), -0xf2dae, -0xf8cfb, Shader.TileMode.CLAMP)
-        paint.shader = shader
-        paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
-        canvas.drawRect(0F, 0F, width.toFloat(), height.toFloat(), paint)
-        return updatedBitmap
+    sealed class BrandedCouponDetailsState {
+        object Loading : BrandedCouponDetailsState()
+        data class Error(var errorResponseInfo: ErrorResponseInfo) : BrandedCouponDetailsState()
+        data class BrandedCouponDetailsSuccess(var couponDetailsListData: CouponDetails) :
+            BrandedCouponDetailsState()
     }
 
 }

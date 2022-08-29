@@ -13,8 +13,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.transition.TransitionInflater
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
@@ -26,11 +26,11 @@ import com.fypmoney.view.StoreWebpageOpener2
 import com.fypmoney.view.arcadegames.brandedcoupons.adapter.CouponDetailsTitleAdapter
 import com.fypmoney.view.arcadegames.brandedcoupons.adapter.CouponDetailsTitleUiModel
 import com.fypmoney.view.arcadegames.brandedcoupons.adapter.OnDetailsClicked
+import com.fypmoney.view.arcadegames.brandedcoupons.model.BrandedCouponDetailsUiModel
 import com.fypmoney.view.arcadegames.brandedcoupons.utils.startCircularReveal
 import com.fypmoney.view.arcadegames.brandedcoupons.viewmodel.BrandedCouponDetailsFragmentVM
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
 import kotlinx.android.synthetic.main.toolbar.*
-import org.json.JSONArray
 
 class BrandedCouponDetailsFragment :
     BaseFragment<FragmentBrandedCouponDetailsBinding, BrandedCouponDetailsFragmentVM>(),
@@ -43,23 +43,16 @@ class BrandedCouponDetailsFragment :
     private var revealX: Int = 0
     private var revealY: Int = 0
 
+    private val args: BrandedCouponDetailsFragmentArgs by navArgs()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding = getViewDataBinding()
 
-        if (arguments?.getString("startColor") != null && arguments?.getString("endColor") != null) {
-            brandedCouponDetailsFragmentVM.startColor =
-                arguments?.getString("startColor").toString()
-            brandedCouponDetailsFragmentVM.endColor = arguments?.getString("endColor").toString()
-            backgroundGradientDrawable(
-                Color.parseColor(brandedCouponDetailsFragmentVM.startColor),
-                Color.parseColor(brandedCouponDetailsFragmentVM.endColor)
-            )
-            activity?.window?.statusBarColor =
-                Color.parseColor(brandedCouponDetailsFragmentVM.startColor)
+        brandedCouponDetailsFragmentVM.brandedCouponDetailsUiModel = args.brandedCouponDetailsData
 
-        }
+        setData()
 
         setToolbarAndTitle(
             context = requireContext(),
@@ -69,26 +62,17 @@ class BrandedCouponDetailsFragment :
             backArrowTint = Color.WHITE
         )
 
-        brandedCouponDetailsFragmentVM.couponCode = arguments?.getString("coupon_code").toString()
-
-        revealX = arguments?.getInt("REVEAL_X")!!
-        revealY = arguments?.getInt("REVEAL_Y")!!
-
-        brandedCouponDetailsFragmentVM.callRewardCouponsApi(brandedCouponDetailsFragmentVM.couponCode)
+        revealX = brandedCouponDetailsFragmentVM.brandedCouponDetailsUiModel?.revealX!!
+        revealY = brandedCouponDetailsFragmentVM.brandedCouponDetailsUiModel?.revealY!!
 
         if (revealX > 0 && revealY > 0) {
-
-            sharedElementEnterTransition =
-                TransitionInflater.from(context).inflateTransition(android.R.transition.move)
             view.startCircularReveal(revealX, revealY)
         }
-
-        setObserver()
 
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    if (revealX > 0 && revealY > 0)
+                    if (brandedCouponDetailsFragmentVM.brandedCouponDetailsUiModel?.via.equals("Ticket"))
                         findNavController().navigate(R.id.action_navigation_branded_coupons_details_to_navigation_rewards)
                     else
                         findNavController().navigateUp()
@@ -98,131 +82,100 @@ class BrandedCouponDetailsFragment :
 
     }
 
-    private fun setObserver() {
-        brandedCouponDetailsFragmentVM.stateBrandedCoupon.observe(viewLifecycleOwner) {
+    private fun setData() {
+        brandedCouponDetailsFragmentVM.brandedCouponDetailsUiModel?.let {
+
+            brandedCouponDetailsFragmentVM.couponCode = it.couponCode.toString()
+
             handleCouponDetailsState(it)
         }
     }
 
-    private fun handleCouponDetailsState(it: BrandedCouponDetailsFragmentVM.BrandedCouponDetailsState?) {
-        when (it) {
-            is BrandedCouponDetailsFragmentVM.BrandedCouponDetailsState.Error -> {}
+    private fun handleCouponDetailsState(it: BrandedCouponDetailsUiModel) {
 
-            BrandedCouponDetailsFragmentVM.BrandedCouponDetailsState.Loading -> {
-                binding.shimmerCouponDetails.toVisible()
-                binding.nestedBrandedCouponContainer.toGone()
-                binding.clBrandedCouponBottom.toGone()
-            }
+        setBackColor(it.startColor, it.endColor)
+        binding.nestedBrandedCouponContainer.toVisible()
+        binding.clBrandedCouponBottom.toVisible()
+        binding.shimmerCouponDetails.toGone()
 
-            is BrandedCouponDetailsFragmentVM.BrandedCouponDetailsState.BrandedCouponDetailsSuccess -> {
+        Utility.setImageUsingGlideWithShimmerPlaceholderWithoutNull(
+            this.context,
+            it.brandLogo,
+            binding.ivBrandLogo
+        )
 
-                setBackColor(it)
-                binding.nestedBrandedCouponContainer.toVisible()
-                binding.clBrandedCouponBottom.toVisible()
-                binding.shimmerCouponDetails.toGone()
+        binding.tvBrandedContent.text = it.couponTitle
 
-                Utility.setImageUsingGlideWithShimmerPlaceholderWithoutNull(
-                    this.context,
-                    it.couponDetailsData.brandLogo,
-                    binding.ivBrandLogo
+        binding.tvBrandedCouponCode.text = brandedCouponDetailsFragmentVM.couponCode
+
+        if (it.brandType.equals("ADVERTISEMENT")) {
+            binding.tvBrandedCouponCodeText.toGone()
+            binding.clCouponCode.toGone()
+        } else {
+            binding.tvBrandedCouponCodeText.toVisible()
+            binding.clCouponCode.toVisible()
+        }
+
+        binding.ivCouponCodeCopy.setOnClickListener {
+            if (brandedCouponDetailsFragmentVM.couponCode.isNotEmpty()) {
+
+                val clipboardManager = getSystemService(
+                    requireContext(),
+                    ClipboardManager::class.java
+                ) as ClipboardManager
+
+                val clipData = ClipData.newPlainText(
+                    "label",
+                    binding.tvBrandedCouponCode.text.toString()
                 )
-
-                binding.tvBrandedContent.text = it.couponDetailsData.title
-
-                binding.tvBrandedCouponCode.text = it.couponDetailsData.code
-
-                val couponCode = it.couponDetailsData.code
-
-                if (it.couponDetailsData.type.equals("ADVERTISEMENT")) {
-                    binding.tvBrandedCouponCodeText.toGone()
-                    binding.clCouponCode.toGone()
-                } else {
-                    binding.tvBrandedCouponCodeText.toVisible()
-                    binding.clCouponCode.toVisible()
-                }
-
-                binding.ivCouponCodeCopy.setOnClickListener {
-                    if (!couponCode.isNullOrEmpty()) {
-
-                        val clipboardManager = getSystemService(
-                            requireContext(),
-                            ClipboardManager::class.java
-                        ) as ClipboardManager
-
-                        val clipData = ClipData.newPlainText(
-                            "label",
-                            binding.tvBrandedCouponCode.text.toString()
-                        )
-                        clipboardManager.setPrimaryClip(clipData)
-                        Utility.showToast("Coupon code copied")
-                    } else {
-                        Utility.showToast("Some error...")
-                    }
-                }
-
-                val redeemLink: String? = it.couponDetailsData.redeemLink
-                binding.btnCouponRedeemNow.setOnClickListener {
-                    if (!redeemLink.isNullOrEmpty()) {
-                        val intent = Intent(context, StoreWebpageOpener2::class.java)
-//                    intent.putExtra(ARG_WEB_PAGE_TITLE, it.title)
-                        intent.putExtra(ARG_WEB_URL_TO_OPEN, redeemLink)
-                        startActivity(intent)
-                    } else {
-                        Utility.showToast("Some error...")
-                    }
-                }
-
-                val jsonArr = JSONArray(it.couponDetailsData.tnc)
-                val tncArray: ArrayList<String> = ArrayList()
-                for (i in 0 until jsonArr.length()) {
-                    tncArray.add(jsonArr[i] as String)
-                }
-
-                val jsonArr1 = JSONArray(it.couponDetailsData.howToRedeem)
-                val howToRedeemArray: ArrayList<String> = ArrayList()
-                for (i in 0 until jsonArr1.length()) {
-                    howToRedeemArray.add(jsonArr1[i] as String)
-                }
-
-                val jsonArr2 = JSONArray(it.couponDetailsData.description)
-                val offerDetailsArray: ArrayList<String> = ArrayList()
-                for (i in 0 until jsonArr2.length()) {
-                    offerDetailsArray.add(jsonArr2[i] as String)
-                }
-
-                listOfCouponDetailsTitle.add(
-                    CouponDetailsTitleUiModel(
-                        "How to redeem?",
-                        R.drawable.icon_discount,
-                        howToRedeemArray,
-                        false
-                    )
-                )
-                listOfCouponDetailsTitle.add(
-                    CouponDetailsTitleUiModel(
-                        "Offer details",
-                        R.drawable.ic_receipt_search,
-                        offerDetailsArray,
-                        false
-                    )
-                )
-                listOfCouponDetailsTitle.add(
-                    CouponDetailsTitleUiModel(
-                        "Terms & Condition",
-                        R.drawable.ic_receipt_item,
-                        tncArray,
-                        false
-                    )
-                )
-                setRecyclerView(tncArray, howToRedeemArray, offerDetailsArray)
+                clipboardManager.setPrimaryClip(clipData)
+                Utility.showToast("Coupon code copied")
+            } else {
+                Utility.showToast("Some error...")
             }
         }
+
+        val redeemLink: String? = it.redeemLink
+        binding.btnCouponRedeemNow.setOnClickListener {
+            if (!redeemLink.isNullOrEmpty()) {
+                val intent = Intent(context, StoreWebpageOpener2::class.java)
+                intent.putExtra(ARG_WEB_URL_TO_OPEN, redeemLink)
+                startActivity(intent)
+            } else {
+                Utility.showToast("Some error...")
+            }
+        }
+
+        listOfCouponDetailsTitle.add(
+            CouponDetailsTitleUiModel(
+                "How to redeem?",
+                R.drawable.icon_discount,
+                it.howToRedeem,
+                false
+            )
+        )
+        listOfCouponDetailsTitle.add(
+            CouponDetailsTitleUiModel(
+                "Offer details",
+                R.drawable.ic_receipt_search,
+                it.description,
+                false
+            )
+        )
+        listOfCouponDetailsTitle.add(
+            CouponDetailsTitleUiModel(
+                "Terms & Condition",
+                R.drawable.ic_receipt_item,
+                it.tnc,
+                false
+            )
+        )
+
+        setRecyclerView()
+
     }
 
     private fun setRecyclerView(
-        array: List<String>?,
-        howToRedeemArray: List<String>?,
-        offerDetailsArray: List<String>?
     ) {
         val layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
@@ -245,21 +198,15 @@ class BrandedCouponDetailsFragment :
         )
     }
 
-    private fun setBackColor(brandedCouponDetailsState: BrandedCouponDetailsFragmentVM.BrandedCouponDetailsState.BrandedCouponDetailsSuccess) {
-        val arr = Utility.splitStringByDelimiters(
-            brandedCouponDetailsState.couponDetailsData.rewardColor,
-            ","
+    private fun setBackColor(startColor: String?, endColor: String?) {
+
+        backgroundGradientDrawable(
+            Color.parseColor(startColor),
+            Color.parseColor(endColor)
         )
+        activity?.window?.statusBarColor =
+            Color.parseColor(startColor)
 
-        if (arr?.size!! > 1) {
-            backgroundGradientDrawable(
-                Color.parseColor(arr[0]),
-                Color.parseColor(arr[1])
-            )
-            activity?.window?.statusBarColor =
-                Color.parseColor(arr[0])
-
-        }
     }
 
     private fun backgroundGradientDrawable(
@@ -297,6 +244,7 @@ class BrandedCouponDetailsFragment :
     override fun getViewModel(): BrandedCouponDetailsFragmentVM = brandedCouponDetailsFragmentVM
 
     override fun onTryAgainClicked() {}
+
     override fun expendDetails(copounDetailsItem: CouponDetailsTitleUiModel) {
         updatedList(copounDetailsItem)
     }
