@@ -30,7 +30,6 @@ android {
         versionName "4.3.3"
         multiDexEnabled = true
         vectorDrawables.useSupportLibrary = true
-        // Stops the Gradle plugin�s automatic rasterization of vectors
         generatedDensities = []
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -39,9 +38,9 @@ android {
 
     buildTypes {
         release {
-            debuggable true
-            minifyEnabled false
-            shrinkResources false
+            debuggable false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
         }
@@ -193,7 +192,6 @@ dependencies {
     // pay u custom browser
     implementation 'in.payu:payu-custom-browser:7.8.0'
 
-    //phonepay
     implementation 'in.payu:phonepe-intent:1.6.1'
 
     // upi

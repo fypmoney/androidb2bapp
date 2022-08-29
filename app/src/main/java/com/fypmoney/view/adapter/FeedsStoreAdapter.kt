@@ -16,7 +16,6 @@ import com.fypmoney.viewhelper.FeedsViewHelper
 import com.fypmoney.viewmodel.StoreScreenViewModel
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
-import kotlinx.android.synthetic.main.view_home.view.*
 
 
 /**

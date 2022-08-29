@@ -3,10 +3,6 @@
     <color name="colorPrimary">#000</color>
     <color name="colorPrimaryDark">#000</color>
     <color name="colorAccent">#000</color>
-    <color name="textColorPrimary">#000</color>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#000000</color>
@@ -26,16 +22,13 @@
     <color name="mainBackgroundColor">#FFFFFF</color>
     <color name="buttonBackgroundColor">#1F4AA8</color>
     <color name="fragmentBackgroundColor">#F6F6F6</color>
-    <color name="color_dark_black">#3a3b3b</color>
     <color name="iconColor">#4D4D4D</color>
-    <color name="color_light_pink">#ffe6ee</color>
     <color name="color_light_green">#97dc21</color>
     <color name="text_color_light">#9CA3A5</color>
     <color name="text_color_walk_through">#cc0E141C</color>
     <color name="text_color_little_dark">#5A6365</color>
     <color name="text_color_dark">#231F20</color>
     <color name="spin_light">#bae6c2</color>
-    <color name="spin_dark">#66ba72</color>
     <color name="text_color_more_dark">#4D4D4D</color>
     <color name="text_color_faded">#989898</color>
     <color name="colorRed">#FF4B4B</color>
@@ -48,42 +41,31 @@
     <color name="text_color_red">#FF4856</color>
     <color name="add_money_amount_color">#5AAFC9</color>
     <color name="color_skyblue">#5AAFC9</color>
-    <color name="textColorRed1">#EF4B59</color>
     <color name="color_green">#BAE6C2</color>
     <color name="color_little_orange">#FFE6B5</color>
     <color name="color_sky">#8ECFE3</color>
     <color name="color_dark_green">#72BE80</color>
     <color name="color_pink">#FFD3D7</color>
     <color name="color_orange">#F7AA11</color>
-    <color name="color_little_light_green">#DEF7E3</color>
     <color name="color_task_card_blue">#5AAFC9</color>
     <color name="color_task_card_pink">#FF4856</color>
     <color name="color_task_card_orange">#F7AA11</color>
     <color name="color_task_card_green">#8ECC9A</color>
-    <color name="progress_primary">@color/white</color>
     <color name="progress_secondary">@color/gray_scale</color>
     <color name="progress_max_active">@color/white</color>
 
     <color name="gray_scale">#707070</color>
-    <color name="color_gift">#EDFFF1</color>
     <color name="background_light_dark">#f2f2f2</color>
     <color name="yellow">#F2A100</color>
-    <color name="card_gift">#FFD98D</color>
 
-    <color name="color1">#40E0D0</color>
-    <color name="color2">#9FCD9A</color>
-    <color name="color3">#FFB964</color>
     <color name="color4">#F7797D</color>
-    <color name="color5">#F7797D</color>
     <color name="green_winnings">#62AA70</color>
     <color name="grey_heading">#9EA5A7</color>
     <color name="color_mat_black">#2d3039</color>
-    <color name="color_border_grey">#E9E9E9</color>
     <color name="color_black_1">#15181F</color>
     <color name="colorEdittext">#121517</color>
     <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">#fff</color>
     <color name="transparent">#0000</color>
-    <color name="transparentColor">#00000000</color>
     <color name="link_color">#007AFF</color>
     <color name="black_overlay">#10000000</color>
     <color name="reward_background">#090B12</color>
@@ -133,7 +115,6 @@
     <color name="black12">#231F20</color>
     <color name="black13">#262B32</color>
     <color name="sky1">#A7E5FF</color>
-    <color name="green1">#79D181</color>
     <color name="orange1">#FDEECF</color>
 
 </resources>
