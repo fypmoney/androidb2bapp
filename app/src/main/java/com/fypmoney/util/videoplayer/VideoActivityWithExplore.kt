@@ -27,7 +27,7 @@ import com.fypmoney.util.Utility
 import com.fypmoney.util.launchMain
 import com.fypmoney.view.StoreWebpageOpener2
 import com.fypmoney.view.activity.UserFeedsDetailView
-import com.fypmoney.view.fragment.OfferDetailsBottomSheet
+import com.fypmoney.view.storeoffers.OfferDetailsBottomSheet
 import com.fypmoney.view.fypstories.view.StoriesBottomSheet
 import com.fypmoney.view.home.main.explore.ViewDetails.ExploreInAppWebview
 import com.fypmoney.view.home.main.explore.`interface`.ExploreItemClickListener

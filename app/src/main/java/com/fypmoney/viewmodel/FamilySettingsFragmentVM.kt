@@ -28,7 +28,7 @@ import com.fypmoney.view.adapter.MemberAdapterViewAll
 /*
 * This is used as a family settings
 * */
-class FamilySettingsViewModel(application: Application) : BaseViewModel(application),
+class FamilySettingsFragmentVM(application: Application) : BaseViewModel(application),
     MemberAdapter.OnMemberItemClickListener, MemberAdapter.OnFamilyMemberClickListener {
     var onViewAllClicked = MutableLiveData<Boolean>()
     var onAddMemberClicked = MutableLiveData<Boolean>()

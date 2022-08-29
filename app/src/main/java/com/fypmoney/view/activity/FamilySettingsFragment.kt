@@ -10,7 +10,7 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.database.entity.ContactEntity
-import com.fypmoney.databinding.ViewFamilySettingsBinding
+import com.fypmoney.databinding.FragmentFamilySettingsBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
@@ -20,8 +20,7 @@ import com.fypmoney.view.contacts.model.ContactsActivityUiModel
 import com.fypmoney.view.contacts.view.PayToContactsActivity
 import com.fypmoney.view.fragment.LeaveFamilyBottomSheet
 import com.fypmoney.view.fragment.UpdateFamilyNameBottomSheet
-import com.fypmoney.view.interfaces.HomeTabChangeClickListener
-import com.fypmoney.viewmodel.FamilySettingsViewModel
+import com.fypmoney.viewmodel.FamilySettingsFragmentVM
 import kotlinx.android.synthetic.main.toolbar.*
 
 
@@ -30,23 +29,22 @@ import kotlinx.android.synthetic.main.toolbar.*
 *
 * */
 
-class FamilySettingsView(val tabchangeListner: HomeTabChangeClickListener? = null) :
-    BaseFragment<ViewFamilySettingsBinding, FamilySettingsViewModel>(),
+class FamilySettingsFragment : BaseFragment<FragmentFamilySettingsBinding, FamilySettingsFragmentVM>(),
     UpdateFamilyNameBottomSheet.OnUpdateFamilyClickListener,
     LeaveFamilyBottomSheet.OnLeaveFamilyClickListener {
-    private lateinit var mViewModel: FamilySettingsViewModel
-    private lateinit var mViewBinding: ViewFamilySettingsBinding
+    private lateinit var mViewModel: FamilySettingsFragmentVM
+    private lateinit var mViewBinding: FragmentFamilySettingsBinding
 
     override fun getBindingVariable(): Int {
         return BR.viewModel
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.view_family_settings
+        return R.layout.fragment_family_settings
     }
 
-    override fun getViewModel(): FamilySettingsViewModel {
-        mViewModel = ViewModelProvider(this).get(FamilySettingsViewModel::class.java)
+    override fun getViewModel(): FamilySettingsFragmentVM {
+        mViewModel = ViewModelProvider(this).get(FamilySettingsFragmentVM::class.java)
         return mViewModel
     }
 

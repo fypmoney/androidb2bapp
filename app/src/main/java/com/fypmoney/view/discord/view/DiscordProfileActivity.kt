@@ -1,4 +1,4 @@
-package com.fypmoney.view.discord
+package com.fypmoney.view.discord.view
 
 import android.graphics.Color
 import android.os.Bundle

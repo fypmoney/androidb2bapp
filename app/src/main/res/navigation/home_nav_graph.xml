@@ -103,9 +103,9 @@
 
     <fragment
         android:id="@+id/navigation_fyper"
-        android:name="com.fypmoney.view.activity.FamilySettingsView"
+        android:name="com.fypmoney.view.activity.FamilySettingsFragment"
         android:label="@string/fyper_txt"
-        tools:layout="@layout/view_family_settings" />
+        tools:layout="@layout/fragment_family_settings" />
 
 
     <fragment

@@ -2,7 +2,6 @@ package com.fypmoney.view.fragment
 
 
 import android.app.Dialog
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -13,14 +12,8 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import com.fypmoney.R
-import com.fypmoney.base.BaseActivity
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.databinding.ViewInviteMemberBinding
-import com.fypmoney.databinding.ViewStayTunedBinding
-import com.fypmoney.util.SharedPrefUtils
-import com.fypmoney.util.Utility
-import com.fypmoney.view.activity.AddMemberView
-import com.fypmoney.view.activity.FamilySettingsView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 

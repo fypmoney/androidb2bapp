@@ -14,8 +14,6 @@ import android.os.Build
 import android.provider.ContactsContract
 import android.provider.MediaStore
 import android.provider.Settings
-import android.telephony.SubscriptionManager
-import android.telephony.TelephonyManager
 import android.text.*
 import android.text.InputFilter.LengthFilter
 import android.text.method.LinkMovementMethod
@@ -36,7 +34,6 @@ import androidx.annotation.NonNull
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatEditText
 import com.bumptech.glide.Glide
-import com.facebook.FacebookSdk.getApplicationContext
 import com.freshchat.consumer.sdk.Freshchat
 import com.fyp.trackr.models.UserTrackr
 import com.fyp.trackr.models.logOut
@@ -52,7 +49,6 @@ import com.fypmoney.util.AppConstants.CardScreen
 import com.fypmoney.util.AppConstants.DATE_FORMAT_CHANGED
 import com.fypmoney.util.AppConstants.FEEDSCREEN
 import com.fypmoney.util.AppConstants.FyperScreen
-import com.fypmoney.util.AppConstants.GiftScreen
 import com.fypmoney.util.AppConstants.HOMEVIEW
 import com.fypmoney.util.AppConstants.JACKPOTTAB
 import com.fypmoney.util.AppConstants.OfferScreen
@@ -65,14 +61,11 @@ import com.fypmoney.util.AppConstants.TRACKORDER
 import com.fypmoney.view.activity.ChoresActivity
 import com.fypmoney.view.activity.OfferDetailActivity
 import com.fypmoney.view.fragment.OffersStoreActivity
-import com.fypmoney.view.fragment.StoresActivity
-import com.fypmoney.view.giftcard.GiftCardsListScreen
 import com.fypmoney.view.home.main.homescreen.view.HomeActivity
 import com.fypmoney.view.ordercard.OrderCardView
 import com.fypmoney.view.ordercard.model.UserDeliveryAddress
 import com.fypmoney.view.ordercard.trackorder.TrackOrderView
 import com.fypmoney.view.referandearn.view.ReferAndEarnActivity
-import com.fypmoney.view.storeoffers.OffersScreen
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.Gson
 import com.google.i18n.phonenumbers.PhoneNumberUtil
@@ -1101,10 +1094,10 @@ object Utility {
                 intent = Intent(context, ReferAndEarnActivity::class.java)
 
             }
-            GiftScreen -> {
+            /*GiftScreen -> {
                 intent = Intent(context, GiftCardsListScreen::class.java)
 
-            }
+            }*/
             JACKPOTTAB -> {
 //                intent = Intent(context, RewardsActivity::class.java)
 //                intent.putExtra(AppConstants.FROM_WHICH_SCREEN, JACKPOTTAB)
@@ -1116,9 +1109,9 @@ object Utility {
 
             }
             OfferScreen -> {
-                intent = Intent(context, OffersScreen::class.java)
+              /*  intent = Intent(context, OffersScreen::class.java)
                 intent.putExtra(AppConstants.FROM_WHICH_SCREEN, OfferScreen)
-
+*/
             }
             StoreScreen -> {
                 intent = Intent(context, HomeActivity::class.java)
@@ -1132,9 +1125,9 @@ object Utility {
             }
 
             StoreshopsScreen -> {
-                intent = Intent(context, StoresActivity::class.java)
+                /*intent = Intent(context, StoresActivity::class.java)
                 intent.putExtra(AppConstants.FROM_WHICH_SCREEN, StoreshopsScreen)
-
+*/
             }
 
             FEEDSCREEN -> {

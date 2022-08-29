@@ -1,4 +1,4 @@
-package com.fypmoney.view.discord
+package com.fypmoney.view.discord.view
 
 
 import android.content.Intent

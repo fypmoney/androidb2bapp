@@ -40,7 +40,7 @@ import com.fypmoney.util.videoplayer.VideoActivityWithExplore
 import com.fypmoney.view.StoreWebpageOpener2
 import com.fypmoney.view.activity.AddMoneyView
 import com.fypmoney.view.activity.UserFeedsDetailView
-import com.fypmoney.view.fragment.OfferDetailsBottomSheet
+import com.fypmoney.view.storeoffers.OfferDetailsBottomSheet
 import com.fypmoney.view.fragment.TaskMessageInsuficientFuntBottomSheet
 import com.fypmoney.view.fypstories.view.StoriesBottomSheet
 import com.fypmoney.view.home.main.explore.ViewDetails.ExploreInAppWebview

@@ -49,7 +49,7 @@ import com.fypmoney.view.contacts.model.CONTACT_ACTIVITY_UI_MODEL
 import com.fypmoney.view.contacts.model.ContactActivityActionEvent
 import com.fypmoney.view.contacts.model.ContactsActivityUiModel
 import com.fypmoney.view.contacts.view.PayToContactsActivity
-import com.fypmoney.view.fragment.OfferDetailsBottomSheet
+import com.fypmoney.view.storeoffers.OfferDetailsBottomSheet
 import com.fypmoney.view.fypstories.view.StoriesBottomSheet
 import com.fypmoney.view.home.main.explore.ViewDetails.ExploreInAppWebview
 import com.fypmoney.view.home.main.explore.`interface`.ExploreItemClickListener
