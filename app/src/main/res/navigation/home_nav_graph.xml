@@ -1045,4 +1045,27 @@
         android:label="Active Coupon Fragment"
         tools:layout="@layout/fragment_active_coupon" />
 
+    <fragment
+        android:id="@+id/navigation_video_with_explore"
+        android:name="com.fypmoney.util.videoplayer.VideoWithExploreFragment"
+        android:label="video with explore"
+        tools:layout="@layout/fragment_video_with_explore">
+
+        <argument
+            android:name="videoUrl"
+            android:defaultValue=""
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="actionFlag"
+            android:defaultValue=""
+            app:argType="string"
+            app:nullable="true" />
+
+        <deepLink
+            android:id="@+id/deeplink_video_with_explore"
+            android:autoVerify="true"
+            app:uri="https://www.fypmoney.in/videowithexplore?videoUrl={videoUrl}&amp;actionFlag={actionFlag}" />
+    </fragment>
+
 </navigation>

@@ -37,7 +37,7 @@ import com.fypmoney.util.SharedPrefUtils.Companion.SF_MESSAGE_ON_RECHARGE
 import com.fypmoney.util.Utility
 import com.fypmoney.util.Utility.deeplinkRedirection
 import com.fypmoney.util.videoplayer.VideoActivity2
-import com.fypmoney.util.videoplayer.VideoActivityWithExplore
+import com.fypmoney.util.videoplayer.VideoWithExploreFragment
 import com.fypmoney.view.StoreWebpageOpener2
 import com.fypmoney.view.activity.NotificationView
 import com.fypmoney.view.activity.UserFeedsDetailView
@@ -493,10 +493,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
 
             }
             AppConstants.TYPE_VIDEO_EXPLORE -> {
-                val intent = Intent(requireActivity(), VideoActivityWithExplore::class.java)
-                intent.putExtra(ARG_WEB_URL_TO_OPEN, redirectionResource)
-                intent.putExtra(AppConstants.ACTIONFLAG, sectionContentItem.actionFlagCode)
-                startActivity(intent)
+                findNavController().navigate(Uri.parse("https://www.fypmoney.in/videowithexplore?videoUrl=${redirectionResource}&amp;actionFlag=${sectionContentItem.actionFlagCode}"),
+                    navOptions {
+                        anim {
+                            popEnter = R.anim.slide_in_left
+                            popExit = R.anim.slide_out_righ
+                            enter = R.anim.slide_in_right
+                            exit = R.anim.slide_out_left
+                        }
+                    })
             }
             AppConstants.EXPLORE_SECTION_EXPLORE -> {
                 Firebase.analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {

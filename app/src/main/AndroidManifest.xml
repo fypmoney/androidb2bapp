@@ -382,28 +382,17 @@
         <activity
             android:name=".util.videoplayer.VideoActivity2"
             android:theme="@style/video.FullScreen">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".util.videoplayer.VideoActivityWithExplore"
-            android:screenOrientation="portrait"
-            android:theme="@style/video.FullScreen">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".view.upgradetokyc.UpgradeToKycInfoActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".view.discord.view.DiscordInviteActivity" />
-        <activity android:name=".view.discord.view.DiscordWebView" />
-        <activity android:name=".view.discord.view.DiscordProfileActivity">
+        <activity android:name=".view.discord.view.DiscordInviteActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".view.discord.view.DiscordWebView"
+            android:screenOrientation="portrait" />
+        <activity android:name=".view.discord.view.DiscordProfileActivity"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 

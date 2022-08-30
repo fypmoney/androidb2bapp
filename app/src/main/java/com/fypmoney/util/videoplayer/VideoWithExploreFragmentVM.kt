@@ -28,16 +28,16 @@ import com.google.gson.JsonParser
 
 import java.nio.charset.StandardCharsets
 
-class VideoExploreViewModel(
-    private val context: Application,
-
-    ) : BaseViewModel(context) {
+class VideoWithExploreFragmentVM(private val context: Application) : BaseViewModel(context) {
     val isMute = MutableLiveData<Boolean>()
     private var player: MediaPlayer? = null
     private var playerListener: Player.Listener? = null
     var rewardHistoryList: MutableLiveData<ArrayList<ExploreContentResponse>> = MutableLiveData()
     var openBottomSheet: MutableLiveData<ArrayList<offerDetailResponse>> = LiveEvent()
     var feedDetail: MutableLiveData<FeedDetails> = MutableLiveData()
+    var videoUrl:String? = null
+    var actionFlag:String? = null
+
     private val handler = Handler()
     private val updateSeekBarTask = object : Runnable {
         override fun run() {
@@ -47,7 +47,6 @@ class VideoExploreViewModel(
             handler.postDelayed(this, 500)
         }
     }
-    private val url = MutableLiveData<String>()
     val playerState = MutableLiveData<Player.State>()
     val buttonState = MutableLiveData<PlayingState>()
 
@@ -69,7 +68,7 @@ class VideoExploreViewModel(
 
     val playerParamsChanged = MutableLiveData<Pair<Int, Int>>()
     val errorHappened = MutableLiveData<Pair<String, String>>()
-    val TAG = "VideoActivty"
+    private val TAG = VideoWithExploreFragmentVM::class.java.simpleName
 
 
     init {
@@ -95,13 +94,9 @@ class VideoExploreViewModel(
 
 
     val PLAYBACK_RATE_DEFAULT = "1.0"
+
     private fun initDefault() {
         buttonState.value = PlayingState.PLAYING
-
-        url.value =
-            "https://fcc3ddae59ed.us-west-2.playback.live-video.net/api/video/v1/us-west-2.893648527354.channel.xhP3ExfcX8ON.m3u8"
-
-
         selectedRateValue.value = PLAYBACK_RATE_DEFAULT
 
     }

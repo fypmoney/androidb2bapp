@@ -10,16 +10,18 @@ import android.os.Handler
 import android.util.Log
 import android.view.SurfaceHolder
 import android.view.View
+import android.view.ViewGroup
 import android.widget.SeekBar
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.amazonaws.ivs.player.Player
-import com.amazonaws.ivs.player.ViewUtil
 import com.fypmoney.BR
 import com.fypmoney.R
-import com.fypmoney.base.BaseActivity
-import com.fypmoney.databinding.ActivityVideoXploreBinding
+import com.fypmoney.base.BaseFragment
+import com.fypmoney.databinding.FragmentVideoWithExploreBinding
 import com.fypmoney.model.CustomerInfoResponseDetails
 import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
@@ -27,67 +29,69 @@ import com.fypmoney.util.Utility
 import com.fypmoney.util.launchMain
 import com.fypmoney.view.StoreWebpageOpener2
 import com.fypmoney.view.activity.UserFeedsDetailView
-import com.fypmoney.view.storeoffers.OfferDetailsBottomSheet
 import com.fypmoney.view.fypstories.view.StoriesBottomSheet
 import com.fypmoney.view.home.main.explore.ViewDetails.ExploreInAppWebview
 import com.fypmoney.view.home.main.explore.`interface`.ExploreItemClickListener
 import com.fypmoney.view.home.main.explore.adapters.ExploreBaseAdapter
 import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
 import com.fypmoney.view.home.main.explore.model.SectionContentItem
+import com.fypmoney.view.storeoffers.OfferDetailsBottomSheet
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
-import kotlinx.android.synthetic.main.activity_video_xplore.*
 import kotlinx.android.synthetic.main.toolbar.*
 
-class VideoActivityWithExplore : BaseActivity<ActivityVideoXploreBinding, VideoExploreViewModel>(),
+class VideoWithExploreFragment : BaseFragment<FragmentVideoWithExploreBinding, VideoWithExploreFragmentVM>(),
     SurfaceHolder.Callback {
 
-    private var mViewBinding: ActivityVideoXploreBinding? = null
-    private lateinit var viewModel: VideoExploreViewModel
+    private lateinit var mViewBinding: FragmentVideoWithExploreBinding
+    private  val videoWithExploreFragmentVM by viewModels<VideoWithExploreFragmentVM> { defaultViewModelProviderFactory }
     private val timerHandler = Handler()
 
-    val HIDE_CONTROLS_DELAY = 1800L
-    private val timerRunnable = kotlinx.coroutines.Runnable {
+    private val HIDE_CONTROLS_DELAY = 1800L
+    private val navArgs:VideoWithExploreFragmentArgs by navArgs()
+
+    private val timerRunnable by lazy {
+        kotlinx.coroutines.Runnable {
         launchMain {
             Log.d(TAG, "Hiding controls")
 
-            viewModel.toggleControls(false)
+            videoWithExploreFragmentVM.toggleControls(false)
         }
     }
-    val TAG = "Videoplayer"
+    }
+    val TAG = VideoWithExploreFragment::class.java.simpleName
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         mViewBinding = getViewDataBinding()
-        mViewBinding!!.data = viewModel
-        val url = intent?.getStringExtra(ARG_WEB_URL_TO_OPEN)
-        val ACTIONFLAG = intent?.getStringExtra(AppConstants.ACTIONFLAG)
+        mViewBinding.data = videoWithExploreFragmentVM
+        videoWithExploreFragmentVM.videoUrl = navArgs.videoUrl
+        videoWithExploreFragmentVM.actionFlag = navArgs.actionFlag
         setToolbarAndTitle(
-            context = this,
+            context = requireContext(),
             toolbar = toolbar,
             isBackArrowVisible = true, toolbarTitle = "",
             backArrowTint = Color.WHITE
         )
-        viewModel.callExplporeContent(ACTIONFLAG)
+        videoWithExploreFragmentVM.callExplporeContent(videoWithExploreFragmentVM.actionFlag)
 
-        viewModel.rewardHistoryList.observe(
-            this
+        videoWithExploreFragmentVM.rewardHistoryList.observe(
+            viewLifecycleOwner
         ) { list ->
 
-            setRecyclerView(mViewBinding!!, list)
+            setRecyclerView(mViewBinding, list)
         }
-        viewModel.openBottomSheet.observe(
-            this
+        videoWithExploreFragmentVM.openBottomSheet.observe(
+            viewLifecycleOwner
         ) { list ->
             if (list.size > 0) {
                 callOfferDetailsSheeet(list[0])
             }
         }
 
-        viewModel.feedDetail.observe(
-            this
+        videoWithExploreFragmentVM.feedDetail.observe(
+            viewLifecycleOwner
         ) { list ->
 
             when (list.displayCard) {
@@ -110,23 +114,24 @@ class VideoActivityWithExplore : BaseActivity<ActivityVideoXploreBinding, VideoE
 
         }
 
-        surface_view.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
+        mViewBinding.surfaceView.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
             if (left != oldLeft || top != oldTop || right != oldRight || bottom != oldBottom) {
-                val width = viewModel.playerParamsChanged.value?.first
-                val height = viewModel.playerParamsChanged.value?.second
+                val width = videoWithExploreFragmentVM.playerParamsChanged.value?.first
+                val height = videoWithExploreFragmentVM.playerParamsChanged.value?.second
                 if (width != null && height != null) {
-                    surface_view.post {
+                    mViewBinding.surfaceView.post {
                         Log.d(
                             TAG,
                             "On rotation player layout params changed $width $height"
                         )
-                        ViewUtil.setLayoutParams(surface_view, width, height)
+                        val prams = ViewGroup.LayoutParams(width, height)
+                        mViewBinding.surfaceView.layoutParams = prams
                     }
                 }
             }
         }
 
-        seek_bar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        mViewBinding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
@@ -134,86 +139,87 @@ class VideoActivityWithExplore : BaseActivity<ActivityVideoXploreBinding, VideoE
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
 
                 if (fromUser) {
-                    viewModel.playerSeekTo(progress.toLong())
+                    videoWithExploreFragmentVM.playerSeekTo(progress.toLong())
                 }
             }
         })
-        mute.setOnClickListener(View.OnClickListener {
-            viewModel.mutePlayer()
+        mViewBinding.mute.setOnClickListener(View.OnClickListener {
+            videoWithExploreFragmentVM.mutePlayer()
 
         })
-        viewModel.playerState.observe(this, Observer { state ->
+        videoWithExploreFragmentVM.playerState.observe(viewLifecycleOwner, Observer { state ->
             when (state) {
                 Player.State.BUFFERING -> {
                     // Indicates that the Player is buffering content
-                    viewModel.buffering.value = true
-                    viewModel.buttonState.value = PlayingState.PLAYING
-                    status_text.setTextColor(Color.WHITE)
-                    status_text.text = getString(R.string.buffering)
+                    videoWithExploreFragmentVM.buffering.value = true
+                    videoWithExploreFragmentVM.buttonState.value = PlayingState.PLAYING
+                    mViewBinding.statusText.setTextColor(Color.WHITE)
+                    mViewBinding.statusText.text = getString(R.string.buffering)
                 }
                 Player.State.IDLE -> {
                     // Indicates that the Player is idle
-                    viewModel.buffering.value = false
-                    viewModel.buttonState.value = PlayingState.PAUSED
-                    status_text.setTextColor(Color.WHITE)
-                    status_text.text = getString(R.string.paused)
+                    videoWithExploreFragmentVM.buffering.value = false
+                    videoWithExploreFragmentVM.buttonState.value = PlayingState.PAUSED
+                    mViewBinding.statusText.setTextColor(Color.WHITE)
+                    mViewBinding.statusText.text = getString(R.string.paused)
                 }
                 Player.State.READY -> {
                     // Indicates that the Player is ready to play the loaded source
-                    viewModel.buffering.value = false
-                    viewModel.buttonState.value = PlayingState.PAUSED
-                    status_text.setTextColor(Color.WHITE)
-                    status_text.text = getString(R.string.paused)
+                    videoWithExploreFragmentVM.buffering.value = false
+                    videoWithExploreFragmentVM.buttonState.value = PlayingState.PAUSED
+                    mViewBinding.statusText.setTextColor(Color.WHITE)
+                    mViewBinding.statusText.text = getString(R.string.paused)
                 }
                 Player.State.ENDED -> {
                     // Indicates that the Player reached the end of the stream
-                    viewModel.buffering.value = false
-                    viewModel.buttonState.value = PlayingState.PAUSED
-                    status_text.setTextColor(Color.WHITE)
-                    status_text.text = getString(R.string.ended)
+                    videoWithExploreFragmentVM.buffering.value = false
+                    videoWithExploreFragmentVM.buttonState.value = PlayingState.PAUSED
+                    mViewBinding.statusText.setTextColor(Color.WHITE)
+                    mViewBinding.statusText.text = getString(R.string.ended)
                 }
                 Player.State.PLAYING -> {
                     // Indicates that the Player is playing
-                    viewModel.buffering.value = false
-                    viewModel.buttonState.value = PlayingState.PLAYING
-                    status_text.setTextColor(Color.WHITE)
-                    status_text.text = getString(R.string.playing)
+                    videoWithExploreFragmentVM.buffering.value = false
+                    videoWithExploreFragmentVM.buttonState.value = PlayingState.PLAYING
+                    mViewBinding.statusText.setTextColor(Color.WHITE)
+                    mViewBinding.statusText.text = getString(R.string.playing)
                 }
                 else -> { /* Ignored */
                 }
             }
         })
 
-        viewModel.buttonState.observe(this, Observer { state ->
-            viewModel.isPlaying.value = state == PlayingState.PLAYING
-        })
+        videoWithExploreFragmentVM.buttonState.observe(viewLifecycleOwner) { state ->
+            videoWithExploreFragmentVM.isPlaying.value = state == PlayingState.PLAYING
+        }
 
-        viewModel.playerParamsChanged.observe(this, Observer {
+        videoWithExploreFragmentVM.playerParamsChanged.observe(viewLifecycleOwner) {
             Log.d(TAG, "Player layout params changed ${it.first} ${it.second}")
-            ViewUtil.setLayoutParams(surface_view, it.first, it.second)
-        })
+            //ViewUtil.setLayoutParams(mViewBinding.surfaceView, it.first, it.second)
+            /*val prams = ViewGroup.LayoutParams(it.first, it.second)
+            mViewBinding.surfaceView.layoutParams = prams*/
+        }
 
-        viewModel.errorHappened.observe(this, Observer {
+        videoWithExploreFragmentVM.errorHappened.observe(viewLifecycleOwner) {
             Log.d(TAG, "Error dialog is shown")
 
-        })
+        }
 
         initSurface()
         initButtons()
-        viewModel.playerStart(surface_view.holder.surface, url)
-
+        videoWithExploreFragmentVM.playerStart(mViewBinding.surfaceView.holder.surface, videoWithExploreFragmentVM.videoUrl)
     }
 
     private fun initSurface() {
-        surface_view.holder.addCallback(this)
-        player_root.setOnClickListener {
+        mViewBinding.surfaceView.holder.addCallback(this)
+        mViewBinding.playerRoot.setOnClickListener {
             Log.d(TAG, "Player screen clicked")
-            when (player_controls.visibility) {
+            when (mViewBinding.playerControls.visibility) {
                 View.VISIBLE -> {
-                    viewModel.toggleControls(false)
+                    videoWithExploreFragmentVM.toggleControls(false)
                 }
                 View.GONE -> {
-                    viewModel.toggleControls(true)
+                    videoWithExploreFragmentVM.toggleControls(true)
                     restartTimer()
                 }
             }
@@ -223,37 +229,32 @@ class VideoActivityWithExplore : BaseActivity<ActivityVideoXploreBinding, VideoE
     }
 
     private fun initButtons() {
-        player_controls.setOnClickListener {
+        mViewBinding.playerControls.setOnClickListener {
             restartTimer()
-            when (viewModel.buttonState.value) {
+            when (videoWithExploreFragmentVM.buttonState.value) {
                 PlayingState.PLAYING -> {
-                    viewModel.buttonState.value = PlayingState.PAUSED
-                    viewModel.pause()
+                    videoWithExploreFragmentVM.buttonState.value = PlayingState.PAUSED
+                    videoWithExploreFragmentVM.pause()
                 }
                 PlayingState.PAUSED -> {
-                    viewModel.buttonState.value = PlayingState.PLAYING
-                    viewModel.play()
+                    videoWithExploreFragmentVM.buttonState.value = PlayingState.PLAYING
+                    videoWithExploreFragmentVM.play()
                 }
             }
         }
-        play_button_view.setOnClickListener {
+        mViewBinding.playButtonView.setOnClickListener {
             restartTimer()
-            when (viewModel.buttonState.value) {
+            when (videoWithExploreFragmentVM.buttonState.value) {
                 PlayingState.PLAYING -> {
-                    viewModel.buttonState.value = PlayingState.PAUSED
-                    viewModel.pause()
+                    videoWithExploreFragmentVM.buttonState.value = PlayingState.PAUSED
+                    videoWithExploreFragmentVM.pause()
                 }
                 PlayingState.PAUSED -> {
-                    viewModel.buttonState.value = PlayingState.PLAYING
-                    viewModel.play()
+                    videoWithExploreFragmentVM.buttonState.value = PlayingState.PLAYING
+                    videoWithExploreFragmentVM.play()
                 }
             }
         }
-
-
-
-
-
         restartTimer()
     }
 
@@ -268,26 +269,26 @@ class VideoActivityWithExplore : BaseActivity<ActivityVideoXploreBinding, VideoE
 
     override fun surfaceDestroyed(holder: SurfaceHolder) {
         Log.d(TAG, "Surface destroyed")
-        viewModel.updateSurface(null)
+        videoWithExploreFragmentVM.updateSurface(null)
     }
 
     override fun surfaceCreated(holder: SurfaceHolder) {
         Log.d(TAG, "Surface created")
-        viewModel.updateSurface(holder.surface)
+        videoWithExploreFragmentVM.updateSurface(holder.surface)
     }
 
     private fun callOfferDetailsSheeet(redeemDetails: offerDetailResponse) {
 
-        var bottomSheetMessage = OfferDetailsBottomSheet(redeemDetails)
+        val bottomSheetMessage = OfferDetailsBottomSheet(redeemDetails)
         bottomSheetMessage.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
-        bottomSheetMessage.show(supportFragmentManager, "TASKMESSAGE")
+        bottomSheetMessage.show(requireActivity().supportFragmentManager, "TASKMESSAGE")
     }
 
     private fun callDiduKnowBottomSheet(list: List<String>) {
         val bottomSheet =
             StoriesBottomSheet(list)
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
-        bottomSheet.show(supportFragmentManager, "DidUKnowSheet")
+        bottomSheet.show(requireActivity().supportFragmentManager, "DidUKnowSheet")
     }
 
     private fun intentToActivitytoBlog(
@@ -295,7 +296,7 @@ class VideoActivityWithExplore : BaseActivity<ActivityVideoXploreBinding, VideoE
         feedDetails: FeedDetails,
         type: String? = null
     ) {
-        val intent = Intent(this, aClass)
+        val intent = Intent(requireActivity(), aClass)
         intent.putExtra(AppConstants.FEED_RESPONSE, feedDetails)
         intent.putExtra(AppConstants.FROM_WHICH_SCREEN, type)
         intent.putExtra(AppConstants.CUSTOMER_INFO_RESPONSE, CustomerInfoResponseDetails())
@@ -303,23 +304,23 @@ class VideoActivityWithExplore : BaseActivity<ActivityVideoXploreBinding, VideoE
     }
 
     private fun setRecyclerView(
-        root: ActivityVideoXploreBinding,
+        root: FragmentVideoWithExploreBinding,
         list: ArrayList<ExploreContentResponse>
     ) {
         if (list.size > 0) {
             root.shimmerLayout.visibility = View.GONE
         }
         val layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         root.rvExplore.layoutManager = layoutManager
 
-        var arrayList: ArrayList<ExploreContentResponse> = ArrayList()
+        val arrayList: ArrayList<ExploreContentResponse> = ArrayList()
         list.forEach { item ->
             if (item.sectionContent?.size!! > 0) {
                 arrayList.add(item)
             }
         }
-        var exploreClickListener2 = object : ExploreItemClickListener {
+        val exploreClickListener2 = object : ExploreItemClickListener {
 
             override fun onItemClicked(
                 position: Int,
@@ -329,38 +330,37 @@ class VideoActivityWithExplore : BaseActivity<ActivityVideoXploreBinding, VideoE
                 when (it.redirectionType) {
                     AppConstants.EXPLORE_IN_APP -> {
                         it.redirectionResource?.let { uri ->
-                            val redirectionResources = uri?.split(",")?.get(0)
-                            when (redirectionResources) {
+                            when (val redirectionResources = uri.split(",")[0]) {
                                 AppConstants.FyperScreen -> {
-                                    navController?.navigate(R.id.navigation_fyper)
+                                    findNavController().navigate(R.id.navigation_fyper)
                                 }
                                 AppConstants.JACKPOTTAB -> {
-                                    navController?.navigate(R.id.navigation_jackpot)
+                                    findNavController().navigate(R.id.navigation_jackpot)
                                 }
                                 AppConstants.CardScreen -> {
-                                    navController?.navigate(R.id.navigation_card)
+                                    findNavController().navigate(R.id.navigation_card)
                                 }
                                 AppConstants.RewardHistory -> {
-                                    navController?.navigate(R.id.navigation_rewards_history)
+                                    findNavController().navigate(R.id.navigation_rewards_history)
                                 }
                                 AppConstants.ARCADE -> {
-                                    navController?.navigate(R.id.navigation_arcade)
+                                    findNavController().navigate(R.id.navigation_arcade)
                                 }
                                 AppConstants.F_Store -> {
-                                    navController?.navigate(R.id.navigation_explore)
+                                    findNavController().navigate(R.id.navigation_explore)
                                 }
                                 AppConstants.REWARDS -> {
-                                    navController?.navigate(R.id.navigation_rewards)
+                                    findNavController().navigate(R.id.navigation_rewards)
                                 }
                                 AppConstants.INSIGHTS -> {
-                                    navController?.navigate(R.id.navigation_insights)
+                                    findNavController().navigate(R.id.navigation_insights)
                                 }
                                 else -> {
 
                                     redirectionResources.let { it1 ->
                                         Utility.deeplinkRedirection(
                                             it1,
-                                            this@VideoActivityWithExplore
+                                            requireContext()
                                         )
                                     }
                                 }
@@ -372,7 +372,7 @@ class VideoActivityWithExplore : BaseActivity<ActivityVideoXploreBinding, VideoE
                     }
                     AppConstants.EXT_WEBVIEW -> {
                         val intent =
-                            Intent(this@VideoActivityWithExplore, VideoActivity::class.java)
+                            Intent(requireActivity(), VideoActivity::class.java)
                         intent.putExtra(ARG_WEB_URL_TO_OPEN, it.redirectionResource)
 
                         startActivity(intent)
@@ -381,7 +381,7 @@ class VideoActivityWithExplore : BaseActivity<ActivityVideoXploreBinding, VideoE
                     AppConstants.EXPLORE_IN_APP_WEBVIEW -> {
 
                         val intent =
-                            Intent(this@VideoActivityWithExplore, ExploreInAppWebview::class.java)
+                            Intent(requireActivity(), ExploreInAppWebview::class.java)
 //        intent.putExtra(AppConstants.EXPLORE_RESPONSE, feedDetails)
                         intent.putExtra(
                             AppConstants.FROM_WHICH_SCREEN,
@@ -394,20 +394,20 @@ class VideoActivityWithExplore : BaseActivity<ActivityVideoXploreBinding, VideoE
                     AppConstants.IN_APP_WITH_CARD -> {
 
                         val intent =
-                            Intent(this@VideoActivityWithExplore, StoreWebpageOpener2::class.java)
+                            Intent(requireActivity(), StoreWebpageOpener2::class.java)
 //        intent.putExtra(AppConstants.EXPLORE_RESPONSE, feedDetails)
 
                         intent.putExtra(ARG_WEB_URL_TO_OPEN, it.redirectionResource)
                         startActivity(intent)
                     }
                     AppConstants.OFFER_REDIRECTION -> {
-                        viewModel.callFetchOfferApi(it.redirectionResource)
+                        videoWithExploreFragmentVM.callFetchOfferApi(it.redirectionResource)
 
                     }
 
 
                     AppConstants.FEED_TYPE_BLOG -> {
-                        viewModel.callFetchFeedsApi(it.redirectionResource)
+                        videoWithExploreFragmentVM.callFetchFeedsApi(it.redirectionResource)
 
                     }
 
@@ -429,7 +429,7 @@ class VideoActivityWithExplore : BaseActivity<ActivityVideoXploreBinding, VideoE
                         if (!it.redirectionResource.isNullOrEmpty()) {
 //
 
-                            viewModel.callFetchFeedsApi(it.redirectionResource)
+                            videoWithExploreFragmentVM.callFetchFeedsApi(it.redirectionResource)
 
                         }
 
@@ -441,7 +441,7 @@ class VideoActivityWithExplore : BaseActivity<ActivityVideoXploreBinding, VideoE
         val scale: Float = this.resources.displayMetrics.density
         val typeAdapter = ExploreBaseAdapter(
             arrayList,
-            this,
+            requireContext(),
             exploreClickListener2,
             scale
         )
@@ -451,19 +451,22 @@ class VideoActivityWithExplore : BaseActivity<ActivityVideoXploreBinding, VideoE
 
     override fun onResume() {
         super.onResume()
-        viewModel.play()
+        videoWithExploreFragmentVM.play()
     }
 
     override fun onPause() {
         super.onPause()
-        viewModel.pause()
+        videoWithExploreFragmentVM.pause()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        viewModel.playerRelease()
+        videoWithExploreFragmentVM.playerRelease()
 
-        surface_view.holder.removeCallback(this)
+        mViewBinding.surfaceView.holder.removeCallback(this)
+    }
+
+    override fun onTryAgainClicked() {
     }
 
     override fun getBindingVariable(): Int {
@@ -471,12 +474,11 @@ class VideoActivityWithExplore : BaseActivity<ActivityVideoXploreBinding, VideoE
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.activity_video_xplore
+        return R.layout.fragment_video_with_explore
     }
 
-    override fun getViewModel(): VideoExploreViewModel {
-        viewModel = ViewModelProvider(this).get(VideoExploreViewModel::class.java)
-        return viewModel
+    override fun getViewModel(): VideoWithExploreFragmentVM {
+        return videoWithExploreFragmentVM
     }
 
 }

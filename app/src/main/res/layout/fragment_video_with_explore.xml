@@ -7,7 +7,7 @@
 
         <variable
             name="data"
-            type="com.fypmoney.util.videoplayer.VideoExploreViewModel" />
+            type="com.fypmoney.util.videoplayer.VideoWithExploreFragmentVM" />
 
         <import type="android.view.View" />
     </data>
@@ -24,8 +24,7 @@
             android:id="@+id/layout"
             android:layout_width="match_parent"
             android:layout_weight="8"
-            android:layout_height="0dp"
-            android:layout_above="@+id/relativeLayout8">
+            android:layout_height="0dp">
 
             <FrameLayout
                 android:layout_height="match_parent"
@@ -54,7 +53,6 @@
                             android:id="@+id/surface_view"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-
                             android:layout_gravity="center" />
 
                         <ProgressBar
@@ -82,7 +80,6 @@
                             android:id="@+id/player_controls"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-
                             android:clickable="true"
                             android:focusable="true"
                             android:visibility="@{data.showControls ? View.VISIBLE : View.GONE}"
@@ -94,7 +91,6 @@
                                 android:layout_width="match_parent"
                                 android:background="@color/black"
                                 android:alpha=".40"
-
                                 android:layout_height="match_parent" />
 
                             <LinearLayout

@@ -236,7 +236,7 @@ dependencies {
     implementation(name:'adjust-lib', ext:'aar')
     implementation("com.moengage:rich-notification:2.3.00")
     implementation('com.github.simonpercic:oklog3:2.3.0')
-    implementation 'com.amazonaws:ivs-player:1.6.0'
+    implementation 'com.amazonaws:ivs-player:1.10.0'
     implementation("com.squareup.okhttp3:okhttp-dnsoverhttps:4.9.0")
     implementation "ru.tinkoff.scrollingpagerindicator:scrollingpagerindicator:1.0.6"
 
