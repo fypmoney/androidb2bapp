@@ -17,7 +17,7 @@ fun View.startCircularReveal(x: Int, y: Int) {
                                     oldRight: Int, oldBottom: Int) {
             v.removeOnLayoutChangeListener(this)
             val radius = hypot(right.toDouble(), bottom.toDouble()).toInt()
-            ViewAnimationUtils.createCircularReveal(v, x, y - 600, 0f, radius.toFloat()).apply {
+            ViewAnimationUtils.createCircularReveal(v, x, y, 0f, radius.toFloat()).apply {
                 interpolator = DecelerateInterpolator(2f)
                 duration = 2000
                 start()

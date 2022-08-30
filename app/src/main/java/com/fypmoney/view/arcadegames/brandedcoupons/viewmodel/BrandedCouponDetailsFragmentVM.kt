@@ -12,7 +12,8 @@ import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.BaseRequest
 import com.fypmoney.view.arcadegames.brandedcoupons.model.BrandedCouponDetailsResponse
-import com.fypmoney.view.arcadegames.brandedcoupons.model.CouponDetailsData
+import com.fypmoney.view.arcadegames.brandedcoupons.model.BrandedCouponDetailsUiModel
+import com.fypmoney.view.arcadegames.brandedcoupons.model.CouponDetails
 
 class BrandedCouponDetailsFragmentVM(application: Application) : BaseViewModel(application) {
 
@@ -22,11 +23,12 @@ class BrandedCouponDetailsFragmentVM(application: Application) : BaseViewModel(a
 
     lateinit var endColor: String
 
+    var brandedCouponDetailsUiModel: BrandedCouponDetailsUiModel? = null
+
     val stateBrandedCoupon: LiveData<BrandedCouponDetailsState>
         get() = _stateBrandedCoupon
 
     private val _stateBrandedCoupon = MutableLiveData<BrandedCouponDetailsState>()
-
 
     fun callRewardCouponsApi(code: String?) {
         WebApiCaller.getInstance().request(
@@ -71,7 +73,7 @@ class BrandedCouponDetailsFragmentVM(application: Application) : BaseViewModel(a
     sealed class BrandedCouponDetailsState {
         object Loading : BrandedCouponDetailsState()
         data class Error(var errorResponseInfo: ErrorResponseInfo) : BrandedCouponDetailsState()
-        data class BrandedCouponDetailsSuccess(var couponDetailsData: CouponDetailsData) :
+        data class BrandedCouponDetailsSuccess(var couponDetailsData: CouponDetails) :
             BrandedCouponDetailsState()
     }
 

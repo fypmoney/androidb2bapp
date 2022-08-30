@@ -13,7 +13,7 @@ plugins {
 android {
     signingConfigs {
         config {
-            storeFile file('C:\\Users\\Pawankumar\\Desktop\\FypKeystore.jks')
+            storeFile file('C:\\Users\\Tapan Yadav\\Desktop\\FypKeystore.jks')
             storePassword 'WjfUzYjN8bem6bX6'
             keyAlias 'Fyp'
             keyPassword 'WjfUzYjN8bem6bX6'
@@ -38,9 +38,9 @@ android {
 
     buildTypes {
         release {
-            debuggable false
-            minifyEnabled true
-            shrinkResources true
+            debuggable true
+            minifyEnabled false
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
         }
@@ -240,6 +240,8 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp-dnsoverhttps:4.9.0")
     implementation "ru.tinkoff.scrollingpagerindicator:scrollingpagerindicator:1.0.6"
 
+//    def paging_version = "3.2.0-alpha02"
+//    implementation "androidx.paging:paging-runtime-ktx:$paging_version"
 
 }
 apollo {

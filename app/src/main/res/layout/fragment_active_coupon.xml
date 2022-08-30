@@ -39,8 +39,8 @@
                     android:id="@+id/containerBrandedActiveCouponsChips"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingHorizontal="@dimen/dp12"
-                    android:gravity="center_horizontal">
+                    android:gravity="center_horizontal"
+                    android:paddingHorizontal="@dimen/dp12">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/chipMyntsView"
@@ -113,7 +113,6 @@
                             android:layout_width="@dimen/dp36"
                             android:layout_height="@dimen/dp36"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginTop="2dp"
                             android:paddingStart="1dp"
                             android:paddingTop="11dp"
                             android:paddingEnd="1dp"
@@ -170,7 +169,6 @@
                             android:layout_width="@dimen/dp36"
                             android:layout_height="@dimen/dp36"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginTop="2dp"
                             android:paddingStart="1dp"
                             android:paddingTop="11dp"
                             android:paddingEnd="1dp"
@@ -227,10 +225,7 @@
                             android:layout_width="@dimen/dp36"
                             android:layout_height="@dimen/dp36"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginTop="2dp"
-                            android:paddingStart="1dp"
                             android:paddingTop="8dp"
-                            android:paddingEnd="1dp"
                             android:paddingBottom="8dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -300,8 +295,8 @@
                 android:id="@+id/emptyActiveCoupon"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 android:layout_marginTop="@dimen/_minus24sdp"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -309,8 +304,8 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/ivJackpotEmpty"
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -335,14 +330,28 @@
                 android:id="@+id/rvBrandedActiveCoupons"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:layout_marginStart="@dimen/dp6"
                 android:layout_marginTop="@dimen/_12sdp"
                 android:clipToPadding="false"
-                android:visibility="invisible"
                 android:paddingBottom="@dimen/dp16"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toTopOf="@+id/progressActiveCoupons"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/hsvContainerBrandedActiveCouponsChips" />
+
+            <ProgressBar
+                android:id="@+id/progressActiveCoupons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp8"
+                android:visibility="gone"
+                android:background="@color/transparent"
+                android:indeterminateTint="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rvBrandedActiveCoupons" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -3,11 +3,10 @@ package com.fypmoney.view.arcadegames.brandedcoupons.ui
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.navOptions
 import androidx.recyclerview.widget.GridLayoutManager
 import com.fypmoney.BR
 import com.fypmoney.R
@@ -18,21 +17,36 @@ import com.fypmoney.extension.toGone
 import com.fypmoney.extension.toInvisible
 import com.fypmoney.extension.toVisible
 import com.fypmoney.util.Utility
-import com.fypmoney.view.arcadegames.brandedcoupons.adapter.BrandedActiveCouponsAdapter
-import com.fypmoney.view.arcadegames.brandedcoupons.adapter.BrandedActiveCouponsUiModel
+import com.fypmoney.view.arcadegames.brandedcoupons.adapter.ActiveBrandedCouponAdapter
+import com.fypmoney.view.arcadegames.brandedcoupons.model.ActiveCouponsListItem
+import com.fypmoney.view.arcadegames.brandedcoupons.model.BrandedCouponDetailsUiModel
+import com.fypmoney.view.arcadegames.brandedcoupons.model.CouponDetails
+import com.fypmoney.view.arcadegames.brandedcoupons.utils.GridPaginationListener
+import com.fypmoney.view.arcadegames.brandedcoupons.utils.findLocationOfCenterOnTheScreen
 import com.fypmoney.view.arcadegames.brandedcoupons.viewmodel.BrandedActiveCouponsFragmentVM
 import kotlinx.android.synthetic.main.toolbar.*
+import org.json.JSONArray
 
 class ActiveCouponFragment :
     BaseFragment<FragmentActiveCouponBinding, BrandedActiveCouponsFragmentVM>() {
 
     private lateinit var binding: FragmentActiveCouponBinding
     private val activeCouponsFragmentVM by viewModels<BrandedActiveCouponsFragmentVM> { defaultViewModelProviderFactory }
+    private var isLoading = false
+    private var itemsArrayList: ArrayList<ActiveCouponsListItem> = ArrayList()
+    private var activeCouponsAdapter: ActiveBrandedCouponAdapter? = null
+
+    companion object {
+        var page = 0
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding = getViewDataBinding()
+
+
+        activeCouponsFragmentVM.callBrandedActiveCouponData(page)
 
         setToolbarAndTitle(
             context = requireContext(),
@@ -47,9 +61,23 @@ class ActiveCouponFragment :
         setObserver()
 
         setUpRecentRecyclerView()
+
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if (arguments?.getString("via").equals("Coupon"))
+                        findNavController().navigate(R.id.action_navigation_active_coupon_fragment_to_navigation_rewards)
+                    else
+                        findNavController().navigateUp()
+                }
+            }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+
     }
 
     private fun setObserver() {
+
+        page = 0
 
         activeCouponsFragmentVM.stateMynts.observe(viewLifecycleOwner) {
             handleMyntsState(it)
@@ -68,7 +96,12 @@ class ActiveCouponFragment :
         }
 
         activeCouponsFragmentVM.stateBrandedActiveCoupons.observe(viewLifecycleOwner) {
+            binding.progressActiveCoupons.toGone()
             handleActiveCouponState(it)
+        }
+
+        activeCouponsFragmentVM.stateBrandedCoupon.observe(viewLifecycleOwner) {
+            handleCouponDetailsState(it)
         }
 
     }
@@ -146,7 +179,19 @@ class ActiveCouponFragment :
         when (it) {
             is BrandedActiveCouponsFragmentVM.BrandedActiveCouponDataState.BrandedCouponSuccess -> {
 
-                if (it.activeCouponsListItem?.isEmpty() == true) {
+                if (page == 0)
+                    itemsArrayList.clear()
+
+                it.activeCouponsListItem?.forEach { it1 ->
+                    if (it1 != null) {
+                        itemsArrayList.add(it1)
+                    }
+                }
+
+                isLoading = false
+                activeCouponsAdapter?.notifyDataSetChanged()
+
+                if (itemsArrayList.isEmpty()) {
                     binding.emptyActiveCoupon.toVisible()
                     binding.rvBrandedActiveCoupons.toInvisible()
                 } else {
@@ -154,17 +199,19 @@ class ActiveCouponFragment :
                     binding.rvBrandedActiveCoupons.toVisible()
                 }
 
-                (binding.rvBrandedActiveCoupons.adapter as BrandedActiveCouponsAdapter).submitList(
-                    it.activeCouponsListItem?.map {
-                        it.let { it1 ->
-                            it1?.let { it2 ->
-                                BrandedActiveCouponsUiModel.fromBrandedActiveCouponItem(
-                                    this.requireContext(), it2
-                                )
-                            }
-                        }
-                    }
-                )
+                page += 1
+
+//                (binding.rvBrandedActiveCoupons.adapter as BrandedActiveCouponsAdapter).submitList(
+//                    it.activeCouponsListItem?.map {
+//                        it.let { it1 ->
+//                            it1?.let { it2 ->
+//                                BrandedActiveCouponsUiModel.fromBrandedActiveCouponItem(
+//                                    this.requireContext(), it2
+//                                )
+//                            }
+//                        }
+//                    }
+//                )
                 binding.shimmerLayoutActiveBrandedCoupons.toGone()
 
             }
@@ -174,29 +221,52 @@ class ActiveCouponFragment :
         }
     }
 
-    private fun setUpRecentRecyclerView() {
+    private fun handleCouponDetailsState(it: BrandedActiveCouponsFragmentVM.BrandedCouponDetailsState?) {
+        when (it) {
+            is BrandedActiveCouponsFragmentVM.BrandedCouponDetailsState.Error -> {}
 
-        val activeCouponsAdapter = BrandedActiveCouponsAdapter(onActiveCouponClick = {
-            val bundle =
-                bundleOf(
-                    "Coupon Code" to it
-                )
-            findNavController().navigate(
-                R.id.navigation_branded_coupons_details,
-                bundle,
-                navOptions {
-                    anim {
-                        popEnter = R.anim.slide_in_left
-                        popExit = R.anim.slide_out_righ
-                        enter = R.anim.slide_in_right
-                        exit = R.anim.slide_out_left
-                    }
-                })
-        })
+            BrandedActiveCouponsFragmentVM.BrandedCouponDetailsState.Loading -> {
+
+            }
+
+            is BrandedActiveCouponsFragmentVM.BrandedCouponDetailsState.BrandedCouponDetailsSuccess -> {
+
+                activeCouponsFragmentVM.couponDetailsData = it.couponDetailsListData
+
+                setCouponDetailsData(it.couponDetailsListData)
+            }
+        }
+    }
+
+    private fun setUpRecentRecyclerView() {
+        activeCouponsAdapter = ActiveBrandedCouponAdapter(onActiveCouponClick = {
+            activeCouponsFragmentVM.callRewardCouponsApi(it)
+        }, itemsArrayList, this.requireContext())
+
         with(binding.rvBrandedActiveCoupons) {
             adapter = activeCouponsAdapter
             layoutManager = GridLayoutManager(requireContext(), 2)
+
+            addOnScrollListener(object :
+                GridPaginationListener(layoutManager as GridLayoutManager) {
+                override fun loadMoreItems() {
+                    loadMore()
+                }
+
+                override fun loadMoreTopItems() {}
+
+                override fun isLoading(): Boolean {
+                    return isLoading
+                }
+
+            })
         }
+    }
+
+    private fun loadMore() {
+        activeCouponsFragmentVM.callBrandedActiveCouponData(page)
+        binding.progressActiveCoupons.toVisible()
+        isLoading = true
     }
 
     private fun setBackgrounds() {
@@ -237,6 +307,70 @@ class ActiveCouponFragment :
                 0f,
                 false
             )
+        }
+    }
+
+    private fun setCouponDetailsData(couponDetailsData: CouponDetails) {
+
+        val location =
+            binding.rvBrandedActiveCoupons.findLocationOfCenterOnTheScreen()
+
+        val jsonArr =
+            JSONArray(couponDetailsData.tnc)
+        val tnc: ArrayList<String> = ArrayList()
+        for (i in 0 until jsonArr.length()) {
+            tnc.add(jsonArr[i] as String)
+        }
+
+        val jsonArr1 =
+            JSONArray(couponDetailsData.howToRedeem)
+        val howToRedeem: ArrayList<String> = ArrayList()
+        for (i in 0 until jsonArr1.length()) {
+            howToRedeem.add(jsonArr1[i] as String)
+        }
+
+        val jsonArr2 =
+            JSONArray(couponDetailsData.description)
+        val description: ArrayList<String> = ArrayList()
+        for (i in 0 until jsonArr2.length()) {
+            description.add(jsonArr2[i] as String)
+        }
+
+        val arr = Utility.splitStringByDelimiters(
+            couponDetailsData.rewardColor,
+            ","
+        )
+
+        var startColor: String? = null
+        var endColor: String? = null
+
+        if (arr?.size!! > 0)
+            startColor = arr[0]
+
+        if (arr.size > 1)
+            endColor = arr[1]
+
+        val directions =
+            ActiveCouponFragmentDirections.actionNavigationActiveCouponFragmentToNavigationBrandedCouponsDetails(
+                BrandedCouponDetailsUiModel(
+                    howToRedeem = howToRedeem,
+                    tnc = tnc,
+                    description = description,
+                    couponCode = couponDetailsData.code,
+                    brandLogo = couponDetailsData.brandLogo,
+                    couponTitle = couponDetailsData.title,
+                    startColor = startColor,
+                    endColor = endColor,
+                    redeemLink = couponDetailsData.redeemLink,
+                    brandType = couponDetailsData.type,
+                    revealX = location[0],
+                    revealY = location[1],
+                    via = "Active"
+                )
+            )
+
+        directions.let {
+            findNavController().navigate(it)
         }
     }
 
