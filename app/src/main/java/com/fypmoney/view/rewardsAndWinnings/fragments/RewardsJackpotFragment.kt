@@ -243,7 +243,7 @@ class RewardsJackpotFragment : BaseFragment<FragmentJackpotOverviewBinding, Rewa
 
                     }
                     AppConstants.TYPE_VIDEO_EXPLORE -> {
-                        findNavController().navigate(Uri.parse("https://www.fypmoney.in/videowithexplore?videoUrl=${it.redirectionResource}&amp;actionFlag=${it.actionFlagCode}"),
+                        findNavController().navigate(Uri.parse("https://www.fypmoney.in/videowithexplore?videoUrl=${it.redirectionResource}&actionFlag=${it.actionFlagCode}"),
                             navOptions {
                                 anim {
                                     popEnter = R.anim.slide_in_left

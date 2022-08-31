@@ -260,7 +260,7 @@ class MobileNumberInfoRechargeFragment:BaseFragment<MobileNumberInfoRechargeFrag
 
             }
             AppConstants.TYPE_VIDEO_EXPLORE -> {
-                findNavController().navigate(Uri.parse("https://www.fypmoney.in/videowithexplore?videoUrl=${redirectionResource}&amp;actionFlag=${sectionContentItem.actionFlagCode}"),
+                findNavController().navigate(Uri.parse("https://www.fypmoney.in/videowithexplore?videoUrl=${redirectionResource}&actionFlag=${sectionContentItem.actionFlagCode}"),
                     navOptions {
                         anim {
                             popEnter = R.anim.slide_in_left
