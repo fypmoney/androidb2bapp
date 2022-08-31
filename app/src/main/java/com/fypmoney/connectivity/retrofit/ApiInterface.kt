@@ -134,7 +134,7 @@ interface ApiInterface {
      * @description Call POST type's web API
      */
     @FormUrlEncoded
-    @Headers("Accept: application/x-www-form-urlencoded")
+    @Headers("Content-Type: application/x-www-form-urlencoded")
     @POST
     fun postDataOnPayUServer(
         @Url endPoint: String,

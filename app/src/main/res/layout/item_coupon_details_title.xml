@@ -29,6 +29,7 @@
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="@dimen/dp12"
                 android:paddingVertical="@dimen/dp12"
+                android:duplicateParentState="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -36,12 +37,13 @@
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/ivExpandRedeemRules"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:padding="@dimen/dp6"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_arrow_right_black" />
+                    app:tint="@color/black"
+                    app:srcCompat="@drawable/ic_forword_arrow" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvRedeemRulesTitle"

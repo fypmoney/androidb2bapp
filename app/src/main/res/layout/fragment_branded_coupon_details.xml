@@ -5,7 +5,9 @@
     tools:context=".view.arcadegames.brandedcoupons.ui.BrandedCouponDetailsFragment">
 
     <data>
-
+        <variable
+            name="viewModel"
+            type="com.fypmoney.view.arcadegames.brandedcoupons.viewmodel.BrandedCouponDetailsFragmentVM" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,6 +25,7 @@
             android:id="@+id/shimmerCouponDetails"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            tools:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -37,6 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:visibility="gone"
+            tools:visibility="visible"
             app:layout_constraintBottom_toTopOf="@+id/clBrandedCouponBottom"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -132,6 +136,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/dp18"
                         android:padding="@dimen/dp6"
+                        android:onClick="@{()->viewModel.copyCouponCode()}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -171,6 +176,7 @@
                 android:fontFamily="@font/product_sans_bold"
                 android:paddingVertical="@dimen/dp18"
                 android:text="@string/redeem_now"
+                android:onClick="@{()->viewModel.redeemNow()}"
                 android:textColor="@color/my_profile_background_color"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

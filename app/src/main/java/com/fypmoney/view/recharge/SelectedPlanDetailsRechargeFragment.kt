@@ -135,11 +135,13 @@ class SelectedPlanDetailsRechargeFragment: BaseFragment<SelectedPlanDetailsRecha
                 callInsufficientFundMessageSheet(it.amount)
             }
             is SelectedPlanDetailsRechargeFragmentVM.SelectedPlanDetailsRechargeEvent.ShowPaymentProcessingScreen -> {
-                val direction = SelectedPlanDetailsRechargeFragmentDirections.actionSelectedPlanDetailsToPaymentProcessing(
-                    payAndRechargeRequest = it.payRequest,
-                    rechargeType = PREPAID
-                )
-                findNavController().navigate(direction)
+                if(findNavController().currentDestination?.id==R.id.navigation_recharge_plan_to_selected_plan){
+                    val direction = SelectedPlanDetailsRechargeFragmentDirections.actionSelectedPlanDetailsToPaymentProcessing(
+                        payAndRechargeRequest = it.payRequest,
+                        rechargeType = PREPAID)
+                    findNavController().navigate(direction)
+                }
+
             }
             null -> {}
             SelectedPlanDetailsRechargeFragmentVM.SelectedPlanDetailsRechargeEvent.OnPayClickEvent -> {

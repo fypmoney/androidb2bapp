@@ -512,10 +512,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
                     }
                     param(FirebaseAnalytics.Param.SCREEN_CLASS, HomeFragment::class.java.simpleName)
                 }
-                val directions = HomeFragmentDirections.actionHomeToSectionExplore(sectionExploreItem = sectionContentItem,
+                if(findNavController().currentDestination?.id==R.id.navigation_home){
+                    val directions = HomeFragmentDirections.actionHomeToSectionExplore(sectionExploreItem = sectionContentItem,
                         sectionExploreName= exploreContentResponse?.sectionDisplayText)
-
-                directions.let { it1 -> findNavController().navigate(it1) }
+                    directions.let { it1 -> findNavController().navigate(it1) }
+                }
             }
             AppConstants.EXPLORE_IN_APP -> {
                 redirectionResource?.let { uri ->
