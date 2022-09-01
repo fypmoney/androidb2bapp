@@ -53,7 +53,8 @@ import java.io.IOException
 /*
 * This class is used as Home Screen
 * */
-class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewModel>(), LogoutBottomSheet.OnLogoutClickListener {
+class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewModel>(),
+    LogoutBottomSheet.OnLogoutClickListener {
     private lateinit var mViewModel: UserProfileViewModel
     private lateinit var mViewBinding: ViewUserNewProfileBinding
 
@@ -117,78 +118,79 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
 
         mViewBinding.profileList.adapter = GlobalListAdapter(this@UserProfileView,
             onListItemClicked = {
-            when (it.postion) {
+                when (it.postion) {
 
-                0 ->{
-                    val mainFragment = NotificationSettingsFragment()
-                    supportFragmentManager.beginTransaction().add(R.id.container, mainFragment)
-                        .commit()
-                }
-
-                1 -> {
-                    startActivity(
-                        Intent(
-                            this@UserProfileView,
-                            BankTransactionHistoryView::class.java
+                    0 -> {
+                        startActivity(
+                            Intent(
+                                this@UserProfileView,
+                                BankTransactionHistoryView::class.java
+                            )
                         )
-                    )
-                }
+                    }
 
-                2 -> {
-                    Utility.goToAppSettings(applicationContext)
-                }
+                    1 -> {
+                        Utility.goToAppSettings(applicationContext)
+                    }
 
-                3 -> {
-                    val dicordconnected =
-                        SharedPrefUtils.getString(
-                            application,
-                            SharedPrefUtils.SF_DICORD_CONNECTED
-                        )
-                    if (!dicordconnected.isNullOrEmpty() && dicordconnected == "connected") {
+                    2 -> {
+                        val dicordconnected =
+                            SharedPrefUtils.getString(
+                                application,
+                                SharedPrefUtils.SF_DICORD_CONNECTED
+                            )
+                        if (!dicordconnected.isNullOrEmpty() && dicordconnected == "connected") {
 
+                            intentToActivityMain(
+                                this@UserProfileView,
+                                DiscordProfileActivity::class.java
+                            )
+                        } else {
+                            startActivity(Intent(this, DiscordInviteActivity::class.java))
+
+
+                        }
+                    }
+                    3 -> {
+                        addPocketFragmentToActivity()
+                    }
+                    4 -> {
                         intentToActivityMain(
                             this@UserProfileView,
-                            DiscordProfileActivity::class.java
+                            SocialCommunityActivity::class.java
                         )
-                    } else {
-                        startActivity(Intent(this, DiscordInviteActivity::class.java))
-
-
                     }
+                    5 -> {
+                        addFragmentToActivity()
                     }
 
-                4 -> {
-                    intentToActivityMain(this@UserProfileView, SocialCommunityActivity::class.java)
-                }
-                5 -> {
-                    openWebPageFor(
-                        getString(R.string.privacy_policy),
-                        "https://www.fypmoney.in/fyp/privacy-policy/"
-                    )
-                }
-                6 -> {
-                    openWebPageFor(
-                        getString(R.string.terms_and_conditions),
-                        "https://www.fypmoney.in/fyp/terms-of-use/"
-                    )
+                    6 -> {
+                        addNotificationSettingsFragmentToActivity()
+                    }
+
+                    7 -> {
+                        openWebPageFor(
+                            getString(R.string.privacy_policy),
+                            "https://www.fypmoney.in/fyp/privacy-policy/"
+                        )
+                    }
+                    8 -> {
+                        openWebPageFor(
+                            getString(R.string.terms_and_conditions),
+                            "https://www.fypmoney.in/fyp/terms-of-use/"
+                        )
+                    }
+
+                    9 -> {
+                        callFreshChat(applicationContext)
+                    }
+
+                    10 -> {
+                        callLogOutBottomSheet()
+                    }
                 }
 
-                7 -> {
-                    callFreshChat(applicationContext)
-                }
-
-                8 -> {
-                    callLogOutBottomSheet()
-                }
-                9->{
-                    addFragmentToActivity()
-                }
-                10 -> {
-                    addPocketFragmentToActivity()
-                }
-            }
-
-        })
+            })
 
         mViewModel.callGetCustomerProfileApi()
 
@@ -196,22 +198,46 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
         setObserver()
     }
 
-    private fun addFragmentToActivity(){
+    private fun addFragmentToActivity() {
         val fm = supportFragmentManager
         val tr = fm.beginTransaction()
-        tr.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left,R.anim.slide_in_left,R.anim.slide_out_righ);
+        tr.setCustomAnimations(
+            R.anim.slide_in_right,
+            R.anim.slide_out_left,
+            R.anim.slide_in_left,
+            R.anim.slide_out_righ
+        );
         tr.add(R.id.container, FamilySettingsView())
         tr.addToBackStack("family")
         tr.commit()
         //mViewBinding.container.toVisible()
     }
 
-    private fun addPocketFragmentToActivity(){
+    private fun addPocketFragmentToActivity() {
         val fm = supportFragmentManager
         val tr = fm.beginTransaction()
-        tr.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left,R.anim.slide_in_left,R.anim.slide_out_righ);
+        tr.setCustomAnimations(
+            R.anim.slide_in_right,
+            R.anim.slide_out_left,
+            R.anim.slide_in_left,
+            R.anim.slide_out_righ
+        );
         tr.add(R.id.container, PocketMoneySettingsFragment())
         tr.addToBackStack("pocket")
+        tr.commit()
+    }
+
+    private fun addNotificationSettingsFragmentToActivity() {
+        val fm = supportFragmentManager
+        val tr = fm.beginTransaction()
+        tr.setCustomAnimations(
+            R.anim.slide_in_right,
+            R.anim.slide_out_left,
+            R.anim.slide_in_left,
+            R.anim.slide_out_righ
+        );
+        tr.add(R.id.container, NotificationSettingsFragment())
+        tr.addToBackStack("notification")
         tr.commit()
     }
 
@@ -220,47 +246,41 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
         (mViewBinding.profileList.adapter as GlobalListAdapter).submitList(prepareOptions())
 
     }
+
     private fun prepareOptions(): ArrayList<ListUiModel> {
 
         val iconList = ArrayList<ListUiModel>()
         iconList.add(
             ListUiModel(
                 postion = 0,
-                name = getString(R.string.notification_settings),
-                icon = AppCompatResources.getDrawable(this, R.drawable.ic_whats_app)
-            )
-        )
-        iconList.add(
-            ListUiModel(
-                postion = 1,
                 name = getString(R.string.trans_history_heading),
                 icon = AppCompatResources.getDrawable(this, R.drawable.ic_account_statement)
             )
         )
         iconList.add(
             ListUiModel(
-                postion = 2,
+                postion = 1,
                 name = getString(R.string.privacy_settings),
                 icon = AppCompatResources.getDrawable(this, R.drawable.ic_profile_privacy_settings)
             )
         )
 
-       val discoredConnected=  SharedPrefUtils.getString(
+        val discoredConnected = SharedPrefUtils.getString(
             application,
             SharedPrefUtils.SF_DICORD_CONNECTED
         )
-        if(!discoredConnected.isNullOrEmpty() && (discoredConnected == "connected")){
+        if (!discoredConnected.isNullOrEmpty() && (discoredConnected == "connected")) {
             iconList.add(
                 ListUiModel(
-                    postion = 3,
+                    postion = 2,
                     name = getString(R.string.discord_profile),
                     icon = AppCompatResources.getDrawable(this, R.drawable.ic_discord_profile)
                 )
             )
-        }else{
+        } else {
             iconList.add(
                 ListUiModel(
-                    postion = 3,
+                    postion = 2,
                     name = getString(R.string.connect_to_discord),
                     icon = AppCompatResources.getDrawable(this, R.drawable.ic_discord_profile)
                 )
@@ -269,52 +289,61 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
 
         iconList.add(
             ListUiModel(
+                postion = 3,
+                name = getString(R.string.pocket_money_settings_screen_title),
+                icon = AppCompatResources.getDrawable(this, R.drawable.ic_pocket_settings)
+            )
+        )
+
+        iconList.add(
+            ListUiModel(
                 postion = 4,
                 name = getString(R.string.community_settings),
                 icon = AppCompatResources.getDrawable(this, R.drawable.ic_community)
             )
         )
+
         iconList.add(
             ListUiModel(
                 postion = 5,
+                name = getString(R.string.family_settings_screen_title),
+                icon = AppCompatResources.getDrawable(this, R.drawable.ic_add_family_member)
+            )
+        )
+
+        iconList.add(
+            ListUiModel(
+                postion = 6,
+                name = getString(R.string.notification_settings),
+                icon = AppCompatResources.getDrawable(this, R.drawable.ic_whats_app)
+            )
+        )
+        iconList.add(
+            ListUiModel(
+                postion = 7,
                 name = getString(R.string.privacy_policy),
                 icon = AppCompatResources.getDrawable(this, R.drawable.ic_privacy)
             )
         )
         iconList.add(
             ListUiModel(
-                postion = 6,
+                postion = 8,
                 name = getString(R.string.t_n_c),
                 icon = AppCompatResources.getDrawable(this, R.drawable.ic_term_and_condition)
             )
         )
         iconList.add(
             ListUiModel(
-                postion = 7,
+                postion = 9,
                 name = getString(R.string.help),
                 icon = AppCompatResources.getDrawable(this, R.drawable.ic_help)
             )
         )
         iconList.add(
             ListUiModel(
-                postion = 8,
+                postion = 10,
                 name = getString(R.string.log_out),
                 icon = AppCompatResources.getDrawable(this, R.drawable.ic_log_out)
-            )
-        )
-
-        iconList.add(
-            ListUiModel(
-                postion = 9,
-                name = getString(R.string.family_settings_screen_title),
-                icon = AppCompatResources.getDrawable(this, R.drawable.ic_add_family_member)
-            )
-        )
-        iconList.add(
-            ListUiModel(
-                postion = 10,
-                name = getString(R.string.pocket_money_settings_screen_title),
-                icon = AppCompatResources.getDrawable(this, R.drawable.ic_pocket_settings)
             )
         )
 
@@ -327,7 +356,7 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
     private fun setObserver() {
         mViewModel.onLogoutSuccess.observe(this) {
             UserTrackr.logOut()
-            intentToActivityMain(this@UserProfileView,LoginView::class.java, isFinishAll = true)
+            intentToActivityMain(this@UserProfileView, LoginView::class.java, isFinishAll = true)
         }
 
         mViewModel.onProfileSuccess.observe(this) {
@@ -373,12 +402,15 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
         mViewModel.onUpgradeKycClicked.observe(this) {
             if (it) {
                 Utility.getCustomerDataFromPreference()?.let {
-                    if(it.postKycScreenCode.isNullOrEmpty()){
+                    if (it.postKycScreenCode.isNullOrEmpty()) {
                         val intent = Intent(this, PanAdhaarSelectionActivity::class.java)
                         startActivity(intent)
-                    }else{
-                        val intent  = Intent(this,UpgradeToKycInfoActivity::class.java).apply {
-                            putExtra(KYC_UPGRADE_FROM_WHICH_SCREEN,UserProfileView::class.java.simpleName)
+                    } else {
+                        val intent = Intent(this, UpgradeToKycInfoActivity::class.java).apply {
+                            putExtra(
+                                KYC_UPGRADE_FROM_WHICH_SCREEN,
+                                UserProfileView::class.java.simpleName
+                            )
                         }
                         startActivity(intent)
                     }
@@ -527,8 +559,6 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
     override fun onLogoutButtonClick() {
         mViewModel.callLogOutApi()
     }
-
-
 
 
 }

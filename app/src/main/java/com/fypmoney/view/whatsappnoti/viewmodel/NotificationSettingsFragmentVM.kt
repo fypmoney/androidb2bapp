@@ -34,7 +34,7 @@ class NotificationSettingsFragmentVM(application: Application) : BaseViewModel(a
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_POST_OPT_STATUS_DATA,
-                NetworkUtil.endURL(ApiConstant.API_POST_OPT_STATUS_DATA) + "init",
+                NetworkUtil.endURL(ApiConstant.API_POST_OPT_STATUS_DATA) + "status",
                 ApiUrl.GET,
                 BaseRequest(),
                 this, isProgressBar = true
