@@ -150,8 +150,8 @@ class OtpReminderBottomSheet : BottomSheetDialogFragment(), WebApiCaller.OnWebAp
                 Utility.showToast(responseData.toString())
                 if (responseData is PocketMoneyOtpVerifyResponse) {
                     Utility.showToast("Reminder added successfully")
-                    dismiss()
                     listener.onActionComplete("close")
+                    dismiss()
                 }
             }
             ApiConstant.API_ADD_POCKET_MONEY_REMINDER -> {
