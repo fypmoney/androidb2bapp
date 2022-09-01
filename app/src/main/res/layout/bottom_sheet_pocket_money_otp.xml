@@ -125,7 +125,7 @@
             android:layout_marginTop="@dimen/dp72"
             android:layout_marginBottom="@dimen/dp26"
             android:backgroundTint="#47BC5C"
-            android:fontFamily="@font/product_sans_bold"
+            android:fontFamily="@font/product_sans_regular"
             android:paddingVertical="15dp"
             android:text="@string/continue_txt"
             android:textAllCaps="false"

@@ -31,7 +31,7 @@
         android:layout_marginTop="@dimen/_18sdp"
         android:layout_marginBottom="@dimen/_18sdp"
         android:backgroundTint="@color/reward_continue_button"
-        android:fontFamily="@font/product_sans_bold"
+        android:fontFamily="@font/product_sans_regular"
         android:text="@string/delete"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"

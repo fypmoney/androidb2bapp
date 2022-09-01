@@ -112,6 +112,7 @@
             android:paddingHorizontal="@dimen/dp18"
             android:paddingBottom="@dimen/dp12"
             android:inputType="number"
+            android:backgroundTint="@color/white"
             android:textAlignment="center"
             android:gravity="center_horizontal"
             android:textColor="@color/white"
@@ -254,7 +255,7 @@
             android:layout_marginTop="@dimen/dp36"
             android:layout_marginBottom="@dimen/dp26"
             android:backgroundTint="#47BC5C"
-            android:fontFamily="@font/product_sans_bold"
+            android:fontFamily="@font/product_sans_regular"
             android:paddingVertical="15dp"
             android:text="@string/confirm"
             android:textAllCaps="false" />

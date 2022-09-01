@@ -328,8 +328,6 @@ class BrandedCouponsFragment :
 
                 brandedCouponsFragmentVM.frequency = it.couponItem.frequency
 
-                binding.motionLayoutCoupons.toVisible()
-
                 Glide.with(this).load(R.drawable.play_button)
                     .into(binding.ivBtnPlayAnimation)
 
@@ -360,18 +358,26 @@ class BrandedCouponsFragment :
 
                 if (brandedCouponsFragmentVM.productId == "null") {
                     if (it.couponItem.isCouponAssigned.equals("YES")) {
-                        binding.motionLayoutCoupons.jumpToState(1)
+//                        binding.motionLayoutCoupons.jumpToState(1)
+
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            binding.shimmerLayoutBrandedCoupons.toInvisible()
+                        }, 1000)
                         binding.chipMyntsBurnView.toGone()
 
                         brandedCouponsFragmentVM.couponData = it.couponItem.couponDetails
 
-                        Handler(Looper.getMainLooper()).postDelayed({
-                            setAndOpenDetailsScreen(brandedCouponsFragmentVM.couponData)
-                        }, 1500)
+//                        Handler(Looper.getMainLooper()).postDelayed({
+                        setAndOpenDetailsScreen(brandedCouponsFragmentVM.couponData)
+//                        }, 1500)
                     } else {
+                        binding.shimmerLayoutBrandedCoupons.toInvisible()
+                        binding.motionLayoutCoupons.toVisible()
                         binding.frameBtnContainer.toVisible()
                     }
                 } else {
+                    binding.shimmerLayoutBrandedCoupons.toInvisible()
+                    binding.motionLayoutCoupons.toVisible()
                     binding.frameBtnContainer.toVisible()
                 }
 
@@ -382,7 +388,7 @@ class BrandedCouponsFragment :
                         )
                     }
 
-                binding.shimmerLayoutBrandedCoupons.toInvisible()
+//                binding.shimmerLayoutBrandedCoupons.toInvisible()
 
             }
             is BrandedCouponsFragmentVM.BrandedCouponDataState.Error -> {

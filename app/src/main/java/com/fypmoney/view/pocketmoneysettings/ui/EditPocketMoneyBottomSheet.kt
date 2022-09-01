@@ -107,6 +107,15 @@ class EditPocketMoneyBottomSheet : BottomSheetDialogFragment(), WebApiCaller.OnW
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val touchOutsideView = dialog!!.window
+            ?.decorView
+            ?.findViewById<View>(R.id.touch_outside)
+        touchOutsideView?.setOnClickListener(null)
+    }
+
     private fun setViews() {
         binding.etContactNumber.isClickable = false
         binding.etContactNumber.isFocusable = false

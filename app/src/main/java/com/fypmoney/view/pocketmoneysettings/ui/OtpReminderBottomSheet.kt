@@ -34,13 +34,8 @@ class OtpReminderBottomSheet : BottomSheetDialogFragment(), WebApiCaller.OnWebAp
 
     private lateinit var binding: BottomSheetPocketMoneyOtpBinding
     var otp = ObservableField<String>()
-    lateinit var timer: CountDownTimer
+    private lateinit var timer: CountDownTimer
 
-    private lateinit var listener: OnActionCompleteListener
-
-    fun setOnActionCompleteListener(listener: OnActionCompleteListener) {
-        this.listener = listener
-    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         BottomSheetDialog(requireContext(), theme)
@@ -58,7 +53,6 @@ class OtpReminderBottomSheet : BottomSheetDialogFragment(), WebApiCaller.OnWebAp
             false
         )
 
-        // start timer get started initially
         startTimer()
 
         binding.otpView.setOtpCompletionListener { otp1 ->
@@ -106,8 +100,13 @@ class OtpReminderBottomSheet : BottomSheetDialogFragment(), WebApiCaller.OnWebAp
         return binding.root
     }
 
-    interface OnActionCompleteListener {
-        fun onActionComplete(str: String)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val touchOutsideView = dialog!!.window
+            ?.decorView
+            ?.findViewById<View>(R.id.touch_outside)
+        touchOutsideView?.setOnClickListener(null)
     }
 
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
@@ -150,7 +149,6 @@ class OtpReminderBottomSheet : BottomSheetDialogFragment(), WebApiCaller.OnWebAp
                 Utility.showToast(responseData.toString())
                 if (responseData is PocketMoneyOtpVerifyResponse) {
                     Utility.showToast("Reminder added successfully")
-                    listener.onActionComplete("close")
                     dismiss()
                 }
             }
@@ -178,5 +176,10 @@ class OtpReminderBottomSheet : BottomSheetDialogFragment(), WebApiCaller.OnWebAp
 
     override fun offLine() {
 
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        timer.cancel()
     }
 }

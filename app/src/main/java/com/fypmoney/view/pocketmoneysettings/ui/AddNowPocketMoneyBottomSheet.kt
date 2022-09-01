@@ -4,8 +4,6 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import android.content.res.ColorStateList
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.view.LayoutInflater
@@ -39,6 +37,11 @@ class AddNowPocketMoneyBottomSheet :
 
     private lateinit var binding: BottomSheetSetupPocketMoneyBinding
     private var frequencyValue: String? = null
+    private lateinit var listener: OnActionCompleteListener
+
+    fun setOnActionCompleteListener(listener: OnActionCompleteListener) {
+        this.listener = listener
+    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         BottomSheetDialog(requireContext(), theme)
@@ -118,6 +121,15 @@ class AddNowPocketMoneyBottomSheet :
         }
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val touchOutsideView = dialog!!.window
+            ?.decorView
+            ?.findViewById<View>(R.id.touch_outside)
+        touchOutsideView?.setOnClickListener(null)
     }
 
     private fun defaultCardSelect() {
@@ -335,14 +347,6 @@ class AddNowPocketMoneyBottomSheet :
             }
         }
 
-    val listener = object: OtpReminderBottomSheet.OnActionCompleteListener {
-        override fun onActionComplete(str: String) {
-            // do what you want to do here because this block will be invoked in bottom sheet
-            // you will receive "your password is this" here
-            // as per question maybe check your password / pin
-            dismiss()
-        }
-    }
 
     private fun addPocketMoneyReminder(setPocketMoneyReminder: SetPocketMoneyReminder) {
         WebApiCaller.getInstance().request(
@@ -365,10 +369,16 @@ class AddNowPocketMoneyBottomSheet :
                 Utility.showToast(responseData.toString())
                 if (responseData is PocketMoneyReminderResponse) {
                     Utility.showToast("Otp Sent")
-                    openAddReminderBottomSheet(responseData.data)
+                    listener.onActionComplete(responseData.data)
+                    dismiss()
+//                    openAddReminderBottomSheet(responseData.data)
                 }
             }
         }
+    }
+
+    interface OnActionCompleteListener {
+        fun onActionComplete(data: Data?)
     }
 
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
@@ -377,21 +387,6 @@ class AddNowPocketMoneyBottomSheet :
                 Utility.showToast(errorResponseInfo.msg)
             }
         }
-    }
-
-    private fun openAddReminderBottomSheet(data: Data?) {
-        val otpReminderBottomSheet = OtpReminderBottomSheet()
-        val bundle = Bundle()
-        bundle.putString("otpIdentifier", data?.otpIdentifier)
-        bundle.putString("name", data?.name)
-        bundle.putString("mobile", data?.mobile)
-        data?.amount?.let { bundle.putInt("amount", it) }
-        bundle.putString("frequency", data?.frequency)
-        otpReminderBottomSheet.setOnActionCompleteListener(listener)
-        otpReminderBottomSheet.arguments = bundle
-        otpReminderBottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
-        otpReminderBottomSheet.show(childFragmentManager, "OtpReminderBottomSheet")
-
     }
 
     override fun offLine() {

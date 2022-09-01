@@ -14,6 +14,7 @@ import com.fypmoney.extension.toGone
 import com.fypmoney.extension.toVisible
 import com.fypmoney.view.pocketmoneysettings.adapter.PocketMoneyReminderAdapter
 import com.fypmoney.view.pocketmoneysettings.adapter.PocketMoneyReminderUiModel
+import com.fypmoney.view.pocketmoneysettings.model.Data
 import com.fypmoney.view.pocketmoneysettings.viewmodel.PocketMoneySettingsFragmentVM
 import kotlinx.android.synthetic.main.toolbar.*
 
@@ -50,6 +51,29 @@ class PocketMoneySettingsFragment :
         val addReminderBottomSheet = AddNowPocketMoneyBottomSheet()
         addReminderBottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         addReminderBottomSheet.show(childFragmentManager, "AddNowPocketMoneyBottomSheet")
+        addReminderBottomSheet.setOnActionCompleteListener(listener)
+
+    }
+
+    val listener = object: AddNowPocketMoneyBottomSheet.OnActionCompleteListener {
+
+        override fun onActionComplete(data: Data?) {
+            openOtpReminderBottomSheet(data)
+        }
+    }
+
+    private fun openOtpReminderBottomSheet(data: Data?) {
+        val otpReminderBottomSheet = OtpReminderBottomSheet()
+        val bundle = Bundle()
+        bundle.putString("otpIdentifier", data?.otpIdentifier)
+        bundle.putString("name", data?.name)
+        bundle.putString("mobile", data?.mobile)
+        data?.amount?.let { bundle.putInt("amount", it) }
+        bundle.putString("frequency", data?.frequency)
+        otpReminderBottomSheet.arguments = bundle
+        otpReminderBottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        otpReminderBottomSheet.show(childFragmentManager, "OtpReminderBottomSheet")
+
     }
 
     private fun setObserver() {

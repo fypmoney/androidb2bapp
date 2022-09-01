@@ -1052,5 +1052,6 @@ By tapping on Create Account, you agree to the Terms of Service & Privacy Policy
     <string name="weekly">Weekly</string>
     <string name="monthly">Monthly</string>
     <string name="min_10_max_5_000">Min ₹10 - Max ₹5,000</string>
+    <string name="otp">OTP</string>
 
 </resources>

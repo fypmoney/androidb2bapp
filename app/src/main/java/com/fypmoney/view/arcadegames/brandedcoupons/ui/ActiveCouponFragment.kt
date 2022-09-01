@@ -374,6 +374,11 @@ class ActiveCouponFragment :
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+
+        page = 0
+    }
     override fun getBindingVariable(): Int {
         return BR.viewModel
     }
