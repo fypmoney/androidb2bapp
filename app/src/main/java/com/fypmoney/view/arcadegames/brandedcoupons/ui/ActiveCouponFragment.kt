@@ -36,17 +36,12 @@ class ActiveCouponFragment :
     private var itemsArrayList: ArrayList<ActiveCouponsListItem> = ArrayList()
     private var activeCouponsAdapter: ActiveBrandedCouponAdapter? = null
 
-    companion object {
-        var page = 0
-    }
+    var page = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding = getViewDataBinding()
-
-
-        activeCouponsFragmentVM.callBrandedActiveCouponData(page)
 
         setToolbarAndTitle(
             context = requireContext(),
@@ -55,6 +50,8 @@ class ActiveCouponFragment :
             titleColor = Color.WHITE,
             backArrowTint = Color.WHITE
         )
+
+        activeCouponsFragmentVM.callBrandedActiveCouponData(page)
 
         setBackgrounds()
 
@@ -77,7 +74,7 @@ class ActiveCouponFragment :
 
     private fun setObserver() {
 
-        page = 0
+//        page = 0
 
         activeCouponsFragmentVM.stateMynts.observe(viewLifecycleOwner) {
             handleMyntsState(it)
@@ -374,11 +371,6 @@ class ActiveCouponFragment :
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-
-        page = 0
-    }
     override fun getBindingVariable(): Int {
         return BR.viewModel
     }
