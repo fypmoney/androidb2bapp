@@ -51,6 +51,7 @@ class ActiveCouponFragment :
             backArrowTint = Color.WHITE
         )
 
+        page = 0
         activeCouponsFragmentVM.callBrandedActiveCouponData(page)
 
         setBackgrounds()
@@ -74,7 +75,7 @@ class ActiveCouponFragment :
 
     private fun setObserver() {
 
-//        page = 0
+        page = 0
 
         activeCouponsFragmentVM.stateMynts.observe(viewLifecycleOwner) {
             handleMyntsState(it)
@@ -93,6 +94,7 @@ class ActiveCouponFragment :
         }
 
         activeCouponsFragmentVM.stateBrandedActiveCoupons.observe(viewLifecycleOwner) {
+            page = 0
             binding.progressActiveCoupons.toGone()
             handleActiveCouponState(it)
         }
@@ -198,17 +200,6 @@ class ActiveCouponFragment :
 
                 page += 1
 
-//                (binding.rvBrandedActiveCoupons.adapter as BrandedActiveCouponsAdapter).submitList(
-//                    it.activeCouponsListItem?.map {
-//                        it.let { it1 ->
-//                            it1?.let { it2 ->
-//                                BrandedActiveCouponsUiModel.fromBrandedActiveCouponItem(
-//                                    this.requireContext(), it2
-//                                )
-//                            }
-//                        }
-//                    }
-//                )
                 binding.shimmerLayoutActiveBrandedCoupons.toGone()
 
             }

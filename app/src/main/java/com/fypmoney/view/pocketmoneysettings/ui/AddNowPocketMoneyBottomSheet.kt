@@ -366,12 +366,10 @@ class AddNowPocketMoneyBottomSheet :
     override fun onSuccess(purpose: String, responseData: Any) {
         when (purpose) {
             ApiConstant.API_ADD_POCKET_MONEY_REMINDER -> {
-                Utility.showToast(responseData.toString())
                 if (responseData is PocketMoneyReminderResponse) {
                     Utility.showToast("Otp Sent")
                     listener.onActionComplete(responseData.data)
                     dismiss()
-//                    openAddReminderBottomSheet(responseData.data)
                 }
             }
         }

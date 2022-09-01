@@ -36,7 +36,6 @@ class OtpReminderBottomSheet : BottomSheetDialogFragment(), WebApiCaller.OnWebAp
     var otp = ObservableField<String>()
     private lateinit var timer: CountDownTimer
 
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         BottomSheetDialog(requireContext(), theme)
 
@@ -146,14 +145,12 @@ class OtpReminderBottomSheet : BottomSheetDialogFragment(), WebApiCaller.OnWebAp
     override fun onSuccess(purpose: String, responseData: Any) {
         when (purpose) {
             ApiConstant.API_VERIFY_OTP_POCKET_MONEY_REMINDER -> {
-                Utility.showToast(responseData.toString())
                 if (responseData is PocketMoneyOtpVerifyResponse) {
                     Utility.showToast("Reminder added successfully")
                     dismiss()
                 }
             }
             ApiConstant.API_ADD_POCKET_MONEY_REMINDER -> {
-                Utility.showToast(responseData.toString())
                 if (responseData is PocketMoneyReminderResponse) {
                     binding.tvSentOtpAgain.toInvisible()
                     startTimer()

@@ -94,11 +94,8 @@ class PocketMoneyReminderAdapter(val childFragmentManager: FragmentManager, val 
     override fun onSuccess(purpose: String, responseData: Any) {
         when (purpose) {
             ApiConstant.API_DELETE_POCKET_MONEY_REMINDER -> {
-                Utility.showToast(responseData.toString())
                 if (responseData is PocketMoneyOtpVerifyResponse) {
-                    Utility.showToast("Deleted successfully")
-
-                    notifyDataSetChanged()
+                    Utility.showToast("Reminder deleted successfully")
                 }
             }
         }

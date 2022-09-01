@@ -325,10 +325,9 @@ class EditPocketMoneyBottomSheet : BottomSheetDialogFragment(), WebApiCaller.OnW
     override fun onSuccess(purpose: String, responseData: Any) {
         when (purpose) {
             ApiConstant.API_ADD_POCKET_MONEY_REMINDER -> {
-                Utility.showToast(responseData.toString())
                 if (responseData is PocketMoneyReminderResponse) {
                     dismiss()
-                    Utility.showToast("Edited successfully")
+                    Utility.showToast("Reminder edited successfully")
                 }
             }
         }

@@ -12,7 +12,6 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.FragmentNotificationSettingsBinding
-import com.fypmoney.util.Utility
 import com.fypmoney.view.whatsappnoti.viewmodel.NotificationSettingsFragmentVM
 import kotlinx.android.synthetic.main.dialog_settings_confirm.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -60,18 +59,12 @@ class NotificationSettingsFragment :
     private fun handleState(it: NotificationSettingsFragmentVM.WhatsAppNotificationOptState?) {
         when (it) {
             is NotificationSettingsFragmentVM.WhatsAppNotificationOptState.Success -> {
-                Utility.showToast("Status: ${it.whatsAppOptData.isOptInDone}")
                 binding.smWhatsAppNotification.isChecked =
                     it.whatsAppOptData.isOptInDone.equals("YES")
                 binding.smWhatsAppNotification.isClickable = true
             }
             is NotificationSettingsFragmentVM.WhatsAppNotificationOptState.Error -> {
-                if (it.errorResponseInfo.errorCode == "NTS_1008") {
-                    binding.smWhatsAppNotification.isChecked = true
-                } else {
-                    Utility.showToast("We're encounter some issue at the moment. Please try again later...")
-                    binding.smWhatsAppNotification.isChecked = false
-                }
+                binding.smWhatsAppNotification.isChecked = it.errorResponseInfo.errorCode == "NTS_1008"
                 binding.smWhatsAppNotification.isClickable = true
             }
             NotificationSettingsFragmentVM.WhatsAppNotificationOptState.Loading -> {}
