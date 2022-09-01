@@ -61,12 +61,17 @@ class NotificationSettingsFragment :
         when (it) {
             is NotificationSettingsFragmentVM.WhatsAppNotificationOptState.Success -> {
                 Utility.showToast("Status: ${it.whatsAppOptData.isOptInDone}")
-                binding.smWhatsAppNotification.isChecked = it.whatsAppOptData.isOptInDone.equals("YES")
+                binding.smWhatsAppNotification.isChecked =
+                    it.whatsAppOptData.isOptInDone.equals("YES")
                 binding.smWhatsAppNotification.isClickable = true
             }
             is NotificationSettingsFragmentVM.WhatsAppNotificationOptState.Error -> {
-                Utility.showToast("We're encounter some issue at the moment. Please try again later...")
-                binding.smWhatsAppNotification.isChecked = false
+                if (it.errorResponseInfo.errorCode == "NTS_1008") {
+                    binding.smWhatsAppNotification.isChecked = true
+                } else {
+                    Utility.showToast("We're encounter some issue at the moment. Please try again later...")
+                    binding.smWhatsAppNotification.isChecked = false
+                }
                 binding.smWhatsAppNotification.isClickable = true
             }
             NotificationSettingsFragmentVM.WhatsAppNotificationOptState.Loading -> {}
