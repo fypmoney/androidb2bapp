@@ -22,6 +22,9 @@ import com.fypmoney.view.arcadegames.model.*
 import com.fypmoney.view.giftcard.model.*
 import com.fypmoney.view.home.main.home.model.networkmodel.CallToActionNetworkResponse
 import com.fypmoney.view.ordercard.model.UserOfferCardResponse
+import com.fypmoney.view.pocketmoneysettings.model.PocketMoneyOtpVerifyResponse
+import com.fypmoney.view.pocketmoneysettings.model.PocketMoneyReminderListResponse
+import com.fypmoney.view.pocketmoneysettings.model.PocketMoneyReminderResponse
 import com.fypmoney.view.recharge.model.RecentRechargesResponse
 import com.fypmoney.view.whatsappnoti.model.WhatsAppNotificationResponse
 import com.google.gson.Gson
@@ -287,6 +290,22 @@ class ApiDataParsing {
 
                 ApiConstant.API_POST_OPT_STATUS_DATA -> {
                     getObject(response, WhatsAppNotificationResponse::class.java)
+                }
+
+                ApiConstant.API_GET_POCKET_MONEY_REMINDER_DATA -> {
+                    getObject(response, PocketMoneyReminderListResponse::class.java)
+                }
+
+                ApiConstant.API_DELETE_POCKET_MONEY_REMINDER -> {
+                    getObject(response, PocketMoneyReminderResponse::class.java)
+                }
+
+                ApiConstant.API_VERIFY_OTP_POCKET_MONEY_REMINDER -> {
+                    getObject(response, PocketMoneyOtpVerifyResponse::class.java)
+                }
+
+                ApiConstant.API_ADD_POCKET_MONEY_REMINDER -> {
+                    getObject(response, PocketMoneyReminderResponse::class.java)
                 }
 
                 ApiConstant.PAYU_PRODUCTION_URL -> {

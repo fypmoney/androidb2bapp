@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp8"
+        app:cardBackgroundColor="#1C2129"
+        app:cardCornerRadius="@dimen/dp14">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/dp28">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvName"
+                style="@style/TextviewRegular"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/dp24"
+                android:layout_marginTop="28dp"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:fontFamily="@font/product_sans_bold"
+                app:layout_constraintEnd_toStartOf="@+id/linearReminderEdit"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/enter_otp_here" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvMobileNumber"
+                android:layout_width="@dimen/_220sdp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp24"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:textColor="#9CA3A5"
+                app:fontFamily="@font/product_sans_regular"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvName"
+                tools:text="+91 12345 67890" />
+
+            <LinearLayout
+                android:id="@+id/linearReminderEdit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp8"
+                android:gravity="end"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@+id/tvPocketReminderText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tvName"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivReminderEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp4"
+                    app:srcCompat="@drawable/ic_reminder_edit" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivReminderDelete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp4"
+                    app:srcCompat="@drawable/ic_pocket_delete" />
+
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvPocketReminderText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp24"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:text="@string/reminder"
+                android:textColor="#9CA3A5"
+                app:fontFamily="@font/product_sans_regular"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvMobileNumber" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvPocketReminderFrequency"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:text="@string/reminder"
+                android:layout_marginStart="@dimen/dp1"
+                android:textColor="@color/white"
+                app:fontFamily="@font/product_sans_bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="@id/tvPocketReminderText"
+                app:layout_constraintTop_toBottomOf="@+id/tvPocketReminderText" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvPocketAmountText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:text="@string/amount_text"
+                android:textColor="#9CA3A5"
+                app:fontFamily="@font/product_sans_regular"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tvPocketReminderText"
+                app:layout_constraintTop_toBottomOf="@+id/tvMobileNumber" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvPocketAmount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:text="@string/reminder"
+                android:layout_marginStart="@dimen/dp2"
+                android:textColor="@color/white"
+                app:fontFamily="@font/product_sans_bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tvPocketAmountText"
+                app:layout_constraintTop_toBottomOf="@+id/tvPocketAmountText" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>

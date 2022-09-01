@@ -385,6 +385,22 @@ class WebApiCaller {
                                     )
 
                             }
+                            ApiConstant.API_VERIFY_OTP_POCKET_MONEY_REMINDER -> {
+                                mObservable =
+                                    apiInterface.postLoginInitDataOnServer(
+                                        client_id = ApiConstant.CLIENT_ID,
+                                        appId = ApiConstant.APP_ID,
+                                        authorization = SharedPrefUtils.getString(
+                                            PockketApplication.instance,
+                                            SharedPrefUtils.SF_KEY_ACCESS_TOKEN
+                                        ),
+                                        one_tap = true,
+                                        endPoint = request.endpoint,
+                                        request = request.param
+                                    )
+
+                            }
+
                             ApiConstant.API_LOGIN -> {
                                 mObservable =
                                     apiInterface.postLoginDataOnServer(

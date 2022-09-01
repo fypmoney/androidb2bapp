@@ -31,6 +31,7 @@ import com.fypmoney.view.community.SocialCommunityActivity
 import com.fypmoney.view.discord.DiscordInviteActivity
 import com.fypmoney.view.discord.DiscordProfileActivity
 import com.fypmoney.view.fragment.LogoutBottomSheet
+import com.fypmoney.view.pocketmoneysettings.ui.PocketMoneySettingsFragment
 import com.fypmoney.view.register.PanAdhaarSelectionActivity
 import com.fypmoney.view.upgradetokyc.UpgradeToKycInfoActivity
 import com.fypmoney.view.whatsappnoti.ui.NotificationSettingsFragment
@@ -117,10 +118,12 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
         mViewBinding.profileList.adapter = GlobalListAdapter(this@UserProfileView,
             onListItemClicked = {
             when (it.postion) {
-                2 -> {
-                    Utility.goToAppSettings(applicationContext)
-                }
 
+                0 ->{
+                    val mainFragment = NotificationSettingsFragment()
+                    supportFragmentManager.beginTransaction().add(R.id.container, mainFragment)
+                        .commit()
+                }
 
                 1 -> {
                     startActivity(
@@ -131,10 +134,8 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
                     )
                 }
 
-                0 ->{
-                    val mainFragment = NotificationSettingsFragment()
-                    supportFragmentManager.beginTransaction().add(R.id.container, mainFragment)
-                        .commit()
+                2 -> {
+                    Utility.goToAppSettings(applicationContext)
                 }
 
                 3 -> {
@@ -182,7 +183,9 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
                 9->{
                     addFragmentToActivity()
                 }
-
+                10 -> {
+                    addPocketFragmentToActivity()
+                }
             }
 
         })
@@ -201,6 +204,15 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
         tr.addToBackStack("family")
         tr.commit()
         //mViewBinding.container.toVisible()
+    }
+
+    private fun addPocketFragmentToActivity(){
+        val fm = supportFragmentManager
+        val tr = fm.beginTransaction()
+        tr.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left,R.anim.slide_in_left,R.anim.slide_out_righ);
+        tr.add(R.id.container, PocketMoneySettingsFragment())
+        tr.addToBackStack("pocket")
+        tr.commit()
     }
 
     override fun onStart() {
@@ -232,13 +244,7 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
                 icon = AppCompatResources.getDrawable(this, R.drawable.ic_profile_privacy_settings)
             )
         )
-        iconList.add(
-            ListUiModel(
-                postion = 9,
-                name = getString(R.string.family_settings_screen_title),
-                icon = AppCompatResources.getDrawable(this, R.drawable.ic_add_family_member)
-            )
-        )
+
        val discoredConnected=  SharedPrefUtils.getString(
             application,
             SharedPrefUtils.SF_DICORD_CONNECTED
@@ -297,6 +303,20 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
             )
         )
 
+        iconList.add(
+            ListUiModel(
+                postion = 9,
+                name = getString(R.string.family_settings_screen_title),
+                icon = AppCompatResources.getDrawable(this, R.drawable.ic_add_family_member)
+            )
+        )
+        iconList.add(
+            ListUiModel(
+                postion = 10,
+                name = getString(R.string.pocket_money_settings_screen_title),
+                icon = AppCompatResources.getDrawable(this, R.drawable.ic_pocket_settings)
+            )
+        )
 
         return iconList
     }

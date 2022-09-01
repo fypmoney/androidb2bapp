@@ -68,3 +68,25 @@ data class ReferralCodeResponse(
     @SerializedName("msg") var msg: String?
 ) : Serializable
 
+@Keep
+data class SetPocketMoneyReminder(
+    @SerializedName("identifierType") val identifierType: String? = null,
+    @SerializedName("mobile") val mobile: String? = null,
+    @SerializedName("name") val name: String? = null,
+    @SerializedName("amount") val amount: Int? = null,
+    @SerializedName("frequency") val frequency: String? = null,
+    @SerializedName("relation") val relation: String? = null
+) : BaseRequest()
+
+@Keep
+data class SetPocketMoneyOtpReminder(
+    @SerializedName("identifierType") val identifierType: String? = null,
+    @SerializedName("otpIdentifier") val otpIdentifier: String? = null,
+    @SerializedName("otp") val otp: String? = null,
+) : BaseRequest()
+
+@Keep
+data class DeletePocketMoneyReminder(
+    @SerializedName("mobile") val mobile: String? = null
+) : BaseRequest()
+

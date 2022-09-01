@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".view.pocketmoneysettings.ui.PocketMoneySettingsFragment">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bgcolor">
+
+        <include
+            android:id="@+id/layout_toolbar"
+            layout="@layout/toolbar" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/verification_title"
+            style="@style/TextviewRegular"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/dp20"
+            android:layout_marginTop="@dimen/dp16"
+            android:text="@string/active_reminders"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:fontFamily="@font/product_sans_bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_toolbar" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clEmptyPocketMoneyReminder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/btnPocketSettingAddNow"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_toolbar">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivJackpotEmpty"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_timer_pocket_settings" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvJackpotsComing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:text="@string/setup_pocket_money_reminder_now"
+                android:textColor="#9CA3A5"
+                android:textSize="18sp"
+                app:fontFamily="@font/product_sans_regular"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ivJackpotEmpty" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvPocketMoneyReminder"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:clipToPadding="true"
+            android:paddingVertical="@dimen/dp8"
+            android:layout_margin="@dimen/dp8"
+            app:layout_constraintBottom_toTopOf="@+id/btnPocketSettingAddNow"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/verification_title" />
+
+        <Button
+            android:id="@+id/btnPocketSettingAddNow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/dp36"
+            android:layout_marginBottom="@dimen/dp16"
+            android:backgroundTint="#47BC5C"
+            android:fontFamily="@font/product_sans_bold"
+            android:paddingVertical="15dp"
+            android:text="@string/add_now"
+            android:textAllCaps="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

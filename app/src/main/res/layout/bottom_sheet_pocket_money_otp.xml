@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#1B1B1B">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/dp28">
+
+        <View
+            android:id="@+id/view_pocket_otp"
+            android:layout_width="48dp"
+            android:layout_height="4dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/curved_background13"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/verification_title"
+            style="@style/TextviewRegular"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/dp20"
+            android:layout_marginTop="28dp"
+            android:text="@string/enter_otp_here"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:fontFamily="@font/product_sans_bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view_pocket_otp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_mobile"
+            android:layout_width="@dimen/_220sdp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp20"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:text="@string/enter_the_otp_received_on_the_contact_number_you_entered"
+            android:textColor="#9CA3A5"
+            app:fontFamily="@font/product_sans_regular"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/verification_title" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/otp"
+            style="@style/TextviewRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_mobile"
+            android:layout_marginStart="@dimen/dp20"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="24dp"
+            android:text="@string/otp"
+            android:textSize="16sp"
+            app:fontFamily="@font/product_sans_bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_mobile" />
+
+        <com.mukesh.OtpView
+            android:id="@+id/otpView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:cursorVisible="false"
+            android:focusableInTouchMode="true"
+            android:inputType="textVisiblePassword|number"
+            android:itemBackground="@drawable/otp_background_pocket_view"
+            app:OtpItemCount="4"
+            app:OtpItemHeight="60dp"
+            app:OtpItemSpacing="30dp"
+            app:OtpItemWidth="60dp"
+            app:OtpViewType="none"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/otp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvResendIn"
+            style="@style/TextviewRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/otpView"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="@dimen/dp20"
+            android:layout_marginTop="@dimen/dp24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/otpView"
+            tools:text="1:59 Resend Otp In" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSentOtpAgain"
+            style="@style/TextviewRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/otpView"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/dp24"
+            android:layout_marginEnd="24dp"
+            android:text="@string/resend_otp"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/otpView" />
+
+        <Button
+            android:id="@+id/button_continue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/dp72"
+            android:layout_marginBottom="@dimen/dp26"
+            android:backgroundTint="#47BC5C"
+            android:fontFamily="@font/product_sans_bold"
+            android:paddingVertical="15dp"
+            android:text="@string/continue_txt"
+            android:textAllCaps="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvResendIn" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

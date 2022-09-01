@@ -220,6 +220,15 @@ object ApiConstant {
     const val API_GET_ACTIVE_COUPON_COUNT_DATA = "services/PockketService/api/active-coupon-count/"
 
     const val API_POST_OPT_STATUS_DATA = "services/NotificationService/services/NotificationService/api/whatsapp/opt/"
+
+    const val API_GET_POCKET_MONEY_REMINDER_DATA = "services/PockketService/api/pocketmoneyreminder/list/"
+
+    const val API_DELETE_POCKET_MONEY_REMINDER = "services/PockketService/api/pocketmoneyreminder/disable/"
+
+    const val API_VERIFY_OTP_POCKET_MONEY_REMINDER = "services/PockketService/api/pocketmoneyreminder/verify/"
+
+    const val API_ADD_POCKET_MONEY_REMINDER = "services/PockketService/api/pocketmoneyreminder/"
+
 }
 
 
