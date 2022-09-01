@@ -51,8 +51,7 @@ import java.util.concurrent.Executors.newSingleThreadExecutor
 /**
  *  Base Activity
  */
-abstract class
-BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
+abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
     BaseUpdateCheckActivity(), DialogUtils.OnAlertDialogNoInternetClickListener {
     private var dialog: Dialog? = null
     private var mViewDataBinding: T? = null
@@ -61,8 +60,6 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
     private lateinit var biometricPrompt: BiometricPrompt
     private lateinit var executor: Executor
     private lateinit var biometricManager: BiometricManager
-    val PERMISSION_READ_CONTACTS = 1
-    val PERMISSION_WRITE_EXTERNAL_STORAGE = 2
     private val TAG = BaseActivity::class.java.simpleName
     var navController: NavController? = null
 
@@ -216,7 +213,6 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
         {
             if(it) {
                 Utility.showToast(resources.getString(R.string.unauthrized_msg))
-                UserTrackr.logOut()
                 Utility.resetPreferenceAfterLogout()
                 val intent = Intent(this@BaseActivity , LoginView::class.java)
                     startActivity(intent)
@@ -226,23 +222,7 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
 
     }
 
-    /*
-    * This method will insert the firebase analytics Logs
-    * */
-    fun insertAnalyticsLogs() {
-        val params = Bundle()
-        params.putString("button_name", "Login")
-        params.putString("button_text", "Login clicked")
-        firebaseAnalytics.logEvent("fyp_login", params)
 
-        val bundle = Bundle()
-        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "100")
-        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "login_button")
-        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button")
-        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
-
-
-    }
 
     /*
    * Ask for device security pin, pattern or fingerprint
@@ -269,7 +249,7 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
     /*
     * Ask for device security pin, pattern or fingerprint greater than OS pie
     * */
-    fun askForDeviceSecurity(executor: Executor, isFingerPrintAllowed: Boolean) {
+    private fun askForDeviceSecurity(executor: Executor, isFingerPrintAllowed: Boolean) {
 
         val promptInfo = BiometricPrompt.PromptInfo.Builder()
             .setTitle(AppConstants.DIALOG_TITLE_AUTH)
@@ -352,6 +332,7 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
 
 
     // call back when password is correct or incorrect
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == AppConstants.DEVICE_SECURITY_REQUEST_CODE) {
@@ -556,16 +537,6 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
 
     }
 
-    /**
-     * @param context
-     * @return true if pass or pin set
-     */
-    fun isPassOrPinSet(): Boolean {
-        val keyguardManager =
-            getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager //api 16+
-        return keyguardManager.isKeyguardSecure
-    }
-
     /*
   * This method is used to call fresh chat
   * */
@@ -593,7 +564,7 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
             fresh.user = user
         }
         val faqOptions = FaqOptions()
-            .showFaqCategoriesAsGrid(false)
+            .showFaqCategoriesAsGrid(true)
             .showContactUsOnAppBar(true)
             .showContactUsOnFaqScreens(true)
             .showContactUsOnFaqNotHelpful(true)

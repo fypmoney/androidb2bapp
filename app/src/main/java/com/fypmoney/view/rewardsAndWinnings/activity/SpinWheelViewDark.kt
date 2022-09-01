@@ -20,6 +20,7 @@ import com.fypmoney.databinding.ViewSpinWheelBlackBinding
 import com.fypmoney.model.SectionListItem
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
+import com.fypmoney.util.spinwheel.LuckyWheelView
 import com.fypmoney.view.fragment.ErrorBottomSpinProductSheet
 import com.fypmoney.view.rewardsAndWinnings.viewModel.SpinWheelProductViewModel
 import kotlinx.android.synthetic.main.dialog_cash_won.*
@@ -103,12 +104,11 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
         }
 
         try {
+            luckyWheelView.setLuckyRoundItemSelectedListener(object : LuckyWheelView.LuckyRoundItemSelectedListener{
+                override fun LuckyRoundItemSelected(index: Int) {
+                    sectionArrayList.forEach { item ->
 
-            luckyWheelView.setLuckyRoundItemSelectedListener {
-
-                sectionArrayList.forEach { item ->
-
-                    if (item.id == sectionId.toString()) {
+                        if (item.id == sectionId.toString()) {
 
                             if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
                                 trackr {
@@ -119,22 +119,24 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
                                 offer_found_tv?.visibility = View.VISIBLE
                                 showwonDialog(item.sectionValue)
                                 mp = MediaPlayer.create(
-                                    this,
+                                    this@SpinWheelViewDark,
                                     R.raw.reward_won_sound
                                 )
                                 mp?.start()
                             }
 
 
-                        return@forEach
+                            return@forEach
+
+                        }
+
 
                     }
 
-
                 }
 
+            })
 
-            }
         } catch (e: Exception) {
 
         }

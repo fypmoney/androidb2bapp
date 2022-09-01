@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navOptions
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.trackr
@@ -22,12 +23,12 @@ import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.util.videoplayer.VideoActivity2
-import com.fypmoney.util.videoplayer.VideoActivityWithExplore
+import com.fypmoney.util.videoplayer.VideoWithExploreFragment
 import com.fypmoney.view.StoreWebpageOpener2
 import com.fypmoney.view.activity.UserFeedsDetailView
 import com.fypmoney.view.activity.UserFeedsInAppWebview
 import com.fypmoney.view.adapter.FeedsAdapter
-import com.fypmoney.view.fragment.OfferDetailsBottomSheet
+import com.fypmoney.view.storeoffers.OfferDetailsBottomSheet
 import com.fypmoney.view.fypstories.view.StoriesBottomSheet
 import com.fypmoney.view.home.main.explore.ViewDetails.ExploreInAppWebview
 import com.fypmoney.view.home.main.explore.`interface`.ExploreItemClickListener
@@ -242,11 +243,15 @@ class RewardsJackpotFragment : BaseFragment<FragmentJackpotOverviewBinding, Rewa
 
                     }
                     AppConstants.TYPE_VIDEO_EXPLORE -> {
-                        val intent = Intent(requireActivity(), VideoActivityWithExplore::class.java)
-                        intent.putExtra(ARG_WEB_URL_TO_OPEN, it.redirectionResource)
-                        intent.putExtra(AppConstants.ACTIONFLAG, it.actionFlagCode)
-
-                        startActivity(intent)
+                        findNavController().navigate(Uri.parse("https://www.fypmoney.in/videowithexplore?videoUrl=${it.redirectionResource}&actionFlag=${it.actionFlagCode}"),
+                            navOptions {
+                                anim {
+                                    popEnter = R.anim.slide_in_left
+                                    popExit = R.anim.slide_out_righ
+                                    enter = R.anim.slide_in_right
+                                    exit = R.anim.slide_out_left
+                                }
+                            })
                     }
                     AppConstants.EXPLORE_IN_APP -> {
                         it.redirectionResource?.let { uri ->

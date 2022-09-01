@@ -114,6 +114,7 @@
                     android:layout_marginLeft="@dimen/dp20"
                     android:layout_marginTop="@dimen/dp27"
                     android:layout_marginRight="@dimen/dp20"
+                    android:drawableTint="@color/white"
                     android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_down_24"
                     android:drawablePadding="@dimen/_10sdp"
                     android:gravity="start|center"

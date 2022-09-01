@@ -1,4 +1,4 @@
-package com.fypmoney.view.fragment
+package com.fypmoney.view.storeoffers
 
 
 import android.app.Dialog

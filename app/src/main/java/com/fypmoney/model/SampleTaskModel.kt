@@ -7,15 +7,6 @@ import java.io.Serializable
 class SampleTaskModel {
 
     @Keep
-    data class TasksResponse(
-        @SerializedName("data") val sampleTaskResponseDetails: List<SampleTaskDetails> = mutableListOf()
-    ) : Serializable
-    @Keep
-    data class TaskResponseById(
-        @SerializedName("data") val sampleTaskResponseDetails: SampleTaskDetails
-    ) : Serializable
-
-    @Keep
     data class SampleTaskDetails(
         @SerializedName("id") var id: String? = null,
         @SerializedName("name") var name: String? = null,

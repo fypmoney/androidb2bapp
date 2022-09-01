@@ -3,17 +3,11 @@ package com.fypmoney.view.fragment
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.ViewWalkThroughNewFourBinding
-import com.fypmoney.databinding.ViewWalkThroughNewThirdBinding
-import com.fypmoney.databinding.ViewWalkThroughThreeBinding
 import com.fypmoney.viewmodel.WalkThroughThreeViewModel
-import kotlinx.android.synthetic.main.view_walk_through_three.*
-import kotlinx.android.synthetic.main.view_walk_through_three.imageView
-import kotlinx.android.synthetic.main.view_walk_through_two.*
 
 /*
 * This class is used as Add member Screen

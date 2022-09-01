@@ -169,7 +169,6 @@ class CategoryWaiseTransactionDetailsFragmentVM(application: Application) : Base
                     txnItem.category = data.data?.category!!
                     txnItem.iconLink = data.data.iconLink!!
                     txnItem.categoryCode = data.data.categoryCode!!
-
                     _state.value = CategoryWaiseTxnDetailsState.MerchantCategoryUpdated(
                         MerchantCategory(category = data.data.category, iconLink = data.data.iconLink, categoryCode = data.data.categoryCode)
                     )

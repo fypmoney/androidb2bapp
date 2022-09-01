@@ -98,20 +98,7 @@ class RewardsFragment : BaseFragment<FragmentRewardsBinding, RewardsFragmentVM>(
 //
 //        binding.viewPager.adapter = adapter
 //        binding.viewPager.offscreenPageLimit = 0
-        var tabchangeListner = object : HomeTabChangeClickListener {
-            override fun tabchange(pos: Int, str: String) {
-                when (str) {
-                    getString(R.string.jackpot) -> {
-                        binding.viewPager.currentItem = 2
-                    }
-                    getString(R.string.reward_history) -> {
-                        binding.viewPager.currentItem = 3
-                    }
-                }
 
-            }
-
-        }
 
         // add Fragments in your ViewPagerFragmentAdapter class
 

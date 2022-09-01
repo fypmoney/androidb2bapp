@@ -24,7 +24,7 @@ import com.fypmoney.extension.toVisible
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.util.videoplayer.VideoActivity2
-import com.fypmoney.util.videoplayer.VideoActivityWithExplore
+import com.fypmoney.util.videoplayer.VideoWithExploreFragment
 import com.fypmoney.view.StoreWebpageOpener2
 import com.fypmoney.view.home.main.explore.ViewDetails.ExploreInAppWebview
 import com.fypmoney.view.home.main.explore.`interface`.ExploreItemClickListener
@@ -260,10 +260,15 @@ class MobileNumberInfoRechargeFragment:BaseFragment<MobileNumberInfoRechargeFrag
 
             }
             AppConstants.TYPE_VIDEO_EXPLORE -> {
-                val intent = Intent(requireActivity(), VideoActivityWithExplore::class.java)
-                intent.putExtra(ARG_WEB_URL_TO_OPEN, redirectionResource)
-                intent.putExtra(AppConstants.ACTIONFLAG, sectionContentItem.actionFlagCode)
-                startActivity(intent)
+                findNavController().navigate(Uri.parse("https://www.fypmoney.in/videowithexplore?videoUrl=${redirectionResource}&actionFlag=${sectionContentItem.actionFlagCode}"),
+                    navOptions {
+                        anim {
+                            popEnter = R.anim.slide_in_left
+                            popExit = R.anim.slide_out_righ
+                            enter = R.anim.slide_in_right
+                            exit = R.anim.slide_out_left
+                        }
+                    })
             }
             AppConstants.EXPLORE_SECTION_EXPLORE -> {
                 val directions = MobileNumberInfoRechargeFragmentDirections.actionExploreSectionExplore(

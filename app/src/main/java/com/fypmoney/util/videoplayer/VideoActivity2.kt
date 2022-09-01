@@ -7,13 +7,13 @@ import android.os.Handler
 import android.util.Log
 import android.view.SurfaceHolder
 import android.view.View
+import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.amazonaws.ivs.player.Player
-import com.amazonaws.ivs.player.ViewUtil
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
@@ -79,7 +79,8 @@ class VideoActivity2 : BaseActivity<ActivityVideo2Binding, VideoViewModel>(),
                             TAG,
                             "On rotation player layout params changed $width $height"
                         )
-                        ViewUtil.setLayoutParams(surface_view, width, height)
+                       /* val prams = ViewGroup.LayoutParams(width, height)
+                        surface_view.layoutParams = prams*/
                     }
                 }
             }
@@ -156,7 +157,8 @@ class VideoActivity2 : BaseActivity<ActivityVideo2Binding, VideoViewModel>(),
 
         viewModel.playerParamsChanged.observe(this, Observer {
             Log.d(TAG, "Player layout params changed ${it.first} ${it.second}")
-            ViewUtil.setLayoutParams(surface_view, it.first, it.second)
+            /*val prams = ViewGroup.LayoutParams(it.first, it.second)
+            surface_view.layoutParams = prams*/
         })
 
         viewModel.errorHappened.observe(this, Observer {

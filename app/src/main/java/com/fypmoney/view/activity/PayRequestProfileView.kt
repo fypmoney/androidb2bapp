@@ -23,7 +23,6 @@ import com.fypmoney.view.register.PanAdhaarSelectionActivity
 import com.fypmoney.view.register.fragments.CompleteKYCBottomSheet
 import com.fypmoney.view.upgradetokyc.UpgradeToKycInfoActivity
 import com.fypmoney.viewmodel.PayRequestProfileViewModel
-import kotlinx.android.synthetic.main.screen_card.*
 import kotlinx.android.synthetic.main.toolbar.*
 
 /*
@@ -33,7 +32,7 @@ class PayRequestProfileView :
     BaseActivity<ViewPayRequestProfileBinding, PayRequestProfileViewModel>(),
     MyProfileListAdapter.OnListItemClickListener {
     private lateinit var mViewModel: PayRequestProfileViewModel
-
+    private lateinit var binding: ViewPayRequestProfileBinding
     override fun getBindingVariable(): Int {
         return BR.viewModel
     }
@@ -49,6 +48,7 @@ class PayRequestProfileView :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = getViewDataBinding()
         setToolbarAndTitle(
             context = this@PayRequestProfileView,
             toolbar = toolbar,
@@ -62,7 +62,7 @@ class PayRequestProfileView :
         //drawableIds.add(R.drawable.transsactions)
 
         val myProfileAdapter = MyProfileListAdapter(applicationContext, this)
-        list.adapter = myProfileAdapter
+        binding.list.adapter = myProfileAdapter
 
         myProfileAdapter.setList(
             iconList1 = drawableIds,

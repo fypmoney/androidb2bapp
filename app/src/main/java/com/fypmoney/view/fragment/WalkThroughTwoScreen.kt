@@ -3,16 +3,11 @@ package com.fypmoney.view.fragment
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.ViewWalkThroughNewTwoBinding
-import com.fypmoney.databinding.ViewWalkThroughTwoBinding
 import com.fypmoney.viewmodel.WalkThroughTwoViewModel
-import kotlinx.android.synthetic.main.view_walk_through_one.*
-import kotlinx.android.synthetic.main.view_walk_through_two.*
-import kotlinx.android.synthetic.main.view_walk_through_two.imageView
 
 /*
 * This class is used as walk through screen

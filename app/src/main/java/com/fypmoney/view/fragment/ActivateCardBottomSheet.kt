@@ -18,7 +18,7 @@ import com.fypmoney.application.PockketApplication
 import com.fypmoney.databinding.BottomSheetActivateCardBinding
 import com.fypmoney.util.Utility
 import com.fypmoney.util.textview.ClickableSpanListener
-import com.fypmoney.util.textview.MyStoreClickableSpan
+import com.fypmoney.util.textview.FYPClickableSpan
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
@@ -110,7 +110,7 @@ class ActivateCardBottomSheet(
         val ss = SpannableString(text);
         ss.setSpan(
 
-            MyStoreClickableSpan(pos = 1, clickableSpanListener = object : ClickableSpanListener {
+            FYPClickableSpan(pos = 1, clickableSpanListener = object : ClickableSpanListener {
                 override fun onPositionClicked(pos: Int) {
                     onActivateCardClickListener.onPrivacyPolicyTermsClicked(getString(R.string.privacy_policy),"https://www.fypmoney.in/fyp/privacy-policy/")
 
@@ -121,7 +121,7 @@ class ActivateCardBottomSheet(
             Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
         )
         ss.setSpan(
-            MyStoreClickableSpan(pos = 2, clickableSpanListener = object : ClickableSpanListener {
+            FYPClickableSpan(pos = 2, clickableSpanListener = object : ClickableSpanListener {
                 override fun onPositionClicked(pos: Int) {
                     onActivateCardClickListener.onPrivacyPolicyTermsClicked(getString(R.string.terms_and_conditions),"https://www.fypmoney.in/fyp/terms-of-use/")
                 }

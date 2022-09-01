@@ -147,13 +147,6 @@ class NewAddMoneyActivityVM(application: Application):BaseViewModel(application)
                                     )
                                 )
                             }else if(it.mode=="SHOW_STATIC_QR_INFO"){
-                                /*if(isClicked){
-                                    it.toShow = "YES"
-                                }else{
-                                    it.toShow = "YES"
-                                    it.identifier1 = "test@Gmail.com"
-                                    it.identifier2 = "dsadasd"
-                                }*/
                                 if(((it.toShow!!)=="YES") && (it.identifier1.isNullOrEmpty() || it.identifier2.isNullOrEmpty())){
                                     _state.value = BankDetailsState.UnableToGenerateUPIIdState
                                 }else{

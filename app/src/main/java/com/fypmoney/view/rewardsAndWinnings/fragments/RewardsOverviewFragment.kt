@@ -5,7 +5,6 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
-import android.os.SystemClock
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -26,14 +25,14 @@ import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.util.videoplayer.VideoActivity2
-import com.fypmoney.util.videoplayer.VideoActivityWithExplore
+import com.fypmoney.util.videoplayer.VideoWithExploreFragment
 import com.fypmoney.view.StoreWebpageOpener2
 import com.fypmoney.view.activity.UserFeedsDetailView
 import com.fypmoney.view.activity.UserFeedsInAppWebview
 import com.fypmoney.view.adapter.FeedsAdapter
 import com.fypmoney.view.arcadegames.model.ArcadeType
 import com.fypmoney.view.arcadegames.model.checkTheArcadeType
-import com.fypmoney.view.fragment.OfferDetailsBottomSheet
+import com.fypmoney.view.storeoffers.OfferDetailsBottomSheet
 import com.fypmoney.view.fypstories.view.StoriesBottomSheet
 import com.fypmoney.view.home.main.explore.ViewDetails.ExploreInAppWebview
 import com.fypmoney.view.home.main.explore.`interface`.ExploreItemClickListener
@@ -50,7 +49,6 @@ class RewardsOverviewFragment :
     BaseFragment<FragmentRewardsOverviewBinding, RewardsAndVM>(),
     FeedsAdapter.OnFeedItemClickListener {
 
-    private var mLastClickTime: Long = 0
 
     companion object {
         var page = 0
@@ -62,15 +60,6 @@ class RewardsOverviewFragment :
 
     private var mViewBinding: FragmentRewardsOverviewBinding? = null
     private var mViewmodel: RewardsAndVM? = null
-
-//    val startForResult =
-//        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-//            if (result.resultCode == 99) {
-//                mViewmodel?.totalMynts?.postValue(true)
-//            }
-//
-//        }
-    //private var feedsRewardsAdapter: FeedsRewardsAdapter? = null
 
     override fun getBindingVariable(): Int {
         return BR.viewModel
@@ -90,10 +79,6 @@ class RewardsOverviewFragment :
     }
 
     override fun onFeedClick(position: Int, feedDetails: FeedDetails) {
-        if (SystemClock.elapsedRealtime() - mLastClickTime < 1200) {
-            return
-        }
-        mLastClickTime = SystemClock.elapsedRealtime()
         when (feedDetails.displayCard) {
             AppConstants.FEED_TYPE_DEEPLINK -> {
                 feedDetails.action?.url?.let {
@@ -292,11 +277,15 @@ class RewardsOverviewFragment :
 
             }
             AppConstants.TYPE_VIDEO_EXPLORE -> {
-                val intent = Intent(requireActivity(), VideoActivityWithExplore::class.java)
-                intent.putExtra(ARG_WEB_URL_TO_OPEN, sectionContentItem.redirectionResource)
-                intent.putExtra(AppConstants.ACTIONFLAG, sectionContentItem.actionFlagCode)
-
-                startActivity(intent)
+                findNavController().navigate(Uri.parse("https://www.fypmoney.in/videowithexplore?videoUrl=${sectionContentItem.redirectionResource}&amp;actionFlag=${sectionContentItem.actionFlagCode}"),
+                    navOptions {
+                        anim {
+                            popEnter = R.anim.slide_in_left
+                            popExit = R.anim.slide_out_righ
+                            enter = R.anim.slide_in_right
+                            exit = R.anim.slide_out_left
+                        }
+                    })
             }
             AppConstants.EXPLORE_SECTION_EXPLORE -> {
                 val directions = RewardsOverviewFragmentDirections.actionExploreSectionExplore(

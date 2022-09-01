@@ -1,13 +1,11 @@
 package com.fypmoney.view.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.base.BaseViewHolder
 import com.fypmoney.databinding.CashbackHistoryRowItemBinding
 import com.fypmoney.model.BankTransactionHistoryResponseDetails
-import com.fypmoney.model.CashbackWonResponse
 import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsCashbackwonVM
 import com.fypmoney.viewhelper.CashBackHistoryViewHelper
 

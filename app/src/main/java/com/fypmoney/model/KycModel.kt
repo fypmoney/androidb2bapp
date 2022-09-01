@@ -96,18 +96,6 @@ data class KycVerificationResponseDetails(
    @SerializedName("age") val age: Int?,
 ):Serializable
 
-/*{
-  "msg": "Adhar Registered Successfully.",
-  "data": {
-    "message": "Adhar Registered Successfully.",
-    "action": "ADHAR_AUTH",
-    "token": null,
-    "expiryTime": null,
-    "postKycScreenCode": 90,
-    "age": 24
-  }
-}
-* */
 
 
 

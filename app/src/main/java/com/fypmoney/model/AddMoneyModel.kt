@@ -6,9 +6,7 @@ import com.google.gson.annotations.SerializedName
 import com.payu.paymentparamhelper.PostData
 import java.io.Serializable
 
-@Keep
-data class AddMoneyModel(var name: String? = null, var imageUrl: String? = null) {
-}
+
 @Keep
 data class UpiModel(
     var name: String? = null,

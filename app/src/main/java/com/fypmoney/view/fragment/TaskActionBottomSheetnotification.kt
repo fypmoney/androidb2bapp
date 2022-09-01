@@ -13,7 +13,6 @@ import androidx.databinding.ObservableField
 import com.fypmoney.R
 import com.fypmoney.model.NotificationModel
 import com.fypmoney.model.NotificationTaskObjectModel
-import com.fypmoney.view.activity.HomeView
 import com.fypmoney.view.interfaces.AcceptRejectClickListener
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -50,39 +49,13 @@ class TaskActionBottomSheetnotification(
 
         getExtraDetail(list!!, view)
 
-        accept.setOnClickListener(View.OnClickListener {
-            if (accept.text == "Accept") {
-                HomeView.mViewModel!!.callTaskAccept("ACCEPT", list?.entityId.toString(), "")
-            } else if (accept.text == "Completed") {
-                HomeView.mViewModel!!.callTaskAccept(
-                    "COMPLETE", list?.entityId.toString(), view.comment.text?.trim()
-                        .toString()
-                )
+        accept.setOnClickListener({
 
-            } else if (accept.text == "Pay") {
-                onClickListener.onAcceptClicked(
-                    56, view.comment.text?.trim()
-                        .toString()
-                )
-
-
-            }
 
 
         })
         view.reject.setOnClickListener(View.OnClickListener {
-            if (view.reject.text == "Reject") {
-                HomeView.mViewModel!!.callTaskAccept("REJECT", list?.entityId.toString(), "")
-            } else if (view.reject.text == "In process") {
-                onClickListener.ondimiss()
-            } else if (view.reject.text == "Depreciate") {
 
-                HomeView.mViewModel!!.callTaskAccept(
-                    "DEPRECIATE", list?.entityId.toString(), comment.text?.trim()
-                        .toString()
-                )
-
-            }
 
         })
         if (list?.actionAllowed == "COMPLETE") {

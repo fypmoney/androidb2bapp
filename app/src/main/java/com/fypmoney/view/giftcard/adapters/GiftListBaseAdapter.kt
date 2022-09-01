@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.R
-import com.fypmoney.view.giftcard.GiftCardAdapter
 import com.fypmoney.view.giftcard.model.GiftSearchResponse
 import com.fypmoney.view.giftcard.model.VoucherBrandItem
 import kotlinx.android.synthetic.main.gift_section_base.view.*

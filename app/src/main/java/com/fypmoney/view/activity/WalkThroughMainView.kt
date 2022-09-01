@@ -18,7 +18,6 @@ import com.fypmoney.view.fragment.WalkThroughThreeScreen
 import com.fypmoney.view.fragment.WalkThroughTwoScreen
 import com.fypmoney.viewmodel.WalkThroughMainViewModel
 import kotlinx.android.synthetic.main.view_walk_through_main.*
-import kotlinx.android.synthetic.main.view_walk_through_one.*
 
 
 /*

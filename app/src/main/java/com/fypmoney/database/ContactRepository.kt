@@ -20,15 +20,6 @@ import kotlinx.coroutines.runBlocking
 class ContactRepository(mDB: AppDatabase?) {
     private var appDB: AppDatabase? = mDB
     private val TAG = ContactRepository::class.java.simpleName
-    /*  */
-    /**
-     * Method to fetch the contacts from local database.
-     *//*
-    fun getContactsFromDatabase(): List<ContactEntity>? {
-        return runBlocking {
-            appDB?.contactDao()?.getAllContacts()
-        }
-    }*/
 
     /**
      * Method to fetch the contacts from local database.

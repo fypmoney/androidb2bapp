@@ -10,7 +10,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp12"
+        android:layout_marginStart="@dimen/dp6"
+        android:layout_marginEnd="@dimen/dp6"
         android:layout_marginTop="@dimen/dp16"
         android:background="@color/bgcolor">
 
@@ -100,6 +101,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/viewActiveBrandCoupon" />
+
+        <ProgressBar
+            android:id="@+id/progressActiveCoupon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:visibility="invisible"
+            app:layout_constraintTop_toBottomOf="@+id/viewActiveBrandCoupon"/>
+
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline2"

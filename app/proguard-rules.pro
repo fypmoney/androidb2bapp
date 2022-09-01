@@ -109,7 +109,6 @@
 -keep class com.fypmoney.connectivity.ApiDataParsing
 -keep class com.fypmoney.connectivity.network.NetworkUtil
 -keep class com.fypmoney.connectivity.retrofit.ApiClient
--keep class com.fypmoney.connectivity.retrofit.ApiClient1
 -keep class com.fypmoney.view.activity.AddMoneyUpiDebitView
 -keep class com.fypmoney.view.fragment.AddUpiBottomSheet
 -keep class com.fypmoney.viewmodel.AddMoneyUpiDebitViewModel

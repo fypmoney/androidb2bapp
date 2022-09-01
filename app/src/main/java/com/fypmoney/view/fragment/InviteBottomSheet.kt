@@ -2,27 +2,19 @@ package com.fypmoney.view.fragment
 
 
 import android.app.Dialog
-import android.content.ClipData
 import android.content.ClipboardManager
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import androidx.databinding.DataBindingUtil
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
-import com.fypmoney.databinding.BottomSheetInviteBinding
-import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kotlinx.android.synthetic.main.bottom_sheet_invite.view.*
-import kotlinx.android.synthetic.main.screen_home.*
 
 
 /*

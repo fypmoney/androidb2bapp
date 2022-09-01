@@ -24,6 +24,10 @@ import com.fypmoney.util.DialogUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.util.Utility.removePlusOrNineOneFromNo
 import com.fypmoney.view.adapter.addmemberAdapter
+import com.fypmoney.view.contacts.model.CONTACT_ACTIVITY_UI_MODEL
+import com.fypmoney.view.contacts.model.ContactActivityActionEvent
+import com.fypmoney.view.contacts.model.ContactsActivityUiModel
+import com.fypmoney.view.contacts.view.PayToContactsActivity
 import com.fypmoney.view.fragment.taskAddedMessageBottomSheet
 import com.fypmoney.view.interfaces.ListItemClickListener
 import com.fypmoney.view.interfaces.MessageSubmitClickListener
@@ -339,7 +343,12 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding, AddTaskViewModel>()
 
             override fun onCallClicked(pos: Int) {
                 if (validate()) {
-                    intentToActivity(ContactViewAddMember::class.java)
+                    val intent = Intent(this@AddTaskActivity, PayToContactsActivity::class.java)
+                    intent.putExtra(
+                        CONTACT_ACTIVITY_UI_MODEL, ContactsActivityUiModel(toolBarTitle = getString(R.string.select_member),
+                            showLoadingBalance = false,contactClickAction = ContactActivityActionEvent.AddMember)
+                    )
+                    startActivity(intent)
                 }
             }
         }

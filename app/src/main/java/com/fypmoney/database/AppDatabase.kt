@@ -6,8 +6,6 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
-import com.fypmoney.data.upidata.model.RecentUpiDao
-import com.fypmoney.data.upidata.model.RecentlyUsedUpi
 import com.fypmoney.database.dao.ContactDao
 import com.fypmoney.database.dao.InterestDao
 import com.fypmoney.database.dao.MemberDao

@@ -28,8 +28,8 @@ import com.fypmoney.util.Utility
 import com.fypmoney.view.adapter.GlobalListAdapter
 import com.fypmoney.view.adapter.ListUiModel
 import com.fypmoney.view.community.SocialCommunityActivity
-import com.fypmoney.view.discord.DiscordInviteActivity
-import com.fypmoney.view.discord.DiscordProfileActivity
+import com.fypmoney.view.discord.view.DiscordInviteActivity
+import com.fypmoney.view.discord.view.DiscordProfileActivity
 import com.fypmoney.view.fragment.LogoutBottomSheet
 import com.fypmoney.view.pocketmoneysettings.ui.PocketMoneySettingsFragment
 import com.fypmoney.view.register.PanAdhaarSelectionActivity
@@ -207,7 +207,7 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
             R.anim.slide_in_left,
             R.anim.slide_out_righ
         );
-        tr.add(R.id.container, FamilySettingsView())
+        tr.add(R.id.container, FamilySettingsFragment())
         tr.addToBackStack("family")
         tr.commit()
         //mViewBinding.container.toVisible()

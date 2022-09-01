@@ -7,11 +7,11 @@ import com.google.gson.annotations.SerializedName
 data class BrandedCouponDetailsResponse(
 
     @field:SerializedName("data")
-    val data: CouponDetailsData? = null
+    val data: CouponDetails? = null
 )
 
 @Keep
-data class CouponDetailsData(
+data class CouponDetails(
 
     @field:SerializedName("image")
     val image: String? = null,

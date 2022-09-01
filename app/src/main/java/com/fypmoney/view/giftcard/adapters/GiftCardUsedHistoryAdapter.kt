@@ -1,4 +1,4 @@
-package com.fypmoney.view.giftcard
+package com.fypmoney.view.giftcard.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

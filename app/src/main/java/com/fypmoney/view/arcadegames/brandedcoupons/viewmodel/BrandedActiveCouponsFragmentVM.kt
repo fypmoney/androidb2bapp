@@ -11,10 +11,10 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.BaseRequest
+import com.fypmoney.model.QueryPaginationParams
 import com.fypmoney.model.RewardPointsSummaryResponse
-import com.fypmoney.view.arcadegames.brandedcoupons.model.ActiveCouponsListItem
-import com.fypmoney.view.arcadegames.brandedcoupons.model.BrandedActiveCouponResponse
-import com.fypmoney.view.arcadegames.brandedcoupons.model.BrandedCouponCountResponse
+import com.fypmoney.util.livedata.LiveEvent
+import com.fypmoney.view.arcadegames.brandedcoupons.model.*
 import com.fypmoney.view.arcadegames.model.MultipleJackpotNetworkResponse
 import com.fypmoney.view.rewardsAndWinnings.model.totalRewardsResponse
 import com.google.gson.Gson
@@ -22,6 +22,8 @@ import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 
 class BrandedActiveCouponsFragmentVM(application: Application) : BaseViewModel(application) {
+
+    var couponDetailsData: CouponDetails? = null
 
     val stateMynts: LiveData<MyntsState>
         get() = _stateMynts
@@ -43,12 +45,15 @@ class BrandedActiveCouponsFragmentVM(application: Application) : BaseViewModel(a
         get() = _stateBrandedActiveCoupons
     private val _stateBrandedActiveCoupons = MutableLiveData<BrandedActiveCouponDataState>()
 
+    val stateBrandedCoupon: LiveData<BrandedCouponDetailsState>
+        get() = _stateBrandedCoupon
+    private val _stateBrandedCoupon = LiveEvent<BrandedCouponDetailsState>()
+
     init {
         callMyntsSummaryApi()
         callTotalCashRewardsEarnings()
         callTotalJackpotCards()
         callBrandedActiveCount()
-        callBrandedActiveCouponData()
     }
 
     private fun callMyntsSummaryApi() {
@@ -99,14 +104,30 @@ class BrandedActiveCouponsFragmentVM(application: Application) : BaseViewModel(a
         )
     }
 
-    private fun callBrandedActiveCouponData() {
+    fun callBrandedActiveCouponData(page: Int) {
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_GET_ACTIVE_COUPON_DATA,
                 NetworkUtil.endURL(ApiConstant.API_GET_ACTIVE_COUPON_DATA),
                 ApiUrl.GET,
-                BaseRequest(),
+                param = QueryPaginationParams(
+                    page,
+                    10,
+                    null
+                ),
                 this, isProgressBar = false
+            )
+        )
+    }
+
+    fun callRewardCouponsApi(code: String?) {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_GET_COUPON_REWARD_DATA,
+                NetworkUtil.endURL(ApiConstant.API_GET_COUPON_REWARD_DATA + code),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = true
             )
         )
     }
@@ -144,13 +165,26 @@ class BrandedActiveCouponsFragmentVM(application: Application) : BaseViewModel(a
 
             ApiConstant.API_GET_ACTIVE_COUPON_COUNT_DATA -> {
                 if (responseData is BrandedCouponCountResponse) {
-                    _stateCouponCount.value = CouponCountState.CouponCountSuccess(responseData.data?.amount)
+                    _stateCouponCount.value =
+                        CouponCountState.CouponCountSuccess(responseData.data?.amount)
                 }
             }
 
             ApiConstant.API_GET_ACTIVE_COUPON_DATA -> {
                 if (responseData is BrandedActiveCouponResponse) {
-                    _stateBrandedActiveCoupons.value = BrandedActiveCouponDataState.BrandedCouponSuccess(responseData.data?.activeCouponsList)
+                    _stateBrandedActiveCoupons.value =
+                        BrandedActiveCouponDataState.BrandedCouponSuccess(responseData.data?.activeCouponsList)
+                }
+            }
+
+            ApiConstant.API_GET_COUPON_REWARD_DATA -> {
+                if (responseData is BrandedCouponDetailsResponse) {
+                    _stateBrandedCoupon.value =
+                        responseData.data?.let {
+                            BrandedCouponDetailsState.BrandedCouponDetailsSuccess(
+                                it
+                            )
+                        }
                 }
             }
 
@@ -177,6 +211,9 @@ class BrandedActiveCouponsFragmentVM(application: Application) : BaseViewModel(a
             ApiConstant.API_GET_ACTIVE_COUPON_DATA -> {
                 _stateBrandedActiveCoupons.value =
                     BrandedActiveCouponDataState.Error(errorResponseInfo)
+            }
+            ApiConstant.API_GET_COUPON_REWARD_DATA -> {
+                _stateBrandedCoupon.value = BrandedCouponDetailsState.Error(errorResponseInfo)
             }
 
         }
@@ -213,4 +250,12 @@ class BrandedActiveCouponsFragmentVM(application: Application) : BaseViewModel(a
         data class BrandedCouponSuccess(var activeCouponsListItem: List<ActiveCouponsListItem?>?) :
             BrandedActiveCouponDataState()
     }
+
+    sealed class BrandedCouponDetailsState {
+        object Loading : BrandedCouponDetailsState()
+        data class Error(var errorResponseInfo: ErrorResponseInfo) : BrandedCouponDetailsState()
+        data class BrandedCouponDetailsSuccess(var couponDetailsListData: CouponDetails) :
+            BrandedCouponDetailsState()
+    }
+
 }

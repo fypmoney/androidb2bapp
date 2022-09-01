@@ -167,14 +167,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent">
 
-                    <!--<com.fypmoney.util.MyKeyboard
-                        android:id="@+id/keyboard"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toTopOf="@+id/linear"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:visibility="gone"/>-->
+
                     <Button
                             android:id="@+id/btnSendOtp"
                             android:layout_width="wrap_content"

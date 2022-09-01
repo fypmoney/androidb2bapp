@@ -5,9 +5,7 @@ import com.fypmoney.database.entity.MemberEntity
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-class MemberModel(var name: String? = null, var imageUrl: String? = null) {
 
-}
 @Keep
 data class AddFamilyMemberRequest(
     @SerializedName("mobileNo") val mobileNo: String,
@@ -77,24 +75,7 @@ data class UpdateFamilyApprovalResponse(
 
 
 
-@Keep
-data class UpdateFamilyApprovalRequest(
-    @SerializedName("id") val id: String?=null,
-    @SerializedName("actionSelected") val actionSelected: String?=null,
-    @SerializedName("sourceUserId") var sourceUserId: Int?,
-    @SerializedName("destinationUserId") var destinationUserId: Int?,
-    @SerializedName("actionAllowed") var actionAllowed: String?,
-    @SerializedName("requestStatus") var requestStatus: String?,
-    @SerializedName("requestHandler") var requestHandler: String?,
-    @SerializedName("expiryDate") var expiryDate: String?,
-    @SerializedName("isParentRequest") var isParentRequest: String?,
-    @SerializedName("parentId") var parentId: String?,
-    @SerializedName("entityId") var entityId: String?,
-    @SerializedName("isApprovalProcessed") var isApprovalProcessed: String?,
-    @SerializedName("objectJson") var objectJson: String?,
-    @SerializedName("description") var description: String?,
-    @SerializedName("entityType") var entityType: String?,
-    @SerializedName("status") var status: String?) : BaseRequest()
+
 
 @Keep
 data class UpdateFamilyNameResponse(

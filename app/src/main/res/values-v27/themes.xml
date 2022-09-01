@@ -24,12 +24,6 @@
 
     </style>
 
-    <style name="Theme.AppCompat.Light.NoActionBar.FullScreen" parent="@style/Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowActionBar">false</item>
-        <item name="android:windowFullscreen">true</item>
-        <item name="android:windowContentOverlay">@null</item>
-    </style>
     <!--Button Style-->
     <style name="Widget.App.Button" parent="Widget.MaterialComponents.Button">
         <item name="materialButtonStyle">@style/Widget.MaterialComponents.Button</item>
@@ -123,36 +117,15 @@
     </style>
 
     <!--Button Style-->
-    <style name="App_Button" parent="Widget.MaterialComponents.Button">
-        <item name="materialButtonStyle">@style/Widget.MaterialComponents.Button</item>
-        <item name="android:textAllCaps">false</item>
-        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Button</item>
-        <item name="android:textColor">@color/buttonTextColor</item>
-        <item name="android:textSize">@dimen/textSize_18</item>
-        <item name="android:layout_width">299dp</item>
-        <item name="android:layout_height">52dp</item>
-        <item name="cornerRadius">@dimen/corner_radius</item>
-        <item name="android:background">@drawable/curved_background1</item>
-        <item name="fontFamily">@font/product_sans_regular</item>
-    </style>
 
 
     <!--Divider Style-->
-    <style name="Divider">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/divider_height</item>
-        <item name="android:background">@color/dividerColor</item>
-    </style>
     <!--Vertical Style-->
     <style name="VerticalDivider">
         <item name="android:layout_width">@dimen/divider_height</item>
         <item name="android:layout_height">0dp</item>
         <item name="android:background">@color/dividerColor</item>
     </style>
-
-    <style name="Theme.DreamfolksApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="Theme.DreamfolksApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Dark">
         <item name="android:fontFamily">@font/product_sans_regular</item>
@@ -184,12 +157,6 @@
         <item name="android:background">@drawable/shape_rounded_dialog</item>
     </style>
 
-    <style name="MyDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert" />
-
-    <style name="spinnerTheme">
-        <item name="android:textColor">@color/text_color_dark</item>
-    </style>
-
     <!--
     Textview product sans bold
     -->
@@ -210,26 +177,6 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/text_color_light</item>
         <item name="android:textSize">@dimen/textSize_14</item>
-        <item name="fontFamily">@font/product_sans_regular</item>
-    </style>
-
-    <style name="newsted">
-        <item name="android:background">@drawable/rounded_corner</item>
-
-
-    </style>
-
-    <style name="keyview">
-        <item name="android:background">@drawable/white_round</item>
-        <item name="android:padding">10dp</item>
-        <item name="android:textColor">@color/text_color_dark</item>
-        <item name="android:textSize">28sp</item>
-        <item name="fontFamily">@font/product_sans_regular</item>
-        <item name="android:textAlignment">center</item>
-        <item name="android:layout_margin">5dp</item>
-    </style>
-
-    <style name="Widget.BottomNavigationView" parent="Widget.Design.BottomNavigationView">
         <item name="fontFamily">@font/product_sans_regular</item>
     </style>
 
@@ -389,16 +336,6 @@
         <item name="android:textDirection">firstStrong</item>
     </style>
 
-    <style name="tab_style">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="tabIndicatorColor">@android:color/white</item>
-        <item name="tabIndicatorHeight">10dp</item>
-        <item name="android:background">@drawable/custom_indicator</item>
-        <item name="tabGravity">fill</item>
-        <item name="tabMode">fixed</item>
-    </style>
-
     <style name="Widget.GifView" parent="@android:style/Widget" />
 
     <style name="CustomBottomSheetDialogTheme" parent="Theme.MaterialComponents.BottomSheetDialog">
@@ -411,25 +348,6 @@
         <item name="android:navigationBarDividerColor" tools:ignore="NewApi">
             @android:color/transparent
         </item>
-    </style>
-
-    <style name="WhiteBottomSheetTheme" parent="Theme.MaterialComponents.BottomSheetDialog">
-        <item name="android:windowIsFloating">false</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowAnimationStyle">@style/Animation.MyTheme.BottomSheet.Modal</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="bottomSheetStyle">@style/Widget.MyTheme.BottomSheet.Modal</item>
-        <item name="android:navigationBarColor">@color/white</item>
-        <item name="android:navigationBarDividerColor" tools:ignore="NewApi">
-            @android:color/transparent
-        </item>
-    </style>
-
-    <style name="CustomBottomSheetDialogTheme1">
-        <item name="android:windowAnimationStyle">
-            @style/Animation.MaterialComponents.BottomSheetDialog
-        </item>
-        <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
 
@@ -458,8 +376,4 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
-    <style name="EditTextThemeOverlay" parent="Theme.MaterialComponents.Light">
-        <item name="colorAccent">@android:color/holo_blue_light</item>
-        <item name="boxBackgroundMode">none</item>
-    </style>
 </resources>

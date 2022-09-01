@@ -26,12 +26,12 @@ import com.fypmoney.util.AppConstants.OFFER_REDIRECTION
 import com.fypmoney.util.AppConstants.TYPE_VIDEO
 import com.fypmoney.util.Utility
 import com.fypmoney.util.videoplayer.VideoActivity2
-import com.fypmoney.util.videoplayer.VideoActivityWithExplore
+import com.fypmoney.util.videoplayer.VideoWithExploreFragment
 import com.fypmoney.view.StoreWebpageOpener2
 import com.fypmoney.view.activity.UserFeedsDetailView
 import com.fypmoney.view.arcadegames.model.ArcadeType
 import com.fypmoney.view.arcadegames.model.checkTheArcadeType
-import com.fypmoney.view.fragment.OfferDetailsBottomSheet
+import com.fypmoney.view.storeoffers.OfferDetailsBottomSheet
 import com.fypmoney.view.fypstories.view.StoriesBottomSheet
 import com.fypmoney.view.home.main.explore.ViewDetails.ExploreInAppWebview
 import com.fypmoney.view.home.main.explore.`interface`.ExploreItemClickListener
@@ -176,11 +176,15 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
 
                     }
                     AppConstants.TYPE_VIDEO_EXPLORE -> {
-                        val intent = Intent(requireActivity(), VideoActivityWithExplore::class.java)
-                        intent.putExtra(ARG_WEB_URL_TO_OPEN, it.redirectionResource)
-                        intent.putExtra(ACTIONFLAG, it.actionFlagCode)
-
-                        startActivity(intent)
+                        findNavController().navigate(Uri.parse("https://www.fypmoney.in/videowithexplore?videoUrl=${it.redirectionResource}&actionFlag=${it.actionFlagCode}"),
+                            navOptions {
+                                anim {
+                                    popEnter = R.anim.slide_in_left
+                                    popExit = R.anim.slide_out_righ
+                                    enter = R.anim.slide_in_right
+                                    exit = R.anim.slide_out_left
+                                }
+                            })
                     }
                     AppConstants.EXPLORE_IN_APP -> {
                         it.redirectionResource?.let { uri ->
