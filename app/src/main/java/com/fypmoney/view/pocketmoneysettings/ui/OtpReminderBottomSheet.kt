@@ -23,6 +23,7 @@ import com.fypmoney.extension.toVisible
 import com.fypmoney.model.SetPocketMoneyOtpReminder
 import com.fypmoney.model.SetPocketMoneyReminder
 import com.fypmoney.util.Utility
+import com.fypmoney.view.pocketmoneysettings.model.Data
 import com.fypmoney.view.pocketmoneysettings.model.PocketMoneyOtpVerifyResponse
 import com.fypmoney.view.pocketmoneysettings.model.PocketMoneyReminderResponse
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -35,6 +36,11 @@ class OtpReminderBottomSheet : BottomSheetDialogFragment(), WebApiCaller.OnWebAp
     private lateinit var binding: BottomSheetPocketMoneyOtpBinding
     var otp = ObservableField<String>()
     private lateinit var timer: CountDownTimer
+    private lateinit var notifyListener: OnActionCompleteListener
+
+    fun setOnActionCompleteListener(notifyListener: OnActionCompleteListener) {
+        this.notifyListener = notifyListener
+    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         BottomSheetDialog(requireContext(), theme)
@@ -108,6 +114,10 @@ class OtpReminderBottomSheet : BottomSheetDialogFragment(), WebApiCaller.OnWebAp
         touchOutsideView?.setOnClickListener(null)
     }
 
+    interface OnActionCompleteListener {
+        fun onActionComplete(data: String)
+    }
+
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
 
     override fun progress(isStart: Boolean, message: String) {
@@ -147,6 +157,7 @@ class OtpReminderBottomSheet : BottomSheetDialogFragment(), WebApiCaller.OnWebAp
             ApiConstant.API_VERIFY_OTP_POCKET_MONEY_REMINDER -> {
                 if (responseData is PocketMoneyOtpVerifyResponse) {
                     Utility.showToast("Reminder added successfully")
+                    notifyListener.onActionComplete("done")
                     dismiss()
                 }
             }
