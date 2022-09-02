@@ -3,6 +3,7 @@ package com.fypmoney.view.arcadegames.brandedcoupons.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.Keep
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
@@ -10,11 +11,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.fypmoney.R
 import com.fypmoney.databinding.ItemCouponDetailsTitleBinding
+import com.fypmoney.extension.executeAfter
 import com.fypmoney.extension.toGone
 import com.fypmoney.extension.toVisible
 import com.fypmoney.view.arcadegames.brandedcoupons.model.CouponDetailsTitleModel
 
-class CouponDetailsTitleAdapter(private val onItemExpendedClick:OnDetailsClicked) :
+class CouponDetailsTitleAdapter(private val lifecycleOwner: LifecycleOwner,private val onItemExpendedClick:OnDetailsClicked) :
     ListAdapter<CouponDetailsTitleUiModel, CouponDetailsTitleVH>(
         CouponDetailsTitleDiffUtils) {
 
@@ -24,55 +26,54 @@ class CouponDetailsTitleAdapter(private val onItemExpendedClick:OnDetailsClicked
             parent,
             false
         )
-        return CouponDetailsTitleVH(binding,onItemExpendedClick)
+        return CouponDetailsTitleVH(binding,lifecycleOwner,onItemExpendedClick)
     }
 
     override fun onBindViewHolder(holder: CouponDetailsTitleVH, position: Int) {
         holder.bind(getItem(position))
-
     }
 
 }
 
 class CouponDetailsTitleVH(private val binding: ItemCouponDetailsTitleBinding,
+                           private val lifecycleOwner1: LifecycleOwner,
 private val onItemExpendedClick:OnDetailsClicked
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(item: CouponDetailsTitleUiModel) {
+        binding.executeAfter {
+            lifecycleOwner = lifecycleOwner1
+            binding.tvRedeemRulesTitle.text = item.couponDetailsTitle
+            binding.ivRedeemRulesOffer.setImageResource(item.couponDetailsIcon)
 
-        binding.tvRedeemRulesTitle.text = item.couponDetailsTitle
-        binding.ivRedeemRulesOffer.setImageResource(item.couponDetailsIcon)
-
-
-        val layoutManager =
-            LinearLayoutManager(binding.root.context, LinearLayoutManager.VERTICAL, false)
-        binding.rvCouponDetailsContent.layoutManager = layoutManager
-
-
-
-        if (item.isExpended) {
             val redeemArray = item.arrayCouponDetails?.map {
                 CouponDetailsContentUiModel(it)
             }
-            binding.ivExpandRedeemRules.setImageResource(R.drawable.ic_forword_arrow)
-            binding.ivExpandRedeemRules.rotation = 90.0f
+
             val adapter = CouponDetailsContentAdapter()
             binding.rvCouponDetailsContent.adapter = adapter
             adapter.submitList(redeemArray)
-            binding.rvCouponDetailsContent.toVisible()
-        }
-        else{
-            binding.ivExpandRedeemRules.setImageResource(R.drawable.ic_forword_arrow)
-            binding.rvCouponDetailsContent.toGone()
-//                binding.cvCouponRedeemRules.startAnimation(animationCollapse)
-//                binding.ivExpandRedeemRules.animate().setDuration(400).rotation(0F)
+
+
+
+            binding.cvCouponRedeemRules.setOnClickListener {
+                /*item.isExpended = !item.isExpended
+                onItemExpendedClick.expendDetails(item)*/
+                if (!item.isExpended) {
+                    binding.ivExpandRedeemRules.setImageResource(R.drawable.ic_forword_arrow)
+                    binding.ivExpandRedeemRules.rotation = 90.0f
+                    binding.rvCouponDetailsContent.toVisible()
+                    item.isExpended = true
+                }
+                else{
+                    item.isExpended = false
+                    binding.ivExpandRedeemRules.rotation = 0.0f
+                    binding.ivExpandRedeemRules.setImageResource(R.drawable.ic_forword_arrow)
+                    binding.rvCouponDetailsContent.toGone()
+                }
+
+            }
         }
 
-        binding.cvCouponRedeemRules.setOnClickListener {
-            // setRecyclerData(binding, bindingAdapterPosition, isExpanded, item.arrayCouponDetails)
-            item.isExpended = !item.isExpended
-            onItemExpendedClick.expendDetails(item)
-
-        }
     }
 }
 
@@ -81,7 +82,7 @@ object CouponDetailsTitleDiffUtils : DiffUtil.ItemCallback<CouponDetailsTitleUiM
         oldItem: CouponDetailsTitleUiModel,
         newItem: CouponDetailsTitleUiModel
     ): Boolean {
-        return (oldItem.couponDetailsTitle == newItem.couponDetailsTitle)
+        return (oldItem == newItem)
     }
 
     override fun areContentsTheSame(

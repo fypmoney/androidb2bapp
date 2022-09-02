@@ -105,6 +105,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-common-java8:2.4.0'
     implementation 'com.google.firebase:firebase-dynamic-links:21.0.0'
     implementation "com.google.firebase:firebase-dynamic-links-ktx:21.0.0"
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

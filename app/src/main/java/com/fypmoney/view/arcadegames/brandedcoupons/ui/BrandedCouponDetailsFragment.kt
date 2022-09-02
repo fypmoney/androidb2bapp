@@ -166,13 +166,8 @@ class BrandedCouponDetailsFragment :
 
     }
 
-    private fun setRecyclerView(
-    ) {
-        val layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        binding.rvCouponDetailsTitle.layoutManager = layoutManager
-
-        val adapter = CouponDetailsTitleAdapter(this@BrandedCouponDetailsFragment)
+    private fun setRecyclerView() {
+        val adapter = CouponDetailsTitleAdapter(viewLifecycleOwner,this@BrandedCouponDetailsFragment)
         binding.rvCouponDetailsTitle.adapter = adapter
     }
 
@@ -196,7 +191,6 @@ class BrandedCouponDetailsFragment :
     }
 
     private fun setBackColor(startColor: String?, endColor: String?) {
-
         backgroundGradientDrawable(
             Color.parseColor(startColor),
             Color.parseColor(endColor)
