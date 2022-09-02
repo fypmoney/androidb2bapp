@@ -37,6 +37,8 @@ class PocketMoneySettingsFragment :
             backArrowTint = Color.WHITE
         )
 
+        pocketMoneySettingsFragmentVM.callPocketMoneyReminderData()
+
         binding.btnPocketSettingAddNow.setOnClickListener {
             openAddReminderBottomSheet()
         }
@@ -47,18 +49,26 @@ class PocketMoneySettingsFragment :
 
     }
 
+    public interface OnClickListener {
+        fun onClick()
+    }
+
     private fun openAddReminderBottomSheet() {
         val addReminderBottomSheet = AddNowPocketMoneyBottomSheet()
         addReminderBottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         addReminderBottomSheet.show(childFragmentManager, "AddNowPocketMoneyBottomSheet")
         addReminderBottomSheet.setOnActionCompleteListener(listener)
-
     }
 
     val listener = object: AddNowPocketMoneyBottomSheet.OnActionCompleteListener {
-
         override fun onActionComplete(data: Data?) {
             openOtpReminderBottomSheet(data)
+        }
+    }
+
+    private val notifyListener = object : OtpReminderBottomSheet.OnActionCompleteListener{
+        override fun onActionComplete(data: String) {
+            pocketMoneySettingsFragmentVM.callPocketMoneyReminderData()
         }
     }
 
@@ -73,6 +83,7 @@ class PocketMoneySettingsFragment :
         otpReminderBottomSheet.arguments = bundle
         otpReminderBottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         otpReminderBottomSheet.show(childFragmentManager, "OtpReminderBottomSheet")
+        otpReminderBottomSheet.setOnActionCompleteListener(notifyListener)
 
     }
 
@@ -112,7 +123,15 @@ class PocketMoneySettingsFragment :
     }
 
     private fun setUpRecentRecyclerView() {
-        val pocketMoneyReminderAdapter = PocketMoneyReminderAdapter(childFragmentManager, this.requireContext())
+        val pocketMoneyReminderAdapter = PocketMoneyReminderAdapter(
+            childFragmentManager,
+            this.requireContext(),
+            object : OnClickListener{
+                override fun onClick() {
+                    pocketMoneySettingsFragmentVM.callPocketMoneyReminderData()
+                }
+
+            })
         with(binding.rvPocketMoneyReminder) {
             adapter = pocketMoneyReminderAdapter
             layoutManager = LinearLayoutManager(requireContext())
@@ -131,8 +150,4 @@ class PocketMoneySettingsFragment :
 
     override fun getViewModel(): PocketMoneySettingsFragmentVM = pocketMoneySettingsFragmentVM
 
-    override fun onStart() {
-        super.onStart()
-        pocketMoneySettingsFragmentVM.callPocketMoneyReminderData()
-    }
 }

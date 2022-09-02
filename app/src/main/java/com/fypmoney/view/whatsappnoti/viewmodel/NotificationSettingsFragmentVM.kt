@@ -16,12 +16,6 @@ import com.fypmoney.view.whatsappnoti.model.WhatsAppOptData
 
 class NotificationSettingsFragmentVM(application: Application) : BaseViewModel(application) {
 
-//    var optStatus: Boolean = true
-//
-//    val stateOptStatus: LiveData<WhatsAppOptStatusState>
-//        get() = _stateOptStatus
-//    private val _stateOptStatus = MutableLiveData<WhatsAppOptStatusState>()
-
     val stateOptStatusChange: LiveData<WhatsAppNotificationOptState>
         get() = _stateOptStatusChange
     private val _stateOptStatusChange = MutableLiveData<WhatsAppNotificationOptState>()
@@ -49,7 +43,7 @@ class NotificationSettingsFragmentVM(application: Application) : BaseViewModel(a
                 NetworkUtil.endURL(ApiConstant.API_POST_OPT_STATUS_DATA) + code,
                 ApiUrl.POST,
                 BaseRequest(),
-                this, isProgressBar = false
+                this, isProgressBar = true
             )
         )
     }
@@ -76,12 +70,6 @@ class NotificationSettingsFragmentVM(application: Application) : BaseViewModel(a
             }
         }
     }
-
-//    sealed class WhatsAppOptStatusState {
-//        object Loading : WhatsAppOptStatusState()
-//        data class Error(var errorResponseInfo: ErrorResponseInfo) : WhatsAppOptStatusState()
-//        data class Success(var whatsAppOptData: WhatsAppOptData) : WhatsAppOptStatusState()
-//    }
 
     sealed class WhatsAppNotificationOptState {
         object Loading : WhatsAppNotificationOptState()

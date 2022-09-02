@@ -23,11 +23,16 @@ import com.fypmoney.databinding.ItemPocketMoneyReminderBinding
 import com.fypmoney.model.DeletePocketMoneyReminder
 import com.fypmoney.util.Utility
 import com.fypmoney.view.pocketmoneysettings.model.DataItem
-import com.fypmoney.view.pocketmoneysettings.model.PocketMoneyOtpVerifyResponse
+import com.fypmoney.view.pocketmoneysettings.model.PocketMoneyReminderResponse
 import com.fypmoney.view.pocketmoneysettings.ui.EditPocketMoneyBottomSheet
+import com.fypmoney.view.pocketmoneysettings.ui.PocketMoneySettingsFragment
 import kotlinx.android.synthetic.main.dialog_delete_reminder_confirm.*
 
-class PocketMoneyReminderAdapter(val childFragmentManager: FragmentManager, val context: Context) :
+class PocketMoneyReminderAdapter(
+    val childFragmentManager: FragmentManager,
+    val context: Context,
+    val clickNotify: PocketMoneySettingsFragment.OnClickListener
+) :
     ListAdapter<PocketMoneyReminderUiModel, PocketMoneyReminderAdapter.PocketMoneyReminderVH>(
         PocketMoneyReminderDiffUtil
     ), WebApiCaller.OnWebApiResponse {
@@ -87,6 +92,13 @@ class PocketMoneyReminderAdapter(val childFragmentManager: FragmentManager, val 
         editReminderBottomSheet.arguments = bundle
         editReminderBottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         editReminderBottomSheet.show(childFragmentManager, "EditPocketMoneyBottomSheet")
+        editReminderBottomSheet.setOnActionCompleteListener(editNotifyListener)
+    }
+
+    private val editNotifyListener = object : EditPocketMoneyBottomSheet.OnActionCompleteListener {
+        override fun onActionComplete(data: String) {
+            clickNotify.onClick()
+        }
     }
 
     override fun progress(isStart: Boolean, message: String) {}
@@ -94,8 +106,9 @@ class PocketMoneyReminderAdapter(val childFragmentManager: FragmentManager, val 
     override fun onSuccess(purpose: String, responseData: Any) {
         when (purpose) {
             ApiConstant.API_DELETE_POCKET_MONEY_REMINDER -> {
-                if (responseData is PocketMoneyOtpVerifyResponse) {
+                if (responseData is PocketMoneyReminderResponse) {
                     Utility.showToast("Reminder deleted successfully")
+                    clickNotify.onClick()
                 }
             }
         }

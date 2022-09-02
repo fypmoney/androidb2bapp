@@ -31,6 +31,11 @@ class EditPocketMoneyBottomSheet : BottomSheetDialogFragment(), WebApiCaller.OnW
 
     private lateinit var binding: BottomSheetSetupPocketMoneyBinding
     private var frequencyValue: String? = null
+    private lateinit var editNotifyListener: OnActionCompleteListener
+
+    fun setOnActionCompleteListener(editNotifyListener: OnActionCompleteListener) {
+        this.editNotifyListener = editNotifyListener
+    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         BottomSheetDialog(requireContext(), theme)
@@ -150,6 +155,10 @@ class EditPocketMoneyBottomSheet : BottomSheetDialogFragment(), WebApiCaller.OnW
                 binding.tvErrorAmountExceed.toGone()
 
         }
+    }
+
+    interface OnActionCompleteListener {
+        fun onActionComplete(data: String)
     }
 
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
@@ -326,8 +335,9 @@ class EditPocketMoneyBottomSheet : BottomSheetDialogFragment(), WebApiCaller.OnW
         when (purpose) {
             ApiConstant.API_ADD_POCKET_MONEY_REMINDER -> {
                 if (responseData is PocketMoneyReminderResponse) {
-                    dismiss()
+                    editNotifyListener.onActionComplete("done")
                     Utility.showToast("Reminder edited successfully")
+                    dismiss()
                 }
             }
         }
