@@ -1,57 +1,51 @@
 package com.fypmoney.view.pocketmoneysettings.ui
 
-import android.app.Dialog
 import android.content.res.ColorStateList
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.widget.TextViewCompat
 import androidx.core.widget.doOnTextChanged
-import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import com.fypmoney.R
-import com.fypmoney.connectivity.ApiConstant
-import com.fypmoney.connectivity.ApiUrl
-import com.fypmoney.connectivity.ErrorResponseInfo
-import com.fypmoney.connectivity.network.NetworkUtil
-import com.fypmoney.connectivity.retrofit.ApiRequest
-import com.fypmoney.connectivity.retrofit.WebApiCaller
+import com.fypmoney.base.BaseBottomSheetFragment
+import com.fypmoney.base.BaseViewModel
 import com.fypmoney.databinding.BottomSheetSetupPocketMoneyBinding
 import com.fypmoney.extension.toGone
 import com.fypmoney.extension.toVisible
 import com.fypmoney.model.SetPocketMoneyReminder
 import com.fypmoney.util.Utility
-import com.fypmoney.view.pocketmoneysettings.model.PocketMoneyReminderResponse
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.fypmoney.view.pocketmoneysettings.viewmodel.AddOrEditReminderViewModel
 import kotlinx.android.synthetic.main.bottom_sheet_setup_pocket_money.*
 
-class EditPocketMoneyBottomSheet : BottomSheetDialogFragment(), WebApiCaller.OnWebApiResponse{
+class EditPocketMoneyBottomSheet : BaseBottomSheetFragment<BottomSheetSetupPocketMoneyBinding>() {
 
-    private lateinit var binding: BottomSheetSetupPocketMoneyBinding
+    private val addOrEditReminderViewModel by viewModels<AddOrEditReminderViewModel> { defaultViewModelProviderFactory }
     private var frequencyValue: String? = null
-    private lateinit var editNotifyListener: OnActionCompleteListener
 
-    fun setOnActionCompleteListener(editNotifyListener: OnActionCompleteListener) {
+    private lateinit var editNotifyListener: OnEditActionCompleteListener
+    fun setOnEditActionCompleteListener(editNotifyListener: OnEditActionCompleteListener) {
         this.editNotifyListener = editNotifyListener
     }
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
-        BottomSheetDialog(requireContext(), theme)
+    override val baseFragmentVM: BaseViewModel
+        get() = addOrEditReminderViewModel
+    override val customTag: String
+        get() = EditPocketMoneyBottomSheet::class.java.simpleName
+    override val layoutId: Int
+        get() = R.layout.bottom_sheet_setup_pocket_money
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        binding = DataBindingUtil.inflate(
-            inflater,
-            R.layout.bottom_sheet_setup_pocket_money,
-            container,
-            false
-        )
+        setUpBinding()
+
+        val touchOutsideView = dialog!!.window
+            ?.decorView
+            ?.findViewById<View>(R.id.touch_outside)
+        touchOutsideView?.setOnClickListener(null)
+
+        setUpObserver()
 
         setViews()
 
@@ -82,6 +76,7 @@ class EditPocketMoneyBottomSheet : BottomSheetDialogFragment(), WebApiCaller.OnW
             val name: String = etName.text.toString().trim()
             val number: String = etContactNumber.text.toString().trim()
             val amount: String = etPocketMoneyAmount.text.toString().trim()
+
             if (name.isEmpty())
                 Utility.showToast("Please enter name")
             else if (etContactNumber.text.toString().trim().isEmpty())
@@ -97,7 +92,7 @@ class EditPocketMoneyBottomSheet : BottomSheetDialogFragment(), WebApiCaller.OnW
             else if (frequencyValue == null || frequencyValue.equals("null"))
                 Utility.showToast("Please select allowance frequency")
             else
-                addPocketMoneyReminderData(
+                addOrEditReminderViewModel.callPocketMoneySendOtp(
                     SetPocketMoneyReminder(
                         identifierType = "MOBILE",
                         mobile = number,
@@ -109,26 +104,38 @@ class EditPocketMoneyBottomSheet : BottomSheetDialogFragment(), WebApiCaller.OnW
                 )
         }
 
-        return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    private fun setUpObserver() {
+        addOrEditReminderViewModel.stateReminderPocketMoney.observe(viewLifecycleOwner) {
+            handleSendOtpState(it)
+        }
+    }
 
-        val touchOutsideView = dialog!!.window
-            ?.decorView
-            ?.findViewById<View>(R.id.touch_outside)
-        touchOutsideView?.setOnClickListener(null)
+    private fun handleSendOtpState(pocketMoneyReminderState: AddOrEditReminderViewModel.PocketMoneyReminderState) {
+        when (pocketMoneyReminderState) {
+            is AddOrEditReminderViewModel.PocketMoneyReminderState.Error -> {
+
+            }
+            AddOrEditReminderViewModel.PocketMoneyReminderState.Loading -> {}
+            is AddOrEditReminderViewModel.PocketMoneyReminderState.Success -> {
+                editNotifyListener.onEditActionComplete("done")
+                Utility.showToast("Reminder edited successfully")
+                dismiss()
+            }
+        }
     }
 
     private fun setViews() {
         binding.etContactNumber.isClickable = false
         binding.etContactNumber.isFocusable = false
         binding.etContactNumber.keyListener = null
-        binding.etContactNumber.setTextColor(ContextCompat.getColor(
-            binding.etContactNumber.context,
-            R.color.text_grey
-        ))
+        binding.etContactNumber.setTextColor(
+            ContextCompat.getColor(
+                binding.etContactNumber.context,
+                R.color.text_grey
+            )
+        )
         binding.ivClipboardContact.toGone()
         binding.etName.setText(arguments?.getString("name"))
         binding.etContactNumber.setText(arguments?.getString("mobile"))
@@ -138,45 +145,34 @@ class EditPocketMoneyBottomSheet : BottomSheetDialogFragment(), WebApiCaller.OnW
     }
 
     private fun setListeners() {
+        binding.etContactNumber.doOnTextChanged { text, _, _, _ ->
+            if (binding.etContactNumber.text.toString().trim() == "0")
+                binding.etContactNumber.text?.clear()
+
+            if (!text.isNullOrEmpty() && text.length < 10) {
+                binding.tvErrorMobileNumber.toVisible()
+            } else {
+                binding.tvErrorMobileNumber.toGone()
+            }
+        }
         binding.etPocketMoneyAmount.doOnTextChanged { _, _, _, _ ->
-            if (!binding.etPocketMoneyAmount.text.toString()
-                    .trim().isNullOrEmpty() && binding.etPocketMoneyAmount.text.toString().trim()
+            if (binding.etPocketMoneyAmount.text.toString()
+                    .trim().isNotEmpty() && binding.etPocketMoneyAmount.text.toString().trim()
                     .toInt() < 10
             ) {
                 binding.tvErrorAmountExceed.toVisible()
-                binding.tvErrorAmountExceed.text = "Amount should be greater than ₹10"
-            } else if (!binding.etPocketMoneyAmount.text.toString()
-                    .trim().isNullOrEmpty() && binding.etPocketMoneyAmount.text.toString().trim()
+                binding.tvErrorAmountExceed.text =
+                    String.format("Amount should be greater than ₹10")
+            } else if (binding.etPocketMoneyAmount.text.toString()
+                    .trim().isNotEmpty() && binding.etPocketMoneyAmount.text.toString().trim()
                     .toInt() > 5000
             ) {
                 binding.tvErrorAmountExceed.toVisible()
-                binding.tvErrorAmountExceed.text = "Amount should be less than ₹5000"
+                binding.tvErrorAmountExceed.text = String.format("Amount should be less than ₹5000")
             } else
                 binding.tvErrorAmountExceed.toGone()
 
         }
-    }
-
-    interface OnActionCompleteListener {
-        fun onActionComplete(data: String)
-    }
-
-    override fun getTheme(): Int = R.style.BottomSheetDialogTheme
-
-    private fun addPocketMoneyReminderData(setPocketMoneyReminder: SetPocketMoneyReminder) {
-        addPocketMoneyReminder(setPocketMoneyReminder)
-    }
-
-    private fun addPocketMoneyReminder(setPocketMoneyReminder: SetPocketMoneyReminder) {
-        WebApiCaller.getInstance().request(
-            ApiRequest(
-                ApiConstant.API_ADD_POCKET_MONEY_REMINDER,
-                NetworkUtil.endURL(ApiConstant.API_ADD_POCKET_MONEY_REMINDER),
-                ApiUrl.POST,
-                setPocketMoneyReminder,
-                this, isProgressBar = true
-            )
-        )
     }
 
     private fun selectCard(frequencyValue: String) {
@@ -329,27 +325,13 @@ class EditPocketMoneyBottomSheet : BottomSheetDialogFragment(), WebApiCaller.OnW
         }
     }
 
-    override fun progress(isStart: Boolean, message: String) {}
-
-    override fun onSuccess(purpose: String, responseData: Any) {
-        when (purpose) {
-            ApiConstant.API_ADD_POCKET_MONEY_REMINDER -> {
-                if (responseData is PocketMoneyReminderResponse) {
-                    editNotifyListener.onActionComplete("done")
-                    Utility.showToast("Reminder edited successfully")
-                    dismiss()
-                }
-            }
-        }
+    interface OnEditActionCompleteListener {
+        fun onEditActionComplete(data: String)
     }
 
-    override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
-        when (purpose) {
-            ApiConstant.API_ADD_POCKET_MONEY_REMINDER -> {
-                Utility.showToast(errorResponseInfo.msg)
-            }
+    private fun setUpBinding() {
+        binding.apply {
+            lifecycleOwner = viewLifecycleOwner
         }
     }
-
-    override fun offLine() {}
 }

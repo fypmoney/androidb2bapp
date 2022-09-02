@@ -13,17 +13,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.R
-import com.fypmoney.connectivity.ApiConstant
-import com.fypmoney.connectivity.ApiUrl
-import com.fypmoney.connectivity.ErrorResponseInfo
-import com.fypmoney.connectivity.network.NetworkUtil
-import com.fypmoney.connectivity.retrofit.ApiRequest
-import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.databinding.ItemPocketMoneyReminderBinding
-import com.fypmoney.model.DeletePocketMoneyReminder
-import com.fypmoney.util.Utility
 import com.fypmoney.view.pocketmoneysettings.model.DataItem
-import com.fypmoney.view.pocketmoneysettings.model.PocketMoneyReminderResponse
 import com.fypmoney.view.pocketmoneysettings.ui.EditPocketMoneyBottomSheet
 import com.fypmoney.view.pocketmoneysettings.ui.PocketMoneySettingsFragment
 import kotlinx.android.synthetic.main.dialog_delete_reminder_confirm.*
@@ -31,11 +22,12 @@ import kotlinx.android.synthetic.main.dialog_delete_reminder_confirm.*
 class PocketMoneyReminderAdapter(
     val childFragmentManager: FragmentManager,
     val context: Context,
+    val onClickNotifyDelete:(mobileNumber: String) -> Unit,
     val clickNotify: PocketMoneySettingsFragment.OnClickListener
 ) :
     ListAdapter<PocketMoneyReminderUiModel, PocketMoneyReminderAdapter.PocketMoneyReminderVH>(
         PocketMoneyReminderDiffUtil
-    ), WebApiCaller.OnWebApiResponse {
+    ){
 
     inner class PocketMoneyReminderVH(private val binding: ItemPocketMoneyReminderBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -70,18 +62,6 @@ class PocketMoneyReminderAdapter(
         holder.bind(getItem(position))
     }
 
-    private fun deletePocketMoneyReminder(deletePocketMoneyOtpReminder: DeletePocketMoneyReminder) {
-        WebApiCaller.getInstance().request(
-            ApiRequest(
-                ApiConstant.API_DELETE_POCKET_MONEY_REMINDER,
-                NetworkUtil.endURL(ApiConstant.API_DELETE_POCKET_MONEY_REMINDER),
-                ApiUrl.PUT,
-                deletePocketMoneyOtpReminder,
-                this, isProgressBar = true
-            )
-        )
-    }
-
     private fun openAddReminderBottomSheet(item: PocketMoneyReminderUiModel) {
         val editReminderBottomSheet = EditPocketMoneyBottomSheet()
         val bundle = Bundle()
@@ -92,35 +72,15 @@ class PocketMoneyReminderAdapter(
         editReminderBottomSheet.arguments = bundle
         editReminderBottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         editReminderBottomSheet.show(childFragmentManager, "EditPocketMoneyBottomSheet")
-        editReminderBottomSheet.setOnActionCompleteListener(editNotifyListener)
+        editReminderBottomSheet.setOnEditActionCompleteListener(editNotifyListener)
     }
 
-    private val editNotifyListener = object : EditPocketMoneyBottomSheet.OnActionCompleteListener {
-        override fun onActionComplete(data: String) {
-            clickNotify.onClick()
-        }
-    }
-
-    override fun progress(isStart: Boolean, message: String) {}
-
-    override fun onSuccess(purpose: String, responseData: Any) {
-        when (purpose) {
-            ApiConstant.API_DELETE_POCKET_MONEY_REMINDER -> {
-                if (responseData is PocketMoneyReminderResponse) {
-                    Utility.showToast("Reminder deleted successfully")
-                    clickNotify.onClick()
-                }
+    private val editNotifyListener =
+        object : EditPocketMoneyBottomSheet.OnEditActionCompleteListener {
+            override fun onEditActionComplete(data: String) {
+                clickNotify.onClick()
             }
         }
-    }
-
-    override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
-        when (purpose) {
-            ApiConstant.API_DELETE_POCKET_MONEY_REMINDER -> {
-                Utility.showToast(errorResponseInfo.msg)
-            }
-        }
-    }
 
     private fun callConfirmDisableNotificationDialog(context: Context, mobile: String) {
 
@@ -136,11 +96,7 @@ class PocketMoneyReminderAdapter(
         dialogDisableConfirm.window?.attributes = wlp
 
         dialogDisableConfirm.btnDeleteNotifications?.setOnClickListener {
-            deletePocketMoneyReminder(
-                DeletePocketMoneyReminder(
-                    mobile = mobile
-                )
-            )
+            onClickNotifyDelete(mobile)
             //TODO close dialog on delete success response
             dialogDisableConfirm.dismiss()
         }
@@ -151,8 +107,6 @@ class PocketMoneyReminderAdapter(
 
         dialogDisableConfirm.show()
     }
-
-    override fun offLine() {}
 }
 
 @Keep

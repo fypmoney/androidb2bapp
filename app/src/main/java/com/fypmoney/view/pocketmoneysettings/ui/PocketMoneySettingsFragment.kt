@@ -12,6 +12,8 @@ import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.FragmentPocketMoneySettingsBinding
 import com.fypmoney.extension.toGone
 import com.fypmoney.extension.toVisible
+import com.fypmoney.model.DeletePocketMoneyReminder
+import com.fypmoney.util.Utility
 import com.fypmoney.view.pocketmoneysettings.adapter.PocketMoneyReminderAdapter
 import com.fypmoney.view.pocketmoneysettings.adapter.PocketMoneyReminderUiModel
 import com.fypmoney.view.pocketmoneysettings.model.Data
@@ -49,7 +51,7 @@ class PocketMoneySettingsFragment :
 
     }
 
-    public interface OnClickListener {
+    interface OnClickListener {
         fun onClick()
     }
 
@@ -60,13 +62,13 @@ class PocketMoneySettingsFragment :
         addReminderBottomSheet.setOnActionCompleteListener(listener)
     }
 
-    val listener = object: AddNowPocketMoneyBottomSheet.OnActionCompleteListener {
+    val listener = object : AddNowPocketMoneyBottomSheet.OnActionCompleteListener {
         override fun onActionComplete(data: Data?) {
             openOtpReminderBottomSheet(data)
         }
     }
 
-    private val notifyListener = object : OtpReminderBottomSheet.OnActionCompleteListener{
+    private val notifyListener = object : OtpReminderBottomSheet.OnActionCompleteListener {
         override fun onActionComplete(data: String) {
             pocketMoneySettingsFragmentVM.callPocketMoneyReminderData()
         }
@@ -82,7 +84,7 @@ class PocketMoneySettingsFragment :
         bundle.putString("frequency", data?.frequency)
         otpReminderBottomSheet.arguments = bundle
         otpReminderBottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
-        otpReminderBottomSheet.show(childFragmentManager, "OtpReminderBottomSheet")
+        otpReminderBottomSheet.show(childFragmentManager, "OtpBottomSheet")
         otpReminderBottomSheet.setOnActionCompleteListener(notifyListener)
 
     }
@@ -90,6 +92,22 @@ class PocketMoneySettingsFragment :
     private fun setObserver() {
         pocketMoneySettingsFragmentVM.stateReminderCoupon.observe(viewLifecycleOwner) {
             handleReminderCouponState(it)
+        }
+
+        pocketMoneySettingsFragmentVM.stateReminderDeleteCoupon.observe(viewLifecycleOwner){
+            handleReminderDeleteState(it)
+        }
+    }
+
+    private fun handleReminderDeleteState(it: PocketMoneySettingsFragmentVM.PocketMoneyReminderDeleteState?) {
+        when(it){
+            is PocketMoneySettingsFragmentVM.PocketMoneyReminderDeleteState.Error -> {}
+            PocketMoneySettingsFragmentVM.PocketMoneyReminderDeleteState.Loading -> {}
+            is PocketMoneySettingsFragmentVM.PocketMoneyReminderDeleteState.Success -> {
+                Utility.showToast("Reminder deleted successfully")
+                pocketMoneySettingsFragmentVM.callPocketMoneyReminderData()
+            }
+            null -> {}
         }
     }
 
@@ -126,7 +144,14 @@ class PocketMoneySettingsFragment :
         val pocketMoneyReminderAdapter = PocketMoneyReminderAdapter(
             childFragmentManager,
             this.requireContext(),
-            object : OnClickListener{
+            onClickNotifyDelete = {
+                pocketMoneySettingsFragmentVM.callPocketMoneyReminderDeleteData(
+                    DeletePocketMoneyReminder(
+                        mobile = it
+                    )
+                )
+            },
+            object : OnClickListener {
                 override fun onClick() {
                     pocketMoneySettingsFragmentVM.callPocketMoneyReminderData()
                 }

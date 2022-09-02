@@ -1,63 +1,75 @@
 package com.fypmoney.view.pocketmoneysettings.ui
 
 import android.app.Activity
-import android.app.Dialog
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.provider.ContactsContract
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.widget.TextViewCompat
 import androidx.core.widget.doOnTextChanged
-import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import com.fypmoney.R
-import com.fypmoney.connectivity.ApiConstant
-import com.fypmoney.connectivity.ApiUrl
-import com.fypmoney.connectivity.ErrorResponseInfo
-import com.fypmoney.connectivity.network.NetworkUtil
-import com.fypmoney.connectivity.retrofit.ApiRequest
-import com.fypmoney.connectivity.retrofit.WebApiCaller
+import com.fypmoney.base.BaseBottomSheetFragment
+import com.fypmoney.base.BaseViewModel
 import com.fypmoney.databinding.BottomSheetSetupPocketMoneyBinding
 import com.fypmoney.extension.toGone
 import com.fypmoney.extension.toVisible
 import com.fypmoney.model.SetPocketMoneyReminder
 import com.fypmoney.util.Utility
 import com.fypmoney.view.pocketmoneysettings.model.Data
-import com.fypmoney.view.pocketmoneysettings.model.PocketMoneyReminderResponse
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.fypmoney.view.pocketmoneysettings.viewmodel.AddOrEditReminderViewModel
 import kotlinx.android.synthetic.main.bottom_sheet_setup_pocket_money.*
 
-class AddNowPocketMoneyBottomSheet :
-    BottomSheetDialogFragment(), WebApiCaller.OnWebApiResponse {
+class AddNowPocketMoneyBottomSheet : BaseBottomSheetFragment<BottomSheetSetupPocketMoneyBinding>() {
 
-    private lateinit var binding: BottomSheetSetupPocketMoneyBinding
+    private val addOrEditReminderViewModel by viewModels<AddOrEditReminderViewModel> { defaultViewModelProviderFactory }
     private var frequencyValue: String? = null
-    private lateinit var listener: OnActionCompleteListener
 
+    private lateinit var listener: OnActionCompleteListener
     fun setOnActionCompleteListener(listener: OnActionCompleteListener) {
         this.listener = listener
     }
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
-        BottomSheetDialog(requireContext(), theme)
+    override val baseFragmentVM: BaseViewModel
+        get() = addOrEditReminderViewModel
+    override val customTag: String
+        get() = AddNowPocketMoneyBottomSheet::class.java.simpleName
+    override val layoutId: Int
+        get() = R.layout.bottom_sheet_setup_pocket_money
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    private var resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data: Intent? = result.data
+                when (val finalResult =
+                    Utility.getPhoneNumberFromContact(requireActivity(), data)) {
+                    is Utility.MobileNumberFromPhoneBook.MobileNumberFound -> {
+                        binding.etContactNumber.setText(finalResult.phoneNumber)
+                        finalResult.name?.let {
+                            binding.etName.setText(it)
+                        }
+                    }
+                    is Utility.MobileNumberFromPhoneBook.UnableToFindMobileNumber -> {
+                        Utility.showToast(finalResult.errorMsg)
+                    }
+                }
+            }
+        }
 
-        binding = DataBindingUtil.inflate(
-            inflater,
-            R.layout.bottom_sheet_setup_pocket_money,
-            container,
-            false
-        )
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setUpBinding()
+
+        val touchOutsideView = dialog!!.window
+            ?.decorView
+            ?.findViewById<View>(R.id.touch_outside)
+        touchOutsideView?.setOnClickListener(null)
+
+        setUpObserver()
 
         binding.ivClipboardContact.setOnClickListener {
             selectContactFromPhoneContactList()
@@ -108,7 +120,7 @@ class AddNowPocketMoneyBottomSheet :
             else if (frequencyValue == null)
                 Utility.showToast("Please select allowance frequency")
             else
-                addPocketMoneyReminder(
+                addOrEditReminderViewModel.callPocketMoneySendOtp(
                     SetPocketMoneyReminder(
                         identifierType = "MOBILE",
                         mobile = number,
@@ -120,16 +132,26 @@ class AddNowPocketMoneyBottomSheet :
                 )
         }
 
-        return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    private fun setUpObserver() {
+        addOrEditReminderViewModel.stateReminderPocketMoney.observe(viewLifecycleOwner) {
+            handleSendOtpState(it)
+        }
+    }
 
-        val touchOutsideView = dialog!!.window
-            ?.decorView
-            ?.findViewById<View>(R.id.touch_outside)
-        touchOutsideView?.setOnClickListener(null)
+    private fun handleSendOtpState(pocketMoneyReminderState: AddOrEditReminderViewModel.PocketMoneyReminderState) {
+        when (pocketMoneyReminderState) {
+            is AddOrEditReminderViewModel.PocketMoneyReminderState.Error -> {
+
+            }
+            AddOrEditReminderViewModel.PocketMoneyReminderState.Loading -> {}
+            is AddOrEditReminderViewModel.PocketMoneyReminderState.Success -> {
+                Utility.showToast("Otp Sent")
+                listener.onActionComplete(pocketMoneyReminderState.dataItem)
+                dismiss()
+            }
+        }
     }
 
     private fun defaultCardSelect() {
@@ -140,8 +162,6 @@ class AddNowPocketMoneyBottomSheet :
         unSelectCard("Daily")
         unSelectCard("Monthly")
     }
-
-    override fun getTheme(): Int = R.style.BottomSheetDialogTheme
 
     private fun selectContactFromPhoneContactList() {
         val intent = Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI)
@@ -160,18 +180,19 @@ class AddNowPocketMoneyBottomSheet :
             }
         }
         binding.etPocketMoneyAmount.doOnTextChanged { _, _, _, _ ->
-            if (!binding.etPocketMoneyAmount.text.toString()
-                    .trim().isNullOrEmpty() && binding.etPocketMoneyAmount.text.toString().trim()
+            if (binding.etPocketMoneyAmount.text.toString()
+                    .trim().isNotEmpty() && binding.etPocketMoneyAmount.text.toString().trim()
                     .toInt() < 10
             ) {
                 binding.tvErrorAmountExceed.toVisible()
-                binding.tvErrorAmountExceed.text = "Amount should be greater than ₹10"
-            } else if (!binding.etPocketMoneyAmount.text.toString()
-                    .trim().isNullOrEmpty() && binding.etPocketMoneyAmount.text.toString().trim()
+                binding.tvErrorAmountExceed.text =
+                    String.format("Amount should be greater than ₹10")
+            } else if (binding.etPocketMoneyAmount.text.toString()
+                    .trim().isNotEmpty() && binding.etPocketMoneyAmount.text.toString().trim()
                     .toInt() > 5000
             ) {
                 binding.tvErrorAmountExceed.toVisible()
-                binding.tvErrorAmountExceed.text = "Amount should be less than ₹5000"
+                binding.tvErrorAmountExceed.text = String.format("Amount should be less than ₹5000")
             } else
                 binding.tvErrorAmountExceed.toGone()
 
@@ -328,66 +349,13 @@ class AddNowPocketMoneyBottomSheet :
         }
     }
 
-    private var resultLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                val data: Intent? = result.data
-                when (val finalResult =
-                    Utility.getPhoneNumberFromContact(requireActivity(), data)) {
-                    is Utility.MobileNumberFromPhoneBook.MobileNumberFound -> {
-                        binding.etContactNumber.setText(finalResult.phoneNumber)
-                        finalResult.name?.let {
-                            binding.etName.setText(it)
-                        }
-                    }
-                    is Utility.MobileNumberFromPhoneBook.UnableToFindMobileNumber -> {
-                        Utility.showToast(finalResult.errorMsg)
-                    }
-                }
-            }
-        }
-
-
-    private fun addPocketMoneyReminder(setPocketMoneyReminder: SetPocketMoneyReminder) {
-        WebApiCaller.getInstance().request(
-            ApiRequest(
-                ApiConstant.API_ADD_POCKET_MONEY_REMINDER,
-                NetworkUtil.endURL(ApiConstant.API_ADD_POCKET_MONEY_REMINDER),
-                ApiUrl.POST,
-                setPocketMoneyReminder,
-                this, isProgressBar = true
-            )
-        )
-    }
-
-    override fun progress(isStart: Boolean, message: String) {
-    }
-
-    override fun onSuccess(purpose: String, responseData: Any) {
-        when (purpose) {
-            ApiConstant.API_ADD_POCKET_MONEY_REMINDER -> {
-                if (responseData is PocketMoneyReminderResponse) {
-                    Utility.showToast("Otp Sent")
-                    listener.onActionComplete(responseData.data)
-                    dismiss()
-                }
-            }
-        }
-    }
-
     interface OnActionCompleteListener {
         fun onActionComplete(data: Data?)
     }
 
-    override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
-        when (purpose) {
-            ApiConstant.API_ADD_POCKET_MONEY_REMINDER -> {
-                Utility.showToast(errorResponseInfo.msg)
-            }
+    private fun setUpBinding() {
+        binding.apply {
+            lifecycleOwner = viewLifecycleOwner
         }
     }
-
-    override fun offLine() {
-    }
-
 }

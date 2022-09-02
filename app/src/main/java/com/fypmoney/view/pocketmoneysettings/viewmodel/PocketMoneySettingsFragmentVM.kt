@@ -11,14 +11,21 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.BaseRequest
+import com.fypmoney.model.DeletePocketMoneyReminder
+import com.fypmoney.view.pocketmoneysettings.model.Data
 import com.fypmoney.view.pocketmoneysettings.model.DataItem
 import com.fypmoney.view.pocketmoneysettings.model.PocketMoneyReminderListResponse
+import com.fypmoney.view.pocketmoneysettings.model.PocketMoneyReminderResponse
 
 class PocketMoneySettingsFragmentVM(application: Application) : BaseViewModel(application) {
 
     val stateReminderCoupon: LiveData<PocketMoneyReminderState>
         get() = _stateReminderCoupon
     private val _stateReminderCoupon = MutableLiveData<PocketMoneyReminderState>()
+
+    val stateReminderDeleteCoupon: LiveData<PocketMoneyReminderDeleteState>
+        get() = _stateReminderDeleteCoupon
+    private val _stateReminderDeleteCoupon = MutableLiveData<PocketMoneyReminderDeleteState>()
 
     fun callPocketMoneyReminderData() {
         WebApiCaller.getInstance().request(
@@ -27,6 +34,18 @@ class PocketMoneySettingsFragmentVM(application: Application) : BaseViewModel(ap
                 NetworkUtil.endURL(ApiConstant.API_GET_POCKET_MONEY_REMINDER_DATA),
                 ApiUrl.GET,
                 BaseRequest(),
+                this, isProgressBar = true
+            )
+        )
+    }
+
+    fun callPocketMoneyReminderDeleteData(deletePocketMoneyOtpReminder: DeletePocketMoneyReminder) {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_DELETE_POCKET_MONEY_REMINDER,
+                NetworkUtil.endURL(ApiConstant.API_DELETE_POCKET_MONEY_REMINDER),
+                ApiUrl.PUT,
+                deletePocketMoneyOtpReminder,
                 this, isProgressBar = true
             )
         )
@@ -41,6 +60,14 @@ class PocketMoneySettingsFragmentVM(application: Application) : BaseViewModel(ap
                     _stateReminderCoupon.value = PocketMoneyReminderState.Success(responseData.data)
                 }
             }
+
+            ApiConstant.API_DELETE_POCKET_MONEY_REMINDER -> {
+                if (responseData is PocketMoneyReminderResponse) {
+                    _stateReminderDeleteCoupon.value =
+                        PocketMoneyReminderDeleteState.Success(responseData.data)
+                }
+            }
+
         }
     }
 
@@ -50,6 +77,11 @@ class PocketMoneySettingsFragmentVM(application: Application) : BaseViewModel(ap
         when (purpose) {
             ApiConstant.API_GET_POCKET_MONEY_REMINDER_DATA -> {
                 _stateReminderCoupon.value = PocketMoneyReminderState.Error(errorResponseInfo)
+            }
+
+            ApiConstant.API_DELETE_POCKET_MONEY_REMINDER -> {
+                _stateReminderDeleteCoupon.value =
+                    PocketMoneyReminderDeleteState.Error(errorResponseInfo)
             }
         }
     }
@@ -61,4 +93,12 @@ class PocketMoneySettingsFragmentVM(application: Application) : BaseViewModel(ap
             PocketMoneyReminderState()
     }
 
+    sealed class PocketMoneyReminderDeleteState {
+        object Loading : PocketMoneyReminderDeleteState()
+        data class Error(var errorResponseInfo: ErrorResponseInfo) :
+            PocketMoneyReminderDeleteState()
+
+        data class Success(var data: Data?) :
+            PocketMoneyReminderDeleteState()
+    }
 }
