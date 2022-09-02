@@ -16,6 +16,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.navOptions
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.amazonaws.ivs.player.Player
 import com.fypmoney.BR
@@ -354,6 +355,17 @@ class VideoWithExploreFragment : BaseFragment<FragmentVideoWithExploreBinding, V
                                 }
                                 AppConstants.INSIGHTS -> {
                                     findNavController().navigate(R.id.navigation_insights)
+                                }
+                                AppConstants.TYPE_POCKET_MONEY_REMINDER -> {
+                                    findNavController().navigate(Uri.parse("https://www.fypmoney.in/pocketmoneyremainder"),
+                                        navOptions {
+                                            anim {
+                                                popEnter = R.anim.slide_in_left
+                                                popExit = R.anim.slide_out_righ
+                                                enter = R.anim.slide_in_right
+                                                exit = R.anim.slide_out_left
+                                            }
+                                        })
                                 }
                                 else -> {
 

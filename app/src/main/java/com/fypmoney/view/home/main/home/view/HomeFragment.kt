@@ -364,11 +364,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
 
             }
             is HomeFragmentVM.HomeFragmentEvent.PrepaidRechargeEvent -> {
-                /*if(findNavController().currentDestination?.id == R.id.navigation_home){
-                    val directions =
-                        HomeFragmentDirections.actionRechargeScreen(rechargeType = AppConstants.PREPAID)
-                    directions.let { it1 -> findNavController().navigate(it1) }
-                }*/
                 findNavController().navigate(Uri.parse("https://www.fypmoney.in/recharge/${AppConstants.PREPAID}"),
                     navOptions {
                         anim {
@@ -378,7 +373,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
                             exit = R.anim.slide_out_left
                         }
                     })
-
             }
             null -> {
 
@@ -503,6 +497,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
                         }
                     })
             }
+            AppConstants.TYPE_POCKET_MONEY_REMINDER -> {
+                findNavController().navigate(Uri.parse("https://www.fypmoney.in/pocketmoneyremainder"),
+                    navOptions {
+                        anim {
+                            popEnter = R.anim.slide_in_left
+                            popExit = R.anim.slide_out_righ
+                            enter = R.anim.slide_in_right
+                            exit = R.anim.slide_out_left
+                        }
+                    })
+            }
             AppConstants.EXPLORE_SECTION_EXPLORE -> {
                 Firebase.analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
                     sectionContentItem.redirectionResource?.let {
@@ -575,6 +580,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
 
                         AppConstants.DTH_RECHARGE_REDIRECTION->{
                             findNavController().navigate(Uri.parse("https://www.fypmoney.in/recharge/dth"),
+                                navOptions {
+                                    anim {
+                                        popEnter = R.anim.slide_in_left
+                                        popExit = R.anim.slide_out_righ
+                                        enter = R.anim.slide_in_right
+                                        exit = R.anim.slide_out_left
+                                    }
+                                })
+                        }
+                        AppConstants.TYPE_POCKET_MONEY_REMINDER -> {
+                            findNavController().navigate(Uri.parse("https://www.fypmoney.in/pocketmoneyremainder"),
                                 navOptions {
                                     anim {
                                         popEnter = R.anim.slide_in_left
@@ -777,7 +793,20 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
                         findNavController().navigate(R.id.navigation_arcade)
                     } else if (redirectionResources == AppConstants.RechargeHomeScreen) {
                         findNavController().navigate(R.id.navigation_enter_mobile_number_recharge)
-                    } else {
+                    }else if(redirectionResources == AppConstants.TYPE_POCKET_MONEY_REMINDER){
+                            findNavController().navigate(Uri.parse("https://www.fypmoney.in/pocketmoneyremainder"),
+                                navOptions {
+                                    anim {
+                                        popEnter = R.anim.slide_in_left
+                                        popExit = R.anim.slide_out_righ
+                                        enter = R.anim.slide_in_right
+                                        exit = R.anim.slide_out_left
+                                    }
+                                })
+
+                    }
+
+                    else {
                         redirectionResources.let { it1 ->
                             deeplinkRedirection(
                                 it1,
@@ -839,6 +868,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
 
                 }
 
+            }
+            AppConstants.TYPE_POCKET_MONEY_REMINDER -> {
+                findNavController().navigate(Uri.parse("https://www.fypmoney.in/pocketmoneyremainder"),
+                    navOptions {
+                        anim {
+                            popEnter = R.anim.slide_in_left
+                            popExit = R.anim.slide_out_righ
+                            enter = R.anim.slide_in_right
+                            exit = R.anim.slide_out_left
+                        }
+                    })
             }
 
 

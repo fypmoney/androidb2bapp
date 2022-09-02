@@ -18,8 +18,7 @@ import com.fypmoney.view.pocketmoneysettings.model.Data
 import com.fypmoney.view.pocketmoneysettings.viewmodel.PocketMoneySettingsFragmentVM
 import kotlinx.android.synthetic.main.toolbar.*
 
-class PocketMoneySettingsFragment :
-    BaseFragment<FragmentPocketMoneySettingsBinding, PocketMoneySettingsFragmentVM>() {
+class PocketMoneySettingsFragment : BaseFragment<FragmentPocketMoneySettingsBinding, PocketMoneySettingsFragmentVM>() {
 
     private val pocketMoneySettingsFragmentVM by viewModels<PocketMoneySettingsFragmentVM> { defaultViewModelProviderFactory }
     private lateinit var binding: FragmentPocketMoneySettingsBinding

@@ -392,7 +392,17 @@ class DthStoresListFragment : BaseFragment<DthStoresListFragmentBinding, DthStor
                                     }
                                 })
                         }
-
+                        AppConstants.TYPE_POCKET_MONEY_REMINDER -> {
+                            findNavController().navigate(Uri.parse("https://www.fypmoney.in/pocketmoneyremainder"),
+                                navOptions {
+                                    anim {
+                                        popEnter = R.anim.slide_in_left
+                                        popExit = R.anim.slide_out_righ
+                                        enter = R.anim.slide_in_right
+                                        exit = R.anim.slide_out_left
+                                    }
+                                })
+                        }
                         else -> {
                             redirectionResources.let { it1 ->
                                 Utility.deeplinkRedirection(

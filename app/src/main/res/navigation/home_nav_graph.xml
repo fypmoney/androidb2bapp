@@ -1096,4 +1096,17 @@
         android:label="Whatsapp Notification Fragment"
         tools:layout="@layout/fragment_notification_settings" />
 
+    <fragment
+        android:id="@+id/navigation_pockket_money_reminder_settings"
+        android:name="com.fypmoney.view.pocketmoneysettings.ui.PocketMoneySettingsFragment"
+        android:label="Pockket Money Remainder Fragment"
+        tools:layout="@layout/fragment_pocket_money_settings">
+
+        <deepLink
+            android:id="@+id/deeplink_video_with_explore"
+            android:autoVerify="true"
+            app:uri="https://www.fypmoney.in/pocketmoneyremainder" />
+
+    </fragment>
+
 </navigation>
