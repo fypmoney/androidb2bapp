@@ -9,7 +9,6 @@ import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.widget.TextViewCompat
-import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import com.fypmoney.R
 import com.fypmoney.base.BaseBottomSheetFragment
@@ -64,14 +63,12 @@ class AddNowPocketMoneyBottomSheet : BaseBottomSheetFragment<BottomSheetSetupPoc
         super.onViewCreated(view, savedInstanceState)
 
         setUpBinding()
+        binding.viewModel = addOrEditReminderViewModel
 
-        dialog!!.window?.decorView?.findViewById<View>(R.id.touch_outside)?.bottomSheetTouchOutsideDisableOnly()
+        dialog!!.window?.decorView?.findViewById<View>(R.id.touch_outside)
+            ?.bottomSheetTouchOutsideDisableOnly()
 
         setUpObserver()
-
-        binding.ivClipboardContact.setOnClickListener {
-            selectContactFromPhoneContactList()
-        }
 
         defaultCardSelect()
 
@@ -95,8 +92,6 @@ class AddNowPocketMoneyBottomSheet : BaseBottomSheetFragment<BottomSheetSetupPoc
             unSelectCard("Weekly")
             unSelectCard("Daily")
         }
-
-        setListeners()
 
         binding.buttonConfirmReminder.setOnClickListener {
             val name: String = etName.text.toString().trim()
@@ -136,6 +131,51 @@ class AddNowPocketMoneyBottomSheet : BaseBottomSheetFragment<BottomSheetSetupPoc
         addOrEditReminderViewModel.stateReminderPocketMoney.observe(viewLifecycleOwner) {
             handleSendOtpState(it)
         }
+
+        addOrEditReminderViewModel.phoneBookEvent.observe(viewLifecycleOwner) {
+            handleEvent(it)
+        }
+
+        addOrEditReminderViewModel.stateAmountPocketMoney.observe(viewLifecycleOwner) {
+            handleEditTextState(it)
+        }
+    }
+
+    private fun handleEditTextState(it: AddOrEditReminderViewModel.ReminderEditTextState?) {
+        when (it) {
+            AddOrEditReminderViewModel.ReminderEditTextState.GreaterThanFiveThousand -> {
+                binding.tvErrorAmountExceed.toVisible()
+                binding.tvErrorAmountExceed.text = String.format("Amount should be less than ₹5000")
+            }
+            AddOrEditReminderViewModel.ReminderEditTextState.LessThanTen -> {
+                binding.tvErrorAmountExceed.toVisible()
+                binding.tvErrorAmountExceed.text =
+                    String.format("Amount should be greater than ₹10")
+            }
+            null -> {
+            }
+            AddOrEditReminderViewModel.ReminderEditTextState.GreaterThanTenLessThanFiveThousand -> {
+                binding.tvErrorAmountExceed.toGone()
+            }
+            AddOrEditReminderViewModel.ReminderEditTextState.MobileNumberIsInvalid -> {
+                binding.tvErrorMobileNumber.toVisible()
+            }
+            AddOrEditReminderViewModel.ReminderEditTextState.MobileNumberIsValid -> {
+                binding.tvErrorMobileNumber.toGone()
+            }
+            AddOrEditReminderViewModel.ReminderEditTextState.MobileNumberZeroNotAllowed -> {
+                binding.etContactNumber.text?.clear()
+            }
+        }
+    }
+
+    private fun handleEvent(it: AddOrEditReminderViewModel.AddReminderEvents?) {
+        when (it) {
+            AddOrEditReminderViewModel.AddReminderEvents.PickContactFromContactBookEvent -> {
+                selectContactFromPhoneContactList()
+            }
+            null -> {}
+        }
     }
 
     private fun handleSendOtpState(pocketMoneyReminderState: AddOrEditReminderViewModel.PocketMoneyReminderState) {
@@ -164,37 +204,6 @@ class AddNowPocketMoneyBottomSheet : BaseBottomSheetFragment<BottomSheetSetupPoc
     private fun selectContactFromPhoneContactList() {
         val intent = Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI)
         resultLauncher.launch(intent)
-    }
-
-    private fun setListeners() {
-        binding.etContactNumber.doOnTextChanged { text, _, _, _ ->
-            if (binding.etContactNumber.text.toString().trim() == "0")
-                binding.etContactNumber.text?.clear()
-
-            if (!text.isNullOrEmpty() && text.length < 10) {
-                binding.tvErrorMobileNumber.toVisible()
-            } else {
-                binding.tvErrorMobileNumber.toGone()
-            }
-        }
-        binding.etPocketMoneyAmount.doOnTextChanged { _, _, _, _ ->
-            if (binding.etPocketMoneyAmount.text.toString()
-                    .trim().isNotEmpty() && binding.etPocketMoneyAmount.text.toString().trim()
-                    .toInt() < 10
-            ) {
-                binding.tvErrorAmountExceed.toVisible()
-                binding.tvErrorAmountExceed.text =
-                    String.format("Amount should be greater than ₹10")
-            } else if (binding.etPocketMoneyAmount.text.toString()
-                    .trim().isNotEmpty() && binding.etPocketMoneyAmount.text.toString().trim()
-                    .toInt() > 5000
-            ) {
-                binding.tvErrorAmountExceed.toVisible()
-                binding.tvErrorAmountExceed.text = String.format("Amount should be less than ₹5000")
-            } else
-                binding.tvErrorAmountExceed.toGone()
-
-        }
     }
 
     private fun selectCard(frequencyValue: String) {

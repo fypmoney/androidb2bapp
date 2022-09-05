@@ -11,6 +11,7 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.SetPocketMoneyReminder
+import com.fypmoney.util.livedata.LiveEvent
 import com.fypmoney.view.pocketmoneysettings.model.Data
 import com.fypmoney.view.pocketmoneysettings.model.PocketMoneyReminderResponse
 
@@ -20,6 +21,14 @@ class AddOrEditReminderViewModel(application: Application) : BaseViewModel(appli
         get() = _stateReminderPocketMoney
     private val _stateReminderPocketMoney =
         MutableLiveData<PocketMoneyReminderState>()
+
+    val stateAmountPocketMoney: LiveData<ReminderEditTextState>
+        get() = _stateAmountPocketMoney
+    private val _stateAmountPocketMoney = MutableLiveData<ReminderEditTextState>()
+
+    val phoneBookEvent: LiveData<AddReminderEvents>
+        get() = _phoneBookEvent
+    private val _phoneBookEvent = LiveEvent<AddReminderEvents>()
 
     fun callPocketMoneySendOtp(setPocketMoneyReminder: SetPocketMoneyReminder) {
         WebApiCaller.getInstance().request(
@@ -56,11 +65,51 @@ class AddOrEditReminderViewModel(application: Application) : BaseViewModel(appli
         }
     }
 
+    fun onSelectContactFromPhonebook() {
+        _phoneBookEvent.value = AddReminderEvents.PickContactFromContactBookEvent
+    }
+
+    fun realtimeTextChanged(text: CharSequence) {
+        if (text.isNotEmpty() && Integer.parseInt(text.toString()) < 10)
+            _stateAmountPocketMoney.value = ReminderEditTextState.LessThanTen
+
+        if (text.isNotEmpty() && Integer.parseInt(text.toString()) >= 10 && Integer.parseInt(text.toString()) <= 5000)
+            _stateAmountPocketMoney.value = ReminderEditTextState.GreaterThanTenLessThanFiveThousand
+
+        if (text.isNotEmpty() && Integer.parseInt(text.toString()) > 5000)
+            _stateAmountPocketMoney.value = ReminderEditTextState.GreaterThanFiveThousand
+    }
+
+    fun mobileNumberValidation(text: CharSequence) {
+        if (text.toString() == "0") {
+            _stateAmountPocketMoney.value = ReminderEditTextState.MobileNumberZeroNotAllowed
+        }
+
+        if (text.isNotEmpty() && text.length < 10) {
+            _stateAmountPocketMoney.value = ReminderEditTextState.MobileNumberIsInvalid
+        } else {
+            _stateAmountPocketMoney.value = ReminderEditTextState.MobileNumberIsValid
+        }
+    }
+
     sealed class PocketMoneyReminderState {
         object Loading : PocketMoneyReminderState()
         data class Error(var errorResponseInfo: ErrorResponseInfo) : PocketMoneyReminderState()
         data class Success(var dataItem: Data?) :
             PocketMoneyReminderState()
+    }
+
+    sealed class ReminderEditTextState {
+        object LessThanTen : ReminderEditTextState()
+        object GreaterThanFiveThousand : ReminderEditTextState()
+        object GreaterThanTenLessThanFiveThousand : ReminderEditTextState()
+        object MobileNumberIsInvalid : ReminderEditTextState()
+        object MobileNumberIsValid : ReminderEditTextState()
+        object MobileNumberZeroNotAllowed : ReminderEditTextState()
+    }
+
+    sealed class AddReminderEvents {
+        object PickContactFromContactBookEvent : AddReminderEvents()
     }
 
 }

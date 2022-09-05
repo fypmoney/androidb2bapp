@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.widget.TextViewCompat
-import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import com.fypmoney.R
 import com.fypmoney.base.BaseBottomSheetFragment
@@ -68,8 +67,6 @@ class EditPocketMoneyBottomSheet : BaseBottomSheetFragment<BottomSheetSetupPocke
             unSelectCard("Daily")
         }
 
-        setListeners()
-
         binding.buttonConfirmReminder.setOnClickListener {
             val name: String = etName.text.toString().trim()
             val number: String = etContactNumber.text.toString().trim()
@@ -108,6 +105,37 @@ class EditPocketMoneyBottomSheet : BaseBottomSheetFragment<BottomSheetSetupPocke
         addOrEditReminderViewModel.stateReminderPocketMoney.observe(viewLifecycleOwner) {
             handleSendOtpState(it)
         }
+        addOrEditReminderViewModel.stateAmountPocketMoney.observe(viewLifecycleOwner) {
+            handleEditTextState(it)
+        }
+    }
+
+    private fun handleEditTextState(it: AddOrEditReminderViewModel.ReminderEditTextState?) {
+        when (it) {
+            AddOrEditReminderViewModel.ReminderEditTextState.GreaterThanFiveThousand -> {
+                binding.tvErrorAmountExceed.toVisible()
+                binding.tvErrorAmountExceed.text = String.format("Amount should be less than ₹5000")
+            }
+            AddOrEditReminderViewModel.ReminderEditTextState.LessThanTen -> {
+                binding.tvErrorAmountExceed.toVisible()
+                binding.tvErrorAmountExceed.text =
+                    String.format("Amount should be greater than ₹10")
+            }
+            null -> {
+            }
+            AddOrEditReminderViewModel.ReminderEditTextState.GreaterThanTenLessThanFiveThousand -> {
+                binding.tvErrorAmountExceed.toGone()
+            }
+            AddOrEditReminderViewModel.ReminderEditTextState.MobileNumberIsInvalid -> {
+                binding.tvErrorMobileNumber.toVisible()
+            }
+            AddOrEditReminderViewModel.ReminderEditTextState.MobileNumberIsValid -> {
+                binding.tvErrorMobileNumber.toGone()
+            }
+            AddOrEditReminderViewModel.ReminderEditTextState.MobileNumberZeroNotAllowed -> {
+                binding.etContactNumber.text?.clear()
+            }
+        }
     }
 
     private fun handleSendOtpState(pocketMoneyReminderState: AddOrEditReminderViewModel.PocketMoneyReminderState) {
@@ -140,37 +168,6 @@ class EditPocketMoneyBottomSheet : BaseBottomSheetFragment<BottomSheetSetupPocke
         binding.etPocketMoneyAmount.setText(arguments?.getInt("amount").toString())
         frequencyValue = arguments?.getString("frequency").toString()
         frequencyValue?.let { selectCard(it) }
-    }
-
-    private fun setListeners() {
-        binding.etContactNumber.doOnTextChanged { text, _, _, _ ->
-            if (binding.etContactNumber.text.toString().trim() == "0")
-                binding.etContactNumber.text?.clear()
-
-            if (!text.isNullOrEmpty() && text.length < 10) {
-                binding.tvErrorMobileNumber.toVisible()
-            } else {
-                binding.tvErrorMobileNumber.toGone()
-            }
-        }
-        binding.etPocketMoneyAmount.doOnTextChanged { _, _, _, _ ->
-            if (binding.etPocketMoneyAmount.text.toString()
-                    .trim().isNotEmpty() && binding.etPocketMoneyAmount.text.toString().trim()
-                    .toInt() < 10
-            ) {
-                binding.tvErrorAmountExceed.toVisible()
-                binding.tvErrorAmountExceed.text =
-                    String.format("Amount should be greater than ₹10")
-            } else if (binding.etPocketMoneyAmount.text.toString()
-                    .trim().isNotEmpty() && binding.etPocketMoneyAmount.text.toString().trim()
-                    .toInt() > 5000
-            ) {
-                binding.tvErrorAmountExceed.toVisible()
-                binding.tvErrorAmountExceed.text = String.format("Amount should be less than ₹5000")
-            } else
-                binding.tvErrorAmountExceed.toGone()
-
-        }
     }
 
     private fun selectCard(frequencyValue: String) {
