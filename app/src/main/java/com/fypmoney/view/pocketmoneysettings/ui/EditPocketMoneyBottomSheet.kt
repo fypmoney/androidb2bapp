@@ -11,6 +11,7 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseBottomSheetFragment
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.databinding.BottomSheetSetupPocketMoneyBinding
+import com.fypmoney.extension.bottomSheetTouchOutsideDisableOnly
 import com.fypmoney.extension.toGone
 import com.fypmoney.extension.toVisible
 import com.fypmoney.model.SetPocketMoneyReminder
@@ -23,8 +24,8 @@ class EditPocketMoneyBottomSheet : BaseBottomSheetFragment<BottomSheetSetupPocke
     private val addOrEditReminderViewModel by viewModels<AddOrEditReminderViewModel> { defaultViewModelProviderFactory }
     private var frequencyValue: String? = null
 
-    private lateinit var editNotifyListener: OnEditActionCompleteListener
-    fun setOnEditActionCompleteListener(editNotifyListener: OnEditActionCompleteListener) {
+    private lateinit var editNotifyListener: OnEditReminderActionCompleteListener
+    fun setOnEditReminderActionCompleteListener(editNotifyListener: OnEditReminderActionCompleteListener) {
         this.editNotifyListener = editNotifyListener
     }
 
@@ -40,10 +41,7 @@ class EditPocketMoneyBottomSheet : BaseBottomSheetFragment<BottomSheetSetupPocke
 
         setUpBinding()
 
-        val touchOutsideView = dialog!!.window
-            ?.decorView
-            ?.findViewById<View>(R.id.touch_outside)
-        touchOutsideView?.setOnClickListener(null)
+        dialog!!.window?.decorView?.findViewById<View>(R.id.touch_outside)?.bottomSheetTouchOutsideDisableOnly()
 
         setUpObserver()
 
@@ -119,7 +117,7 @@ class EditPocketMoneyBottomSheet : BaseBottomSheetFragment<BottomSheetSetupPocke
             }
             AddOrEditReminderViewModel.PocketMoneyReminderState.Loading -> {}
             is AddOrEditReminderViewModel.PocketMoneyReminderState.Success -> {
-                editNotifyListener.onEditActionComplete("done")
+                editNotifyListener.onEditReminderActionComplete("done")
                 Utility.showToast("Reminder edited successfully")
                 dismiss()
             }
@@ -325,8 +323,8 @@ class EditPocketMoneyBottomSheet : BaseBottomSheetFragment<BottomSheetSetupPocke
         }
     }
 
-    interface OnEditActionCompleteListener {
-        fun onEditActionComplete(data: String)
+    interface OnEditReminderActionCompleteListener {
+        fun onEditReminderActionComplete(data: String)
     }
 
     private fun setUpBinding() {

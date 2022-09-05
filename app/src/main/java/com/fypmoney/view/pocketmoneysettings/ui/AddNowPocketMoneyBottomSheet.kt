@@ -15,6 +15,7 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseBottomSheetFragment
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.databinding.BottomSheetSetupPocketMoneyBinding
+import com.fypmoney.extension.bottomSheetTouchOutsideDisableOnly
 import com.fypmoney.extension.toGone
 import com.fypmoney.extension.toVisible
 import com.fypmoney.model.SetPocketMoneyReminder
@@ -28,9 +29,9 @@ class AddNowPocketMoneyBottomSheet : BaseBottomSheetFragment<BottomSheetSetupPoc
     private val addOrEditReminderViewModel by viewModels<AddOrEditReminderViewModel> { defaultViewModelProviderFactory }
     private var frequencyValue: String? = null
 
-    private lateinit var listener: OnActionCompleteListener
-    fun setOnActionCompleteListener(listener: OnActionCompleteListener) {
-        this.listener = listener
+    private lateinit var otpListener: CloseAddBottomActionCompleteListener
+    fun setOnAddReminderActionCompleteListener(otpListener: CloseAddBottomActionCompleteListener) {
+        this.otpListener = otpListener
     }
 
     override val baseFragmentVM: BaseViewModel
@@ -64,10 +65,7 @@ class AddNowPocketMoneyBottomSheet : BaseBottomSheetFragment<BottomSheetSetupPoc
 
         setUpBinding()
 
-        val touchOutsideView = dialog!!.window
-            ?.decorView
-            ?.findViewById<View>(R.id.touch_outside)
-        touchOutsideView?.setOnClickListener(null)
+        dialog!!.window?.decorView?.findViewById<View>(R.id.touch_outside)?.bottomSheetTouchOutsideDisableOnly()
 
         setUpObserver()
 
@@ -148,7 +146,7 @@ class AddNowPocketMoneyBottomSheet : BaseBottomSheetFragment<BottomSheetSetupPoc
             AddOrEditReminderViewModel.PocketMoneyReminderState.Loading -> {}
             is AddOrEditReminderViewModel.PocketMoneyReminderState.Success -> {
                 Utility.showToast("Otp Sent")
-                listener.onActionComplete(pocketMoneyReminderState.dataItem)
+                otpListener.onOtpSuccessActionComplete(pocketMoneyReminderState.dataItem)
                 dismiss()
             }
         }
@@ -349,8 +347,8 @@ class AddNowPocketMoneyBottomSheet : BaseBottomSheetFragment<BottomSheetSetupPoc
         }
     }
 
-    interface OnActionCompleteListener {
-        fun onActionComplete(data: Data?)
+    interface CloseAddBottomActionCompleteListener {
+        fun onOtpSuccessActionComplete(data: Data?)
     }
 
     private fun setUpBinding() {

@@ -1,33 +1,21 @@
 package com.fypmoney.view.pocketmoneysettings.adapter
 
-import android.app.Dialog
-import android.content.Context
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.Keep
-import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.fypmoney.R
 import com.fypmoney.databinding.ItemPocketMoneyReminderBinding
 import com.fypmoney.view.pocketmoneysettings.model.DataItem
-import com.fypmoney.view.pocketmoneysettings.ui.EditPocketMoneyBottomSheet
-import com.fypmoney.view.pocketmoneysettings.ui.PocketMoneySettingsFragment
-import kotlinx.android.synthetic.main.dialog_delete_reminder_confirm.*
 
 class PocketMoneyReminderAdapter(
-    val childFragmentManager: FragmentManager,
-    val context: Context,
-    val onClickNotifyDelete:(mobileNumber: String) -> Unit,
-    val clickNotify: PocketMoneySettingsFragment.OnClickListener
+    val onClickNotifyDelete: (mobileNumber: String) -> Unit,
+    val onClickOpenEditSheet: (reminderData: PocketMoneyReminderUiModel) -> Unit
 ) :
     ListAdapter<PocketMoneyReminderUiModel, PocketMoneyReminderAdapter.PocketMoneyReminderVH>(
         PocketMoneyReminderDiffUtil
-    ){
+    ) {
 
     inner class PocketMoneyReminderVH(private val binding: ItemPocketMoneyReminderBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -39,11 +27,11 @@ class PocketMoneyReminderAdapter(
             binding.tvMobileNumber.text = String.format("+91 " + item.mobile)
 
             binding.ivReminderEdit.setOnClickListener {
-                openAddReminderBottomSheet(item)
+                onClickOpenEditSheet(item)
             }
 
             binding.ivReminderDelete.setOnClickListener {
-                callConfirmDisableNotificationDialog(context, item.mobile)
+                onClickNotifyDelete(item.mobile)
             }
         }
 
@@ -62,51 +50,6 @@ class PocketMoneyReminderAdapter(
         holder.bind(getItem(position))
     }
 
-    private fun openAddReminderBottomSheet(item: PocketMoneyReminderUiModel) {
-        val editReminderBottomSheet = EditPocketMoneyBottomSheet()
-        val bundle = Bundle()
-        bundle.putString("name", item.name)
-        bundle.putString("mobile", item.mobile)
-        bundle.putInt("amount", item.amount!!)
-        bundle.putString("frequency", item.frequency)
-        editReminderBottomSheet.arguments = bundle
-        editReminderBottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
-        editReminderBottomSheet.show(childFragmentManager, "EditPocketMoneyBottomSheet")
-        editReminderBottomSheet.setOnEditActionCompleteListener(editNotifyListener)
-    }
-
-    private val editNotifyListener =
-        object : EditPocketMoneyBottomSheet.OnEditActionCompleteListener {
-            override fun onEditActionComplete(data: String) {
-                clickNotify.onClick()
-            }
-        }
-
-    private fun callConfirmDisableNotificationDialog(context: Context, mobile: String) {
-
-        val dialogDisableConfirm = Dialog(context)
-
-        dialogDisableConfirm.setCancelable(false)
-        dialogDisableConfirm.setCanceledOnTouchOutside(false)
-        dialogDisableConfirm.setContentView(R.layout.dialog_delete_reminder_confirm)
-
-        val wlp = dialogDisableConfirm.window?.attributes
-        wlp?.width = ViewGroup.LayoutParams.MATCH_PARENT
-        dialogDisableConfirm.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialogDisableConfirm.window?.attributes = wlp
-
-        dialogDisableConfirm.btnDeleteNotifications?.setOnClickListener {
-            onClickNotifyDelete(mobile)
-            //TODO close dialog on delete success response
-            dialogDisableConfirm.dismiss()
-        }
-
-        dialogDisableConfirm.tvCancelNotificationClick.setOnClickListener {
-            dialogDisableConfirm.dismiss()
-        }
-
-        dialogDisableConfirm.show()
-    }
 }
 
 @Keep

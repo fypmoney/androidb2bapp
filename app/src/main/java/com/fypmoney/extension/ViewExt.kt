@@ -1,9 +1,11 @@
 package com.fypmoney.extension
 
+import android.app.Dialog
 import android.content.res.Resources
 import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
+import com.fypmoney.R
 import kotlin.math.roundToInt
 
 /**
@@ -53,6 +55,9 @@ fun View.setMargin(left: Float, top: Float, right: Float, bottom: Float) {
     layoutParams.setMargins(leftPx, topPx, rightPx, bottomPx)
 }
 
+fun View.bottomSheetTouchOutsideDisableOnly() {
+    setOnClickListener(null)
+}
 
 val Number.toPx get() = TypedValue.applyDimension(
     TypedValue.COMPLEX_UNIT_DIP,

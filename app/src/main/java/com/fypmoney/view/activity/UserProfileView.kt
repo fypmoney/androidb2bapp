@@ -151,9 +151,9 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
 
                         }
                     }
-//                    3 -> {
-//                        addPocketFragmentToActivity()
-//                    }
+                    3 -> {
+                        addPocketFragmentToActivity()
+                    }
                     4 -> {
                         intentToActivityMain(
                             this@UserProfileView,
@@ -287,13 +287,13 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
             )
         }
 
-//        iconList.add(
-//            ListUiModel(
-//                postion = 3,
-//                name = getString(R.string.pocket_money_settings_screen_title),
-//                icon = AppCompatResources.getDrawable(this, R.drawable.ic_pocket_settings)
-//            )
-//        )
+        iconList.add(
+            ListUiModel(
+                postion = 3,
+                name = getString(R.string.pocket_money_settings_screen_title),
+                icon = AppCompatResources.getDrawable(this, R.drawable.ic_pocket_settings)
+            )
+        )
 
         iconList.add(
             ListUiModel(

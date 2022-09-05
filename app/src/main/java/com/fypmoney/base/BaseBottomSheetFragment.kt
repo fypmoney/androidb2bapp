@@ -10,11 +10,10 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
-import androidx.lifecycle.Observer
 import com.fypmoney.R
+import com.fypmoney.util.DialogUtils
 import com.fypmoney.util.autoCleared
 import com.fypmoney.view.activity.LoginView
-import com.fypmoney.view.activity.SplashView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -55,11 +54,21 @@ abstract class BaseBottomSheetFragment <VDB : ViewDataBinding> : BottomSheetDial
     }
 
     private fun observeForError() {
-        baseFragmentVM.logoutUser.observe(viewLifecycleOwner, Observer {
-                    navigateToLogin()
+        baseFragmentVM.logoutUser.observe(viewLifecycleOwner) {
+            navigateToLogin()
+        }
 
-
-        })
+        baseFragmentVM.progressDialog.observe(viewLifecycleOwner)
+        {
+            when (it) {
+                true -> {
+                    DialogUtils.showProgressDialog(requireActivity())
+                }
+                false -> {
+                    DialogUtils.dismissProgressDialog()
+                }
+            }
+        }
     }
 
     private fun navigateToLogin() {

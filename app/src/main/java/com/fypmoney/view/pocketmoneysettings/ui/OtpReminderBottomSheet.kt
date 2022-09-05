@@ -11,6 +11,7 @@ import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseBottomSheetFragment
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.databinding.BottomSheetPocketMoneyOtpBinding
+import com.fypmoney.extension.bottomSheetTouchOutsideDisableOnly
 import com.fypmoney.extension.toInvisible
 import com.fypmoney.extension.toVisible
 import com.fypmoney.model.SetPocketMoneyOtpReminder
@@ -25,10 +26,10 @@ class OtpReminderBottomSheet : BaseBottomSheetFragment<BottomSheetPocketMoneyOtp
     private val otpReminderVM by viewModels<OtpReminderVM> { defaultViewModelProviderFactory }
     var otp = ObservableField<String>()
     private lateinit var timer: CountDownTimer
-    private lateinit var notifyListener: OnActionCompleteListener
+    private lateinit var notifyToAddReminderListener: OnOtpVerifyCompleteListener
 
-    fun setOnActionCompleteListener(notifyListener: OnActionCompleteListener) {
-        this.notifyListener = notifyListener
+    fun setOnOtpVerifyCompleteListener(notifyToAddReminderListener: OnOtpVerifyCompleteListener) {
+        this.notifyToAddReminderListener = notifyToAddReminderListener
     }
 
     override val baseFragmentVM: BaseViewModel
@@ -43,10 +44,7 @@ class OtpReminderBottomSheet : BaseBottomSheetFragment<BottomSheetPocketMoneyOtp
 
         setUpBinding()
 
-        val touchOutsideView = dialog!!.window
-            ?.decorView
-            ?.findViewById<View>(R.id.touch_outside)
-        touchOutsideView?.setOnClickListener(null)
+        dialog!!.window?.decorView?.findViewById<View>(R.id.touch_outside)?.bottomSheetTouchOutsideDisableOnly()
 
         setUpObserver()
 
@@ -119,14 +117,14 @@ class OtpReminderBottomSheet : BaseBottomSheetFragment<BottomSheetPocketMoneyOtp
             OtpReminderVM.PocketMoneyOtpVerifyState.Loading -> {}
             is OtpReminderVM.PocketMoneyOtpVerifyState.Success -> {
                 Utility.showToast("Reminder added successfully")
-                notifyListener.onActionComplete("done")
+                notifyToAddReminderListener.onActionComplete("done")
                 dismiss()
             }
             null -> {}
         }
     }
 
-    interface OnActionCompleteListener {
+    interface OnOtpVerifyCompleteListener {
         fun onActionComplete(data: String)
     }
 

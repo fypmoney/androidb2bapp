@@ -367,6 +367,18 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
                                         }
                                     })
                             }
+                            is ArcadeType.BRANDED_COUPONS -> {
+                                findNavController().navigate(
+                                    Uri.parse("https://www.fypmoney.in/branded_coupons/${type.productCode}/${null}"),
+                                    navOptions {
+                                        anim {
+                                            popEnter = R.anim.slide_in_left
+                                            popExit = R.anim.slide_out_righ
+                                            enter = R.anim.slide_in_right
+                                            exit = R.anim.slide_out_left
+                                        }
+                                    })
+                            }
                             null -> {}
                         }
                     }
