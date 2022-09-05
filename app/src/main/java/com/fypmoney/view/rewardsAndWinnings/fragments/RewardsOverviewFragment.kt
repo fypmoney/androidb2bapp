@@ -288,11 +288,13 @@ class RewardsOverviewFragment :
                     })
             }
             AppConstants.EXPLORE_SECTION_EXPLORE -> {
-                val directions = RewardsOverviewFragmentDirections.actionExploreSectionExplore(
-                    sectionExploreItem = sectionContentItem,
-                    sectionExploreName = exploreContentResponse?.sectionDisplayText
-                )
-                directions.let { it1 -> findNavController().navigate(it1) }
+                if(findNavController().currentDestination?.id==R.id.navigation_rewards){
+                    val directions = RewardsOverviewFragmentDirections.actionExploreSectionExplore(
+                        sectionExploreItem = sectionContentItem,
+                        sectionExploreName = exploreContentResponse?.sectionDisplayText
+                    )
+                    directions.let { it1 -> findNavController().navigate(it1) }
+                }
             }
             AppConstants.EXPLORE_IN_APP -> {
 

@@ -772,7 +772,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
         }
     }
 
-    private fun openExploreFeaturesCallToAction(
+    private fun  openExploreFeaturesCallToAction(
         redirectionType: String?,
         redirectionResource: String?
     ) {

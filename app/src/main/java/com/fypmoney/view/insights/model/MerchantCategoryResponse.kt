@@ -35,7 +35,7 @@ data class MerchantCategoryUiModel(
     companion object{
         fun mapMerchantCategoryToMerchantCategoryUiModel(
             merchantCategory: MerchantCategory,
-            categoryCode: String
+            categoryCode: String?
         ):MerchantCategoryUiModel{
             return MerchantCategoryUiModel(
                 categoryIcon = merchantCategory.iconLink,

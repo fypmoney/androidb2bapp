@@ -126,16 +126,19 @@ class RechargePlansFragment : BaseFragment<RechargePlansFragmentBinding, Recharg
                             trackr {it1->
                                 it1.name = TrackrEvent.prepaid_choose_plan
                             }
-                            val directions = RechargePlansFragmentDirections.actionRechargePlanToSelectedPlan(
-                                valueItem,
-                                rechargePlansFragmentVM.selectedOperator.value,
-                                mobile = rechargePlansFragmentVM.mobile.value,
-                                planType = it1,
-                                rechargeType = rechargePlansFragmentVM.rechargeType,
-                                circle = rechargePlansFragmentVM.selectedCircle.value
-                            )
+                            if(findNavController().currentDestination?.id ==R.id.navigation_select_plans){
+                                val directions = RechargePlansFragmentDirections.actionRechargePlanToSelectedPlan(
+                                    valueItem,
+                                    rechargePlansFragmentVM.selectedOperator.value,
+                                    mobile = rechargePlansFragmentVM.mobile.value,
+                                    planType = it1,
+                                    rechargeType = rechargePlansFragmentVM.rechargeType,
+                                    circle = rechargePlansFragmentVM.selectedCircle.value
+                                )
 
-                            findNavController().navigate(directions)
+                                findNavController().navigate(directions)
+                            }
+
                         }), it2
                     )
                 }

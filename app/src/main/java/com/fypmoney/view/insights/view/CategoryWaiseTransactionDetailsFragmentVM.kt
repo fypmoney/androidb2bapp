@@ -119,7 +119,7 @@ class CategoryWaiseTransactionDetailsFragmentVM(application: Application) : Base
                 ),)}
             else if(txnItem.transactionType.equals("Load",true)){ String.format(PockketApplication.instance.getString(R.string.reccived_with_time),
                 Utility.parseDateTimeWithPlusFiveThirty(txnItem.transactionDate,
-                    AppConstants.SERVER_DATE_TIME_FORMAT1,
+                    AppConstants.SERVER_DATE_TIME_FORMAT3,
                     AppConstants.CHANGED_DATE_TIME_FORMAT3
                 ),)}
             else{
@@ -155,7 +155,6 @@ class CategoryWaiseTransactionDetailsFragmentVM(application: Application) : Base
             }
             ApiConstant.API_GET_MERCHANT_CATEGORY->{
                 val response = JSONObject(responseData.toString())
-
                 val daa = response.getString("data")
                 val jsonArray = parseString(daa) as JsonArray
                 val list= GsonBuilder().create().fromJson(jsonArray,Array<MerchantCategory>::class.java).toList()
