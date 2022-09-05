@@ -1,62 +1,52 @@
 package com.fypmoney.view.pocketmoneysettings.ui
 
-import android.app.Dialog
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.text.TextUtils
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.databinding.ObservableField
+import androidx.fragment.app.viewModels
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
-import com.fypmoney.connectivity.ApiConstant
-import com.fypmoney.connectivity.ApiUrl
-import com.fypmoney.connectivity.ErrorResponseInfo
-import com.fypmoney.connectivity.network.NetworkUtil
-import com.fypmoney.connectivity.retrofit.ApiRequest
-import com.fypmoney.connectivity.retrofit.WebApiCaller
+import com.fypmoney.base.BaseBottomSheetFragment
+import com.fypmoney.base.BaseViewModel
 import com.fypmoney.databinding.BottomSheetPocketMoneyOtpBinding
+import com.fypmoney.extension.bottomSheetTouchOutsideDisableOnly
 import com.fypmoney.extension.toInvisible
 import com.fypmoney.extension.toVisible
 import com.fypmoney.model.SetPocketMoneyOtpReminder
 import com.fypmoney.model.SetPocketMoneyReminder
 import com.fypmoney.util.Utility
-import com.fypmoney.view.pocketmoneysettings.model.Data
-import com.fypmoney.view.pocketmoneysettings.model.PocketMoneyOtpVerifyResponse
-import com.fypmoney.view.pocketmoneysettings.model.PocketMoneyReminderResponse
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.fypmoney.view.pocketmoneysettings.viewmodel.OtpReminderVM
 import java.text.SimpleDateFormat
 import java.util.*
 
-class OtpReminderBottomSheet : BottomSheetDialogFragment(), WebApiCaller.OnWebApiResponse {
+class OtpReminderBottomSheet : BaseBottomSheetFragment<BottomSheetPocketMoneyOtpBinding>(){
 
-    private lateinit var binding: BottomSheetPocketMoneyOtpBinding
+    private val otpReminderVM by viewModels<OtpReminderVM> { defaultViewModelProviderFactory }
     var otp = ObservableField<String>()
     private lateinit var timer: CountDownTimer
-    private lateinit var notifyListener: OnActionCompleteListener
+    private lateinit var notifyToAddReminderListener: OnOtpVerifyCompleteListener
 
-    fun setOnActionCompleteListener(notifyListener: OnActionCompleteListener) {
-        this.notifyListener = notifyListener
+    fun setOnOtpVerifyCompleteListener(notifyToAddReminderListener: OnOtpVerifyCompleteListener) {
+        this.notifyToAddReminderListener = notifyToAddReminderListener
     }
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
-        BottomSheetDialog(requireContext(), theme)
+    override val baseFragmentVM: BaseViewModel
+        get() = otpReminderVM
+    override val customTag: String
+        get() = OtpReminderBottomSheet::class.java.simpleName
+    override val layoutId: Int
+        get() = R.layout.bottom_sheet_pocket_money_otp
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        binding = DataBindingUtil.inflate(
-            inflater,
-            R.layout.bottom_sheet_pocket_money_otp,
-            container,
-            false
-        )
+        setUpBinding()
+
+        dialog!!.window?.decorView?.findViewById<View>(R.id.touch_outside)?.bottomSheetTouchOutsideDisableOnly()
+
+        setUpObserver()
 
         startTimer()
 
@@ -72,7 +62,7 @@ class OtpReminderBottomSheet : BottomSheetDialogFragment(), WebApiCaller.OnWebAp
                     Utility.showToast(PockketApplication.instance.getString(R.string.empty_otp_error))
                 }
                 else -> {
-                    checkOtpPocketMoneyReminder(
+                    otpReminderVM.checkOtpPocketMoneyReminder(
                         SetPocketMoneyOtpReminder(
                             identifierType = "MOBILE",
                             otpIdentifier = data,
@@ -84,53 +74,69 @@ class OtpReminderBottomSheet : BottomSheetDialogFragment(), WebApiCaller.OnWebAp
         }
 
         binding.tvSentOtpAgain.setOnClickListener {
-            WebApiCaller.getInstance().request(
-                ApiRequest(
-                    ApiConstant.API_ADD_POCKET_MONEY_REMINDER,
-                    NetworkUtil.endURL(ApiConstant.API_ADD_POCKET_MONEY_REMINDER),
-                    ApiUrl.POST,
-                    SetPocketMoneyReminder(
-                        identifierType = "MOBILE",
-                        mobile = arguments?.getString("mobile"),
-                        name = arguments?.getString("name"),
-                        amount = arguments?.getInt("amount"),
-                        frequency = arguments?.getString("frequency"),
-                        relation = ""
-                    ),
-                    this, isProgressBar = true
+            otpReminderVM.callPocketMoneyResendOtp(
+                SetPocketMoneyReminder(
+                    identifierType = "MOBILE",
+                    mobile = arguments?.getString("mobile"),
+                    name = arguments?.getString("name"),
+                    amount = arguments?.getInt("amount"),
+                    frequency = arguments?.getString("frequency"),
+                    relation = ""
                 )
             )
         }
 
-        return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    private fun setUpObserver() {
+        otpReminderVM.stateReminderOtpVerify.observe(viewLifecycleOwner){
+            handleOtpVerifyState(it)
+        }
 
-        val touchOutsideView = dialog!!.window
-            ?.decorView
-            ?.findViewById<View>(R.id.touch_outside)
-        touchOutsideView?.setOnClickListener(null)
+        otpReminderVM.stateReminderPocketMoney.observe(viewLifecycleOwner){
+            handleOtpVerifyReminderState(it)
+        }
     }
 
-    interface OnActionCompleteListener {
+    private fun handleOtpVerifyReminderState(it: OtpReminderVM.PocketMoneyReminderState?) {
+        when(it){
+            is OtpReminderVM.PocketMoneyReminderState.Error -> {}
+            OtpReminderVM.PocketMoneyReminderState.Loading -> {}
+            is OtpReminderVM.PocketMoneyReminderState.Success -> {
+                binding.tvSentOtpAgain.toInvisible()
+                startTimer()
+                Utility.showToast("Otp Resent")
+            }
+            null -> {}
+        }
+    }
+
+    private fun handleOtpVerifyState(it: OtpReminderVM.PocketMoneyOtpVerifyState?) {
+        when(it){
+            is OtpReminderVM.PocketMoneyOtpVerifyState.Error -> {}
+            OtpReminderVM.PocketMoneyOtpVerifyState.Loading -> {}
+            is OtpReminderVM.PocketMoneyOtpVerifyState.Success -> {
+                Utility.showToast("Reminder added successfully")
+                notifyToAddReminderListener.onActionComplete("done")
+                dismiss()
+            }
+            null -> {}
+        }
+    }
+
+    interface OnOtpVerifyCompleteListener {
         fun onActionComplete(data: String)
-    }
-
-    override fun getTheme(): Int = R.style.BottomSheetDialogTheme
-
-    override fun progress(isStart: Boolean, message: String) {
     }
 
     private fun startTimer() {
         timer = object : CountDownTimer(60000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 binding.tvResendIn.toVisible()
-                binding.tvResendIn.text =
+                binding.tvResendIn.text = String.format(
                     getString(R.string.resend_timer_text) + SimpleDateFormat("00:ss").format(
                         Date(millisUntilFinished)
                     )
+                )
             }
 
             override fun onFinish() {
@@ -140,54 +146,15 @@ class OtpReminderBottomSheet : BottomSheetDialogFragment(), WebApiCaller.OnWebAp
         }.start()
     }
 
-    private fun checkOtpPocketMoneyReminder(setPocketMoneyOtpReminder: SetPocketMoneyOtpReminder) {
-        WebApiCaller.getInstance().request(
-            ApiRequest(
-                ApiConstant.API_VERIFY_OTP_POCKET_MONEY_REMINDER,
-                NetworkUtil.endURL(ApiConstant.API_VERIFY_OTP_POCKET_MONEY_REMINDER),
-                ApiUrl.POST,
-                setPocketMoneyOtpReminder,
-                this, isProgressBar = true
-            )
-        )
-    }
-
-    override fun onSuccess(purpose: String, responseData: Any) {
-        when (purpose) {
-            ApiConstant.API_VERIFY_OTP_POCKET_MONEY_REMINDER -> {
-                if (responseData is PocketMoneyOtpVerifyResponse) {
-                    Utility.showToast("Reminder added successfully")
-                    notifyListener.onActionComplete("done")
-                    dismiss()
-                }
-            }
-            ApiConstant.API_ADD_POCKET_MONEY_REMINDER -> {
-                if (responseData is PocketMoneyReminderResponse) {
-                    binding.tvSentOtpAgain.toInvisible()
-                    startTimer()
-                    Utility.showToast("Otp Resent")
-                }
-            }
+    private fun setUpBinding(){
+        binding.apply {
+            lifecycleOwner = viewLifecycleOwner
         }
-    }
-
-    override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
-        when (purpose) {
-            ApiConstant.API_VERIFY_OTP_POCKET_MONEY_REMINDER -> {
-                Utility.showToast(errorResponseInfo.msg)
-            }
-            ApiConstant.API_ADD_POCKET_MONEY_REMINDER -> {
-                Utility.showToast(errorResponseInfo.msg)
-            }
-        }
-    }
-
-    override fun offLine() {
-
     }
 
     override fun onDestroy() {
         super.onDestroy()
         timer.cancel()
     }
+
 }
