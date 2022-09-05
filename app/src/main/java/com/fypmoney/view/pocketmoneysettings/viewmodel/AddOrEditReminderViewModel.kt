@@ -70,14 +70,17 @@ class AddOrEditReminderViewModel(application: Application) : BaseViewModel(appli
     }
 
     fun realtimeTextChanged(text: CharSequence) {
-        if (text.isNotEmpty() && Integer.parseInt(text.toString()) < 10)
+        text.toString().toIntOrNull()?.let {
+            if(it<10){
+                _stateAmountPocketMoney.value = ReminderEditTextState.LessThanTen
+            }else if(it in 10..5000){
+                _stateAmountPocketMoney.value = ReminderEditTextState.GreaterThanTenLessThanFiveThousand
+            }else if(it>5000){
+                _stateAmountPocketMoney.value = ReminderEditTextState.GreaterThanFiveThousand
+            }
+        }?: kotlin.run {
             _stateAmountPocketMoney.value = ReminderEditTextState.LessThanTen
-
-        if (text.isNotEmpty() && Integer.parseInt(text.toString()) >= 10 && Integer.parseInt(text.toString()) <= 5000)
-            _stateAmountPocketMoney.value = ReminderEditTextState.GreaterThanTenLessThanFiveThousand
-
-        if (text.isNotEmpty() && Integer.parseInt(text.toString()) > 5000)
-            _stateAmountPocketMoney.value = ReminderEditTextState.GreaterThanFiveThousand
+        }
     }
 
     fun mobileNumberValidation(text: CharSequence) {
