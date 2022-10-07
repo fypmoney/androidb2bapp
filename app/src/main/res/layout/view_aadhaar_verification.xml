@@ -113,6 +113,7 @@
                         android:layout_centerHorizontal="true"
                         android:onClick="@{()->viewModel.clickHere()}"
                         android:text="@string/aadhaar_number_click_here"
+                        android:visibility="gone"
                         android:textAlignment="center"
                         android:textSize="@dimen/_18sdp"
                         app:layout_constraintBottom_toTopOf="@+id/aadhaar_not_linked"

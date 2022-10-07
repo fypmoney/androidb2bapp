@@ -110,7 +110,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
 
     }
     private fun showBottomNavigation(){
-        binding.bottomMenu.toVisible()
+        binding.bottomMenu.toGone()
     }
     private fun hideBottomNavigation(){
         binding.bottomMenu.toGone()

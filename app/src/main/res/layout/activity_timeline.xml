@@ -439,6 +439,7 @@
                     android:layout_marginTop="@dimen/_25sdp"
                     android:layout_marginEnd="@dimen/_15sdp"
                     android:text="@string/get_help_question_mark"
+                    android:visibility="gone"
                     android:layout_marginBottom="@dimen/_20sdp"
                     android:layout_gravity="center_horizontal"
                     android:textColor="@color/white"

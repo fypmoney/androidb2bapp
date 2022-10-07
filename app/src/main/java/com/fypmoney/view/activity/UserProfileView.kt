@@ -265,7 +265,7 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
             )
         )
 
-        val discoredConnected = SharedPrefUtils.getString(
+        /*val discoredConnected = SharedPrefUtils.getString(
             application,
             SharedPrefUtils.SF_DICORD_CONNECTED
         )
@@ -285,9 +285,9 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
                     icon = AppCompatResources.getDrawable(this, R.drawable.ic_discord_profile)
                 )
             )
-        }
+        }*/
 
-        iconList.add(
+        /*iconList.add(
             ListUiModel(
                 postion = 3,
                 name = getString(R.string.pocket_money_settings_screen_title),
@@ -317,7 +317,7 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
                 name = getString(R.string.notification_settings),
                 icon = AppCompatResources.getDrawable(this, R.drawable.ic_whats_app)
             )
-        )
+        )*/
         iconList.add(
             ListUiModel(
                 postion = 7,
@@ -332,13 +332,13 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
                 icon = AppCompatResources.getDrawable(this, R.drawable.ic_term_and_condition)
             )
         )
-        iconList.add(
+        /*iconList.add(
             ListUiModel(
                 postion = 9,
                 name = getString(R.string.help),
                 icon = AppCompatResources.getDrawable(this, R.drawable.ic_help)
             )
-        )
+        )*/
         iconList.add(
             ListUiModel(
                 postion = 10,

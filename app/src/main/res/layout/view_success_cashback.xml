@@ -353,6 +353,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         android:text="@string/get_help"
+                        android:visibility="gone"
                         android:textAllCaps="false"
                         android:layout_marginTop="@dimen/dp16"
                         app:backgroundTint="@color/text_color_dark" />

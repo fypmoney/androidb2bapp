@@ -1,4 +1,4 @@
 include ':app'
-rootProject.name = "Fyp App"
+rootProject.name = "Fyp B2B"
 include ':trackr'
 include ':bubblenavigationbar'
