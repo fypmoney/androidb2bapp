@@ -169,7 +169,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
     private fun rechargeVisbility() {
         SharedPrefUtils.getString(requireContext(),SharedPrefUtils.SF_SHOW_RECHARGE_IN_HOME_SCREEN)?.let {
             if(it==YES){
-                binding.rechargeSectionCl.toVisible()
+                binding.rechargeSectionCl.toGone()
             }else if(it==NO){
                 binding.rechargeSectionCl.toGone()
             }

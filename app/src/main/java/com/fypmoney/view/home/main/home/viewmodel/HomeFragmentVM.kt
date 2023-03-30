@@ -214,7 +214,7 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_Explore,
-                NetworkUtil.endURL(ApiConstant.API_Explore) + "HOME_SCREEN",
+                NetworkUtil.endURL(ApiConstant.API_Explore) + "AGENT_HOME",
                 ApiUrl.GET,
                 BaseRequest(),
                 this, isProgressBar = false

@@ -74,7 +74,7 @@ android {
                 signingConfig signingConfigs.config
                 applicationId "com.fypmoney.dev"
                 resValue "string", "app_name", "F debug"
-                buildConfigField "String", "BASE_ENDPOINT", "\"http://54.84.197.170:9300\""
+                buildConfigField "String", "BASE_ENDPOINT", "\"http://52.22.235.46:9300\""
                 buildConfigField "String", "ADJUST_PROD_KEY","\"buqdhv6bqlts\""
                 buildConfigField "String", "MOENAGE_KEY","\"EF6YXWOUCTC748YDOJ47ZU3V\""
             }
