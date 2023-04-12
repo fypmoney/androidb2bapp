@@ -86,6 +86,12 @@ data class SetPocketMoneyOtpReminder(
 ) : BaseRequest()
 
 @Keep
+data class VerifyOtp(
+    @SerializedName("otpIdentifier") val otpIdentifier: String? = null,
+    @SerializedName("otp") val otp: String? = null,
+) : BaseRequest()
+
+@Keep
 data class DeletePocketMoneyReminder(
     @SerializedName("mobile") val mobile: String? = null
 ) : BaseRequest()

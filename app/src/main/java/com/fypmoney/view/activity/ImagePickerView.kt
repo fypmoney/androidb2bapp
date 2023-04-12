@@ -152,7 +152,7 @@ class ImagePickerView : AppCompatActivity() {
             Uri.fromFile(File(cacheDir, queryName(contentResolver, sourceUri)))
         val options = UCrop.Options()
         options.setCompressionQuality(IMAGE_COMPRESSION)
-        options.setCircleDimmedLayer(true)
+        options.setCircleDimmedLayer(false)
         options.setShowCropGrid(false)
         options.setShowCropFrame(false)
         // applying UI theme
@@ -218,24 +218,26 @@ class ImagePickerView : AppCompatActivity() {
             listener: PickerOptionListener
         ) {
             // setup the alert builder
-            val builder: AlertDialog.Builder = AlertDialog.Builder(context)
-            builder.setTitle(context.getString(R.string.lbl_set_profile_photo))
+//            val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+//            builder.setTitle(context.getString(R.string.lbl_set_profile_photo))
+//
+//            // add a list
+//            val animals = arrayOf(
+//                context.getString(R.string.lbl_take_camera_picture),
+//                context.getString(R.string.lbl_choose_from_gallery)
+//            )
+//            builder.setItems(animals) { dialog, which ->
+//                when (which) {
+//                    0 -> listener.onTakeCameraSelected()
+//                    1 -> listener.onChooseGallerySelected()
+//                }
+//            }
+//
+//            // create and show the alert dialog
+//            val dialog: AlertDialog = builder.create()
+//            dialog.show()
 
-            // add a list
-            val animals = arrayOf(
-                context.getString(R.string.lbl_take_camera_picture),
-                context.getString(R.string.lbl_choose_from_gallery)
-            )
-            builder.setItems(animals) { dialog, which ->
-                when (which) {
-                    0 -> listener.onTakeCameraSelected()
-                    1 -> listener.onChooseGallerySelected()
-                }
-            }
-
-            // create and show the alert dialog
-            val dialog: AlertDialog = builder.create()
-            dialog.show()
+            listener.onTakeCameraSelected()
         }
 
         private fun queryName(resolver: ContentResolver, uri: Uri?): String {

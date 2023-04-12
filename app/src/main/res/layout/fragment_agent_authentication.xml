@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".view.kycagent.ui.AgentAuthenticationFragment">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/bgcolor">
+
+        <include
+            android:id="@+id/layout_toolbar"
+            layout="@layout/toolbar" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+            
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginHorizontal="@dimen/dp20">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp18"
+                        android:text="Agent Authentication"
+                        android:textColor="@color/white"
+                        android:textSize="22sp"
+                        app:fontFamily="@font/product_sans_bold" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp24"
+                        android:text="@string/agent_to_place_finger_on_biometric_device_for_confirmation_please_ensure_that"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        app:fontFamily="@font/product_sans_regular" />
+
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" Device is connected and ready"
+                        android:textColor="@color/white"
+                        android:checked="true"
+                        android:clickable="false"
+
+                        android:paddingStart="@dimen/dp12"
+                        android:button="@drawable/checkbox_selector"
+                        android:buttonTint="@color/brandColor"
+                        android:fontFamily="@font/product_sans_regular"
+                        android:layout_marginTop="@dimen/dp12"
+                        android:id="@+id/rbDeviceReady"/>
+
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" You have more than 20% of battery"
+                        android:textColor="@color/white"
+                        android:paddingStart="@dimen/dp12"
+                        android:button="@drawable/checkbox_selector"
+                        android:fontFamily="@font/product_sans_regular"
+                        android:layout_marginTop="@dimen/dp8"
+                        android:buttonTint="@color/brandColor"
+                        android:checked="true"
+                        android:clickable="false"
+                        android:id="@+id/rbMoreBattery"/>
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        android:id="@+id/mcbConfirm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="I confirm that all the details submitted are
+correct &amp; I agree to the T&amp;C. This biometric
+authentication can be treated as my signature"
+                        android:checked="false"
+                        android:buttonTint="@color/brandColor"
+                        android:layout_marginTop="@dimen/dp24"
+                        android:fontFamily="@font/product_sans_regular"
+                        android:textColor="@color/white"
+                        android:paddingStart="@dimen/dp8"/>
+
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnAddWithdrawSavings"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp20"
+                    android:layout_marginTop="72dp"
+                    android:layout_marginBottom="@dimen/dp20"
+                    android:layout_gravity="bottom"
+                    android:text="Activate Sensor"
+                    android:visibility="visible"
+                    android:paddingVertical="@dimen/dp16"
+                    app:cornerRadius="@dimen/dp10"
+                    app:backgroundTint="#F7AA11"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:textColor="@color/textColor1"
+                    tools:visibility="visible" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </LinearLayout>
+
+</layout>

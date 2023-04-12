@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.fypmoney.view.kycagent.viewmodel.TakeHandFingerFragmentVM" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bgcolor"
+        android:animateLayoutChanges="true">
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="40dp"
+            android:layout_height="4dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dp16"
+            android:background="@drawable/curved_background1"
+            android:backgroundTint="@color/white"
+            android:translationZ="1dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilSelectHand"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="@dimen/_15sdp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:background="@null"
+            android:layout_height="wrap_content"
+            android:hint="Select Hand"
+            android:layout_marginHorizontal="@dimen/dp20"
+            android:textColorHint="@color/onBoardinghintTextColor"
+            app:boxCornerRadiusBottomEnd="@dimen/dp16"
+            app:boxCornerRadiusBottomStart="@dimen/dp16"
+            app:boxCornerRadiusTopEnd="@dimen/dp16"
+            app:boxCornerRadiusTopStart="@dimen/dp16"
+            app:boxBackgroundColor="@color/white"
+            app:boxStrokeColor="@color/onBoarding_text_input_layout_border_color"
+            app:boxBackgroundMode="outline"
+            app:boxStrokeWidth="1dp"
+            app:boxStrokeWidthFocused="1.5dp">
+
+            <AutoCompleteTextView
+                android:id="@+id/actSelectHand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:text="@={viewModel.handDelegate.hand}"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilSelectFingure"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tilSelectHand"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="@dimen/_15sdp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:background="@null"
+            android:layout_height="wrap_content"
+            android:hint="Select Finger"
+            android:layout_marginHorizontal="@dimen/dp20"
+            android:textColorHint="@color/onBoardinghintTextColor"
+            app:boxCornerRadiusBottomEnd="@dimen/dp16"
+            app:boxCornerRadiusBottomStart="@dimen/dp16"
+            app:boxCornerRadiusTopEnd="@dimen/dp16"
+            app:boxCornerRadiusTopStart="@dimen/dp16"
+            app:boxBackgroundColor="@color/white"
+            app:boxStrokeColor="@color/onBoarding_text_input_layout_border_color"
+            app:boxBackgroundMode="outline"
+            app:boxStrokeWidth="1dp"
+            app:boxStrokeWidthFocused="1.5dp">
+
+            <AutoCompleteTextView
+                android:id="@+id/actSelectFingure"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:textSize="14sp"
+                android:text="@={viewModel.fingreDelegate.fingre}"
+                android:textColor="@color/white"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

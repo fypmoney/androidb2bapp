@@ -26,6 +26,7 @@ interface ApiInterface {
         @Header("Authorization") authorization: String?,
         @Header(APP_VERSION) app_version: Int = BuildConfig.VERSION_CODE,
         @Header(CLIENT_TYPE) client_type: String = CLIENT_TYPE_VALUE,
+        @Header("agent_type") agent_type: String?,
         @Url endPoint: String
     ): Observable<ResponseBody>
 
@@ -42,6 +43,7 @@ interface ApiInterface {
         @Header("appId") appId: String?,
         @Header(APP_VERSION) app_version: Int = BuildConfig.VERSION_CODE,
         @Header("Authorization") authorization: String?,
+        @Header("agent_type") agent_type: String?,
         @Header(CLIENT_TYPE) client_type: String = CLIENT_TYPE_VALUE,
         @Url endPoint: String
     ): Observable<ResponseBody>
@@ -60,6 +62,7 @@ interface ApiInterface {
         @Header(CLIENT_TYPE) client_type: String = CLIENT_TYPE_VALUE,
         @Header(APP_VERSION) app_version: Int = BuildConfig.VERSION_CODE,
         @Header("client_secret") client_secret: String?,
+        @Header("agent_type") agent_type: String?,
         @Header("grant_type") grant_type: String?, @Url endPoint: String, @Body request: Any
     ): Observable<ResponseBody>
 
@@ -77,6 +80,7 @@ interface ApiInterface {
         @Header("Authorization") authorization: String?,
         @Header(CLIENT_TYPE) client_type: String = CLIENT_TYPE_VALUE,
         @Header(APP_VERSION) app_version: Int = BuildConfig.VERSION_CODE,
+        @Header("agent_type") agent_type: String?,
         @Url endPoint: String, @Part file: MultipartBody.Part? = null
     ): Observable<ResponseBody>
 
@@ -88,6 +92,7 @@ interface ApiInterface {
         @Header("Authorization") authorization: String?,
         @Header(CLIENT_TYPE) client_type: String = CLIENT_TYPE_VALUE,
         @Header(APP_VERSION) app_version: Int = BuildConfig.VERSION_CODE,
+        @Header("agent_type") agent_type: String?,
         @Header("one-tap") one_tap: Boolean?, @Url endPoint: String, @Body request: Any
     ): Observable<ResponseBody>
 
@@ -113,8 +118,9 @@ interface ApiInterface {
         @Header("appId") appId: String?,
         @Header(CLIENT_TYPE) client_type: String = CLIENT_TYPE_VALUE,
         @Header(APP_VERSION) app_version: Int = BuildConfig.VERSION_CODE,
-        @Header("one-tap") one_tap: Boolean?, @Url endPoint: String, @Body request: Any
-    ): Observable<ResponseBody>
+        @Header("one-tap") one_tap: Boolean?, @Url endPoint: String, @Body request: Any,
+        @Header("agent_type") agent_type: String?
+        ): Observable<ResponseBody>
 
     @Headers("Accept: application/json")
     @POST
@@ -123,6 +129,7 @@ interface ApiInterface {
         @Header("appId") appId: String?,
         @Header(CLIENT_TYPE) client_type: String = CLIENT_TYPE_VALUE,
         @Header(APP_VERSION) app_version: Int = BuildConfig.VERSION_CODE,
+        @Header("agent_type") agent_type: String?,
         @Header("Authorization") authorization: String?, @Url endPoint: String, @Body request: Any
     ): Observable<ResponseBody>
 
@@ -203,7 +210,7 @@ interface ApiInterface {
         @Header(CLIENT_TYPE) client_type: String = CLIENT_TYPE_VALUE,
         @Header(APP_VERSION) app_version: Int = BuildConfig.VERSION_CODE,
         @Query("page") page: Int? = null,
-
+        @Header("agent_type") agent_type: String?,
         @Query("sort") sort: String? = null,
         @Query("size") size: Int,
         @Header("Content-Type") content_type: String = "application/json"
@@ -217,7 +224,7 @@ interface ApiInterface {
         @Header("Authorization") authorization: String?,
         @Header(CLIENT_TYPE) client_type: String = CLIENT_TYPE_VALUE,
         @Header(APP_VERSION) app_version: Int = BuildConfig.VERSION_CODE,
-
+        @Header("agent_type") agent_type: String?,
         @Query("type") type: String? = null,
 
         @Header("Content-Type") content_type: String = "application/json"
@@ -231,4 +238,67 @@ interface ApiInterface {
         @Header(APP_VERSION) app_version: Int = BuildConfig.VERSION_CODE,
         @Url endPoint: String
     ): Observable<ResponseBody>
+
+    @Multipart
+    @POST
+    fun uploadShopPhoto(
+        @Header("client_id") client_id: String?,
+        @Header("appId") appId: String?,
+        @Header("agent_type") agent_type: String?,
+        @Header(CLIENT_TYPE) client_type: String = CLIENT_TYPE_VALUE,
+        @Header(APP_VERSION) app_version: Int = BuildConfig.VERSION_CODE,
+        @Header("Authorization") authorization: String?,
+        @Url endPoint: String,
+        @Part file: MultipartBody.Part? = null
+    ): Observable<ResponseBody>
+
+    @Headers("Accept: application/json")
+    @POST
+    fun sendShopDataFromServer(
+        @Header("client_id") client_id: String?,
+        @Header("appId") appId: String?,
+        @Header("agent_type") agent_type: String?,
+        @Header(APP_VERSION) app_version: Int = BuildConfig.VERSION_CODE,
+        @Header("Authorization") authorization: String?,
+        @Header(CLIENT_TYPE) client_type: String = CLIENT_TYPE_VALUE,
+        @Url endPoint: String,
+        @Body request: Any
+    ): Observable<ResponseBody>
+
+    @Headers("Accept: application/json")
+    @GET
+    fun sendMobileNumber(
+        @Header("client_id") client_id: String?,
+        @Header("appId") appId: String?,
+        @Header("agent_type") agent_type: String?,
+        @Header(APP_VERSION) app_version: Int = BuildConfig.VERSION_CODE,
+        @Header("Authorization") authorization: String?,
+        @Header(CLIENT_TYPE) client_type: String = CLIENT_TYPE_VALUE,
+        @Url endPoint: String
+    ): Observable<ResponseBody>
+
+    @Headers("Accept: application/json")
+    @GET
+    fun fetchShopDetails(
+        @Header("client_id") client_id: String?,
+        @Header("appId") appId: String?,
+        @Header("agent_type") agent_type: String?,
+        @Header(APP_VERSION) app_version: Int = BuildConfig.VERSION_CODE,
+        @Header("Authorization") authorization: String?,
+        @Header(CLIENT_TYPE) client_type: String = CLIENT_TYPE_VALUE,
+        @Url endPoint: String
+    ): Observable<ResponseBody>
+
+    @Headers("Accept: application/json")
+    @POST
+    fun verifyOtp(
+        @Header("client_id") client_id: String?,
+        @Header("appId") appId: String?,
+        @Header("agent_type") agent_type: String?,
+        @Header("Authorization") authorization: String?,
+        @Header(CLIENT_TYPE) client_type: String = CLIENT_TYPE_VALUE,
+        @Header(APP_VERSION) app_version: Int = BuildConfig.VERSION_CODE,
+        @Header("one-tap") one_tap: Boolean?, @Url endPoint: String, @Body request: Any
+    ): Observable<ResponseBody>
+
 }

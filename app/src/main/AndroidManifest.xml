@@ -29,7 +29,12 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+
+    <uses-feature android:name="android.hardware.usb.host" />
+    <uses-permission android:name="android.permission.USB_PERMISSION" />
+
     <uses-permission
         android:name="android.permission.USE_BIOMETRIC"
         android:requiredFeature="false" />
@@ -48,7 +53,9 @@
         android:usesCleartextTraffic="true"
         tools:ignore="UnusedAttribute"
         tools:replace="android:usesCleartextTraffic">
-
+        <activity
+            android:name=".view.kycagent.ui.KycAgentActivity"
+            android:exported="false" />
         <activity
             android:name=".view.addmoney.NewAddMoneyActivity"
             android:exported="false"
@@ -56,27 +63,34 @@
         <activity
             android:name=".view.ordercard.cardofferdetails.CardOfferDetailsActivity"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.ordercard.activateofflinecard.ScanCardKitNumberActivity"
+            android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.ordercard.placeordersuccess.PlaceOrderSuccessActivity"
+            android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.ordercard.personaliseyourcard.PersonaliseYourCardActivity"
+            android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.ordercard.cardorderoffer.CardOrderOfferActivity"
+            android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.webview.WebViewActivity"
+            android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.community.SocialCommunityActivity"
+            android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.referandearn.view.ReferAndEarnActivity"
+            android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.HtmlOpenerView"
@@ -88,6 +102,7 @@
         <activity
             android:name=".view.activity.ChoresHistoryActivity"
             android:label="@string/title_activity_chores_history"
+            android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.SplashView"
@@ -186,7 +201,6 @@
         <activity
             android:name=".view.activity.CommunityView"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".view.activity.UserProfileView"
             android:launchMode="singleTask"
@@ -251,7 +265,6 @@
         <activity
             android:name=".view.activity.PayUSuccessView"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".view.activity.CaptureActivityPortrait"
             android:screenOrientation="sensorPortrait"
@@ -272,7 +285,6 @@
         <activity
             android:name=".view.activity.ChoresSelectSampleActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".view.activity.PermissionsActivity"
             android:screenOrientation="portrait" />
@@ -285,7 +297,6 @@
         <activity
             android:name=".view.rewardsAndWinnings.activity.SpinWheelViewDark"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".view.rewardsAndWinnings.activity.ScratchCardActivity"
             android:screenOrientation="portrait" />
@@ -312,12 +323,11 @@
         <activity
             android:name="com.moe.pushlibrary.activities.MoEActivity"
             android:label="HomeView"
-            android:parentActivityName=".view.home.main.homescreen.view.HomeActivity" />
+            android:parentActivityName=".view.kycagent.ui.KycAgentActivity" />
         <activity android:name=".view.home.main.explore.ViewDetails.ExploreInAppWebview" />
         <activity
             android:name=".view.fragment.OffersStoreActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".view.register.SelectRelationActivity"
             android:screenOrientation="portrait" />
@@ -381,27 +391,25 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".util.videoplayer.VideoActivity2"
-            android:theme="@style/video.FullScreen">
-
-        </activity>
+            android:theme="@style/video.FullScreen"></activity>
         <activity
             android:name=".view.upgradetokyc.UpgradeToKycInfoActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".view.discord.view.DiscordInviteActivity"
+        <activity
+            android:name=".view.discord.view.DiscordInviteActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".view.discord.view.DiscordWebView"
+        <activity
+            android:name=".view.discord.view.DiscordWebView"
             android:screenOrientation="portrait" />
-        <activity android:name=".view.discord.view.DiscordProfileActivity"
-            android:screenOrientation="portrait" >
+        <activity
+            android:name=".view.discord.view.DiscordProfileActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
-
-
 
         <meta-data
             android:name="com.facebook.sdk.AdvertiserIDCollectionEnabled"
@@ -470,6 +478,13 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
     </application>
+
+    <queries>
+        <package android:name="com.mantra.rdservice" />
+        <package android:name="com.scl.rdservice" />
+        <package android:name="com.acpl.registersdk" />
+    </queries>
 
 </manifest>

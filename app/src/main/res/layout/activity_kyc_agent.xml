@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".view.kycagent.ui.KycAgentActivity">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bgcolor">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:fillViewport="true">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.fragment.app.FragmentContainerView
+                    android:id="@+id/nav_host_fragment_activity_home"
+                    android:name="androidx.navigation.fragment.NavHostFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:defaultNavHost="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:navGraph="@navigation/kyc_agent_nav_graph" />
+
+<!--                <androidx.appcompat.widget.AppCompatImageView-->
+<!--                    android:id="@+id/ivKycCard"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="@dimen/_200sdp"-->
+<!--                    android:src="@drawable/img_kyc_frame"-->
+<!--                    android:layout_marginTop="@dimen/dp32"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent"/>-->
+
+<!--                <LinearLayout-->
+<!--                    android:id="@+id/llKycEarnings"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:orientation="horizontal"-->
+<!--                    android:layout_marginHorizontal="@dimen/dp20"-->
+<!--                    android:layout_marginTop="@dimen/dp20"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+
+<!--                    app:layout_constraintTop_toBottomOf="@+id/ivKycCard">-->
+
+<!--                    <com.google.android.material.card.MaterialCardView-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        app:cardCornerRadius="@dimen/dp16"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:layout_marginEnd="@dimen/dp8"-->
+<!--                        app:cardBackgroundColor="#262B32">-->
+
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="match_parent"-->
+<!--                            android:gravity="center_horizontal"-->
+<!--                            android:orientation="vertical"-->
+<!--                            android:paddingVertical="@dimen/dp20">-->
+
+<!--                            <androidx.appcompat.widget.AppCompatImageView-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:src="@drawable/ic_member_added_kyc"/>-->
+
+<!--                            <com.google.android.material.textview.MaterialTextView-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:text="New KYC"-->
+<!--                                android:layout_marginTop="@dimen/dp14"-->
+<!--                                app:fontFamily="@font/product_sans_regular"-->
+<!--                                android:textSize="18sp"-->
+<!--                                android:textColor="@color/white"/>-->
+
+<!--                        </LinearLayout>-->
+
+<!--                    </com.google.android.material.card.MaterialCardView>-->
+
+<!--                    <com.google.android.material.card.MaterialCardView-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        app:cardCornerRadius="@dimen/dp16"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:layout_marginStart="@dimen/dp8"-->
+<!--                        app:cardBackgroundColor="#262B32">-->
+
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="match_parent"-->
+<!--                            android:orientation="vertical"-->
+<!--                            android:gravity="center_horizontal"-->
+<!--                            android:paddingVertical="@dimen/dp20">-->
+
+<!--                            <androidx.appcompat.widget.AppCompatImageView-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:src="@drawable/ic_rupee_kyc"/>-->
+
+<!--                            <com.google.android.material.textview.MaterialTextView-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:text="My Earnings"-->
+<!--                                android:layout_marginTop="@dimen/dp14"-->
+<!--                                app:fontFamily="@font/product_sans_regular"-->
+<!--                                android:textSize="18sp"-->
+<!--                                android:textColor="@color/white"/>-->
+<!--                        </LinearLayout>-->
+
+<!--                    </com.google.android.material.card.MaterialCardView>-->
+
+<!--                </LinearLayout>-->
+
+<!--                <FrameLayout-->
+<!--                    android:id="@+id/explore_cl"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    android:layout_marginTop="10dp"-->
+<!--                    app:layout_constraintTop_toBottomOf="@+id/llKycEarnings">-->
+
+<!--                    <com.facebook.shimmer.ShimmerFrameLayout-->
+<!--                        android:id="@+id/explore_shimmer_layout"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginStart="@dimen/_2sdp"-->
+<!--                        android:layout_marginEnd="@dimen/_2sdp"-->
+<!--                        tools:visibility="gone">-->
+
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:orientation="vertical">-->
+
+<!--                            <include layout="@layout/shimmer_placeholder_layout" />-->
+
+<!--                            <include layout="@layout/shimmer_placeholder_layout" />-->
+
+<!--                            <include layout="@layout/shimmer_placeholder_layout" />-->
+
+<!--                            <include layout="@layout/shimmer_placeholder_layout" />-->
+
+<!--                            <include layout="@layout/shimmer_placeholder_layout" />-->
+
+<!--                            <include layout="@layout/shimmer_placeholder_layout" />-->
+<!--                        </LinearLayout>-->
+<!--                    </com.facebook.shimmer.ShimmerFrameLayout>-->
+
+<!--                    <androidx.recyclerview.widget.RecyclerView-->
+<!--                        android:id="@+id/explore_home_rv"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginTop="@dimen/_6sdp"-->
+<!--                        android:layout_marginEnd="@dimen/_2sdp"-->
+<!--                        android:orientation="vertical"-->
+<!--                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
+<!--                        tools:itemCount="5"-->
+<!--                        tools:listitem="@layout/item_grid_type_offers" />-->
+
+<!--                </FrameLayout>-->
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

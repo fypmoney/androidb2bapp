@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/kyc_agent_nav_graph"
+    app:startDestination="@id/navigation_kyc_agent">
+
+    <fragment
+        android:id="@+id/navigation_kyc_agent"
+        android:name="com.fypmoney.view.kycagent.ui.KycAgentFragment"
+        android:label="Kyc Agent Fragment"
+        tools:layout="@layout/fragment_kyc_agent" >
+
+        <action
+            android:id="@+id/action_kyc_agent_to_section_explore"
+            app:destination="@+id/navigation_section_explore"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_explore"
+        android:name="com.fypmoney.view.home.main.explore.view.ExploreFragment"
+        android:label="@string/explore"
+        tools:layout="@layout/fragment_explore">
+
+
+        <action
+            android:id="@+id/action_explore_section_explore"
+            app:destination="@+id/navigation_section_explore"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_kyc_merchant_registration"
+        android:name="com.fypmoney.view.kycagent.ui.KycMerchantRegistrationFragment"
+        android:label="Kyc Merchant Registration Fragment"
+        tools:layout="@layout/fragment_kyc_merchant_registration" />
+
+    <fragment
+        android:id="@+id/navigation_enter_mobile_number_kyc"
+        android:name="com.fypmoney.view.kycagent.ui.EnterMobileNumberKycFragment"
+        android:label="Enter Mobile Number Kyc Fragment"
+        tools:layout="@layout/fragment_enter_mobile_number_kyc" />
+
+    <fragment
+        android:id="@+id/navigation_photo_upload_kyc"
+        android:name="com.fypmoney.view.kycagent.ui.PhotoUploadKycFragment"
+        android:label="Photo Upload Kyc Fragment"
+        tools:layout="@layout/fragment_photo_upload_kyc" />
+
+    <fragment
+        android:id="@+id/navigation_enter_otp_kyc"
+        android:name="com.fypmoney.view.kycagent.ui.EnterOtpKycFragment"
+        android:label="Enter Otp Kyc Fragment"
+        tools:layout="@layout/fragment_enter_otp_kyc" />
+
+    <fragment
+        android:id="@+id/navigation_verify_biometric"
+        android:name="com.fypmoney.view.kycagent.ui.VerifyBiometricFragment"
+        android:label="Verify Biometric Fragment"
+        tools:layout="@layout/fragment_verify_biometric" />
+
+    <fragment
+        android:id="@+id/navigation_agent_authentication"
+        android:name="com.fypmoney.view.kycagent.ui.AgentAuthenticationFragment"
+        android:label="Agent Authentication Fragment"
+        tools:layout="@layout/fragment_agent_authentication" />
+
+    <fragment
+        android:id="@+id/navigation_kyc_requested_submitted"
+        android:name="com.fypmoney.view.kycagent.ui.KycRequestedSubmittedFragment"
+        android:label="Kyc Requested Submitted Fragment"
+        tools:layout="@layout/fragment_kyc_requested_submitted" />
+
+    <fragment
+        android:id="@+id/navigation_enter_aadhaar_number_kyc"
+        android:name="com.fypmoney.view.kycagent.ui.EnterAadhaarNumberKycFragment"
+        android:label="Enter Aadhaar Number Kyc Fragment"
+        tools:layout="@layout/fragment_enter_aadhaar_number_kyc" />
+
+    <fragment
+        android:id="@+id/navigation_my_earnings"
+        android:name="com.fypmoney.view.kycagent.ui.MyEarningsFragment"
+        android:label="My Earnings Fragment"
+        tools:layout="@layout/fragment_my_earnings" />
+
+    <fragment
+        android:id="@+id/navigation_take_hand_finger"
+        android:name="com.fypmoney.view.kycagent.ui.TakeHandFingerFragment"
+        android:label="Take Hand Finger Fragment"
+        tools:layout="@layout/fragment_take_hand_finger" />
+
+</navigation>

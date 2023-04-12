@@ -1053,5 +1053,12 @@ By tapping on Create Account, you agree to the Terms of Service & Privacy Policy
     <string name="monthly">Monthly</string>
     <string name="min_10_max_5_000">Min ₹10 - Max ₹5,000</string>
     <string name="otp">OTP</string>
-
+    <string name="enter_pincode">Enter Pincode</string>
+    <string name="enter_address">Enter Address</string>
+    <string name="enter_state">Enter State</string>
+    <string name="enter_city">Enter City</string>
+    <string name="agent_to_place_finger_on_biometric_device_for_confirmation_please_ensure_that">Agent to place finger on \nbiometric device for confirmation. \n\nPlease ensure that:</string>
+    <string name="enter_the_otp_sent_to_to_verify_customer_s_request_for_full_kyc">Enter the OTP sent to %1$s to verify customer’s request for Full KYC</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -21,6 +21,7 @@ import com.fypmoney.view.arcadegames.brandedcoupons.model.BrandedCouponCountResp
 import com.fypmoney.view.arcadegames.model.*
 import com.fypmoney.view.giftcard.model.*
 import com.fypmoney.view.home.main.home.model.networkmodel.CallToActionNetworkResponse
+import com.fypmoney.view.kycagent.model.*
 import com.fypmoney.view.ordercard.model.UserOfferCardResponse
 import com.fypmoney.view.pocketmoneysettings.model.PocketMoneyOtpVerifyResponse
 import com.fypmoney.view.pocketmoneysettings.model.PocketMoneyReminderListResponse
@@ -197,6 +198,9 @@ class ApiDataParsing {
                 ApiConstant.API_UPLOAD_PROFILE_PIC -> {
                     getObject(response, ProfileImageUploadResponse::class.java)
                 }
+                ApiConstant.API_UPLOAD_SHOP_PIC -> {
+                    getObject(response, SaveShopDetailsResponse::class.java)
+                }
                 ApiConstant.API_ORDER_CARD -> {
                     getObject(response, OrderCardResponse::class.java)
                 }
@@ -306,6 +310,30 @@ class ApiDataParsing {
 
                 ApiConstant.API_ADD_POCKET_MONEY_REMINDER -> {
                     getObject(response, PocketMoneyReminderResponse::class.java)
+                }
+
+                ApiConstant.API_SAVE_SHOP_DETAILS -> {
+                    getObject(response, SaveShopDetailsResponse::class.java)
+                }
+
+                ApiConstant.API_FETCH_SHOP_DETAILS -> {
+                    getObject(response, FetchShopDetailsResponse::class.java)
+                }
+
+                ApiConstant.API_SEND_OTP_KYC -> {
+                    getObject(response, SendOtpResponse::class.java)
+                }
+
+                ApiConstant.API_VERIFY_OTP_KYC -> {
+                    getObject(response, OtpVerifyResponse::class.java)
+                }
+
+                ApiConstant.API_AGENTS_EARNINGS_LIST -> {
+                    getObject(response, MyEarningsListResponse::class.java)
+                }
+
+                ApiConstant.API_FULL_KYC -> {
+                    getObject(response, FullKycResponse::class.java)
                 }
 
                 ApiConstant.PAYU_PRODUCTION_URL -> {

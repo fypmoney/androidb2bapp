@@ -60,6 +60,7 @@ object ApiConstant {
     const val API_GET_BANK_PROFILE = "/services/PockketService/api/getBankProfile"
     const val API_QR_CODE_SCANNER = "/services/PockketService/api/spend/bharat-qr"
     const val API_UPLOAD_PROFILE_PIC = "/services/authservice/api/upload/profile-pic"
+    const val API_UPLOAD_SHOP_PIC = "/services/loyaltyservice/api/upload/shop-pic"
     const val API_ORDER_CARD = "/services/PockketService/api/order-card"
     const val API_CREATE_TASK = "/services/loyaltyservice/api/task"
     const val API_GET_ORDER_CARD_STATUS = "/services/PockketService/api/order-card/"
@@ -221,6 +222,17 @@ object ApiConstant {
 
     const val API_ADD_POCKET_MONEY_REMINDER = "services/PockketService/api/pocketmoneyreminder/"
 
+    const val API_SAVE_SHOP_DETAILS = "/services/loyaltyservice/api/save-shop-details/"
+
+    const val API_FETCH_SHOP_DETAILS = "/services/loyaltyservice/api/fetch/shop-details/"
+
+    const val API_SEND_OTP_KYC = "/services/PockketService/api/full-kyc/send-otp/"
+
+    const val API_VERIFY_OTP_KYC = "/services/PockketService/api/agent-fullkyc/verify-otp/"
+
+    const val API_AGENTS_EARNINGS_LIST = "/services/PockketService/api/list/agent/earnings/"
+
+    const val API_FULL_KYC = "/services/PockketService/api/agent-fullkyc"
 }
 
 

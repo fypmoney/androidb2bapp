@@ -87,7 +87,8 @@ class WebApiCaller {
                                 PockketApplication.instance,
                                 SharedPrefUtils.SF_KEY_ACCESS_TOKEN
                             ),
-                            client_id = ApiConstant.CLIENT_ID
+                            client_id = ApiConstant.CLIENT_ID,
+                            agent_type = "KYC_AGENT"
                         )
                     }
                     ApiConstant.API_USER_TIMELINE -> {
@@ -104,7 +105,8 @@ class WebApiCaller {
                             client_id = ApiConstant.CLIENT_ID,
                             page = params,
                             size = 6,
-                            sort = null
+                            sort = null,
+                            agent_type = "KYC_AGENT"
                         )
                     }
                     ApiConstant.RewardsHistory -> {
@@ -121,7 +123,8 @@ class WebApiCaller {
                             client_id = ApiConstant.CLIENT_ID,
                             page = params.page,
                             size = params.size,
-                            sort = null
+                            sort = null,
+                            agent_type = "KYC_AGENT"
                         )
                     }
 
@@ -138,7 +141,8 @@ class WebApiCaller {
                             client_id = ApiConstant.CLIENT_ID,
                             page = params.page,
                             size = params.size,
-                            sort = null
+                            sort = null,
+                            agent_type = "KYC_AGENT"
                         )
                     }
 
@@ -155,9 +159,11 @@ class WebApiCaller {
                             ),
                             client_id = ApiConstant.CLIENT_ID,
                             type = params.type,
+                            agent_type = "KYC_AGENT"
 
                             )
                     }
+
                     ApiConstant.CashbackHistory -> {
 
                         val params = request.param as QueryPaginationParams
@@ -172,7 +178,8 @@ class WebApiCaller {
                             client_id = ApiConstant.CLIENT_ID,
                             page = params.page,
                             size = params.size,
-                            sort = null
+                            sort = null,
+                            agent_type = "KYC_AGENT"
                         )
                     }
 
@@ -181,6 +188,31 @@ class WebApiCaller {
                             endPoint = request.endpoint
                         )
                     }
+
+                    ApiConstant.API_SEND_OTP_KYC -> {
+                        mObservable = apiInterface.sendMobileNumber(
+                            endPoint = request.endpoint,
+                            authorization = SharedPrefUtils.getString(
+                                PockketApplication.instance,
+                                SharedPrefUtils.SF_KEY_ACCESS_TOKEN
+                            ),
+                            client_id = ApiConstant.CLIENT_ID, appId = ApiConstant.APP_ID,
+                            agent_type = "KYC_AGENT",
+                        )
+                    }
+
+                    ApiConstant.API_FETCH_SHOP_DETAILS -> {
+                        mObservable = apiInterface.fetchShopDetails(
+                            endPoint = request.endpoint,
+                            authorization = SharedPrefUtils.getString(
+                                PockketApplication.instance,
+                                SharedPrefUtils.SF_KEY_ACCESS_TOKEN
+                            ),
+                            client_id = ApiConstant.CLIENT_ID, appId = ApiConstant.APP_ID,
+                            agent_type = "KYC_AGENT",
+                        )
+                    }
+
                     else -> {
                         mObservable = apiInterface.getDataFromServer1(
                             endPoint = request.endpoint,
@@ -188,7 +220,8 @@ class WebApiCaller {
                                 PockketApplication.instance,
                                 SharedPrefUtils.SF_KEY_ACCESS_TOKEN
                             ),
-                            client_id = ApiConstant.CLIENT_ID, appId = ApiConstant.APP_ID
+                            client_id = ApiConstant.CLIENT_ID, appId = ApiConstant.APP_ID,
+                            agent_type = "KYC_AGENT"
                         )
                     }
                 }
@@ -267,6 +300,34 @@ class WebApiCaller {
                                     request = params1
                                 )
                             }
+                            ApiConstant.API_UPLOAD_SHOP_PIC ->{
+                                mObservable =
+                                    apiInterface.uploadShopPhoto(
+                                        client_id = ApiConstant.CLIENT_ID,
+                                        appId = ApiConstant.APP_ID,
+                                        agent_type = "KYC_AGENT",
+                                        authorization = SharedPrefUtils.getString(
+                                            PockketApplication.instance,
+                                            SharedPrefUtils.SF_KEY_ACCESS_TOKEN
+                                        ),
+                                        endPoint = request.endpoint,
+                                        file = image
+                                    )
+                            }
+                            ApiConstant.API_SAVE_SHOP_DETAILS -> {
+                                mObservable =
+                                    apiInterface.sendShopDataFromServer(
+                                        client_id = ApiConstant.CLIENT_ID,
+                                        appId = ApiConstant.APP_ID,
+                                        agent_type = "KYC_AGENT",
+                                        authorization = SharedPrefUtils.getString(
+                                            PockketApplication.instance,
+                                            SharedPrefUtils.SF_KEY_ACCESS_TOKEN
+                                        ),
+                                        endPoint = request.endpoint,
+                                        request = request.param
+                                    )
+                            }
                             ApiConstant.GET_GIFTS_LIST -> {
 
                                 val params = request.param as RequestGiftswithPage
@@ -315,7 +376,8 @@ class WebApiCaller {
                                                 SharedPrefUtils.SF_KEY_ACCESS_TOKEN
                                             ),
                                             endPoint = request.endpoint,
-                                            request = request.param
+                                            request = request.param,
+                                            agent_type = "KYC_AGENT"
                                         )
 
 
@@ -385,7 +447,8 @@ class WebApiCaller {
                                         client_secret = ApiConstant.CLIENT_SECRET,
                                         grant_type = ApiConstant.GRANT_TYPE,
                                         endPoint = request.endpoint,
-                                        request = request.param
+                                        request = request.param,
+                                        agent_type = "KYC_AGENT"
                                     )
                             }
                             ApiConstant.API_LOGIN_INIT -> {
@@ -399,7 +462,8 @@ class WebApiCaller {
                                         ),
                                         one_tap = true,
                                         endPoint = request.endpoint,
-                                        request = request.param
+                                        request = request.param,
+                                        agent_type = "KYC_AGENT"
                                     )
 
                             }
@@ -414,9 +478,26 @@ class WebApiCaller {
                                         ),
                                         one_tap = true,
                                         endPoint = request.endpoint,
-                                        request = request.param
+                                        request = request.param,
+                                        agent_type = "KYC_AGENT"
                                     )
 
+                            }
+
+                            ApiConstant.API_VERIFY_OTP_KYC -> {
+                                mObservable =
+                                    apiInterface.verifyOtp(
+                                        client_id = ApiConstant.CLIENT_ID,
+                                        appId = ApiConstant.APP_ID,
+                                        authorization = SharedPrefUtils.getString(
+                                            PockketApplication.instance,
+                                            SharedPrefUtils.SF_KEY_ACCESS_TOKEN
+                                        ),
+                                        agent_type = "KYC_AGENT",
+                                        one_tap = true,
+                                        endPoint = request.endpoint,
+                                        request = request.param
+                                    )
                             }
 
                             ApiConstant.API_LOGIN -> {
@@ -426,7 +507,8 @@ class WebApiCaller {
                                         appId = ApiConstant.APP_ID,
                                         one_tap = true,
                                         endPoint = request.endpoint,
-                                        request = request.param
+                                        request = request.param,
+                                        agent_type = "KYC_AGENT"
                                     )
 
                             }
@@ -440,7 +522,8 @@ class WebApiCaller {
                                             SharedPrefUtils.SF_KEY_ACCESS_TOKEN
                                         ),
                                         endPoint = request.endpoint,
-                                        file = image
+                                        file = image,
+                                        agent_type = "KYC_AGENT"
                                     )
                             }
 
@@ -454,7 +537,8 @@ class WebApiCaller {
                                             SharedPrefUtils.SF_KEY_ACCESS_TOKEN
                                         ),
                                         endPoint = request.endpoint,
-                                        request = request.param
+                                        request = request.param,
+                                        agent_type = "KYC_AGENT"
                                     )
 
 

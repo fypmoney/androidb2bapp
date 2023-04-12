@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="@dimen/dp10"
+        android:paddingVertical="@dimen/dp20">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cvAlertContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:cardCornerRadius="@dimen/dp16"
+            app:cardUseCompatPadding="true"
+            app:contentPadding="@dimen/dp10"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="@color/errorAlertBgColor">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="@dimen/dp10">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivAlert"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:srcCompat="@drawable/ic_error_alert" />
+
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvAlertMessage"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    style="@style/TextviewRegular"
+                    android:textColor="@color/toastTextColor"
+                    android:textSize="16sp"
+                    tools:text="Your saving goal could not be saved.\n Please try again!"
+                    app:layout_constraintStart_toEndOf="@+id/ivAlert"
+                    android:layout_marginStart="@dimen/dp16"
+                    android:layout_marginEnd="@dimen/dp16"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

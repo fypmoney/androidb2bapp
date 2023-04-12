@@ -118,4 +118,12 @@
     <color name="orange1">#FDEECF</color>
 
     <color name="card_back_pocket">#1B1B1B</color>
+
+    <color name="brandColor">#F7AA11</color>
+    <color name="errorAlertBgColor">#FFDADD</color>
+    <color name="toastTextColor">#B2101010</color>
+    <color name="onBoarding_text_input_layout_border_color">#33101010</color>
+    <color name="onBoardinghintTextColor">#80101010</color>
+
+
 </resources>

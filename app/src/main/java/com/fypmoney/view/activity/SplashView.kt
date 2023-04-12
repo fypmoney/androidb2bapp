@@ -16,7 +16,7 @@ import com.fypmoney.util.AppConstants.NOT_ALLOWED_MSG
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.util.dynamiclinks.DynamicLinksUtil.getReferralCodeFromDynamicLink
-import com.fypmoney.view.home.main.homescreen.view.HomeActivity
+import com.fypmoney.view.kycagent.ui.KycAgentActivity
 import com.fypmoney.view.register.InviteParentSiblingActivity
 import com.fypmoney.view.register.PanAdhaarSelectionActivity
 import com.fypmoney.view.register.PendingRequestActivity
@@ -165,7 +165,7 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                                 Manifest.permission.READ_CONTACTS
                             )
                         ) {
-                            intentToActivity(HomeActivity::class.java)
+                            intentToActivity(KycAgentActivity::class.java)
                         } else {
                             intentToActivity(PermissionsActivity::class.java)
                         }
@@ -188,7 +188,7 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                                                 Manifest.permission.READ_CONTACTS
                                             )
                                         ) {
-                                            intentToActivity(HomeActivity::class.java)
+                                            intentToActivity(KycAgentActivity::class.java)
                                         } else {
                                             intentToActivity(PermissionsActivity::class.java)
                                         }
@@ -226,7 +226,7 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                                                     Manifest.permission.READ_CONTACTS
                                                 )
                                             ) {
-                                                intentToActivity(HomeActivity::class.java)
+                                                intentToActivity(KycAgentActivity::class.java)
                                             } else {
                                                 intentToActivity(PermissionsActivity::class.java)
                                             }
@@ -253,7 +253,7 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                                                 Manifest.permission.READ_CONTACTS
                                             )
                                         ) {
-                                            intentToActivity(HomeActivity::class.java)
+                                            intentToActivity(KycAgentActivity::class.java)
                                         } else {
                                             intentToActivity(PermissionsActivity::class.java)
                                         }

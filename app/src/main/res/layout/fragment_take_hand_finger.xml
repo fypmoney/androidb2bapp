@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".view.kycagent.ui.TakeHandFingerFragment">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.fypmoney.view.kycagent.viewmodel.TakeHandFingerFragmentVM" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bgcolor">
+
+        <include
+            android:id="@+id/layout_toolbar"
+            layout="@layout/toolbar" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilSelectHand"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_toolbar"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="@dimen/_15sdp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:background="@null"
+            android:layout_height="wrap_content"
+            android:hint="Select Hand"
+            android:layout_marginHorizontal="@dimen/dp20"
+            android:textColorHint="@color/text_grey"
+            app:boxCornerRadiusBottomEnd="@dimen/dp16"
+            app:boxCornerRadiusBottomStart="@dimen/dp16"
+            app:boxCornerRadiusTopEnd="@dimen/dp16"
+            app:boxCornerRadiusTopStart="@dimen/dp16"
+            app:boxBackgroundColor="#262B32">
+
+            <AutoCompleteTextView
+                android:id="@+id/actSelectHand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:text="@={viewModel.handDelegate.hand}"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilSelectFingure"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tilSelectHand"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="@dimen/_18sdp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:background="@null"
+            android:layout_height="wrap_content"
+            android:hint="Select Finger"
+            android:layout_marginHorizontal="@dimen/dp20"
+            android:textColorHint="@color/text_grey"
+            app:boxCornerRadiusBottomEnd="@dimen/dp16"
+            app:boxCornerRadiusBottomStart="@dimen/dp16"
+            app:boxCornerRadiusTopEnd="@dimen/dp16"
+            app:boxCornerRadiusTopStart="@dimen/dp16"
+            app:boxBackgroundColor="#262B32">
+
+            <AutoCompleteTextView
+                android:id="@+id/actSelectFingure"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:textSize="14sp"
+                android:text="@={viewModel.fingreDelegate.fingre}"
+                android:textColor="@color/white"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnMobileNumberProceed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dp20"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="@dimen/dp20"
+            android:text="Proceed"
+            android:paddingVertical="@dimen/dp16"
+            app:cornerRadius="@dimen/dp10"
+            android:visibility="visible"
+            app:backgroundTint="#F7AA11"
+            android:textColor="#101010"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:visibility="visible" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

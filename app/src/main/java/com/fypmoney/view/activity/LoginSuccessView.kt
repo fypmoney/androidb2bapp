@@ -14,7 +14,7 @@ import com.fypmoney.databinding.ViewLoginSuccessBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
-import com.fypmoney.view.home.main.homescreen.view.HomeActivity
+import com.fypmoney.view.kycagent.ui.KycAgentActivity
 import com.fypmoney.view.register.InviteParentSiblingActivity
 import com.fypmoney.view.register.PanAdhaarSelectionActivity
 import com.fypmoney.view.register.PendingRequestActivity
@@ -86,7 +86,7 @@ class LoginSuccessView : BaseActivity<ViewLoginSuccessBinding, LoginSuccessViewM
                             Manifest.permission.READ_CONTACTS
                         )
                     ) {
-                        intentToActivity(HomeActivity::class.java)
+                        intentToActivity(KycAgentActivity::class.java)
                     } else {
                         intentToActivity(PermissionsActivity::class.java)
                     }
@@ -109,7 +109,7 @@ class LoginSuccessView : BaseActivity<ViewLoginSuccessBinding, LoginSuccessViewM
                                             Manifest.permission.READ_CONTACTS
                                         )
                                     ) {
-                                        intentToActivity(HomeActivity::class.java)
+                                        intentToActivity(KycAgentActivity::class.java)
                                     } else {
                                         intentToActivity(PermissionsActivity::class.java)
                                     }
@@ -147,7 +147,7 @@ class LoginSuccessView : BaseActivity<ViewLoginSuccessBinding, LoginSuccessViewM
                                             Manifest.permission.READ_CONTACTS
                                         )
                                     ) {
-                                        intentToActivity(HomeActivity::class.java)
+                                        intentToActivity(KycAgentActivity::class.java)
                                     } else {
                                         intentToActivity(PermissionsActivity::class.java)
                                     }
@@ -173,7 +173,7 @@ class LoginSuccessView : BaseActivity<ViewLoginSuccessBinding, LoginSuccessViewM
                                             Manifest.permission.READ_CONTACTS
                                         )
                                     ) {
-                                        intentToActivity(HomeActivity::class.java)
+                                        intentToActivity(KycAgentActivity::class.java)
                                     } else {
                                         intentToActivity(PermissionsActivity::class.java)
                                     }

@@ -19,27 +19,25 @@ import com.fypmoney.extension.toVisible
 import com.fypmoney.model.CustomerInfoResponseDetails
 import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
-import com.fypmoney.util.AppConstants.ACTIONFLAG
 import com.fypmoney.util.AppConstants.EXPLORE_IN_APP_WEBVIEW
 import com.fypmoney.util.AppConstants.IN_APP_WITH_CARD
 import com.fypmoney.util.AppConstants.OFFER_REDIRECTION
 import com.fypmoney.util.AppConstants.TYPE_VIDEO
 import com.fypmoney.util.Utility
 import com.fypmoney.util.videoplayer.VideoActivity2
-import com.fypmoney.util.videoplayer.VideoWithExploreFragment
 import com.fypmoney.view.StoreWebpageOpener2
 import com.fypmoney.view.activity.UserFeedsDetailView
 import com.fypmoney.view.arcadegames.model.ArcadeType
 import com.fypmoney.view.arcadegames.model.checkTheArcadeType
-import com.fypmoney.view.storeoffers.OfferDetailsBottomSheet
 import com.fypmoney.view.fypstories.view.StoriesBottomSheet
 import com.fypmoney.view.home.main.explore.ViewDetails.ExploreInAppWebview
-import com.fypmoney.view.home.main.explore.`interface`.ExploreItemClickListener
 import com.fypmoney.view.home.main.explore.adapters.ExploreAdapter
 import com.fypmoney.view.home.main.explore.adapters.ExploreBaseAdapter
+import com.fypmoney.view.home.main.explore.`interface`.ExploreItemClickListener
 import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
 import com.fypmoney.view.home.main.explore.model.SectionContentItem
 import com.fypmoney.view.home.main.explore.viewmodel.ExploreFragmentVM
+import com.fypmoney.view.storeoffers.OfferDetailsBottomSheet
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -321,10 +319,10 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
                             }
                             param(FirebaseAnalytics.Param.SCREEN_CLASS, ExploreFragment::class.java.simpleName)
                         }
-                        val directions =
-                            ExploreFragmentDirections.actionExploreSectionExplore(sectionExploreItem = it,
-                                sectionExploreName= exploreContentResponse?.sectionDisplayText)
-                        directions.let { it1 -> findNavController().navigate(it1) }
+//                        val directions =
+//                            ExploreFragmentDirections.actionExploreSectionExplore(sectionExploreItem = it,
+//                                sectionExploreName= exploreContentResponse?.sectionDisplayText)
+//                        directions.let { it1 -> findNavController().navigate(it1) }
                     }
                     AppConstants.GIFT_VOUCHER -> {
                         findNavController().navigate(Uri.parse("fypmoney://creategiftcard/${it.redirectionResource}"))

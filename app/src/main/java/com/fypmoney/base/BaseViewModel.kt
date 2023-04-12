@@ -19,6 +19,7 @@ import com.fypmoney.connectivity.ApiConstant.PLAY_ORDER_API
 import com.fypmoney.connectivity.ErrorResponseInfo
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.database.AppDatabase
+import com.fypmoney.util.DialogUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.util.livedata.LiveEvent
 
@@ -32,6 +33,7 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
     val internetError:LiveEvent<Boolean> = LiveEvent()
     val logoutUser:LiveEvent<Boolean> = LiveEvent()
     var appDatabase: AppDatabase? = null
+    val alertDialog = MutableLiveData<DialogUtils.AlertStateUiModel>()
 
     init {
         appDatabase = AppDatabase.getInstance()

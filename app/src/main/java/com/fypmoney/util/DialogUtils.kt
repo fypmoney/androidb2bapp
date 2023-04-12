@@ -5,17 +5,24 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
+import android.graphics.drawable.InsetDrawable
 import android.util.Log
 import android.view.*
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.Keep
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.widget.AppCompatTextView
+import androidx.databinding.DataBindingUtil
 import com.fypmoney.R
 import com.fypmoney.connectivity.network.NetworkUtil
+import com.fypmoney.databinding.LayoutSuccessErrorAlertBinding
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import java.lang.IllegalStateException
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 /**
@@ -27,6 +34,7 @@ class DialogUtils {
         private val TAG = DialogUtils::class.java.simpleName
         private var dialog: Dialog? = null
          var mAlertDialog: AlertDialog? = null
+        var alertDialogTime = 2000L
         fun showProgressDialog(context: Activity) {
             try {
                 if (dialog != null && dialog!!.isShowing) {
@@ -50,6 +58,48 @@ class DialogUtils {
             dialog?.window!!.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
             dialog?.window!!.setBackgroundDrawableResource(android.R.color.transparent)
             dialog?.show()
+        }
+
+        fun showSuccessAndErrorDialog(context: Activity,alertStateUiModel: AlertStateUiModel) {
+            try {
+                if (dialog != null && dialog!!.isShowing) {
+                    if(!context.isFinishing && !context.isDestroyed){
+                        dialog?.dismiss()
+                    }
+                }
+            }catch (e:IllegalStateException){
+                Log.d(TAG,"Illegal argument exception ${dialog}")
+                FirebaseCrashlytics.getInstance().recordException(e)
+            }catch (e:Exception){
+                Log.d(TAG,"Illegal argument exception ${dialog}")
+                FirebaseCrashlytics.getInstance().recordException(e)
+
+            }finally {
+                dialog= null;
+            }
+            val dialog = Dialog(context)
+            dialog.setCancelable(false)
+            val binding: LayoutSuccessErrorAlertBinding = DataBindingUtil.inflate(LayoutInflater.from(context),
+                R.layout.layout_success_error_alert,null,false)
+            dialog.setContentView(binding.root)
+            binding.cvAlertContainer.setCardBackgroundColor(alertStateUiModel.backgroundColor)
+            binding.ivAlert.setImageDrawable(alertStateUiModel.icon)
+            binding.tvAlertMessage.text = alertStateUiModel.message
+            dialog.window!!.setGravity(Gravity.TOP)
+            dialog.window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT)
+            val back = ColorDrawable(Color.TRANSPARENT)
+            val inset = InsetDrawable(back, 20)
+            dialog.window!!.setBackgroundDrawable(inset)
+            dialog.window!!.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+            dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
+            //dialog?.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+            CoroutineScope(Dispatchers.Main).launch {
+                delay(alertDialogTime)
+                if(!context.isFinishing && !context.isDestroyed){
+                    dialog.dismiss()
+                }
+            }
+            dialog.show()
         }
 
         /**
@@ -206,5 +256,11 @@ class DialogUtils {
     }
 
 
+    @Keep
+    data class AlertStateUiModel(
+        var icon: Drawable,
+        var message:String = "Please try again after sometime...",
+        var backgroundColor:Int
+    )
 
 }
