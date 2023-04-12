@@ -26,6 +26,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import com.freshchat.consumer.sdk.FaqOptions
 import com.freshchat.consumer.sdk.Freshchat
 import com.fypmoney.R
@@ -147,6 +148,19 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
    * Observer to observe the live data
    * */
     private fun setObservers() {
+        mViewModel?.alertDialog?.observe(viewLifecycleOwner)
+        {
+            if(viewLifecycleOwner.lifecycle.currentState == Lifecycle.State.RESUMED){
+                it?.let {
+                    DialogUtils.showSuccessAndErrorDialog(requireActivity(),
+                        alertStateUiModel = it)
+                }?: kotlin.run {
+                    mViewModel?.alertDialog?.value = null
+                }
+            }
+
+
+        }
         mViewModel?.logoutUser?.observe(this)
         {
             if(it) {

@@ -45,6 +45,11 @@ class EnterOtpKycFragment : BaseFragment<FragmentEnterOtpKycBinding, EnterOtpKyc
 
         val data = arguments?.getString("otpIdentifier")
 
+        if (arguments?.containsKey("mobileNumber") == true) {
+            enterOtpKycFragmentVM.mobileNumber =
+                arguments?.getString("mobileNumber").toString()
+        }
+
         startTimer()
 
         binding.buttonContinue.setOnClickListener {
@@ -66,10 +71,10 @@ class EnterOtpKycFragment : BaseFragment<FragmentEnterOtpKycBinding, EnterOtpKyc
         )
 
         binding.tvSentOtpAgain.setOnClickListener {
-        if (arguments?.getString("mobile") != null) {
+        if (enterOtpKycFragmentVM.mobileNumber != null) {
             binding.tvSentOtpAgain.toInvisible()
             startTimer()
-            enterOtpKycFragmentVM.resendMobileNumberForOtp(arguments?.getString("mobile")!!)
+            enterOtpKycFragmentVM.resendMobileNumberForOtp(enterOtpKycFragmentVM.mobileNumber!!)
         }
         }
 
@@ -92,10 +97,13 @@ class EnterOtpKycFragment : BaseFragment<FragmentEnterOtpKycBinding, EnterOtpKyc
                 }
                 is EnterOtpKycFragmentVM.OtpVerifyState.Success -> {
                     if (viewLifecycleOwner.lifecycle.currentState == Lifecycle.State.RESUMED) {
-                        Utility.showToast("Otp Success")
+                        val bundle = Bundle()
+                        bundle.putString("mobileNumber", enterOtpKycFragmentVM.mobileNumber)
+                        bundle.putString("via", "UserKyc")
+                        bundle.putString("fourDigits", it.otpVerifyData.aadhaarDigits)
                         findNavController().navigate(
                             R.id.navigation_enter_aadhaar_number_kyc,
-                            null,
+                            bundle,
                             navOptions {
                                 anim {
                                     popEnter = R.anim.slide_in_left

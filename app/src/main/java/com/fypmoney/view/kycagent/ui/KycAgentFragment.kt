@@ -27,8 +27,6 @@ import com.fypmoney.view.home.main.explore.adapters.ExploreBaseAdapter
 import com.fypmoney.view.home.main.explore.`interface`.ExploreItemClickListener
 import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
 import com.fypmoney.view.home.main.explore.model.SectionContentItem
-import com.fypmoney.view.home.main.home.view.HomeFragment
-import com.fypmoney.view.home.main.home.view.HomeFragmentDirections
 import com.fypmoney.view.kycagent.viewmodel.KycAgentFragmentVM
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -74,10 +72,10 @@ class KycAgentFragment : BaseFragment<FragmentKycAgentBinding, KycAgentFragmentV
                     }
                 })
             }
-            else if (!kycAgentFragmentVM.fullKycDone.equals("FULL")){
+            else if ((kycAgentFragmentVM.isShopListed == "null") || (kycAgentFragmentVM.isShopListed.equals(AppConstants.NO))){
                 val bundle = Bundle()
-                bundle.putString("via", "StoreRegister")
-                findNavController().navigate(R.id.navigation_agent_authentication, bundle, navOptions {
+                bundle.putString("via", "SelfKyc")
+                findNavController().navigate(R.id.navigation_enter_aadhaar_number_kyc, bundle, navOptions {
                     anim {
                         popEnter = R.anim.slide_in_left
                         popExit = R.anim.slide_out_righ
@@ -85,9 +83,21 @@ class KycAgentFragment : BaseFragment<FragmentKycAgentBinding, KycAgentFragmentV
                         exit = R.anim.slide_out_left
                     }
                 })
-            } else{
-                Utility.showToast("There is some error. Please try again after sometime...")
             }
+            else{
+                Utility.showToast("Self KYC Completed")
+            }
+
+//            val bundle = Bundle()
+//            bundle.putString("via", "SelfKyc")
+//            findNavController().navigate(R.id.navigation_enter_aadhaar_number_kyc, bundle, navOptions {
+//                anim {
+//                    popEnter = R.anim.slide_in_left
+//                    popExit = R.anim.slide_out_righ
+//                    enter = R.anim.slide_in_right
+//                    exit = R.anim.slide_out_left
+//                }
+//            })
 
         }
 
@@ -128,6 +138,7 @@ class KycAgentFragment : BaseFragment<FragmentKycAgentBinding, KycAgentFragmentV
                 is KycAgentFragmentVM.KycAgentState.Success -> {
                     kycAgentFragmentVM.isShopPhotoUpload = it.shopData.shopPhoto
                     kycAgentFragmentVM.shopName = it.shopData.shopName
+                    kycAgentFragmentVM.isShopListed = it.shopData.isShopListed.toString()
                 }
             }
         }

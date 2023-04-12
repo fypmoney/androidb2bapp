@@ -43,7 +43,7 @@ task clean(type: Delete) {
 ext{
     appName = 'Fyp'
     // Sdk and tools
-    minSdkVersion = 21
+    minSdkVersion = 23
     targetSdkVersion = 30
     compileSdkVersion = 30
     kotlin_version = '1.5.31'

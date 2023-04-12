@@ -32,6 +32,7 @@ class KycAgentFragmentVM(application: Application) : BaseViewModel(application) 
     var isShopPhotoUpload: String ?= null
     var shopName: String ?= null
     var fullKycDone: String ?= null
+    var isShopListed: String ?= null
 
     var openBottomSheet: MutableLiveData<ArrayList<offerDetailResponse>> = LiveEvent()
     var feedDetail: MutableLiveData<FeedDetails> = LiveEvent()

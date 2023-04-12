@@ -13,6 +13,7 @@ import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.BaseRequest
 import com.fypmoney.model.VerifyOtp
 import com.fypmoney.view.kycagent.model.OtpData
+import com.fypmoney.view.kycagent.model.OtpVerifyData
 import com.fypmoney.view.kycagent.model.OtpVerifyResponse
 import com.fypmoney.view.kycagent.model.SendOtpResponse
 
@@ -25,6 +26,8 @@ class EnterOtpKycFragmentVM(application: Application) : BaseViewModel(applicatio
     val otpVerifyState: LiveData<ResendOtpState>
         get() = _otpVerifyState
     private val _otpVerifyState = MutableLiveData<ResendOtpState>()
+
+    var mobileNumber : String ?= null
 
     fun verifyOtp(otpIdentifier: String, otp: String){
         val verifyOtp = VerifyOtp(
@@ -93,7 +96,7 @@ class EnterOtpKycFragmentVM(application: Application) : BaseViewModel(applicatio
     sealed class OtpVerifyState{
         object Loading : OtpVerifyState()
         data class Error(val errorResponseInfo: ErrorResponseInfo) : OtpVerifyState()
-        data class Success(val msg: String) : OtpVerifyState()
+        data class Success(val otpVerifyData: OtpVerifyData) : OtpVerifyState()
     }
 
     sealed class ResendOtpState{

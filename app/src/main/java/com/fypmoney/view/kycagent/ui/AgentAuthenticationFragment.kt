@@ -34,6 +34,13 @@ class AgentAuthenticationFragment : BaseFragment<FragmentAgentAuthenticationBind
             agentAuthenticationFragmentVM.via = arguments?.getString("via").toString()
         }
 
+        if (arguments?.containsKey("mobileNumber") == true) {
+            agentAuthenticationFragmentVM.mobileNumber =
+                arguments?.getString("mobileNumber").toString()
+        }
+
+        agentAuthenticationFragmentVM.aadhaarNumber = arguments?.getString("aadhaarNumber")
+
         setToolbarAndTitle(
             context = requireContext(),
             toolbar = toolbar,
@@ -45,6 +52,9 @@ class AgentAuthenticationFragment : BaseFragment<FragmentAgentAuthenticationBind
         binding.btnAddWithdrawSavings.setOnClickListener {
             if (binding.mcbConfirm.isChecked) {
                 val bundle = Bundle()
+                bundle.putString("aadhaarNumber", agentAuthenticationFragmentVM.aadhaarNumber)
+                if (agentAuthenticationFragmentVM.mobileNumber != null)
+                    bundle.putString("mobileNumber", agentAuthenticationFragmentVM.mobileNumber)
                 bundle.putString("via", agentAuthenticationFragmentVM.via)
                 findNavController().navigate(R.id.navigation_verify_biometric, bundle, navOptions {
                     anim {

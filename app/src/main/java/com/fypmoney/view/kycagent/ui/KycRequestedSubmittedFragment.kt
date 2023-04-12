@@ -36,6 +36,7 @@ class KycRequestedSubmittedFragment : BaseFragment<FragmentKycRequestedSubmitted
             backArrowTint = Color.WHITE
         )
 
+
     }
 
     override fun getBindingVariable(): Int = BR.viewModel

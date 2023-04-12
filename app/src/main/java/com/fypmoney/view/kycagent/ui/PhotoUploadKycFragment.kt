@@ -107,8 +107,8 @@ class PhotoUploadKycFragment : BaseFragment<FragmentPhotoUploadKycBinding, Photo
     private fun openAgentAuthenticationScreen() {
         //navigation_agent_authentication
         val bundle = Bundle()
-        bundle.putString("via", "StoreRegister")
-        findNavController().navigate(R.id.navigation_agent_authentication, bundle, navOptions {
+        bundle.putString("via", "SelfKyc")
+        findNavController().navigate(R.id.navigation_enter_aadhaar_number_kyc, bundle, navOptions {
             anim {
                 popEnter = R.anim.slide_in_left
                 popExit = R.anim.slide_out_righ

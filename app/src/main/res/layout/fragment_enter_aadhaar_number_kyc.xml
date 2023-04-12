@@ -39,7 +39,7 @@
             app:fontFamily="@font/product_sans_regular"
             android:alpha="0.8"
             android:layout_marginHorizontal="@dimen/dp20"
-            android:text="Aadhaar Number of Customer"
+            android:text="Enter Aadhaar Number of Customer"
             android:layout_marginTop="32dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -65,6 +65,22 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvAadhaarNumber" />
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvAaadhaarError"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp16"
+            android:text="Entered Aadhaar Number does not match the Aadhaar mapped to your Fyp account"
+            android:textColor="@color/colorRed"
+            android:textSize="16sp"
+            android:visibility="gone"
+            android:layout_marginHorizontal="@dimen/dp20"
+            app:fontFamily="@font/product_sans_regular"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etCity"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnAddWithdrawSavings"

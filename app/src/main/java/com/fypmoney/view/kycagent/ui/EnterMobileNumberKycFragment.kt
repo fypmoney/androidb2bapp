@@ -21,7 +21,6 @@ class EnterMobileNumberKycFragment : BaseFragment<FragmentEnterMobileNumberKycBi
     private val enterMobileNumberKycFragmentVM by viewModels<EnterMobileNumberKycFragmentVM> { defaultViewModelProviderFactory }
 
     override fun getBindingVariable(): Int = BR.viewModel
-
     override fun getLayoutId(): Int = R.layout.fragment_enter_mobile_number_kyc
 
     override fun getViewModel(): EnterMobileNumberKycFragmentVM = enterMobileNumberKycFragmentVM
@@ -56,7 +55,7 @@ class EnterMobileNumberKycFragment : BaseFragment<FragmentEnterMobileNumberKycBi
         enterMobileNumberKycFragmentVM.state.observe(viewLifecycleOwner){
             when(it){
                 is EnterMobileNumberKycFragmentVM.EnterMobileNumberKycState.Error -> {
-                    Utility.showToast("Error: ${it.errorResponseInfo.msg}")
+
                 }
                 EnterMobileNumberKycFragmentVM.EnterMobileNumberKycState.Loading -> {
 
@@ -64,7 +63,7 @@ class EnterMobileNumberKycFragment : BaseFragment<FragmentEnterMobileNumberKycBi
                 is EnterMobileNumberKycFragmentVM.EnterMobileNumberKycState.Success -> {
                     if (viewLifecycleOwner.lifecycle.currentState == Lifecycle.State.RESUMED) {
                         val bundle = Bundle()
-                        bundle.putString("mobile", binding.etNumber.text?.trim().toString())
+                        bundle.putString("mobileNumber", binding.etNumber.text?.trim().toString())
                         bundle.putString("otpIdentifier", it.otpData.otpIdentifier)
 
                         findNavController().navigate(

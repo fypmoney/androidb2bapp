@@ -7,7 +7,6 @@ data class FullKycNetworkRequest(
     val customerMobile:String,
     val customerAadhaarNumber:String,
     val currentAddressCheck:String,
-    val currentAddress:String?,
     val selectedFinger:String,
     val capturedInfo:String,
     val deviceSerialNumber:String,

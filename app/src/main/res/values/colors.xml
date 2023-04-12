@@ -124,6 +124,7 @@
     <color name="toastTextColor">#B2101010</color>
     <color name="onBoarding_text_input_layout_border_color">#33101010</color>
     <color name="onBoardinghintTextColor">#80101010</color>
+    <color name="successAlertBgColor">#CBF7D3</color>
 
 
 </resources>

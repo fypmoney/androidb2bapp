@@ -3,6 +3,7 @@ package com.fypmoney.view.kycagent.viewmodel
 import android.app.Application
 import android.content.Context
 import android.content.pm.PackageManager
+import android.os.Parcelable
 import android.util.Base64
 import android.util.Log
 import androidx.annotation.Keep
@@ -11,16 +12,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.util.livedata.LiveEvent
+import kotlinx.android.parcel.Parcelize
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.w3c.dom.Attr
-import java.io.ByteArrayInputStream
-import java.io.InputStream
-import javax.xml.parsers.DocumentBuilderFactory
 
 class VerifyBiometricFragmentVM(application: Application): BaseViewModel(application) {
 
+    var mobileNumber: String ?= null
     lateinit var via: String
+    var aadhaarNumber : String ?= null
     private val TAG = VerifyBiometricFragmentVM::class.java.simpleName
 
     val event: LiveData<VerifyBiometricEvent>
@@ -36,7 +36,7 @@ class VerifyBiometricFragmentVM(application: Application): BaseViewModel(applica
 
 
     fun navigateToFillDetails(){
-        _event.postValue(connectedDeviceInfo?.let { VerifyBiometricEvent.NavigateToFillKycDetailsPage(it.deviceManufactureName) })
+        _event.postValue(connectedDeviceInfo?.let { VerifyBiometricEvent.NavigateToFillKycDetailsPage(it) })
     }
 
     fun appInstalledOrNot(appId: String, context: Context): Boolean {
@@ -89,44 +89,61 @@ class VerifyBiometricFragmentVM(application: Application): BaseViewModel(applica
 //
 //    }
 
-    fun checkWhichDeviceIsAttached(productName: String?, manufacturerName: String?) {
+    fun checkWhichDeviceIsAttached(
+        productName: String?,
+        manufacturerName: String?,
+        serialNumber: String?,
+        version: String
+    ) {
         manufacturerName?.let { mfName->
             if(mfName.startsWith("Startek Eng-Inc",false)){
                 connectedDeviceInfo = FingerDeviceInfo(
                     deviceManufactureName = manufacturerName,
-                    deviceProductName = productName!!
+                    deviceProductName = productName!!,
+                    deviceSerialNumber = serialNumber!!,
+                    deviceVersion = version
                 )
                 _deviceState.value = FingerPrintDevices.StartTek(
                     morphoDevice = FingerDeviceInfo(
                         deviceManufactureName = manufacturerName,
-                        deviceProductName = productName
+                        deviceProductName = productName,
+                        deviceSerialNumber = serialNumber!!,
+                        deviceVersion = version
                     )
                 )
             }else if(mfName=="MANTRA"){
                 viewModelScope.launch {
                     progressDialog.postValue(true)
-                    delay(20000)
+                    delay(2000)
                     progressDialog.postValue(false)
                     connectedDeviceInfo = FingerDeviceInfo(
                         deviceManufactureName = manufacturerName,
-                        deviceProductName = productName!!
+                        deviceProductName = productName!!,
+                        deviceSerialNumber = serialNumber!!,
+                        deviceVersion = version
                     )
                     _deviceState.value = FingerPrintDevices.Mantra(
                         morphoDevice = FingerDeviceInfo(
                             deviceManufactureName = manufacturerName,
-                            deviceProductName = productName!!
+                            deviceProductName = productName!!,
+                            deviceSerialNumber = serialNumber!!,
+                            deviceVersion = version
                         ))
                 }
 
             }else if(mfName=="Morpho"){
                 connectedDeviceInfo = FingerDeviceInfo(
                     deviceManufactureName = manufacturerName,
-                    deviceProductName = productName!!
+                    deviceProductName = productName!!,
+                    deviceSerialNumber = serialNumber!!,
+                    deviceVersion = version
                 )
                 _deviceState.value = FingerPrintDevices.MorphoDevice(
                     morphoDevice = FingerDeviceInfo(
                         deviceManufactureName = manufacturerName,
-                        deviceProductName = productName!!
+                        deviceProductName = productName!!,
+                        deviceSerialNumber = serialNumber!!,
+                        deviceVersion = version
                     ))
             }else{
                 _deviceState.value = FingerPrintDevices.NoDeviceConnected
@@ -136,7 +153,7 @@ class VerifyBiometricFragmentVM(application: Application): BaseViewModel(applica
     }
 
     sealed class VerifyBiometricEvent{
-        data class NavigateToFillKycDetailsPage(var deviceManfatureName: String):VerifyBiometricEvent()
+        data class NavigateToFillKycDetailsPage(var fingerDeviceInfo: FingerDeviceInfo):VerifyBiometricEvent()
     }
 
 
@@ -167,11 +184,14 @@ class VerifyBiometricFragmentVM(application: Application): BaseViewModel(applica
 //        object FullKycCompleted:FillKycEvent()
 //    }
 
+    @Parcelize
     @Keep
     data class FingerDeviceInfo(
         val deviceManufactureName:String,
         val deviceProductName:String,
-    )
+        val deviceSerialNumber: String,
+        val deviceVersion: String
+    ): Parcelable
 
     fun convertPidDataIntoBase64(pidOptions: String): String {
         val data =  pidOptions.toByteArray()

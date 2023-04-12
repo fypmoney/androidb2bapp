@@ -11,6 +11,7 @@ import android.widget.AutoCompleteTextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navOptions
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
@@ -35,6 +36,15 @@ class TakeHandFingerFragment : BaseFragment<FragmentTakeHandFingerBinding, TakeH
             takeHandFingerFragmentVM.via = arguments?.getString("via").toString()
         }
 
+        if (arguments?.containsKey("mobileNumber") == true && arguments?.getString("mobileNumber") != null) {
+            takeHandFingerFragmentVM.customerNumber =
+                arguments?.getString("mobileNumber").toString()
+        }else{
+            takeHandFingerFragmentVM.customerNumber = Utility.getCustomerDataFromPreference()?.mobile
+        }
+
+        takeHandFingerFragmentVM.customerAadhaarNumber = arguments?.getString("aadhaarNumber")
+
         setToolbarAndTitle(
             context = requireContext(),
             toolbar = toolbar,
@@ -44,13 +54,17 @@ class TakeHandFingerFragment : BaseFragment<FragmentTakeHandFingerBinding, TakeH
             backArrowTint = Color.WHITE
         )
 
+        takeHandFingerFragmentVM.deviceDetails = arguments?.getParcelable("DeviceData")
+
+        takeHandFingerFragmentVM.deviceName = takeHandFingerFragmentVM.deviceDetails?.deviceManufactureName
         setUpObserver()
 
         setupHandDropDown()
         setupFingreDropDown()
 
         binding.btnMobileNumberProceed.setOnClickListener {
-            captureMantraFigure()
+            takeHandFingerFragmentVM.onContinueClick()
+//            captureMantraFigure()
 //            if (takeHandFingerFragmentVM.handDelegate.isValid.value == true && takeHandFingerFragmentVM.fingreDelegate.isValid.value == true){
 //                captureMantraFigure()
 //            }
@@ -70,22 +84,26 @@ class TakeHandFingerFragment : BaseFragment<FragmentTakeHandFingerBinding, TakeH
         (binding.actSelectFingure as? AutoCompleteTextView)?.setAdapter(adapter)
     }
 
+//    <Demo></Demo> <CustOpts></CustOpts>
+//    <Demo></Demo> <CustOpts></CustOpts>
+//    <Demo></Demo> <CustOpts></CustOpts>
+
     private fun captureMorphoFigure(){
         val intent = Intent("in.gov.uidai.rdservice.fp.CAPTURE")
         intent.setPackage("com.scl.rdservice")
-        intent.putExtra("PID_OPTIONS", "<PidOptions ver=\"1.0\"><Opts env = \"P\" fCount=\"1\" fType=\"2\" format=\"0\" pidVer=\"2.0\" timeout=\"10000\" wadh=\"E0jzJ/P8UopUHAieZn8CKqS4WPMi5ZSYXgfnlfkWjrc=\"/> <Demo></Demo> <CustOpts></CustOpts></PidOptions>")
+        intent.putExtra("PID_OPTIONS", "<PidOptions ver=\"1.0\"><Opts env = \"P\" fCount=\"1\" fType=\"2\" format=\"0\" pidVer=\"2.0\" timeout=\"10000\" wadh=\"E0jzJ/P8UopUHAieZn8CKqS4WPMi5ZSYXgfnlfkWjrc=\"/></PidOptions>")
         startActivityForResult(intent,1002)
     }
     private fun captureMantraFigure(){
         val intent = Intent("in.gov.uidai.rdservice.fp.CAPTURE")
         intent.setPackage("com.mantra.rdservice")
-        intent.putExtra("PID_OPTIONS", "<PidOptions ver=\"1.0\"><Opts env = \"P\" fCount=\"1\" fType=\"2\" format=\"0\" pidVer=\"2.0\" timeout=\"10000\" wadh=\"E0jzJ/P8UopUHAieZn8CKqS4WPMi5ZSYXgfnlfkWjrc=\"/> <Demo></Demo> <CustOpts></CustOpts></PidOptions>")
+        intent.putExtra("PID_OPTIONS", "<PidOptions ver=\"1.0\"><Opts env = \"P\" fCount=\"1\" fType=\"2\" format=\"0\" pidVer=\"2.0\" timeout=\"10000\" wadh=\"E0jzJ/P8UopUHAieZn8CKqS4WPMi5ZSYXgfnlfkWjrc=\"/></PidOptions>")
         startActivityForResult(intent,1002)
     }
     private fun captureStarTekFigure(){
         val intent = Intent("in.gov.uidai.rdservice.fp.CAPTURE")
         intent.setPackage("com.acpl.registersdk")
-        intent.putExtra("PID_OPTIONS", "<PidOptions ver=\"1.0\"><Opts env = \"P\" fCount=\"1\" fType=\"2\" format=\"0\" pidVer=\"2.0\" timeout=\"10000\" wadh=\"E0jzJ/P8UopUHAieZn8CKqS4WPMi5ZSYXgfnlfkWjrc=\"/> <Demo></Demo> <CustOpts></CustOpts></PidOptions>")
+        intent.putExtra("PID_OPTIONS", "<PidOptions ver=\"1.0\"><Opts env = \"P\" fCount=\"1\" fType=\"2\" format=\"0\" pidVer=\"2.0\" timeout=\"10000\" wadh=\"E0jzJ/P8UopUHAieZn8CKqS4WPMi5ZSYXgfnlfkWjrc=\"/></PidOptions>")
         startActivityForResult(intent,1002)
     }
 
@@ -109,8 +127,21 @@ class TakeHandFingerFragment : BaseFragment<FragmentTakeHandFingerBinding, TakeH
             null -> {
 
             }
-            TakeHandFingerFragmentVM.FillKycEvent.FullKycCompleted -> {
-                findNavController().navigateUp()
+            is TakeHandFingerFragmentVM.FillKycEvent.FullKycCompleted -> {
+                val bundle = Bundle()
+                bundle.putString("message", it.message)
+                bundle.putString("via", takeHandFingerFragmentVM.via)
+                findNavController().navigate(R.id.navigation_kyc_requested_submitted, bundle, navOptions {
+                    anim {
+                        popEnter = R.anim.slide_in_left
+                        popExit = R.anim.slide_out_righ
+                        enter = R.anim.slide_in_right
+                        exit = R.anim.slide_out_left
+                    }
+                    popUpTo(R.id.navigation_kyc_agent){
+                        inclusive = false
+                    }
+                } )
             }
         }
     }
@@ -118,6 +149,7 @@ class TakeHandFingerFragment : BaseFragment<FragmentTakeHandFingerBinding, TakeH
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
+
             if (requestCode == 1002) {
                 val bundle = data?.extras
                 val pid = bundle?.getString("PID_DATA", "")
@@ -175,8 +207,7 @@ class TakeHandFingerFragment : BaseFragment<FragmentTakeHandFingerBinding, TakeH
                         is TakeHandFingerFragmentVM.CaptureFingerStatus.CapturedSuccessFully -> {
                             Log.d(TAG, "Captured successfully")
                             Utility.showToast("Captured successfully")
-                            //takeHandFingerFragmentVM.postKycData(captureInfo = result.pidOptions)
-//                            takeHandFingerFragmentVM.postKycData(captureInfo = takeHandFingerFragmentVM.convertPidDataIntoBase64(result.pidOptions))
+                            takeHandFingerFragmentVM.postKycData(capturedInfo = takeHandFingerFragmentVM.convertPidDataIntoBase64(result.pidOptions))
                         }
                         is TakeHandFingerFragmentVM.CaptureFingerStatus.ErrorInCaptureFinger -> {
                             takeHandFingerFragmentVM.alertDialog.postValue(

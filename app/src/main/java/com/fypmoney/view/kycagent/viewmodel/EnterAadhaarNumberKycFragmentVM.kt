@@ -5,6 +5,8 @@ import com.fypmoney.base.BaseViewModel
 
 class EnterAadhaarNumberKycFragmentVM(application: Application) : BaseViewModel(application) {
 
-    lateinit var mobileNumber: String
+    var mobileNumber: String ?= null
+    lateinit var via: String
+    var lastFourDigitCode : String ?= null
 
 }

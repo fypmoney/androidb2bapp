@@ -5,6 +5,8 @@ import com.fypmoney.base.BaseViewModel
 
 class AgentAuthenticationFragmentVM(application: Application) : BaseViewModel(application) {
 
+    var mobileNumber: String ?= null
     lateinit var via: String
+    var aadhaarNumber : String ?= null
 
 }

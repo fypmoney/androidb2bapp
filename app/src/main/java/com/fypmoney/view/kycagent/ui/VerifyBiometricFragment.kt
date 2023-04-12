@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.graphics.Color
 import android.hardware.usb.UsbDevice
 import android.hardware.usb.UsbManager
@@ -46,6 +45,14 @@ class VerifyBiometricFragment :
             verifyBiometricFragmentVM.via = arguments?.getString("via").toString()
         }
 
+        if (arguments?.containsKey("mobileNumber") == true) {
+            verifyBiometricFragmentVM.mobileNumber =
+                arguments?.getString("mobileNumber").toString()
+        }
+
+        verifyBiometricFragmentVM.aadhaarNumber = arguments?.getString("aadhaarNumber")
+
+
         setToolbarAndTitle(
             context = requireContext(),
             toolbar = toolbar,
@@ -66,6 +73,10 @@ class VerifyBiometricFragment :
                 is VerifyBiometricFragmentVM.VerifyBiometricEvent.NavigateToFillKycDetailsPage -> {
                     val bundle = Bundle()
                     bundle.putString("via", verifyBiometricFragmentVM.via)
+                    bundle.putString("aadhaarNumber", verifyBiometricFragmentVM.aadhaarNumber)
+                    if (verifyBiometricFragmentVM.mobileNumber != null)
+                        bundle.putString("mobileNumber", verifyBiometricFragmentVM.mobileNumber)
+                    bundle.putParcelable("DeviceData", it.fingerDeviceInfo)
                     findNavController().navigate(R.id.navigation_take_hand_finger, bundle, navOptions {
                         anim {
                             popEnter = R.anim.slide_in_left
@@ -192,7 +203,10 @@ class VerifyBiometricFragment :
                     Utility.showToast("Device Detected ${device.manufacturerName}")
                     verifyBiometricFragmentVM.checkWhichDeviceIsAttached(
                         device.productName!!,
-                        device.manufacturerName
+                        device.manufacturerName,
+                        device.serialNumber,
+                        device.version
+
                     )
                 } else {
                     Log.d("UsbRecciver", "Device is not detected")
@@ -216,7 +230,9 @@ class VerifyBiometricFragment :
             val deviceList = usbManager.deviceList
             if (deviceList.size!=0){
                 for (device in deviceList.values) {
-                    verifyBiometricFragmentVM.checkWhichDeviceIsAttached(device.productName!!,device.manufacturerName)
+                    verifyBiometricFragmentVM.checkWhichDeviceIsAttached(device.productName!!,device.manufacturerName,
+                        /*device.serialNumber*/"2211I005195",
+                        /*device.version*/"1.0")
 
                 }
             }else{
@@ -492,8 +508,14 @@ class VerifyBiometricFragment :
 //        val filter = IntentFilter()
 //        filter.addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED)
 //        requireActivity().registerReceiver(userBroadcastReceiver, filter)
-        isOtgEnabled(requireContext())
+//        isOtgEnabled(requireContext())
 
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        isOtgEnabled(requireContext())
 
     }
 
