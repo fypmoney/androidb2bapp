@@ -59,7 +59,7 @@ data class ShopData(
 	val state: String? = null,
 
 	@field:SerializedName("isShopListed")
-	val isShopListed: Any? = null,
+	val isShopListed: String? = null,
 
 	@field:SerializedName("shopPhoto")
 	val shopPhoto: String? = null,

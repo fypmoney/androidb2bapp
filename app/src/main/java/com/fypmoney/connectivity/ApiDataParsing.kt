@@ -199,7 +199,7 @@ class ApiDataParsing {
                     getObject(response, ProfileImageUploadResponse::class.java)
                 }
                 ApiConstant.API_UPLOAD_SHOP_PIC -> {
-                    getObject(response, SaveShopDetailsResponse::class.java)
+                    getObject(response, FetchShopDetailsResponse::class.java)
                 }
                 ApiConstant.API_ORDER_CARD -> {
                     getObject(response, OrderCardResponse::class.java)

@@ -166,7 +166,7 @@ class TakeHandFingerFragment : BaseFragment<FragmentTakeHandFingerBinding, TakeH
                                         requireContext(),
                                         R.drawable.ic_error_alert
                                     )!!,
-                                    message = "Finger quality is not good.Please clean device and fingre and rtey Again",
+                                    message = "Finger quality is not good.Please clean device and finger and try Again",
                                     backgroundColor = ContextCompat.getColor(
                                         requireContext(),
                                         R.color.errorAlertBgColor
@@ -181,7 +181,7 @@ class TakeHandFingerFragment : BaseFragment<FragmentTakeHandFingerBinding, TakeH
                                         requireContext(),
                                         R.drawable.ic_error_alert
                                     )!!,
-                                    message = "Finger quality is very poor.Please clean device and fingre and rtey Again",
+                                    message = "Finger quality is very poor.Please clean device and finger and try again",
                                     backgroundColor = ContextCompat.getColor(
                                         requireContext(),
                                         R.color.errorAlertBgColor
@@ -206,7 +206,7 @@ class TakeHandFingerFragment : BaseFragment<FragmentTakeHandFingerBinding, TakeH
                         }
                         is TakeHandFingerFragmentVM.CaptureFingerStatus.CapturedSuccessFully -> {
                             Log.d(TAG, "Captured successfully")
-                            Utility.showToast("Captured successfully")
+                            Utility.showToast("Finger Captured successfully")
                             takeHandFingerFragmentVM.postKycData(capturedInfo = takeHandFingerFragmentVM.convertPidDataIntoBase64(result.pidOptions))
                         }
                         is TakeHandFingerFragmentVM.CaptureFingerStatus.ErrorInCaptureFinger -> {

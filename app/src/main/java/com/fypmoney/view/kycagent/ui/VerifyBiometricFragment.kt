@@ -203,9 +203,7 @@ class VerifyBiometricFragment :
                     Utility.showToast("Device Detected ${device.manufacturerName}")
                     verifyBiometricFragmentVM.checkWhichDeviceIsAttached(
                         device.productName!!,
-                        device.manufacturerName,
-                        device.serialNumber,
-                        device.version
+                        device.manufacturerName
 
                     )
                 } else {
@@ -230,9 +228,7 @@ class VerifyBiometricFragment :
             val deviceList = usbManager.deviceList
             if (deviceList.size!=0){
                 for (device in deviceList.values) {
-                    verifyBiometricFragmentVM.checkWhichDeviceIsAttached(device.productName!!,device.manufacturerName,
-                        /*device.serialNumber*/"2211I005195",
-                        /*device.version*/"1.0")
+                    verifyBiometricFragmentVM.checkWhichDeviceIsAttached(device.productName!!,device.manufacturerName,)
 
                 }
             }else{

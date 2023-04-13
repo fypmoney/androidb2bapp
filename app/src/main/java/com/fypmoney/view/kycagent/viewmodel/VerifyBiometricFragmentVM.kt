@@ -91,24 +91,18 @@ class VerifyBiometricFragmentVM(application: Application): BaseViewModel(applica
 
     fun checkWhichDeviceIsAttached(
         productName: String?,
-        manufacturerName: String?,
-        serialNumber: String?,
-        version: String
+        manufacturerName: String?
     ) {
         manufacturerName?.let { mfName->
             if(mfName.startsWith("Startek Eng-Inc",false)){
                 connectedDeviceInfo = FingerDeviceInfo(
                     deviceManufactureName = manufacturerName,
-                    deviceProductName = productName!!,
-                    deviceSerialNumber = serialNumber!!,
-                    deviceVersion = version
+                    deviceProductName = productName!!
                 )
                 _deviceState.value = FingerPrintDevices.StartTek(
                     morphoDevice = FingerDeviceInfo(
                         deviceManufactureName = manufacturerName,
-                        deviceProductName = productName,
-                        deviceSerialNumber = serialNumber!!,
-                        deviceVersion = version
+                        deviceProductName = productName
                     )
                 )
             }else if(mfName=="MANTRA"){
@@ -118,32 +112,24 @@ class VerifyBiometricFragmentVM(application: Application): BaseViewModel(applica
                     progressDialog.postValue(false)
                     connectedDeviceInfo = FingerDeviceInfo(
                         deviceManufactureName = manufacturerName,
-                        deviceProductName = productName!!,
-                        deviceSerialNumber = serialNumber!!,
-                        deviceVersion = version
+                        deviceProductName = productName!!
                     )
                     _deviceState.value = FingerPrintDevices.Mantra(
                         morphoDevice = FingerDeviceInfo(
                             deviceManufactureName = manufacturerName,
-                            deviceProductName = productName!!,
-                            deviceSerialNumber = serialNumber!!,
-                            deviceVersion = version
+                            deviceProductName = productName!!
                         ))
                 }
 
             }else if(mfName=="Morpho"){
                 connectedDeviceInfo = FingerDeviceInfo(
                     deviceManufactureName = manufacturerName,
-                    deviceProductName = productName!!,
-                    deviceSerialNumber = serialNumber!!,
-                    deviceVersion = version
+                    deviceProductName = productName!!
                 )
                 _deviceState.value = FingerPrintDevices.MorphoDevice(
                     morphoDevice = FingerDeviceInfo(
                         deviceManufactureName = manufacturerName,
-                        deviceProductName = productName!!,
-                        deviceSerialNumber = serialNumber!!,
-                        deviceVersion = version
+                        deviceProductName = productName!!
                     ))
             }else{
                 _deviceState.value = FingerPrintDevices.NoDeviceConnected
@@ -189,8 +175,8 @@ class VerifyBiometricFragmentVM(application: Application): BaseViewModel(applica
     data class FingerDeviceInfo(
         val deviceManufactureName:String,
         val deviceProductName:String,
-        val deviceSerialNumber: String,
-        val deviceVersion: String
+        var deviceSerialNumber: String ?= null,
+        var deviceVersion: String ?= null
     ): Parcelable
 
     fun convertPidDataIntoBase64(pidOptions: String): String {

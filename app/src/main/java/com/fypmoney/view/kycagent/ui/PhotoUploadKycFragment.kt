@@ -29,7 +29,6 @@ import com.fypmoney.databinding.FragmentPhotoUploadKycBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.view.activity.ImagePickerView
-import com.fypmoney.view.kycagent.model.SaveShopDetailsRequest
 import com.fypmoney.view.kycagent.viewmodel.PhotoUploadKycFragmentVM
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
@@ -80,7 +79,7 @@ class PhotoUploadKycFragment : BaseFragment<FragmentPhotoUploadKycBinding, Photo
             when(it){
                 is PhotoUploadKycFragmentVM.PhotoUploadState.ProfilePicUpdate -> {
                     if (viewLifecycleOwner.lifecycle.currentState == Lifecycle.State.RESUMED) {
-                        openAgentAuthenticationScreen()
+                        openAgentAuthenticationScreen(it.shopData.isShopListed.toString())
                     }
                 }
                 else -> {}
@@ -104,18 +103,28 @@ class PhotoUploadKycFragment : BaseFragment<FragmentPhotoUploadKycBinding, Photo
 
     }
 
-    private fun openAgentAuthenticationScreen() {
+    private fun openAgentAuthenticationScreen(shopListed: String?) {
         //navigation_agent_authentication
-        val bundle = Bundle()
-        bundle.putString("via", "SelfKyc")
-        findNavController().navigate(R.id.navigation_enter_aadhaar_number_kyc, bundle, navOptions {
-            anim {
-                popEnter = R.anim.slide_in_left
-                popExit = R.anim.slide_out_righ
-                enter = R.anim.slide_in_right
-                exit = R.anim.slide_out_left
-            }
-        })
+        if (shopListed.equals(AppConstants.NO)) {
+            val bundle = Bundle()
+            bundle.putString("via", "SelfKyc")
+            findNavController().navigate(
+                R.id.navigation_enter_aadhaar_number_kyc,
+                bundle,
+                navOptions {
+                    anim {
+                        popEnter = R.anim.slide_in_left
+                        popExit = R.anim.slide_out_righ
+                        enter = R.anim.slide_in_right
+                        exit = R.anim.slide_out_left
+                    }
+                    popUpTo(R.id.navigation_kyc_agent){
+                        inclusive = false
+                    }
+                })
+        }else{
+            findNavController().popBackStack()
+        }
     }
 
 //    fun testMethod(){

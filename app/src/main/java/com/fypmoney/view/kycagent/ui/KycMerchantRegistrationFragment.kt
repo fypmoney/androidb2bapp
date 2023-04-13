@@ -3,6 +3,8 @@ package com.fypmoney.view.kycagent.ui
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
@@ -45,7 +47,7 @@ class KycMerchantRegistrationFragment : BaseFragment<FragmentKycMerchantRegistra
                 kycMerchantRegistrationFragmentVM.saveShopDetailsRequest.shopName = binding.etBusinessName.text?.trim().toString()
                 kycMerchantRegistrationFragmentVM.saveShopDetailsRequest.pincode = binding.etPinCode.text?.trim().toString()
                 kycMerchantRegistrationFragmentVM.saveShopDetailsRequest.city = binding.etCity.text?.trim().toString()
-                kycMerchantRegistrationFragmentVM.saveShopDetailsRequest.state = binding.etState.text?.trim().toString()
+                kycMerchantRegistrationFragmentVM.saveShopDetailsRequest.state = kycMerchantRegistrationFragmentVM.stateDelegate.getValue()
                 kycMerchantRegistrationFragmentVM.saveShopDetailsRequest.isPosterOrdered = kycMerchantRegistrationFragmentVM.mcbPosterValue
 
                 kycMerchantRegistrationFragmentVM.saveShopDetails(kycMerchantRegistrationFragmentVM.saveShopDetailsRequest)
@@ -72,6 +74,48 @@ class KycMerchantRegistrationFragment : BaseFragment<FragmentKycMerchantRegistra
 
         setUpObserver()
 
+        setupStateDropDown()
+    }
+
+    private fun setupStateDropDown(){
+        val items = listOf("Andhra Pradesh",
+            "Andaman and Nicobar Islands",
+            "Arunachal Pradesh",
+            "Assam",
+            "Bihar",
+            "Chandigarh",
+            "Chhattisgarh",
+            "Dadar and Nagar Haveli",
+            "Daman and Diu",
+            "Delhi",
+            "Lakshadweep",
+            "Puducherry",
+            "Goa",
+            "Gujarat",
+            "Haryana",
+            "Himachal Pradesh",
+            "Jammu and Kashmir",
+            "Jharkhand",
+            "Karnataka",
+            "Kerala",
+            "Madhya Pradesh",
+            "Maharashtra",
+            "Manipur",
+            "Meghalaya",
+            "Mizoram",
+            "Nagaland",
+            "Odisha",
+            "Punjab",
+            "Rajasthan",
+            "Sikkim",
+            "Tamil Nadu",
+            "Telangana",
+            "Tripura",
+            "Uttar Pradesh",
+            "Uttarakhand",
+            "West Bengal")
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, items)
+        (binding.actState as? AutoCompleteTextView)?.setAdapter(adapter)
     }
 
     private fun setUpObserver() {
@@ -112,12 +156,16 @@ class KycMerchantRegistrationFragment : BaseFragment<FragmentKycMerchantRegistra
                 enter = R.anim.slide_in_right
                 exit = R.anim.slide_out_left
             }
+            popUpTo(R.id.navigation_kyc_agent){
+                inclusive = false
+            }
         })
     }
 
     private fun checkAllFields() : Boolean {
         return (binding.etName.text.toString().isNotEmpty() && binding.etBusinessName.text.toString().isNotEmpty() && binding.etAddress.text.toString().isNotEmpty()
-                && binding.etPinCode.text.toString().isNotEmpty() && binding.etPinCode.text?.trim()?.length == 6 && binding.etCity.text.toString().isNotEmpty() && binding.etState.text.toString().isNotEmpty() && kycMerchantRegistrationFragmentVM.mcbPosterValue != null)
+                && binding.etPinCode.text.toString().isNotEmpty() && binding.etPinCode.text?.trim()?.length == 6 && binding.etCity.text.toString().isNotEmpty()
+                && (kycMerchantRegistrationFragmentVM.stateDelegate.getValue().isNotEmpty() && (kycMerchantRegistrationFragmentVM.stateDelegate.getValue()!="null")) && kycMerchantRegistrationFragmentVM.mcbPosterValue != null)
     }
 
     override fun getBindingVariable(): Int = BR.viewModel

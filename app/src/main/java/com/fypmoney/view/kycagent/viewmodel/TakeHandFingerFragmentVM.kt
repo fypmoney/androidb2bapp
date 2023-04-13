@@ -40,40 +40,51 @@ class TakeHandFingerFragmentVM(application: Application) : BaseViewModel(applica
     private val _kycEvent = LiveEvent<FillKycEvent>()
 
     private val TAG = TakeHandFingerFragmentVM::class.java.simpleName
-    var deviceName:String? = null
+    var deviceName: String? = null
 
-    var customerNumber: String ?= null
-    var customerAadhaarNumber: String ?= null
+    var customerNumber: String? = null
+    var customerAadhaarNumber: String? = null
 
-    var deviceDetails : VerifyBiometricFragmentVM.FingerDeviceInfo ?= null
+    var deviceDetails: VerifyBiometricFragmentVM.FingerDeviceInfo? = null
 
-    fun parseXml(xml:String):CaptureFingerStatus {
+    fun parseXml(xml: String): CaptureFingerStatus {
         val inputStream: InputStream = ByteArrayInputStream(xml.toByteArray())
 
         val dom = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(inputStream)
         val nodeList = dom.getElementsByTagName("Resp")
-        if(nodeList.length != 0){
+        if (nodeList.length != 0) {
             val attributes = nodeList.item(0).attributes
             val errCode = (attributes.getNamedItem("errCode") as Attr).value
-            Log.d(TAG,"errCode:- $errCode")
-            if(errCode=="0"){
+            Log.d(TAG, "errCode:- $errCode")
+            if (errCode == "0") {
+                if (deviceDetails?.deviceManufactureName == "Morpho") {
+                    //Rds version
+                    deviceDetails?.deviceVersion = (dom.getElementsByTagName("DeviceInfo")
+                        .item(0).attributes.getNamedItem("rdsVer") as Attr).value
+
+//Device Serial No
+
+                    deviceDetails?.deviceSerialNumber = (dom.getElementsByTagName("DeviceInfo")
+                        .item(0).childNodes.item(1).childNodes.item(1).attributes.getNamedItem("value") as Attr).value
+                }
+
                 val qScore = (attributes.getNamedItem("qScore") as Attr).value
-                Log.d(TAG,"qScore:- ${qScore}")
+                Log.d(TAG, "qScore:- ${qScore}")
                 qScore.toIntOrNull()?.let {
-                    if(it<=10){
+                    if (it <= 10) {
                         return CaptureFingerStatus.CaptureFingerQualityIsNotGood
-                    }else{
+                    } else {
                         Log.d(TAG, "pidOptions xml: ${xml}")
                         val pidOptions = dom.getElementsByTagName("PidData")
-                        Log.d(TAG,"pidOptions: $pidOptions")
+                        Log.d(TAG, "pidOptions: $pidOptions")
                         return CaptureFingerStatus.CapturedSuccessFully(xml)
                     }
-                }?: kotlin.run {
+                } ?: kotlin.run {
                     return CaptureFingerStatus.CaptureFingerQualityIsPoor
 
                 }
 
-            }else{
+            } else {
                 val errInfo = (attributes.getNamedItem("errInfo") as Attr).value
 
                 return CaptureFingerStatus.ErrorInCaptureFinger(errInfo)
@@ -87,14 +98,14 @@ class TakeHandFingerFragmentVM(application: Application) : BaseViewModel(applica
 
     }
 
-    fun onContinueClick(){
-        if(handDelegate.getValue().isNotEmpty() && fingreDelegate.getValue().isNotEmpty()){
+    fun onContinueClick() {
+        if (handDelegate.getValue().isNotEmpty() && fingreDelegate.getValue().isNotEmpty()) {
             _kycEvent.value = FillKycEvent.CaptureFingrePrint
         }
     }
 
     fun postKycData(capturedInfo: String) {
-        getFinger(handDelegate.hand.value!!,fingreDelegate.fingre.value!!)?.let {
+        getFinger(handDelegate.hand.value!!, fingreDelegate.fingre.value!!)?.let {
             val fullKycNetworkRequest = FullKycNetworkRequest(
                 customerMobile = customerNumber!!,
                 customerAadhaarNumber = customerAadhaarNumber!!,
@@ -104,8 +115,7 @@ class TakeHandFingerFragmentVM(application: Application) : BaseViewModel(applica
                 deviceSerialNumber = deviceDetails?.deviceSerialNumber!!,
                 deviceType = deviceDetails?.deviceManufactureName!!,
                 deviceVersionNo = deviceDetails?.deviceVersion!!,
-                deviceCertificateExpriy = "2024-05-31",
-                collectableAmount = "0"
+                deviceCertificateExpriy = "2029-01-01"
             )
 
             WebApiCaller.getInstance().request(
@@ -117,26 +127,41 @@ class TakeHandFingerFragmentVM(application: Application) : BaseViewModel(applica
                     this, isProgressBar = true
                 )
             )
-        }?: kotlin.run {
+        } ?: kotlin.run {
             alertDialog.postValue(
                 DialogUtils.AlertStateUiModel(
-                icon = ContextCompat.getDrawable(PockketApplication.instance,
-                    R.drawable.ic_error_alert)!!,
-                message = "Finger is not captured,Please try again...",
-                backgroundColor = ContextCompat.getColor(PockketApplication.instance,
-                    R.color.errorAlertBgColor)
-            ))
+                    icon = ContextCompat.getDrawable(
+                        PockketApplication.instance,
+                        R.drawable.ic_error_alert
+                    )!!,
+                    message = "Finger is not captured,Please try again...",
+                    backgroundColor = ContextCompat.getColor(
+                        PockketApplication.instance,
+                        R.color.errorAlertBgColor
+                    )
+                )
+            )
         }
 
 
     }
 
+//    private fun getDeviceType(manufactureName: String) : Int{
+//        if(manufactureName.startsWith("Startek Eng-Inc",false)){
+//            return 3
+//        }else if(manufactureName == "MANTRA"){
+//            return 6
+//        }else if(manufactureName == "Morpho"){
+//            return 1
+//        }
+//    }
+
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
 
-        when(purpose){
-            ApiConstant.API_FULL_KYC ->{
-                if(responseData is FullKycResponse){
+        when (purpose) {
+            ApiConstant.API_FULL_KYC -> {
+                if (responseData is FullKycResponse) {
 //                    alertDialog.postValue(DialogUtils.AlertStateUiModel(
 //                        icon =ContextCompat.getDrawable(PockketApplication.instance,
 //                            R.drawable.ic_success_alert)!!,
@@ -145,7 +170,7 @@ class TakeHandFingerFragmentVM(application: Application) : BaseViewModel(applica
 //                            R.color.successAlertBgColor)
 //                    ))
                     viewModelScope.launch {
-                        delay(DialogUtils.alertDialogTime+100)
+                        delay(DialogUtils.alertDialogTime + 100)
                         _kycEvent.value = FillKycEvent.FullKycCompleted(responseData.msg)
                     }
                 }
@@ -156,29 +181,35 @@ class TakeHandFingerFragmentVM(application: Application) : BaseViewModel(applica
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         super.onError(purpose, errorResponseInfo)
 
-        when(purpose){
-            ApiConstant.API_FULL_KYC ->{
-                alertDialog.postValue(DialogUtils.AlertStateUiModel(
-                    icon =ContextCompat.getDrawable(PockketApplication.instance,
-                        R.drawable.ic_error_alert)!!,
-                    message = errorResponseInfo.msg,
-                    backgroundColor = ContextCompat.getColor(PockketApplication.instance,
-                        R.color.errorAlertBgColor)
-                ))
+        when (purpose) {
+            ApiConstant.API_FULL_KYC -> {
+                alertDialog.postValue(
+                    DialogUtils.AlertStateUiModel(
+                        icon = ContextCompat.getDrawable(
+                            PockketApplication.instance,
+                            R.drawable.ic_error_alert
+                        )!!,
+                        message = errorResponseInfo.msg,
+                        backgroundColor = ContextCompat.getColor(
+                            PockketApplication.instance,
+                            R.color.errorAlertBgColor
+                        )
+                    )
+                )
 
             }
         }
     }
 
     fun convertPidDataIntoBase64(pidOptions: String): String {
-        val data =  pidOptions.toByteArray()
+        val data = pidOptions.toByteArray()
         val base64 = Base64.encodeToString(data, Base64.NO_WRAP)
-        Log.d(TAG,"converted base 64:- ${base64}")
+        Log.d(TAG, "converted base 64:- ${base64}")
         return base64
     }
 
     private fun getFinger(hand: String, finger: String): String? {
-        if(hand=="Right"){
+        if (hand == "Right") {
             when (finger) {
                 "Thumb Finger" -> {
                     return "6~RightThumb"
@@ -199,7 +230,7 @@ class TakeHandFingerFragmentVM(application: Application) : BaseViewModel(applica
                     return "10~RightLittle"
                 }
             }
-        }else{
+        } else {
             when (finger) {
                 "Thumb Finger" -> {
                     return "5~LeftThumb"
@@ -224,17 +255,17 @@ class TakeHandFingerFragmentVM(application: Application) : BaseViewModel(applica
         return null
     }
 
-    sealed class CaptureFingerStatus{
-        data class ErrorInCaptureFinger(val message:String):CaptureFingerStatus()
-        data class CapturedSuccessFully(val pidOptions:String):CaptureFingerStatus()
-        object CaptureFingerQualityIsNotGood:CaptureFingerStatus()
-        object CaptureFingerQualityIsPoor:CaptureFingerStatus()
-        object UnableToCaptureFinger:CaptureFingerStatus()
+    sealed class CaptureFingerStatus {
+        data class ErrorInCaptureFinger(val message: String) : CaptureFingerStatus()
+        data class CapturedSuccessFully(val pidOptions: String) : CaptureFingerStatus()
+        object CaptureFingerQualityIsNotGood : CaptureFingerStatus()
+        object CaptureFingerQualityIsPoor : CaptureFingerStatus()
+        object UnableToCaptureFinger : CaptureFingerStatus()
     }
 
-    sealed class FillKycEvent{
-        object CaptureFingrePrint:FillKycEvent()
-        data class FullKycCompleted(val message: String):FillKycEvent()
+    sealed class FillKycEvent {
+        object CaptureFingrePrint : FillKycEvent()
+        data class FullKycCompleted(val message: String) : FillKycEvent()
     }
 
 }

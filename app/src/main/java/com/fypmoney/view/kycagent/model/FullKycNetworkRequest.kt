@@ -12,8 +12,7 @@ data class FullKycNetworkRequest(
     val deviceSerialNumber:String,
     val deviceType:String,
     val deviceVersionNo:String,
-    val deviceCertificateExpriy:String,
-    val collectableAmount:String
+    val deviceCertificateExpriy:String
 )
 
 @Keep

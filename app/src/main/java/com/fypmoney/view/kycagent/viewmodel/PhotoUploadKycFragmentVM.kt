@@ -12,7 +12,9 @@ import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.BaseRequest
 import com.fypmoney.util.livedata.LiveEvent
+import com.fypmoney.view.kycagent.model.FetchShopDetailsResponse
 import com.fypmoney.view.kycagent.model.SaveShopDetailsResponse
+import com.fypmoney.view.kycagent.model.ShopData
 import okhttp3.MultipartBody
 
 class PhotoUploadKycFragmentVM(application: Application) : BaseViewModel(application) {
@@ -43,16 +45,12 @@ class PhotoUploadKycFragmentVM(application: Application) : BaseViewModel(applica
         super.onSuccess(purpose, responseData)
         when (purpose) {
             ApiConstant.API_UPLOAD_SHOP_PIC -> {
-                if (responseData is SaveShopDetailsResponse) {
-                    _profileState.value = responseData.msg?.let {
-                        PhotoUploadState.ProfilePicUpdate(
-                            it
-                        )
+                if (responseData is FetchShopDetailsResponse) {
+                    _profileState.value =
+                        responseData.data?.let { PhotoUploadState.ProfilePicUpdate(it) }
                     }
-                }
             }
         }
-
     }
 
 
@@ -67,7 +65,7 @@ class PhotoUploadKycFragmentVM(application: Application) : BaseViewModel(applica
     }
 
     sealed class PhotoUploadState{
-        data class ProfilePicUpdate(val message: String):PhotoUploadState()
+        data class ProfilePicUpdate(var shopData: ShopData):PhotoUploadState()
         data class Error(var errorResponseInfo: ErrorResponseInfo) : PhotoUploadState()
     }
 

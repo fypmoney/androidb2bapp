@@ -46,23 +46,26 @@ class KycAgentFragment : BaseFragment<FragmentKycAgentBinding, KycAgentFragmentV
 
         setUpObserver()
 
-        kycAgentFragmentVM.fullKycDone = Utility.getCustomerDataFromPreference()?.bankProfile?.kycType
+        kycAgentFragmentVM.fullKycDone =
+            Utility.getCustomerDataFromPreference()?.bankProfile?.kycType
 
         binding.ivKycCard.setOnClickListener {
 
             //check where we want to send user based on conditions
 
-            if (kycAgentFragmentVM.shopName == null){
-                findNavController().navigate(R.id.navigation_kyc_merchant_registration, null, navOptions {
-                    anim {
-                        popEnter = R.anim.slide_in_left
-                        popExit = R.anim.slide_out_righ
-                        enter = R.anim.slide_in_right
-                        exit = R.anim.slide_out_left
-                    }
-                })
-            }
-            else if (kycAgentFragmentVM.isShopPhotoUpload == null){
+            if (kycAgentFragmentVM.shopName == null) {
+                findNavController().navigate(
+                    R.id.navigation_kyc_merchant_registration,
+                    null,
+                    navOptions {
+                        anim {
+                            popEnter = R.anim.slide_in_left
+                            popExit = R.anim.slide_out_righ
+                            enter = R.anim.slide_in_right
+                            exit = R.anim.slide_out_left
+                        }
+                    })
+            } else if (kycAgentFragmentVM.isShopPhotoUpload == null) {
                 findNavController().navigate(R.id.navigation_photo_upload_kyc, null, navOptions {
                     anim {
                         popEnter = R.anim.slide_in_left
@@ -71,11 +74,56 @@ class KycAgentFragment : BaseFragment<FragmentKycAgentBinding, KycAgentFragmentV
                         exit = R.anim.slide_out_left
                     }
                 })
-            }
-            else if ((kycAgentFragmentVM.isShopListed == "null") || (kycAgentFragmentVM.isShopListed.equals(AppConstants.NO))){
+            } else if ((kycAgentFragmentVM.isShopListed == null) || (kycAgentFragmentVM.isShopListed.equals(
+                    AppConstants.NO
+                ))
+            ) {
                 val bundle = Bundle()
                 bundle.putString("via", "SelfKyc")
-                findNavController().navigate(R.id.navigation_enter_aadhaar_number_kyc, bundle, navOptions {
+                findNavController().navigate(
+                    R.id.navigation_enter_aadhaar_number_kyc,
+                    bundle,
+                    navOptions {
+                        anim {
+                            popEnter = R.anim.slide_in_left
+                            popExit = R.anim.slide_out_righ
+                            enter = R.anim.slide_in_right
+                            exit = R.anim.slide_out_left
+                        }
+                    })
+            } else {
+                Utility.showToast("Self KYC Completed")
+            }
+
+        }
+
+        binding.mcvNewKyc.setOnClickListener {
+            if (kycAgentFragmentVM.isShopListed != null && kycAgentFragmentVM.isShopListed.equals(
+                    AppConstants.YES
+                )
+            ) {
+                findNavController().navigate(
+                    R.id.navigation_enter_mobile_number_kyc,
+                    null,
+                    navOptions {
+                        anim {
+                            popEnter = R.anim.slide_in_left
+                            popExit = R.anim.slide_out_righ
+                            enter = R.anim.slide_in_right
+                            exit = R.anim.slide_out_left
+                        }
+                    })
+            } else {
+                Utility.showToast("Please complete your full kyc first...")
+            }
+        }
+
+        binding.mcvEarnings.setOnClickListener {
+            if (kycAgentFragmentVM.isShopListed != null && kycAgentFragmentVM.isShopListed.equals(
+                    AppConstants.YES
+                )
+            ) {
+                findNavController().navigate(R.id.navigation_my_earnings, null, navOptions {
                     anim {
                         popEnter = R.anim.slide_in_left
                         popExit = R.anim.slide_out_righ
@@ -83,52 +131,17 @@ class KycAgentFragment : BaseFragment<FragmentKycAgentBinding, KycAgentFragmentV
                         exit = R.anim.slide_out_left
                     }
                 })
+            } else {
+                Utility.showToast("Please complete your full kyc first...")
             }
-            else{
-                Utility.showToast("Self KYC Completed")
-            }
-
-//            val bundle = Bundle()
-//            bundle.putString("via", "SelfKyc")
-//            findNavController().navigate(R.id.navigation_enter_aadhaar_number_kyc, bundle, navOptions {
-//                anim {
-//                    popEnter = R.anim.slide_in_left
-//                    popExit = R.anim.slide_out_righ
-//                    enter = R.anim.slide_in_right
-//                    exit = R.anim.slide_out_left
-//                }
-//            })
-
-        }
-
-        binding.mcvNewKyc.setOnClickListener {
-            findNavController().navigate(R.id.navigation_enter_mobile_number_kyc, null, navOptions {
-                anim {
-                    popEnter = R.anim.slide_in_left
-                    popExit = R.anim.slide_out_righ
-                    enter = R.anim.slide_in_right
-                    exit = R.anim.slide_out_left
-                }
-            })
-        }
-
-        binding.mcvEarnings.setOnClickListener {
-            findNavController().navigate(R.id.navigation_my_earnings, null, navOptions {
-                anim {
-                    popEnter = R.anim.slide_in_left
-                    popExit = R.anim.slide_out_righ
-                    enter = R.anim.slide_in_right
-                    exit = R.anim.slide_out_left
-                }
-            })
         }
 
     }
 
     private fun setUpObserver() {
 
-        kycAgentFragmentVM.state.observe(viewLifecycleOwner){
-            when(it){
+        kycAgentFragmentVM.state.observe(viewLifecycleOwner) {
+            when (it) {
                 is KycAgentFragmentVM.KycAgentState.Error -> {
 
                 }
@@ -138,7 +151,7 @@ class KycAgentFragment : BaseFragment<FragmentKycAgentBinding, KycAgentFragmentV
                 is KycAgentFragmentVM.KycAgentState.Success -> {
                     kycAgentFragmentVM.isShopPhotoUpload = it.shopData.shopPhoto
                     kycAgentFragmentVM.shopName = it.shopData.shopName
-                    kycAgentFragmentVM.isShopListed = it.shopData.isShopListed.toString()
+                    kycAgentFragmentVM.isShopListed = it.shopData.isShopListed
                 }
             }
         }
@@ -169,7 +182,11 @@ class KycAgentFragment : BaseFragment<FragmentKycAgentBinding, KycAgentFragmentV
             }
         }
         val exploreClickListener2 = object : ExploreItemClickListener {
-            override fun onItemClicked(position: Int, sectionContentItem: SectionContentItem, exploreContentResponse: ExploreContentResponse?) {
+            override fun onItemClicked(
+                position: Int,
+                sectionContentItem: SectionContentItem,
+                exploreContentResponse: ExploreContentResponse?
+            ) {
                 trackr {
                     it.name = TrackrEvent.home_explore_click
                     it.add(TrackrField.explore_content_id, sectionContentItem.id)
@@ -240,7 +257,10 @@ class KycAgentFragment : BaseFragment<FragmentKycAgentBinding, KycAgentFragmentV
                             it
                         )
                     }
-                    param(FirebaseAnalytics.Param.SCREEN_CLASS, KycAgentFragment::class.java.simpleName)
+                    param(
+                        FirebaseAnalytics.Param.SCREEN_CLASS,
+                        KycAgentFragment::class.java.simpleName
+                    )
                 }
 //                if(findNavController().currentDestination?.id==R.id.navigation_kyc_agent){
 //                    val directions = KycAgentFragmentDirections.actionKycAgentToSectionExplore(sectionExploreItem = sectionContentItem,
@@ -279,7 +299,7 @@ class KycAgentFragment : BaseFragment<FragmentKycAgentBinding, KycAgentFragmentV
                         AppConstants.INSIGHTS -> {
                             findNavController().navigate(R.id.navigation_insights)
                         }
-                        AppConstants.PREPAID_RECHARGE_REDIRECTION->{
+                        AppConstants.PREPAID_RECHARGE_REDIRECTION -> {
                             findNavController().navigate(
                                 Uri.parse("https://www.fypmoney.in/recharge/${AppConstants.PREPAID}"),
                                 navOptions {
@@ -292,7 +312,7 @@ class KycAgentFragment : BaseFragment<FragmentKycAgentBinding, KycAgentFragmentV
                                 })
                         }
 
-                        AppConstants.POSTPAID_RECHARGE_REDIRECTION->{
+                        AppConstants.POSTPAID_RECHARGE_REDIRECTION -> {
                             findNavController().navigate(
                                 Uri.parse("https://www.fypmoney.in/recharge/${AppConstants.POSTPAID}"),
                                 navOptions {
@@ -305,7 +325,7 @@ class KycAgentFragment : BaseFragment<FragmentKycAgentBinding, KycAgentFragmentV
                                 })
                         }
 
-                        AppConstants.DTH_RECHARGE_REDIRECTION->{
+                        AppConstants.DTH_RECHARGE_REDIRECTION -> {
                             findNavController().navigate(
                                 Uri.parse("https://www.fypmoney.in/recharge/dth"),
                                 navOptions {
@@ -479,7 +499,7 @@ class KycAgentFragment : BaseFragment<FragmentKycAgentBinding, KycAgentFragmentV
                     null -> {}
                 }
             }
-            AppConstants.PREPAID_RECHARGE_REDIRECTION->{
+            AppConstants.PREPAID_RECHARGE_REDIRECTION -> {
                 findNavController().navigate(
                     Uri.parse("https://www.fypmoney.in/recharge/${AppConstants.PREPAID}"),
                     navOptions {
@@ -492,7 +512,7 @@ class KycAgentFragment : BaseFragment<FragmentKycAgentBinding, KycAgentFragmentV
                     })
             }
 
-            AppConstants.POSTPAID_RECHARGE_REDIRECTION->{
+            AppConstants.POSTPAID_RECHARGE_REDIRECTION -> {
                 findNavController().navigate(
                     Uri.parse("https://www.fypmoney.in/recharge/${AppConstants.POSTPAID}"),
                     navOptions {
@@ -505,7 +525,7 @@ class KycAgentFragment : BaseFragment<FragmentKycAgentBinding, KycAgentFragmentV
                     })
             }
 
-            AppConstants.DTH_RECHARGE_REDIRECTION->{
+            AppConstants.DTH_RECHARGE_REDIRECTION -> {
                 findNavController().navigate(
                     Uri.parse("https://www.fypmoney.in/recharge/dth"),
                     navOptions {

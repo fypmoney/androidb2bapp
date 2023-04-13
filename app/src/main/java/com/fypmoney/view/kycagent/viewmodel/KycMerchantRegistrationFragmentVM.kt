@@ -12,6 +12,7 @@ import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.livedata.LiveEvent
+import com.fypmoney.view.kycagent.delegates.StateDelegate
 import com.fypmoney.view.kycagent.model.SaveShopDetailsRequest
 import com.fypmoney.view.kycagent.model.SaveShopDetailsResponse
 
@@ -30,6 +31,8 @@ class KycMerchantRegistrationFragmentVM(application: Application) : BaseViewMode
         "",
         AppConstants.NO
     )
+
+    val stateDelegate = StateDelegate()
 
     fun openPhotoUpload(){
         _event.value = KycMerchantRegistrationEvent.OpenPhotoUpload
