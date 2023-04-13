@@ -3,6 +3,7 @@ package com.fypmoney.view.kycagent.viewmodel
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiUrl
@@ -12,6 +13,7 @@ import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.BaseRequest
 import com.fypmoney.model.FeedDetails
+import com.fypmoney.util.DialogUtils
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.util.livedata.LiveEvent
@@ -22,12 +24,18 @@ import com.fypmoney.view.storeoffers.model.offerDetailResponse
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class KycAgentFragmentVM(application: Application) : BaseViewModel(application) {
 
     val state : LiveData<KycAgentState>
         get() = _state
     private val _state = MutableLiveData<KycAgentState>()
+
+    val event : LiveData<KycAgentEvent>
+        get() = _event
+    private val _event = MutableLiveData<KycAgentEvent>()
 
     var isShopPhotoUpload: String ?= null
     var shopName: String ?= null
@@ -60,6 +68,10 @@ class KycAgentFragmentVM(application: Application) : BaseViewModel(application) 
         callExplporeContent()
     }
 
+    fun logOut(){
+        _event.value = KycAgentEvent.LogOutEvent
+    }
+
     private fun getShopData(){
         WebApiCaller.getInstance().request(
             ApiRequest(
@@ -68,6 +80,18 @@ class KycAgentFragmentVM(application: Application) : BaseViewModel(application) 
                 request_type = ApiUrl.GET,
                 onResponse = this,
                 isProgressBar = true,
+                param = BaseRequest()
+            )
+        )
+    }
+
+    fun callLogOutApi() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                purpose = ApiConstant.API_LOGOUT,
+                endpoint = NetworkUtil.endURL(ApiConstant.API_LOGOUT),
+                request_type = ApiUrl.POST,
+                onResponse = this, isProgressBar = true,
                 param = BaseRequest()
             )
         )
@@ -172,6 +196,15 @@ class KycAgentFragmentVM(application: Application) : BaseViewModel(application) 
             ApiConstant.API_FETCH_SHOP_DETAILS -> {
                 _state.value = KycAgentState.Error(errorResponseInfo)
             }
+
+            ApiConstant.API_LOGOUT -> {
+                viewModelScope.launch {
+                    delay(DialogUtils.alertDialogTime)
+                    Utility.resetPreferenceAfterLogout()
+                    _event.value = KycAgentEvent.LogOutSuccess
+                }
+
+            }
         }
 
     }
@@ -180,6 +213,11 @@ class KycAgentFragmentVM(application: Application) : BaseViewModel(application) 
         object Loading : KycAgentState()
         data class Error(var errorResponseInfo: ErrorResponseInfo) : KycAgentState()
         data class Success(var shopData: ShopData) : KycAgentState()
+    }
+
+    sealed class KycAgentEvent{
+        object LogOutEvent : KycAgentEvent()
+        object LogOutSuccess : KycAgentEvent()
     }
 
 }

@@ -62,6 +62,7 @@ import com.fypmoney.view.activity.ChoresActivity
 import com.fypmoney.view.activity.OfferDetailActivity
 import com.fypmoney.view.fragment.OffersStoreActivity
 import com.fypmoney.view.home.main.homescreen.view.HomeActivity
+import com.fypmoney.view.kycagent.ui.KycAgentActivity
 import com.fypmoney.view.ordercard.OrderCardView
 import com.fypmoney.view.ordercard.model.UserDeliveryAddress
 import com.fypmoney.view.ordercard.trackorder.TrackOrderView
@@ -1088,7 +1089,7 @@ object Utility {
 
         when (screenName) {
             HOMEVIEW -> {
-                intent = Intent(context, HomeActivity::class.java)
+                intent = Intent(context, KycAgentActivity::class.java)
             }
             ReferralScreen -> {
                 intent = Intent(context, ReferAndEarnActivity::class.java)
@@ -1104,7 +1105,7 @@ object Utility {
             }
 
             CardScreen -> {
-                intent = Intent(context, HomeActivity::class.java)
+                intent = Intent(context, KycAgentActivity::class.java)
                 intent.putExtra(AppConstants.FROM_WHICH_SCREEN, CardScreen)
 
             }
@@ -1114,7 +1115,7 @@ object Utility {
 */
             }
             StoreScreen -> {
-                intent = Intent(context, HomeActivity::class.java)
+                intent = Intent(context, KycAgentActivity::class.java)
                 intent.putExtra(AppConstants.FROM_WHICH_SCREEN, StoreScreen)
 
             }
@@ -1131,12 +1132,12 @@ object Utility {
             }
 
             FEEDSCREEN -> {
-                intent = Intent(context, HomeActivity::class.java)
+                intent = Intent(context, KycAgentActivity::class.java)
                 intent.putExtra(AppConstants.FROM_WHICH_SCREEN, FEEDSCREEN)
 
             }
             FyperScreen -> {
-                intent = Intent(context, HomeActivity::class.java)
+                intent = Intent(context, KycAgentActivity::class.java)
                 intent.putExtra(AppConstants.FROM_WHICH_SCREEN, FyperScreen)
 
             }

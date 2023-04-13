@@ -1,5 +1,6 @@
 package com.fypmoney.view.kycagent.ui
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
@@ -20,6 +21,7 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.util.videoplayer.VideoActivity2
 import com.fypmoney.view.StoreWebpageOpener2
+import com.fypmoney.view.activity.LoginView
 import com.fypmoney.view.arcadegames.model.ArcadeType
 import com.fypmoney.view.arcadegames.model.checkTheArcadeType
 import com.fypmoney.view.home.main.explore.ViewDetails.ExploreInAppWebview
@@ -43,6 +45,7 @@ class KycAgentFragment : BaseFragment<FragmentKycAgentBinding, KycAgentFragmentV
         super.onViewCreated(view, savedInstanceState)
 
         binding = getViewDataBinding()
+        binding.viewModel = kycAgentFragmentVM
 
         setUpObserver()
 
@@ -162,6 +165,25 @@ class KycAgentFragment : BaseFragment<FragmentKycAgentBinding, KycAgentFragmentV
             setRecyclerView(binding, list)
         }
 
+        kycAgentFragmentVM.event.observe(viewLifecycleOwner){
+            when(it){
+                KycAgentFragmentVM.KycAgentEvent.LogOutEvent -> {
+                    kycAgentFragmentVM.callLogOutApi()
+                }
+                KycAgentFragmentVM.KycAgentEvent.LogOutSuccess -> {
+                    intentToActivityMain(requireActivity(), LoginView::class.java, isFinishAll = true)
+                }
+            }
+        }
+
+    }
+
+    private fun intentToActivityMain(context: Context, aClass: Class<*>, isFinishAll: Boolean? = false) {
+        val intent = Intent(context, aClass)
+        startActivity(intent)
+        if (isFinishAll == true) {
+            requireActivity().finishAffinity()
+        }
     }
 
     private fun setRecyclerView(

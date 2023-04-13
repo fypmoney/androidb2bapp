@@ -32,6 +32,7 @@ import com.fypmoney.view.fragment.AddNewCardBottomSheet
 import com.fypmoney.view.fragment.AddUpiBottomSheet
 import com.fypmoney.view.fragment.TransactionFailBottomSheet
 import com.fypmoney.view.home.main.homescreen.view.HomeActivity
+import com.fypmoney.view.kycagent.ui.KycAgentActivity
 import com.fypmoney.viewmodel.AddMoneyUpiDebitViewModel
 import com.payu.custombrowser.*
 import com.payu.custombrowser.bean.CustomBrowserConfig
@@ -191,7 +192,7 @@ class AddMoneyUpiDebitView : BaseActivity<ViewAddMoneyUpiDebitBinding, AddMoneyU
                         it1,onViewDetailsClick={
                             callViewPaymentDetails()
                         },onHomeViewClick = {
-                            intentToHomeActivity(HomeActivity::class.java)
+                            intentToHomeActivity(KycAgentActivity::class.java)
                         }
                     )
                 }

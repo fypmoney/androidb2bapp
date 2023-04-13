@@ -25,6 +25,7 @@ import com.fypmoney.view.fragment.*
 import com.fypmoney.view.home.main.homescreen.view.HomeActivity
 import com.fypmoney.view.interfaces.AcceptRejectClickListener
 import com.fypmoney.view.interfaces.MessageSubmitClickListener
+import com.fypmoney.view.kycagent.ui.KycAgentActivity
 import com.fypmoney.viewmodel.NotificationViewModel
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.toolbar.*
@@ -202,7 +203,7 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
                         AddMoneySuccessBottomSheet(
                             it2,
                             it1,onViewDetailsClick=null,successTitle = "Payment Made Successfully to ${sendMoneyResponse.receiverName}",onHomeViewClick = {
-                                intentToActivity(HomeActivity::class.java)
+                                intentToActivity(KycAgentActivity::class.java)
                             }
                         )
                     }

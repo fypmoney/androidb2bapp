@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.fypmoney.view.kycagent.viewmodel.DeviceBottomSheetVM" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/dp20"
+            android:background="@color/bgcolor">
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="40dp"
+                android:layout_height="4dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/curved_background1"
+                android:backgroundTint="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:gravity="center"
+                android:layout_marginHorizontal="@dimen/dp20"
+                android:fontFamily="@font/product_sans_bold"
+                android:text="Device Not Supported"
+                android:textSize="25sp"
+                android:textColor="@color/white"
+                />
+
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivPendingAction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_30sdp"
+                app:srcCompat="@drawable/ic_pending_action_slider"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvDesc"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ivPendingAction"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:fontFamily="@font/product_sans_regular"
+                android:gravity="center"
+                android:text="It seems your biometric device is not supported. Please use a biometric device from the following companies: Morpho, Mantra"
+                android:textSize="18sp"
+                android:layout_marginHorizontal="@dimen/dp20"
+                android:textColor="@color/text_grey"
+                />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnPendingAction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvDesc"
+                android:layout_marginTop="@dimen/_35sdp"
+                android:layout_marginHorizontal="@dimen/dp20"
+                android:layout_marginBottom="@dimen/dp20"
+                android:paddingVertical="@dimen/dp18"
+                app:cornerRadius="@dimen/dp13"
+                android:onClick="@{()->viewModel.onContinueClick()}"
+                android:fontFamily="@font/product_sans_regular"
+                android:textColor="@color/textColor1"
+                android:text="@string/continue_btn_text"
+                android:backgroundTint="#F7AA11"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

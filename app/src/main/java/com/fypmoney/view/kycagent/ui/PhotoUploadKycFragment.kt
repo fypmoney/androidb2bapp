@@ -79,20 +79,20 @@ class PhotoUploadKycFragment : BaseFragment<FragmentPhotoUploadKycBinding, Photo
             when(it){
                 is PhotoUploadKycFragmentVM.PhotoUploadState.ProfilePicUpdate -> {
                     if (viewLifecycleOwner.lifecycle.currentState == Lifecycle.State.RESUMED) {
-                        openAgentAuthenticationScreen(it.shopData.isShopListed.toString())
+                        openAgentAuthenticationScreen(it.shopData.isShopListed)
                     }
                 }
                 else -> {}
             }
         }
 
-        photoUploadKycFragmentVM.profileEvent.observe(viewLifecycleOwner){
-            when(it){
-                PhotoUploadKycFragmentVM.PhotoUploadEvent.OpenAgentAuthentication -> {
-
-                }
-            }
-        }
+//        photoUploadKycFragmentVM.profileEvent.observe(viewLifecycleOwner){
+//            when(it){
+//                PhotoUploadKycFragmentVM.PhotoUploadEvent.OpenAgentAuthentication -> {
+//
+//                }
+//            }
+//        }
 
         binding.btnAddWithdrawSavings.setOnClickListener {
             if (photoUploadKycFragmentVM.shopPhotoData != null)
@@ -105,7 +105,7 @@ class PhotoUploadKycFragment : BaseFragment<FragmentPhotoUploadKycBinding, Photo
 
     private fun openAgentAuthenticationScreen(shopListed: String?) {
         //navigation_agent_authentication
-        if (shopListed.equals(AppConstants.NO)) {
+        if (shopListed == null || shopListed == AppConstants.NO) {
             val bundle = Bundle()
             bundle.putString("via", "SelfKyc")
             findNavController().navigate(

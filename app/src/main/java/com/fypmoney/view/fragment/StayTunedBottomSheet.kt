@@ -16,6 +16,7 @@ import com.fypmoney.R
 import com.fypmoney.databinding.ViewStayTunedBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.view.home.main.homescreen.view.HomeActivity
+import com.fypmoney.view.kycagent.ui.KycAgentActivity
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
@@ -67,7 +68,7 @@ class StayTunedBottomSheet : BottomSheetDialogFragment() {
 * navigate to the HomeScreen
 * */
     private fun navigateToDifferentActivity() {
-        val intent = Intent(context, HomeActivity::class.java)
+        val intent = Intent(context, KycAgentActivity::class.java)
         intent.putExtra(AppConstants.FROM_WHICH_SCREEN, "stay_tuned")
         startActivity(intent)
         dismiss()
