@@ -88,6 +88,13 @@ class VerifyBiometricFragment :
                         }
                     })
                 }
+                is VerifyBiometricFragmentVM.VerifyBiometricEvent.NavigateToPlayStore -> {
+                    val webIntent = Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse(it.url)
+                    )
+                    requireActivity().startActivity(webIntent)
+                }
             }
         }
 
@@ -103,7 +110,6 @@ class VerifyBiometricFragment :
         when (it) {
             is VerifyBiometricFragmentVM.FingerPrintDevices.Mantra -> {
                 val appId = "com.mantra.rdservice"
-                //val appId = "in.gov.uidai.rdservice.fp.INFO"
                 if (verifyBiometricFragmentVM.appInstalledOrNot(
                         appId = appId,
                         context = requireContext()
@@ -111,11 +117,7 @@ class VerifyBiometricFragment :
                 ) {
                     getMantraDeviceInfo()
                 } else {
-                    val webIntent = Intent(
-                        Intent.ACTION_VIEW,
-                        Uri.parse("https://play.google.com/store/apps/details?id=$appId")
-                    )
-                    requireActivity().startActivity(webIntent)
+                    showDeviceDriverBototmsheet("MANTRA")
                 }
             }
 
@@ -128,11 +130,8 @@ class VerifyBiometricFragment :
                 ) {
                     getMorophoDeviceInfo()
                 } else {
-                    val webIntent = Intent(
-                        Intent.ACTION_VIEW,
-                        Uri.parse("https://play.google.com/store/apps/details?id=$appId")
-                    )
-                    requireActivity().startActivity(webIntent)
+                    showDeviceDriverBototmsheet("MORPHO")
+
                 }
             }
             VerifyBiometricFragmentVM.FingerPrintDevices.NoDeviceConnected -> {
@@ -156,17 +155,22 @@ class VerifyBiometricFragment :
                 if(verifyBiometricFragmentVM.appInstalledOrNot(appId = appId, context =requireContext())){
                     getStartekData()
                 }else{
-                    val webIntent = Intent(
-                        Intent.ACTION_VIEW,
-                        Uri.parse("https://play.google.com/store/apps/details?id=$appId")
-                    )
-                    requireActivity().startActivity(webIntent)
+                    showDeviceDriverBototmsheet("STARTEK")
                 }
             }
             null -> {}
         }
     }
 
+
+    private fun showDeviceDriverBototmsheet(deviceName:String){
+        val deviceDriverSheet = DeviceDriverBottomSheet(deviceName = deviceName, onInstallClick = {
+            verifyBiometricFragmentVM.redirectToPlayStore(it)
+        })
+        deviceDriverSheet.isCancelable = false
+        deviceDriverSheet.show(requireActivity().supportFragmentManager,"deviceDriver")
+
+    }
 
     private val userBroadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
 

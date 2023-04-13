@@ -143,8 +143,25 @@ class VerifyBiometricFragmentVM(application: Application): BaseViewModel(applica
 
     }
 
+    fun redirectToPlayStore(deviceName:String){
+        if(deviceName.equals("STARTEK",false)){
+            val url = "https://play.google.com/store/apps/details?id=com.acpl.registersdk"
+            _event.value = VerifyBiometricEvent.NavigateToPlayStore(url)
+
+        }else if(deviceName.equals("MANTRA")){
+            val url = "https://play.google.com/store/apps/details?id=com.mantra.rdservice"
+            _event.value = VerifyBiometricEvent.NavigateToPlayStore(url)
+
+        }else if(deviceName.equals("MORPHO")){
+            val url = "https://play.google.com/store/apps/details?id=com.scl.rdservice"
+            _event.value = VerifyBiometricEvent.NavigateToPlayStore(url)
+
+        }
+    }
+
     sealed class VerifyBiometricEvent{
         data class NavigateToFillKycDetailsPage(var fingerDeviceInfo: FingerDeviceInfo):VerifyBiometricEvent()
+        data class NavigateToPlayStore(var url:String):VerifyBiometricEvent()
     }
 
 

@@ -283,7 +283,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     android:fontFamily="@font/product_sans_regular"
                     android:textColor="@color/textColor1"
-                    android:text="@string/continue_btn_text"
+                    android:text="@string/log_out"
                     android:backgroundTint="#F7AA11" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
