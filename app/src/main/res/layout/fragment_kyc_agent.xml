@@ -237,7 +237,7 @@
                         tools:visibility="gone">
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
 
@@ -260,7 +260,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_6sdp"
-                        android:layout_marginEnd="@dimen/_2sdp"
+                        android:layout_marginHorizontal="@dimen/dp10"
                         android:orientation="vertical"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:itemCount="5"
@@ -279,7 +279,7 @@
                     android:fontFamily="@font/product_sans_regular"
                     android:onClick="@{()->viewModel.logOut()}"
                     android:paddingVertical="@dimen/dp18"
-                    android:text="@string/continue_btn_text"
+                    android:text="@string/log_out"
                     android:textColor="@color/textColor1"
                     app:cornerRadius="@dimen/dp13"
                     app:layout_constraintBottom_toBottomOf="parent"

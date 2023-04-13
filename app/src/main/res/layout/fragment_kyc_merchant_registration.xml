@@ -50,7 +50,7 @@
                     android:layout_height="56dp"
                     android:layout_marginTop="12dp"
                     android:background="@drawable/edit_text_rounded_rectangle_shape_solid_dark_grey"
-                    android:hint="Enter Your Name"
+                    android:hint="Enter Full Name"
                     android:inputType="text"
                     android:paddingStart="@dimen/dp18"
                     android:paddingEnd="@dimen/dp28"

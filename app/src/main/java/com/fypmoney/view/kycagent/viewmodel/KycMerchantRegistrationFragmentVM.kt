@@ -29,7 +29,7 @@ class KycMerchantRegistrationFragmentVM(application: Application) : BaseViewMode
         "",
         "",
         "",
-        AppConstants.NO
+        null
     )
 
     val stateDelegate = StateDelegate()
@@ -38,7 +38,7 @@ class KycMerchantRegistrationFragmentVM(application: Application) : BaseViewMode
         _event.value = KycMerchantRegistrationEvent.OpenPhotoUpload
     }
 
-    var mcbPosterValue: String = AppConstants.NO
+    var mcbPosterValue: String ?= null
 
     val state : LiveData<KycMerchantRegistration>
         get() = _state

@@ -17,5 +17,5 @@ data class SaveShopDetailsRequest(
     var latitude: String,
     var longitude: String,
     var shopPhoto: String,
-    var isPosterOrdered: String
+    var isPosterOrdered: String?
 ): Parcelable
