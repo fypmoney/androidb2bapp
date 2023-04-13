@@ -57,7 +57,7 @@ class TakeHandFingerFragmentVM(application: Application) : BaseViewModel(applica
             val errCode = (attributes.getNamedItem("errCode") as Attr).value
             Log.d(TAG, "errCode:- $errCode")
             if (errCode == "0") {
-                if (deviceDetails?.deviceManufactureName == "Morpho") {
+                if (deviceDetails?.deviceManufactureName == "MORPHO") {
                     //Rds version
                     deviceDetails?.deviceVersion = (dom.getElementsByTagName("DeviceInfo")
                         .item(0).attributes.getNamedItem("rdsVer") as Attr).value
@@ -112,9 +112,9 @@ class TakeHandFingerFragmentVM(application: Application) : BaseViewModel(applica
                 currentAddressCheck = AppConstants.YES,
                 selectedFinger = it,
                 capturedInfo = capturedInfo,
-                deviceSerialNumber = deviceDetails?.deviceSerialNumber!!,
+                deviceSerialNumber = deviceDetails?.deviceSerialNumber ?: "",
                 deviceType = deviceDetails?.deviceManufactureName!!,
-                deviceVersionNo = deviceDetails?.deviceVersion!!,
+                deviceVersionNo = deviceDetails?.deviceVersion ?: "",
                 deviceCertificateExpriy = "2029-01-01"
             )
 

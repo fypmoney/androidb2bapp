@@ -9,9 +9,9 @@ data class FullKycNetworkRequest(
     val currentAddressCheck:String,
     val selectedFinger:String,
     val capturedInfo:String,
-    val deviceSerialNumber:String,
+    val deviceSerialNumber:String = "",
     val deviceType:String,
-    val deviceVersionNo:String,
+    val deviceVersionNo:String = "",
     val deviceCertificateExpriy:String
 )
 
