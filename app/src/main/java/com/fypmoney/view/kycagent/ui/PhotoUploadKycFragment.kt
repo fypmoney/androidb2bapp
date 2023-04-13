@@ -124,7 +124,7 @@ class PhotoUploadKycFragment : BaseFragment<FragmentPhotoUploadKycBinding, Photo
                 })
         }else{
 //            findNavController().popBackStack()
-            val intent = Intent(requireContext(), KycAgentActivity::class.java)
+            val intent = Intent(requireActivity(), KycAgentActivity::class.java)
             startActivity(intent)
             requireActivity().finishAffinity()
         }

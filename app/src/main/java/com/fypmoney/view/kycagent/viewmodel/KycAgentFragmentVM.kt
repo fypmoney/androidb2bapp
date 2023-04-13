@@ -18,6 +18,7 @@ import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.util.livedata.LiveEvent
 import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
+import com.fypmoney.view.home.main.home.viewmodel.HomeFragmentVM
 import com.fypmoney.view.kycagent.model.FetchShopDetailsResponse
 import com.fypmoney.view.kycagent.model.ShopData
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
@@ -70,6 +71,10 @@ class KycAgentFragmentVM(application: Application) : BaseViewModel(application) 
 
     fun logOut(){
         _event.value = KycAgentEvent.LogOutEvent
+    }
+
+    fun onNotificationClicked() {
+        _event.value = KycAgentEvent.NotificationClicked
     }
 
     private fun getShopData(){
@@ -218,6 +223,7 @@ class KycAgentFragmentVM(application: Application) : BaseViewModel(application) 
     sealed class KycAgentEvent{
         object LogOutEvent : KycAgentEvent()
         object LogOutSuccess : KycAgentEvent()
+        object NotificationClicked : KycAgentEvent()
     }
 
 }
