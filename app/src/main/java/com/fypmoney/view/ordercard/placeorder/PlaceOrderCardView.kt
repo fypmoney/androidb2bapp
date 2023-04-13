@@ -23,6 +23,7 @@ import com.fypmoney.view.fragment.PriceBreakupBottomSheet
 import com.fypmoney.view.fragment.TaskMessageInsuficientFuntBottomSheet
 import com.fypmoney.view.home.main.homescreen.view.HomeActivity
 import com.fypmoney.view.interfaces.AcceptRejectClickListener
+import com.fypmoney.view.kycagent.ui.KycAgentActivity
 import com.fypmoney.view.ordercard.model.PinCodeData
 import com.fypmoney.view.ordercard.model.UserDeliveryAddress
 import com.fypmoney.view.ordercard.placeordersuccess.PlaceOrderSuccessActivity
@@ -342,7 +343,7 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
 
     private fun callNotServicebleSheet() {
         val bottomSheet = NotServiceableBottomSheet(onNotifyClick = {
-            intentToActivity(HomeActivity::class.java)
+            intentToActivity(KycAgentActivity::class.java)
         })
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomSheet.show(supportFragmentManager, "NOTSERVICEABLE")

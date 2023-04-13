@@ -17,6 +17,7 @@ import com.fypmoney.databinding.ViewCreateAccountBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.view.home.main.homescreen.view.HomeActivity
+import com.fypmoney.view.kycagent.ui.KycAgentActivity
 import com.fypmoney.view.register.PanAdhaarSelectionActivity
 import com.fypmoney.viewmodel.CreateAccountViewModel
 import kotlinx.android.synthetic.main.toolbar_animation.*
@@ -166,7 +167,7 @@ Create this method for observe the viewModel fields
                     intentToActivity(PanAdhaarSelectionActivity::class.java)
                 else {
                     if (hasPermissions(this, Manifest.permission.READ_CONTACTS)) {
-                        intentToActivity(HomeActivity::class.java)
+                        intentToActivity(KycAgentActivity::class.java)
                     } else {
                         intentToActivity(PermissionsActivity::class.java)
                     }

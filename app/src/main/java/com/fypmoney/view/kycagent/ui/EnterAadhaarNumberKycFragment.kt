@@ -26,14 +26,6 @@ class EnterAadhaarNumberKycFragment : BaseFragment<FragmentEnterAadhaarNumberKyc
 
         binding = getViewDataBinding()
 
-        setToolbarAndTitle(
-            context = requireContext(),
-            toolbar = toolbar,
-            isBackArrowVisible = true, toolbarTitle = "Complete Full KYC",
-            titleColor = Color.WHITE,
-            backArrowTint = Color.WHITE
-        )
-
         if (arguments?.containsKey("mobileNumber") == true) {
             enterAadhaarNumberKycFragmentVM.mobileNumber =
                 arguments?.getString("mobileNumber").toString()
@@ -45,6 +37,14 @@ class EnterAadhaarNumberKycFragment : BaseFragment<FragmentEnterAadhaarNumberKyc
         }else{
             enterAadhaarNumberKycFragmentVM.lastFourDigitCode = null
         }
+
+        setToolbarAndTitle(
+            context = requireContext(),
+            toolbar = toolbar,
+            isBackArrowVisible = true, toolbarTitle = if (enterAadhaarNumberKycFragmentVM.via == "UserKyc") "Complete Full KYC" else "Become a Fyp Agent!",
+            titleColor = Color.WHITE,
+            backArrowTint = Color.WHITE
+        )
 
         binding.btnAddWithdrawSavings.setOnClickListener {
             binding.tvAaadhaarError.toGone()

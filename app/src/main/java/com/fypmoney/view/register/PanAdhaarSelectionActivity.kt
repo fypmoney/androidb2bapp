@@ -20,6 +20,7 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.view.activity.PermissionsActivity
 import com.fypmoney.view.home.main.homescreen.view.HomeActivity
+import com.fypmoney.view.kycagent.ui.KycAgentActivity
 import com.fypmoney.view.register.fragments.kycDetailsBottomSheet
 import com.fypmoney.view.register.viewModel.KycTypeVM
 import kotlinx.android.synthetic.main.toolbar_animation.*
@@ -117,7 +118,7 @@ class PanAdhaarSelectionActivity :
                     it.name = TrackrEvent.skip_to_home_click
                 }
             if (hasPermissions(this, Manifest.permission.READ_CONTACTS)) {
-                intentToActivity(HomeActivity::class.java)
+                intentToActivity(KycAgentActivity::class.java)
             } else {
                 intentToActivity(PermissionsActivity::class.java)
             }

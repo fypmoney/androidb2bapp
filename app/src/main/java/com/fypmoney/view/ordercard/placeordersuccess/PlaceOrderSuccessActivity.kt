@@ -9,6 +9,7 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ActivityPlaceOrderSucessBinding
 import com.fypmoney.view.home.main.homescreen.view.HomeActivity
+import com.fypmoney.view.kycagent.ui.KycAgentActivity
 import com.fypmoney.view.ordercard.trackorder.TrackOrderView
 import kotlinx.android.synthetic.main.activity_place_order_sucess.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -55,6 +56,6 @@ class PlaceOrderSuccessActivity : BaseActivity<ActivityPlaceOrderSucessBinding,P
     }
 
     override fun onBackPressed() {
-        startActivity(Intent(this@PlaceOrderSuccessActivity, HomeActivity::class.java))
+        startActivity(Intent(this@PlaceOrderSuccessActivity, KycAgentActivity::class.java))
     }
 }

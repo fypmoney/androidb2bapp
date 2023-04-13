@@ -24,19 +24,23 @@
             android:layout_gravity="center">
 
             <com.google.android.material.textview.MaterialTextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp24"
+                android:layout_marginTop="@dimen/dp42"
+                android:layout_marginHorizontal="@dimen/dp20"
                 android:text="Full KYC Request Submitted!"
                 android:textColor="@color/white"
                 android:textSize="22sp"
+                android:textAlignment="center"
                 app:fontFamily="@font/product_sans_regular" />
 
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvKycSubmittedSubHead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp32"
-                android:text="Your KYC Details have been successfully submitted. Please wait while we verify these  details. You will get an SMS on successful verification"
+                android:layout_marginTop="@dimen/dp24"
+                android:layout_marginHorizontal="@dimen/dp20"
+                tools:text="Your KYC Details have been successfully submitted. Please wait while we verify these  details. You will get an SMS on successful verification"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textAlignment="center"
@@ -45,12 +49,10 @@
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/lottieRewardConfetti"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/dp24"
+                android:layout_height="200dp"
+                android:layout_marginTop="@dimen/dp54"
                 app:lottie_loop="true"
                 android:layout_centerInParent="true"
-                android:visibility="gone"
                 app:lottie_autoPlay="true"
                 app:lottie_rawRes="@raw/kyc_fingerprint" />
 

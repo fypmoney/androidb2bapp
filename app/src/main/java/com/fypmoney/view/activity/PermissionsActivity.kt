@@ -21,6 +21,7 @@ import com.fypmoney.util.Utility
 import com.fypmoney.util.textview.ClickableSpanListener
 import com.fypmoney.util.textview.FYPClickableSpan
 import com.fypmoney.view.home.main.homescreen.view.HomeActivity
+import com.fypmoney.view.kycagent.ui.KycAgentActivity
 import com.fypmoney.viewmodel.PermissionViewModel
 import kotlinx.android.synthetic.main.view_permission_activity.*
 
@@ -97,7 +98,7 @@ class PermissionsActivity : BaseActivity<ViewPermissionActivityBinding, Permissi
     ) {
 
         if (requestCode == PERMSSIONS2 && hasPermissions(this, *PERMISSIONS)) {
-            intentToActivity(HomeActivity::class.java)
+            intentToActivity(KycAgentActivity::class.java)
         } else {
             Utility.showToast("Permission is required")
         }

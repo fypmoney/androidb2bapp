@@ -2,10 +2,7 @@ package com.fypmoney.view.kycagent.ui
 
 import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.fypmoney.BR
 import com.fypmoney.R
@@ -28,6 +25,10 @@ class KycRequestedSubmittedFragment : BaseFragment<FragmentKycRequestedSubmitted
             kycRequestedSubmittedFragmentVM.via = arguments?.getString("via").toString()
         }
 
+        if (!(arguments?.getString("message").isNullOrEmpty())) {
+            kycRequestedSubmittedFragmentVM.message = arguments?.getString("message").toString()
+        }
+
         setToolbarAndTitle(
             context = requireContext(),
             toolbar = toolbar,
@@ -36,6 +37,7 @@ class KycRequestedSubmittedFragment : BaseFragment<FragmentKycRequestedSubmitted
             backArrowTint = Color.WHITE
         )
 
+        binding.tvKycSubmittedSubHead.text = kycRequestedSubmittedFragmentVM.message
 
     }
 

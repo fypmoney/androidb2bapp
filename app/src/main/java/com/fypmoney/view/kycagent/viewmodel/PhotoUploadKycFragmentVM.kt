@@ -23,9 +23,9 @@ class PhotoUploadKycFragmentVM(application: Application) : BaseViewModel(applica
         get() = _profileState
     private val _profileState = MutableLiveData<PhotoUploadState>()
 
-    val profileEvent: LiveData<PhotoUploadEvent>
-        get() = _profileEvent
-    private val _profileEvent = LiveEvent<PhotoUploadEvent>()
+//    val profileEvent: LiveData<PhotoUploadEvent>
+//        get() = _profileEvent
+//    private val _profileEvent = LiveEvent<PhotoUploadEvent>()
 
     var shopPhotoData : MultipartBody.Part ?= null
 
@@ -69,8 +69,8 @@ class PhotoUploadKycFragmentVM(application: Application) : BaseViewModel(applica
         data class Error(var errorResponseInfo: ErrorResponseInfo) : PhotoUploadState()
     }
 
-    sealed class PhotoUploadEvent{
-        object OpenAgentAuthentication : PhotoUploadEvent()
-    }
+//    sealed class PhotoUploadEvent{
+//        object OpenAgentAuthentication : PhotoUploadEvent()
+//    }
 
 }

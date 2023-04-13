@@ -14,6 +14,7 @@ import com.fypmoney.databinding.ActivityYourGiftsBinding
 import com.fypmoney.util.Utility
 import com.fypmoney.view.activity.PermissionsActivity
 import com.fypmoney.view.home.main.homescreen.view.HomeActivity
+import com.fypmoney.view.kycagent.ui.KycAgentActivity
 import com.fypmoney.view.register.viewModel.YourgiftVM
 
 class YourGiftsActivity : BaseActivity<ActivityYourGiftsBinding, YourgiftVM>() {
@@ -29,7 +30,7 @@ class YourGiftsActivity : BaseActivity<ActivityYourGiftsBinding, YourgiftVM>() {
                 it.name = TrackrEvent.onboard_offer_screen_continue
             }
             if (hasPermissions(this, Manifest.permission.READ_CONTACTS)) {
-                intentToActivity(HomeActivity::class.java, true)
+                intentToActivity(KycAgentActivity::class.java, true)
             } else {
                 intentToActivity(PermissionsActivity::class.java, true)
             }

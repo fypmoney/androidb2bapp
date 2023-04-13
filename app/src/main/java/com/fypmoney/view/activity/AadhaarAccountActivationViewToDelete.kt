@@ -24,6 +24,7 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.view.fragment.LogoutBottomSheet
 import com.fypmoney.view.home.main.homescreen.view.HomeActivity
+import com.fypmoney.view.kycagent.ui.KycAgentActivity
 import com.fypmoney.view.register.InviteParentSiblingActivity
 import com.fypmoney.viewmodel.AadhaarAccountActivationViewModel
 import kotlinx.android.synthetic.main.toolbar.*
@@ -104,7 +105,7 @@ class AadhaarAccountActivationView :
                         it.name = TrackrEvent.kyc_verification_other
                     }
                     if (hasPermissions(this, Manifest.permission.READ_CONTACTS)) {
-                        intentToActivity(HomeActivity::class.java)
+                        intentToActivity(KycAgentActivity::class.java)
                     } else {
                         intentToActivity(PermissionsActivity::class.java)
                     }
@@ -115,7 +116,7 @@ class AadhaarAccountActivationView :
                         }
                         else -> {
                             if (hasPermissions(this, Manifest.permission.READ_CONTACTS)) {
-                                intentToActivity(HomeActivity::class.java)
+                                intentToActivity(KycAgentActivity::class.java)
                             } else {
                                 intentToActivity(PermissionsActivity::class.java)
                             }

@@ -36,7 +36,9 @@
             app:boxCornerRadiusBottomStart="@dimen/dp16"
             app:boxCornerRadiusTopEnd="@dimen/dp16"
             app:boxCornerRadiusTopStart="@dimen/dp16"
-            app:boxBackgroundColor="#262B32">
+            app:boxBackgroundColor="#262B32"
+            app:boxStrokeColor="#262B32"
+            app:boxStrokeWidthFocused="1.5dp">
 
             <AutoCompleteTextView
                 android:id="@+id/actSelectHand"
@@ -68,7 +70,9 @@
             app:boxCornerRadiusBottomStart="@dimen/dp16"
             app:boxCornerRadiusTopEnd="@dimen/dp16"
             app:boxCornerRadiusTopStart="@dimen/dp16"
-            app:boxBackgroundColor="#262B32">
+            app:boxBackgroundColor="#262B32"
+            app:boxStrokeColor="#262B32"
+            app:boxStrokeWidthFocused="1.5dp">
 
             <AutoCompleteTextView
                 android:id="@+id/actSelectFingure"
