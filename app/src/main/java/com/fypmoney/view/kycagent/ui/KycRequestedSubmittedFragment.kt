@@ -1,5 +1,6 @@
 package com.fypmoney.view.kycagent.ui
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
@@ -38,6 +39,12 @@ class KycRequestedSubmittedFragment : BaseFragment<FragmentKycRequestedSubmitted
         )
 
         binding.tvKycSubmittedSubHead.text = kycRequestedSubmittedFragmentVM.message
+
+        binding.btnContinueClick.setOnClickListener {
+            val intent = Intent(requireContext(), KycAgentActivity::class.java)
+            startActivity(intent)
+            requireActivity().finishAffinity()
+        }
 
     }
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".view.kycagent.ui.KycRequestedSubmittedFragment">
 
     <data>
@@ -20,41 +20,59 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_gravity="center">
+            android:orientation="vertical">
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp42"
                 android:layout_marginHorizontal="@dimen/dp20"
+                android:layout_marginTop="@dimen/dp42"
                 android:text="Full KYC Request Submitted!"
+                android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="22sp"
-                android:textAlignment="center"
                 app:fontFamily="@font/product_sans_regular" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tvKycSubmittedSubHead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp24"
                 android:layout_marginHorizontal="@dimen/dp20"
-                tools:text="Your KYC Details have been successfully submitted. Please wait while we verify these  details. You will get an SMS on successful verification"
+                android:layout_marginTop="@dimen/dp24"
+                android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="18sp"
-                android:textAlignment="center"
-                app:fontFamily="@font/product_sans_regular" />
+                app:fontFamily="@font/product_sans_regular"
+                tools:text="Your KYC Details have been successfully submitted. Please wait while we verify these  details. You will get an SMS on successful verification" />
 
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/lottieRewardConfetti"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_marginTop="@dimen/dp54"
-                app:lottie_loop="true"
                 android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/dp54"
                 app:lottie_autoPlay="true"
+                app:lottie_loop="true"
                 app:lottie_rawRes="@raw/kyc_fingerprint" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnContinueClick"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginHorizontal="@dimen/dp20"
+                android:layout_marginTop="52dp"
+                android:layout_marginBottom="@dimen/dp20"
+                android:paddingVertical="@dimen/dp16"
+                android:text="Continue"
+                android:textColor="@color/textColor1"
+                android:visibility="visible"
+                app:backgroundTint="#F7AA11"
+                app:cornerRadius="@dimen/dp12"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:visibility="visible" />
 
         </LinearLayout>
 
