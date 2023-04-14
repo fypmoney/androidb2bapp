@@ -130,7 +130,7 @@ class KycMerchantRegistrationFragment : BaseFragment<FragmentKycMerchantRegistra
             )
         )
 
-        autocompleteSupportFragment1.setTypesFilter(mutableListOf("school", "primary_school", "secondary_school"))
+//        autocompleteSupportFragment1.setTypesFilter(mutableListOf("school", "primary_school", "secondary_school"))
         autocompleteSupportFragment1.setCountries("IN")
 
         // Display the fetched information after clicking on one of the options
@@ -166,8 +166,8 @@ class KycMerchantRegistrationFragment : BaseFragment<FragmentKycMerchantRegistra
                 kycMerchantRegistrationFragmentVM.saveShopDetailsRequest.pincode =
                     kycMerchantRegistrationFragmentVM.mapOfAddress["postal_code"].toString()
 
-                val nameAddress = "$name, $address"
-                autocompleteSupportFragment1.setText(nameAddress)
+//                val nameAddress = "$name, $address"
+//                autocompleteSupportFragment1.setText(nameAddress)
 
                 binding.tvLocationText.toVisible()
                 binding.tvLocationValue.toVisible()
