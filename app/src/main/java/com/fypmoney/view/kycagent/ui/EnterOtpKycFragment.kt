@@ -150,6 +150,11 @@ class EnterOtpKycFragment : BaseFragment<FragmentEnterOtpKycBinding, EnterOtpKyc
         }.start()
     }
 
+    override fun onStop() {
+        super.onStop()
+        stopTimer()
+    }
+
     override fun getBindingVariable(): Int = BR.viewModel
 
     override fun getLayoutId(): Int = R.layout.fragment_enter_otp_kyc
