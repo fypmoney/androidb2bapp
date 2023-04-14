@@ -34,7 +34,7 @@ class DialogUtils {
         private val TAG = DialogUtils::class.java.simpleName
         private var dialog: Dialog? = null
          var mAlertDialog: AlertDialog? = null
-        var alertDialogTime = 2000L
+        var alertDialogTime = 4000L
         fun showProgressDialog(context: Activity) {
             try {
                 if (dialog != null && dialog!!.isShowing) {
