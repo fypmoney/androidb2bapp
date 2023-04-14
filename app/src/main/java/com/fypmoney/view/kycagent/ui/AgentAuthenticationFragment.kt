@@ -51,7 +51,7 @@ class AgentAuthenticationFragment : BaseFragment<FragmentAgentAuthenticationBind
 
         if (agentAuthenticationFragmentVM.via == "UserKyc"){
             //userkyc
-            binding.tvAgentAuthDesc.text = getString(R.string.agent_to_place_finger_on_biometric_device_for_confirmation_please_ensure_that)
+            binding.tvAgentAuthDesc.text = getString(R.string.place_customer_finger)
             binding.tvAgentAuthHead.text = "Biometric Authentication"
         }else{
             //selfkyc

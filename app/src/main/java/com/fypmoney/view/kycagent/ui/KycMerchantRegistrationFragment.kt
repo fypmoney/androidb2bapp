@@ -105,7 +105,7 @@ class KycMerchantRegistrationFragment : BaseFragment<FragmentKycMerchantRegistra
         val searchView = requireActivity().findViewById<AppCompatEditText>(R.id.places_autocomplete_search_input)
 //
         searchView.hint = "Type to search"
-        searchView.setPadding(20, 20 , 20, 20)
+        searchView.setPadding(60, 60 , 60, 60)
         searchView.setHintTextColor(ContextCompat.getColor(requireContext(), R.color.text_grey))
         searchView.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
         (requireActivity().findViewById<AppCompatImageButton>(R.id.places_autocomplete_search_button)).visibility =
