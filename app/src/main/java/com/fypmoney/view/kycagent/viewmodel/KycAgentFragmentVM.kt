@@ -36,7 +36,7 @@ class KycAgentFragmentVM(application: Application) : BaseViewModel(application) 
 
     val event : LiveData<KycAgentEvent>
         get() = _event
-    private val _event = MutableLiveData<KycAgentEvent>()
+    private val _event = LiveEvent<KycAgentEvent>()
 
     var isShopPhotoUpload: String ?= null
     var shopName: String ?= null
