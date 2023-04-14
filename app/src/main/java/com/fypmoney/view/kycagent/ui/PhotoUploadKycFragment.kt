@@ -68,9 +68,9 @@ class PhotoUploadKycFragment : BaseFragment<FragmentPhotoUploadKycBinding, Photo
             backArrowTint = Color.WHITE
         )
 
-        binding.ivUpload.setOnClickListener {
-            openCameraAndGallery()
-        }
+//        binding.ivUpload.setOnClickListener {
+//            openCameraAndGallery()
+//        }
 
         LocalBroadcastManager.getInstance(requireContext())
             .registerReceiver(usbReceiver, IntentFilter(ACTION_USB_DEVICE_ATTACHED))
@@ -95,10 +95,11 @@ class PhotoUploadKycFragment : BaseFragment<FragmentPhotoUploadKycBinding, Photo
 //        }
 
         binding.btnAddWithdrawSavings.setOnClickListener {
-            if (photoUploadKycFragmentVM.shopPhotoData != null)
-                photoUploadKycFragmentVM.callProfilePicUploadApi(photoUploadKycFragmentVM.shopPhotoData!!)
-            else
-                Utility.showToast("Please select photo first")
+//            if (photoUploadKycFragmentVM.shopPhotoData != null)
+//                photoUploadKycFragmentVM.callProfilePicUploadApi(photoUploadKycFragmentVM.shopPhotoData!!)
+//            else
+//                Utility.showToast("Please select photo first")
+            openCameraAndGallery()
         }
 
     }
@@ -251,6 +252,8 @@ class PhotoUploadKycFragment : BaseFragment<FragmentPhotoUploadKycBinding, Photo
                     photoUploadKycFragmentVM.shopPhotoData = body
 
                     Glide.with(requireContext()).load(uri).into(binding.ivShopUploadedPhoto)
+
+                    photoUploadKycFragmentVM.callProfilePicUploadApi(photoUploadKycFragmentVM.shopPhotoData!!)
 
                 } catch (e: IOException) {
                     e.printStackTrace()

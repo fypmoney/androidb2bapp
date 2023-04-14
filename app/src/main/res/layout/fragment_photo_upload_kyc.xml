@@ -76,7 +76,7 @@
                     android:layout_marginHorizontal="@dimen/dp20"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="@dimen/dp20"
-                    android:text="Upload"
+                    android:text="Open Camera"
                     android:textColor="@color/textColor1"
                     android:paddingVertical="@dimen/dp16"
                     app:cornerRadius="@dimen/dp12"

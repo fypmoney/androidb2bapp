@@ -13,7 +13,7 @@ plugins {
 android {
     signingConfigs {
         config {
-            storeFile file('C:\\Users\\Pawankumar\\Desktop\\FypKeystore.jks')
+            storeFile file('C:\\Users\\tapan.yadav\\Desktop\\FypKeystore.jks')
             storePassword 'WjfUzYjN8bem6bX6'
             keyAlias 'Fyp'
             keyPassword 'WjfUzYjN8bem6bX6'
@@ -240,6 +240,8 @@ dependencies {
     implementation 'com.amazonaws:ivs-player:1.10.0'
     implementation("com.squareup.okhttp3:okhttp-dnsoverhttps:4.9.0")
     implementation "ru.tinkoff.scrollingpagerindicator:scrollingpagerindicator:1.0.6"
+
+    implementation 'com.google.android.libraries.places:places:3.0.0'
 
 //    def paging_version = "3.2.0-alpha02"
 //    implementation "androidx.paging:paging-runtime-ktx:$paging_version"

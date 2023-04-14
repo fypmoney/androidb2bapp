@@ -19,49 +19,105 @@
             android:id="@+id/layout_toolbar"
             layout="@layout/toolbar" />
 
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvTakeHandHead"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp18"
+            android:text="Choose Fingerprint"
+            android:layout_marginHorizontal="@dimen/dp20"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            app:layout_constraintTop_toBottomOf="@+id/layout_toolbar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:fontFamily="@font/product_sans_bold" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvTakeHandDesc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp24"
+            android:text="Please choose the hand (Right or Left) and the finger the customer will place on the biometric device"
+            android:textColor="@color/text_grey"
+            android:textSize="18sp"
+            android:layout_marginHorizontal="@dimen/dp20"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTakeHandHead"
+            app:layout_constraintStart_toStartOf="parent"
+            app:fontFamily="@font/product_sans_regular" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvChooseHand"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:alpha="0.8"
+            android:layout_marginHorizontal="@dimen/dp20"
+            android:text="Choose Hand"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTakeHandDesc"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textColor="@color/text_color_light"
+            app:fontFamily="@font/product_sans_regular" />
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilSelectHand"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_toolbar"
+            app:layout_constraintTop_toBottomOf="@+id/tvChooseHand"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginTop="12dp"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:background="@null"
             android:layout_height="wrap_content"
-            android:hint="Select Hand"
+            android:hint="Choose Hand"
+            app:hintEnabled="false"
             android:layout_marginHorizontal="@dimen/dp20"
             android:textColorHint="@color/text_grey"
             app:boxCornerRadiusBottomEnd="@dimen/dp16"
             app:boxCornerRadiusBottomStart="@dimen/dp16"
             app:boxCornerRadiusTopEnd="@dimen/dp16"
             app:boxCornerRadiusTopStart="@dimen/dp16"
-            app:boxBackgroundColor="#262B32"
-            app:boxStrokeColor="#262B32"
-            app:boxStrokeWidthFocused="1.5dp">
+            app:boxBackgroundColor="#262B32">
 
             <AutoCompleteTextView
                 android:id="@+id/actSelectHand"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="none"
+                android:hint="Choose Hand"
+                android:textColorHint="@color/text_grey"
                 android:text="@={viewModel.handDelegate.hand}"
                 android:textColor="@color/white"
-                android:textSize="14sp"
-
+                android:textSize="16sp"
                 />
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvChooseFinger"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:alpha="0.8"
+            android:layout_marginHorizontal="@dimen/dp20"
+            android:text="Choose Finger"
+            android:textColor="@color/text_color_light"
+            app:fontFamily="@font/product_sans_regular"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tilSelectHand"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilSelectFingure"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tilSelectHand"
+            app:layout_constraintTop_toBottomOf="@+id/tvChooseFinger"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="@dimen/_18sdp"
+            android:layout_marginTop="12dp"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:background="@null"
+            app:hintEnabled="false"
             android:layout_height="wrap_content"
             android:hint="Select Finger"
             android:layout_marginHorizontal="@dimen/dp20"
@@ -70,16 +126,16 @@
             app:boxCornerRadiusBottomStart="@dimen/dp16"
             app:boxCornerRadiusTopEnd="@dimen/dp16"
             app:boxCornerRadiusTopStart="@dimen/dp16"
-            app:boxBackgroundColor="#262B32"
-            app:boxStrokeColor="#262B32"
-            app:boxStrokeWidthFocused="1.5dp">
+            app:boxBackgroundColor="#262B32">
 
             <AutoCompleteTextView
                 android:id="@+id/actSelectFingure"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="none"
-                android:textSize="14sp"
+                android:hint="Choose Finger"
+                android:textColorHint="@color/text_grey"
+                android:textSize="16sp"
                 android:text="@={viewModel.fingreDelegate.fingre}"
                 android:textColor="@color/white"/>
 
@@ -92,7 +148,7 @@
             android:layout_marginHorizontal="@dimen/dp20"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="@dimen/dp20"
-            android:text="Proceed"
+            android:text="Capture"
             android:paddingVertical="@dimen/dp16"
             app:cornerRadius="@dimen/dp10"
             android:visibility="visible"
