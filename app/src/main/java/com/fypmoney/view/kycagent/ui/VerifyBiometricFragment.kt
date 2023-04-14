@@ -134,24 +134,24 @@ class VerifyBiometricFragment :
 
                 }
             }
-            VerifyBiometricFragmentVM.FingerPrintDevices.NoDeviceConnected -> {
-                verifyBiometricFragmentVM.alertDialog.postValue(
-                    DialogUtils.AlertStateUiModel(
-                        icon = ContextCompat.getDrawable(
-                            requireContext(),
-                            R.drawable.ic_error_alert
-                        )!!,
-                        message = "No device is connected",
-                        backgroundColor = ContextCompat.getColor(
-                            requireContext(),
-                            R.color.errorAlertBgColor
-                        )
-                    )
-                )
+            VerifyBiometricFragmentVM.FingerPrintDevices.NotSuppourtedDevice -> {
+                showNoSupportedDevice()
+//                verifyBiometricFragmentVM.alertDialog.postValue(
+//                    DialogUtils.AlertStateUiModel(
+//                        icon = ContextCompat.getDrawable(
+//                            requireContext(),
+//                            R.drawable.ic_error_alert
+//                        )!!,
+//                        message = "No device is connected",
+//                        backgroundColor = ContextCompat.getColor(
+//                            requireContext(),
+//                            R.color.errorAlertBgColor
+//                        )
+//                    )
+//                )
             }
             is VerifyBiometricFragmentVM.FingerPrintDevices.StartTek -> {
                 val appId = "com.acpl.registersdk"
-                //getMantraDeviceInfo()
                 if(verifyBiometricFragmentVM.appInstalledOrNot(appId = appId, context =requireContext())){
                     getStartekData()
                 }else{
@@ -166,10 +166,19 @@ class VerifyBiometricFragment :
     private fun showDeviceDriverBototmsheet(deviceName:String){
         val deviceDriverSheet = DeviceDriverBottomSheet(deviceName = deviceName, onInstallClick = {
             verifyBiometricFragmentVM.redirectToPlayStore(it)
-        })
-        deviceDriverSheet.isCancelable = false
+        }, onDialogDismiss = {
+               findNavController().navigateUp()
+            },)
+        //deviceDriverSheet.isCancelable = false
         deviceDriverSheet.show(requireActivity().supportFragmentManager,"deviceDriver")
 
+    }
+
+    private fun showNoSupportedDevice(){
+        val deviceBottomSheet = DeviceBottomSheet(onContinueClick = {
+            findNavController().navigateUp()
+        })
+        deviceBottomSheet.show(requireActivity().supportFragmentManager,"device-bottomsheet")
     }
 
     private val userBroadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
@@ -186,7 +195,7 @@ class VerifyBiometricFragment :
                     Log.d("UsbRecciver", "Device is detected")
 
                     Log.d("UsbRecciver", "device data ${device.deviceName}")
-                    Log.d("UsbRecciver", "device data1 ${device.toString()}")
+                    Log.d("UsbRecciver", "device data1 $device")
                     Utility.showToast("Device Detected ${device.manufacturerName}")
                     verifyBiometricFragmentVM.checkWhichDeviceIsAttached(
                         device.productName!!,
@@ -216,7 +225,6 @@ class VerifyBiometricFragment :
             if (deviceList.size!=0){
                 for (device in deviceList.values) {
                     verifyBiometricFragmentVM.checkWhichDeviceIsAttached(device.productName!!,device.manufacturerName,false)
-
                 }
             }else{
                 verifyBiometricFragmentVM.alertDialog.postValue(  DialogUtils.AlertStateUiModel(
@@ -381,9 +389,9 @@ class VerifyBiometricFragment :
 
     override fun onResume() {
         super.onResume()
-//        val filter = IntentFilter()
-//        filter.addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED)
-//        requireActivity().registerReceiver(userBroadcastReceiver, filter)
+        val filter = IntentFilter()
+        filter.addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED)
+        requireActivity().registerReceiver(userBroadcastReceiver, filter)
 //        isOtgEnabled(requireContext())
 
     }
@@ -395,7 +403,7 @@ class VerifyBiometricFragment :
 
     override fun onPause() {
         super.onPause()
-       //requireActivity().unregisterReceiver(userBroadcastReceiver)
+       requireActivity().unregisterReceiver(userBroadcastReceiver)
     }
 
     override fun getBindingVariable(): Int = BR.viewModel

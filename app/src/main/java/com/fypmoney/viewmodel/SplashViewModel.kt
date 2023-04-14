@@ -56,7 +56,7 @@ import kotlinx.coroutines.launch
 class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
 
     var moveToNextScreen = MutableLiveData(false)
-    var callCustomer = MutableLiveData(false);
+    var callCustomer = MutableLiveData(false)
 
     val appUpdateState: LiveData<AppUpdateState>
         get() = _appUpdateState
@@ -268,6 +268,7 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
                 }
             }
             ApiConstant.CHECK_APP_UPDATE->{
+                _appUpdateState.value = AppUpdateState.NOTUPDATE
                 val data = Gson().fromJson(responseData.toString(), CheckAppUpdateResponse::class.java)
                 if(data is CheckAppUpdateResponse){
                         when(data.appUpdateData?.updateFlag){

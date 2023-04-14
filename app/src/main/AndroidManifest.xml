@@ -55,6 +55,7 @@
         tools:replace="android:usesCleartextTraffic">
         <activity
             android:name=".view.kycagent.ui.KycAgentActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".view.addmoney.NewAddMoneyActivity"

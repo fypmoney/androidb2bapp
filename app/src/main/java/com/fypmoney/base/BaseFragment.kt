@@ -27,6 +27,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
+import com.freshchat.consumer.sdk.ConversationOptions
 import com.freshchat.consumer.sdk.FaqOptions
 import com.freshchat.consumer.sdk.Freshchat
 import com.fypmoney.R
@@ -419,6 +420,9 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
             .showContactUsOnAppBar(true)
             .showContactUsOnFaqScreens(true)
             .showContactUsOnFaqNotHelpful(true)
+        val tags: MutableList<String> = ArrayList()
+        tags.add("kyc_agent_app")
+        faqOptions.filterByTags(tags,"Fyp kyc agent")
         Freshchat.showFAQs(context, faqOptions)
     }
 

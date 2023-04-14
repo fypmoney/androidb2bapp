@@ -26,8 +26,8 @@ android {
         ndk.abiFilters 'armeabi-v7a','arm64-v8a','x86','x86_64'
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 81
-        versionName "4.3.4"
+        versionCode 1
+        versionName "1.0.0"
         multiDexEnabled = true
         vectorDrawables.useSupportLibrary = true
         generatedDensities = []
@@ -72,16 +72,16 @@ android {
     productFlavors {
             dev{
                 signingConfig signingConfigs.config
-                applicationId "com.fypmoney.dev"
-                resValue "string", "app_name", "F debug"
+                applicationId "com.fypmoney.agnet.dev"
+                resValue "string", "app_name", "Fyp Agent-debug"
                 buildConfigField "String", "BASE_ENDPOINT", "\"http://52.22.235.46:9300\""
                 buildConfigField "String", "ADJUST_PROD_KEY","\"buqdhv6bqlts\""
                 buildConfigField "String", "MOENAGE_KEY","\"EF6YXWOUCTC748YDOJ47ZU3V\""
             }
             prod{
                 signingConfig signingConfigs.config
-                applicationId "com.fypmoney"
-                resValue "string", "app_name", "Fyp"
+                applicationId "com.fypmoney.agent"
+                resValue "string", "app_name", "Fyp Agent"
                 buildConfigField "String", "BASE_ENDPOINT", "\"https://techservices.fyp-e.in\""
                 buildConfigField "String", "ADJUST_PROD_KEY","\"buqdhv6bqlts\""
                 buildConfigField "String", "MOENAGE_KEY","\"EF6YXWOUCTC748YDOJ47ZU3V\""

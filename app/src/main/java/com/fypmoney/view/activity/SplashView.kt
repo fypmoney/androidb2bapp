@@ -76,41 +76,43 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
         }
 
         mViewModel.appUpdateState.observe(this) {
-            when (it) {
-                SplashViewModel.AppUpdateState.FLEXIBLE -> {
-                    PockketApplication.instance.appUpdateRequired = true
-                    SharedPrefUtils.putInt(
-                        applicationContext,
-                        SharedPrefUtils.SF_KEY_APP_UPDATE_TYPE,
-                        0
-                    )
-
-                }
-                SplashViewModel.AppUpdateState.FORCEUPDATE -> {
-                    PockketApplication.instance.appUpdateRequired = true
-                    SharedPrefUtils.putInt(
-                        applicationContext,
-                        SharedPrefUtils.SF_KEY_APP_UPDATE_TYPE,
-                        1
-                    )
-
-
-                }
-                SplashViewModel.AppUpdateState.NOTALLOWED -> {
-                    checkUpdate.value = false
-                    Utility.showToast(NOT_ALLOWED_MSG)
-                    finish()
-
-
-                }
-                SplashViewModel.AppUpdateState.NOTUPDATE -> {
-                    checkUpdate.value = false
-
-
-                }
-            }
-
             mViewModel.moveToNextScreen.value = true
+
+//            when (it) {
+//                SplashViewModel.AppUpdateState.FLEXIBLE -> {
+//                    PockketApplication.instance.appUpdateRequired = true
+//                    SharedPrefUtils.putInt(
+//                        applicationContext,
+//                        SharedPrefUtils.SF_KEY_APP_UPDATE_TYPE,
+//                        0
+//                    )
+//
+//                }
+//                SplashViewModel.AppUpdateState.FORCEUPDATE -> {
+//                    PockketApplication.instance.appUpdateRequired = true
+//                    SharedPrefUtils.putInt(
+//                        applicationContext,
+//                        SharedPrefUtils.SF_KEY_APP_UPDATE_TYPE,
+//                        1
+//                    )
+//
+//
+//                }
+//                SplashViewModel.AppUpdateState.NOTALLOWED -> {
+//                    checkUpdate.value = false
+//                    Utility.showToast(NOT_ALLOWED_MSG)
+//                    finish()
+//
+//
+//                }
+//                SplashViewModel.AppUpdateState.NOTUPDATE -> {
+//                    checkUpdate.value = false
+//
+//
+//                }
+//            }
+//
+//            mViewModel.moveToNextScreen.value = true
 
         }
 

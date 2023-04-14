@@ -110,21 +110,31 @@ class VerifyBiometricFragmentVM(application: Application): BaseViewModel(applica
                 if(fromBroadcast){
                     viewModelScope.launch {
                         progressDialog.postValue(true)
-                        delay(10000)
+                        delay(20000)
                         progressDialog.postValue(false)
-
+                        connectedDeviceInfo = FingerDeviceInfo(
+                            deviceManufactureName = "MANTRA",
+                            deviceProductName = productName!!
+                        )
+                        _deviceState.value = FingerPrintDevices.Mantra(
+                            morphoDevice = FingerDeviceInfo(
+                                deviceManufactureName = "MANTRA",
+                                deviceProductName = productName
+                            ))
                     }
+                }else{
+                    connectedDeviceInfo = FingerDeviceInfo(
+                        deviceManufactureName = "MANTRA",
+                        deviceProductName = productName!!
+                    )
+                    _deviceState.value = FingerPrintDevices.Mantra(
+                        morphoDevice = FingerDeviceInfo(
+                            deviceManufactureName = "MANTRA",
+                            deviceProductName = productName
+                        ))
                 }
 
-                connectedDeviceInfo = FingerDeviceInfo(
-                    deviceManufactureName = "MANTRA",
-                    deviceProductName = productName!!
-                )
-                _deviceState.value = FingerPrintDevices.Mantra(
-                    morphoDevice = FingerDeviceInfo(
-                        deviceManufactureName = "MANTRA",
-                        deviceProductName = productName
-                    ))
+
 
             }else if(mfName=="Morpho"){
                 connectedDeviceInfo = FingerDeviceInfo(
@@ -137,7 +147,7 @@ class VerifyBiometricFragmentVM(application: Application): BaseViewModel(applica
                         deviceProductName = productName!!
                     ))
             }else{
-                _deviceState.value = FingerPrintDevices.NoDeviceConnected
+                _deviceState.value = FingerPrintDevices.NotSuppourtedDevice
             }
         }
 
@@ -169,7 +179,7 @@ class VerifyBiometricFragmentVM(application: Application): BaseViewModel(applica
         data class MorphoDevice(val morphoDevice: FingerDeviceInfo):FingerPrintDevices()
         data class StartTek(val morphoDevice: FingerDeviceInfo):FingerPrintDevices()
         data class Mantra(val morphoDevice: FingerDeviceInfo):FingerPrintDevices()
-        object NoDeviceConnected:FingerPrintDevices()
+        object NotSuppourtedDevice:FingerPrintDevices()
     }
 
     @Keep

@@ -142,7 +142,6 @@ class PockketApplication : Application() {
         config.isGallerySelectionEnabled = true
         config.isResponseExpectationEnabled = true
         config.isTeamMemberInfoVisible = true
-
         config.isUserEventsTrackingEnabled = true
 
         val freshChat = getFreshchatInstance(applicationContext)

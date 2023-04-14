@@ -1,6 +1,7 @@
 package com.fypmoney.view.kycagent.ui
 
 import android.app.Dialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
@@ -10,7 +11,9 @@ import com.fypmoney.base.BaseViewModel
 import com.fypmoney.databinding.BottomSheetDeviceDriverBinding
 import com.fypmoney.view.kycagent.viewmodel.DeviceDriverBottomSheetVM
 
-class DeviceDriverBottomSheet(val deviceName:String, val onInstallClick:(deviceName:String)->Unit) : BaseBottomSheetFragment<BottomSheetDeviceDriverBinding>() {
+class DeviceDriverBottomSheet(val deviceName:String,
+                              val onInstallClick:(deviceName:String)->Unit,
+                              val onDialogDismiss:()->Unit) : BaseBottomSheetFragment<BottomSheetDeviceDriverBinding>() {
 
     private val deviceDriverBottomSheetVM by viewModels<DeviceDriverBottomSheetVM> { defaultViewModelProviderFactory }
 
@@ -28,6 +31,11 @@ class DeviceDriverBottomSheet(val deviceName:String, val onInstallClick:(deviceN
         setUpBinding()
 
         setUpObserver()
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        onDialogDismiss()
     }
 
     private fun setUpObserver() {

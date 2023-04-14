@@ -162,17 +162,7 @@ class TakeHandFingerFragmentVM(application: Application) : BaseViewModel(applica
         when (purpose) {
             ApiConstant.API_FULL_KYC -> {
                 if (responseData is FullKycResponse) {
-//                    alertDialog.postValue(DialogUtils.AlertStateUiModel(
-//                        icon =ContextCompat.getDrawable(PockketApplication.instance,
-//                            R.drawable.ic_success_alert)!!,
-//                        message = responseData.msg,
-//                        backgroundColor = ContextCompat.getColor(PockketApplication.instance,
-//                            R.color.successAlertBgColor)
-//                    ))
-                    viewModelScope.launch {
-                        delay(DialogUtils.alertDialogTime + 100)
-                        _kycEvent.value = FillKycEvent.FullKycCompleted(responseData.msg)
-                    }
+                    _kycEvent.value = FillKycEvent.FullKycCompleted(responseData.msg)
                 }
             }
         }
