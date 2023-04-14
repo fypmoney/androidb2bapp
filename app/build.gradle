@@ -14,7 +14,7 @@ android {
     signingConfigs {
         config {
             storeFile file('C:\\Users\\Pawankumar\\Desktop\\FypAgent.jks')
-            storePassword 'WjfUzYjN8bem6bX6'
+            storePassword 'Fyp#23'
             keyAlias 'key0'
             keyPassword 'Fyp#23'
         }
