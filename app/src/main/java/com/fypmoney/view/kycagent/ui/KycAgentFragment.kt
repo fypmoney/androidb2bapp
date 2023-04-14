@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.TrackrField
 import com.fyp.trackr.models.trackr
@@ -58,47 +59,7 @@ class KycAgentFragment : BaseFragment<FragmentKycAgentBinding, KycAgentFragmentV
 
             //check where we want to send user based on conditions
 
-            if (kycAgentFragmentVM.shopName == null) {
-                findNavController().navigate(
-                    R.id.navigation_kyc_merchant_registration,
-                    null,
-                    navOptions {
-                        anim {
-                            popEnter = R.anim.slide_in_left
-                            popExit = R.anim.slide_out_righ
-                            enter = R.anim.slide_in_right
-                            exit = R.anim.slide_out_left
-                        }
-                    })
-            } else if (kycAgentFragmentVM.isShopPhotoUpload == null) {
-                findNavController().navigate(R.id.navigation_photo_upload_kyc, null, navOptions {
-                    anim {
-                        popEnter = R.anim.slide_in_left
-                        popExit = R.anim.slide_out_righ
-                        enter = R.anim.slide_in_right
-                        exit = R.anim.slide_out_left
-                    }
-                })
-            } else if ((kycAgentFragmentVM.isShopListed == null) || (kycAgentFragmentVM.isShopListed.equals(
-                    AppConstants.NO
-                ))
-            ) {
-                val bundle = Bundle()
-                bundle.putString("via", "SelfKyc")
-                findNavController().navigate(
-                    R.id.navigation_enter_aadhaar_number_kyc,
-                    bundle,
-                    navOptions {
-                        anim {
-                            popEnter = R.anim.slide_in_left
-                            popExit = R.anim.slide_out_righ
-                            enter = R.anim.slide_in_right
-                            exit = R.anim.slide_out_left
-                        }
-                    })
-            } else {
-                Utility.showToast("Self KYC Completed")
-            }
+            setUserRedirection()
 
         }
 
@@ -119,7 +80,7 @@ class KycAgentFragment : BaseFragment<FragmentKycAgentBinding, KycAgentFragmentV
                         }
                     })
             } else {
-                Utility.showToast("Please complete your full kyc first...")
+                setUserRedirection()
             }
         }
 
@@ -137,10 +98,54 @@ class KycAgentFragment : BaseFragment<FragmentKycAgentBinding, KycAgentFragmentV
                     }
                 })
             } else {
-                Utility.showToast("Please complete your full kyc first...")
+                setUserRedirection()
             }
         }
 
+    }
+
+    private fun setUserRedirection(){
+        if (kycAgentFragmentVM.shopName == null) {
+            findNavController().navigate(
+                R.id.navigation_kyc_merchant_registration,
+                null,
+                navOptions {
+                    anim {
+                        popEnter = R.anim.slide_in_left
+                        popExit = R.anim.slide_out_righ
+                        enter = R.anim.slide_in_right
+                        exit = R.anim.slide_out_left
+                    }
+                })
+        } else if (kycAgentFragmentVM.isShopPhotoUpload == null) {
+            findNavController().navigate(R.id.navigation_photo_upload_kyc, null, navOptions {
+                anim {
+                    popEnter = R.anim.slide_in_left
+                    popExit = R.anim.slide_out_righ
+                    enter = R.anim.slide_in_right
+                    exit = R.anim.slide_out_left
+                }
+            })
+        } else if ((kycAgentFragmentVM.isShopListed == null) || (kycAgentFragmentVM.isShopListed.equals(
+                AppConstants.NO
+            ))
+        ) {
+            val bundle = Bundle()
+            bundle.putString("via", "SelfKyc")
+            findNavController().navigate(
+                R.id.navigation_enter_aadhaar_number_kyc,
+                bundle,
+                navOptions {
+                    anim {
+                        popEnter = R.anim.slide_in_left
+                        popExit = R.anim.slide_out_righ
+                        enter = R.anim.slide_in_right
+                        exit = R.anim.slide_out_left
+                    }
+                })
+        } else {
+            Utility.showToast("Self KYC Completed")
+        }
     }
 
     private fun setUpObserver() {
@@ -157,6 +162,10 @@ class KycAgentFragment : BaseFragment<FragmentKycAgentBinding, KycAgentFragmentV
                     kycAgentFragmentVM.isShopPhotoUpload = it.shopData.shopPhoto
                     kycAgentFragmentVM.shopName = it.shopData.shopName
                     kycAgentFragmentVM.isShopListed = it.shopData.isShopListed
+
+                    if (kycAgentFragmentVM.isShopListed.equals(AppConstants.YES)){
+                        Glide.with(requireContext()).load(R.drawable.ic_agent_full_kyc).into(binding.ivKycCard)
+                    }
                 }
             }
         }
@@ -176,7 +185,8 @@ class KycAgentFragment : BaseFragment<FragmentKycAgentBinding, KycAgentFragmentV
                     intentToActivityMain(requireActivity(), LoginView::class.java, isFinishAll = true)
                 }
                 KycAgentFragmentVM.KycAgentEvent.NotificationClicked -> {
-                    startActivity(Intent(requireActivity(), NotificationView::class.java))
+                    callFreshChat(requireContext())
+                    //startActivity(Intent(requireActivity(), NotificationView::class.java))
                 }
             }
         }

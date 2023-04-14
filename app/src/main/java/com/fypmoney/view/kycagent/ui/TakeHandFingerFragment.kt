@@ -116,11 +116,11 @@ class TakeHandFingerFragment : BaseFragment<FragmentTakeHandFingerBinding, TakeH
     private fun handelEvent(it: TakeHandFingerFragmentVM.FillKycEvent?) {
         when(it){
             TakeHandFingerFragmentVM.FillKycEvent.CaptureFingrePrint -> {
-                if(takeHandFingerFragmentVM.deviceName!!.startsWith("Startek Eng-Inc",false)){
+                if(takeHandFingerFragmentVM.deviceName!!.equals("STARTEK",false)){
                     captureStarTekFigure()
-                }else if(takeHandFingerFragmentVM.deviceName == "MANTRA"){
+                }else if(takeHandFingerFragmentVM.deviceName.equals("MANTRA")){
                     captureMantraFigure()
-                }else if(takeHandFingerFragmentVM.deviceName == "Morpho"){
+                }else if(takeHandFingerFragmentVM.deviceName.equals("MORPHO")){
                     captureMorphoFigure()
                 }
             }

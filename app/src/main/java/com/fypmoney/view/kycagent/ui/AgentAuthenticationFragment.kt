@@ -49,6 +49,16 @@ class AgentAuthenticationFragment : BaseFragment<FragmentAgentAuthenticationBind
             backArrowTint = Color.WHITE
         )
 
+        if (agentAuthenticationFragmentVM.via == "UserKyc"){
+            //userkyc
+            binding.tvAgentAuthDesc.text = getString(R.string.agent_to_place_finger_on_biometric_device_for_confirmation_please_ensure_that)
+            binding.tvAgentAuthHead.text = "Biometric Authentication"
+        }else{
+            //selfkyc
+            binding.tvAgentAuthDesc.text = getString(R.string.agent_to_place_finger_on_biometric_device_for_confirmation_please_ensure_that)
+            binding.tvAgentAuthHead.text = "Agent Authentication"
+        }
+
         binding.btnAddWithdrawSavings.setOnClickListener {
             if (binding.mcbConfirm.isChecked) {
                 val bundle = Bundle()

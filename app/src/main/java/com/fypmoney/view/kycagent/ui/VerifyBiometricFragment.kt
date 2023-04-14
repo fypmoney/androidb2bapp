@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Color
 import android.hardware.usb.UsbDevice
 import android.hardware.usb.UsbManager
@@ -63,9 +64,7 @@ class VerifyBiometricFragment :
         )
 
         verifyBiometricFragmentVM.deviceState.observe(viewLifecycleOwner) {
-            if (viewLifecycleOwner.lifecycle.currentState == androidx.lifecycle.Lifecycle.State.RESUMED) {
                 handelState(it)
-            }
         }
 
         verifyBiometricFragmentVM.event.observe(viewLifecycleOwner){
@@ -84,7 +83,17 @@ class VerifyBiometricFragment :
                             enter = R.anim.slide_in_right
                             exit = R.anim.slide_out_left
                         }
+                        popUpTo(R.id.navigation_agent_authentication){
+                            inclusive = false
+                        }
                     })
+                }
+                is VerifyBiometricFragmentVM.VerifyBiometricEvent.NavigateToPlayStore -> {
+                    val webIntent = Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse(it.url)
+                    )
+                    requireActivity().startActivity(webIntent)
                 }
             }
         }
@@ -101,7 +110,6 @@ class VerifyBiometricFragment :
         when (it) {
             is VerifyBiometricFragmentVM.FingerPrintDevices.Mantra -> {
                 val appId = "com.mantra.rdservice"
-                //val appId = "in.gov.uidai.rdservice.fp.INFO"
                 if (verifyBiometricFragmentVM.appInstalledOrNot(
                         appId = appId,
                         context = requireContext()
@@ -109,11 +117,7 @@ class VerifyBiometricFragment :
                 ) {
                     getMantraDeviceInfo()
                 } else {
-                    val webIntent = Intent(
-                        Intent.ACTION_VIEW,
-                        Uri.parse("https://play.google.com/store/apps/details?id=$appId")
-                    )
-                    requireActivity().startActivity(webIntent)
+                    showDeviceDriverBototmsheet("MANTRA")
                 }
             }
 
@@ -126,11 +130,8 @@ class VerifyBiometricFragment :
                 ) {
                     getMorophoDeviceInfo()
                 } else {
-                    val webIntent = Intent(
-                        Intent.ACTION_VIEW,
-                        Uri.parse("https://play.google.com/store/apps/details?id=$appId")
-                    )
-                    requireActivity().startActivity(webIntent)
+                    showDeviceDriverBototmsheet("MORPHO")
+
                 }
             }
             VerifyBiometricFragmentVM.FingerPrintDevices.NoDeviceConnected -> {
@@ -154,36 +155,22 @@ class VerifyBiometricFragment :
                 if(verifyBiometricFragmentVM.appInstalledOrNot(appId = appId, context =requireContext())){
                     getStartekData()
                 }else{
-                    val webIntent = Intent(
-                        Intent.ACTION_VIEW,
-                        Uri.parse("https://play.google.com/store/apps/details?id=$appId")
-                    )
-                    requireActivity().startActivity(webIntent)
+                    showDeviceDriverBototmsheet("STARTEK")
                 }
             }
             null -> {}
         }
     }
 
-//    private fun handelEvent(it: VerifyBiometricFragmentVM.FillKycEvent?) {
-//        when(it){
-//            VerifyBiometricFragmentVM.FillKycEvent.CaptureFingrePrint -> {
-//                if(verifyBiometricFragmentVM.deviceName!!.startsWith("Startek Eng-Inc",false)){
-//                    captureStarTekFigure()
-//                }else if(verifyBiometricFragmentVM.deviceName == "MANTRA"){
-//                    captureMantraFigure()
-//                }else if(verifyBiometricFragmentVM.deviceName == "Morpho"){
-//                    captureMorphoFigure()
-//                }
-//            }
-//            null -> {
-//
-//            }
-//            VerifyBiometricFragmentVM.FillKycEvent.FullKycCompleted -> {
-//                findNavController().navigateUp()
-//            }
-//        }
-//    }
+
+    private fun showDeviceDriverBototmsheet(deviceName:String){
+        val deviceDriverSheet = DeviceDriverBottomSheet(deviceName = deviceName, onInstallClick = {
+            verifyBiometricFragmentVM.redirectToPlayStore(it)
+        })
+        deviceDriverSheet.isCancelable = false
+        deviceDriverSheet.show(requireActivity().supportFragmentManager,"deviceDriver")
+
+    }
 
     private val userBroadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
 
@@ -203,7 +190,7 @@ class VerifyBiometricFragment :
                     Utility.showToast("Device Detected ${device.manufacturerName}")
                     verifyBiometricFragmentVM.checkWhichDeviceIsAttached(
                         device.productName!!,
-                        device.manufacturerName
+                        device.manufacturerName,true
 
                     )
                 } else {
@@ -228,7 +215,7 @@ class VerifyBiometricFragment :
             val deviceList = usbManager.deviceList
             if (deviceList.size!=0){
                 for (device in deviceList.values) {
-                    verifyBiometricFragmentVM.checkWhichDeviceIsAttached(device.productName!!,device.manufacturerName,)
+                    verifyBiometricFragmentVM.checkWhichDeviceIsAttached(device.productName!!,device.manufacturerName,false)
 
                 }
             }else{
@@ -343,114 +330,7 @@ class VerifyBiometricFragment :
                     )
                 }
             }
-//            else if (requestCode == 1002) {
-//                val bundle = data?.extras
-//                val pid = bundle?.getString("PID_DATA", "")
-//                val dnc = bundle?.getString("DNC", "")
-//                val dnr = bundle?.getString("DNR", "")
-//                if (pid!!.isNotEmpty()) {
-//                    Log.d(TAG, "Pid Info : ${pid}")
-//                    val result = verifyBiometricFragmentVM.parseXml(pid)
-//                    when (result) {
-//                        VerifyBiometricFragmentVM.CaptureFingerStatus.CaptureFingerQualityIsNotGood -> {
-//                            verifyBiometricFragmentVM.alertDialog.postValue(
-//                                DialogUtils.AlertStateUiModel(
-//                                    icon = ContextCompat.getDrawable(
-//                                        requireContext(),
-//                                        R.drawable.ic_error_alert
-//                                    )!!,
-//                                    message = "Finger quality is not good.Please clean device and fingre and rtey Again",
-//                                    backgroundColor = ContextCompat.getColor(
-//                                        requireContext(),
-//                                        R.color.errorAlertBgColor
-//                                    )
-//                                )
-//                            )
-//                        }
-//                        VerifyBiometricFragmentVM.CaptureFingerStatus.CaptureFingerQualityIsPoor -> {
-//                            verifyBiometricFragmentVM.alertDialog.postValue(
-//                                DialogUtils.AlertStateUiModel(
-//                                    icon = ContextCompat.getDrawable(
-//                                        requireContext(),
-//                                        R.drawable.ic_error_alert
-//                                    )!!,
-//                                    message = "Finger quality is very poor.Please clean device and fingre and rtey Again",
-//                                    backgroundColor = ContextCompat.getColor(
-//                                        requireContext(),
-//                                        R.color.errorAlertBgColor
-//                                    )
-//                                )
-//                            )
-//                        }
-//                        VerifyBiometricFragmentVM.CaptureFingerStatus.UnableToCaptureFinger -> {
-//                            verifyBiometricFragmentVM.alertDialog.postValue(
-//                                DialogUtils.AlertStateUiModel(
-//                                    icon = ContextCompat.getDrawable(
-//                                        requireContext(),
-//                                        R.drawable.ic_error_alert
-//                                    )!!,
-//                                    message = "unable to scan finger.try Again...",
-//                                    backgroundColor = ContextCompat.getColor(
-//                                        requireContext(),
-//                                        R.color.errorAlertBgColor
-//                                    )
-//                                )
-//                            )
-//                        }
-//                        is VerifyBiometricFragmentVM.CaptureFingerStatus.CapturedSuccessFully -> {
-//                            //verifyBiometricFragmentVM.postKycData(captureInfo = result.pidOptions)
-////                            verifyBiometricFragmentVM.postKycData(captureInfo = verifyBiometricFragmentVM.convertPidDataIntoBase64(result.pidOptions))
-//                        }
-//                        is VerifyBiometricFragmentVM.CaptureFingerStatus.ErrorInCaptureFinger -> {
-//                            verifyBiometricFragmentVM.alertDialog.postValue(
-//                                DialogUtils.AlertStateUiModel(
-//                                    icon = ContextCompat.getDrawable(
-//                                        requireContext(),
-//                                        R.drawable.ic_error_alert
-//                                    )!!,
-//                                    message = result.message,
-//                                    backgroundColor = ContextCompat.getColor(
-//                                        requireContext(),
-//                                        R.color.errorAlertBgColor
-//                                    )
-//                                )
-//                            )
-//                        }
-//                    }
-//                } else if (dnc!!.isEmpty()) {
-//                    Log.d(TAG, "Device not connected")
-//                    verifyBiometricFragmentVM.alertDialog.postValue(
-//                        DialogUtils.AlertStateUiModel(
-//                            icon = ContextCompat.getDrawable(
-//                                requireContext(),
-//                                R.drawable.ic_error_alert
-//                            )!!,
-//                            message = "Device not connected",
-//                            backgroundColor = ContextCompat.getColor(
-//                                requireContext(),
-//                                R.color.errorAlertBgColor
-//                            )
-//                        )
-//                    )
-//
-//                } else if (dnr!!.isEmpty()) {
-//                    Log.d(TAG, "Device not registered")
-//                    verifyBiometricFragmentVM.alertDialog.postValue(
-//                        DialogUtils.AlertStateUiModel(
-//                            icon = ContextCompat.getDrawable(
-//                                requireContext(),
-//                                R.drawable.ic_error_alert
-//                            )!!,
-//                            message = "Device not registered",
-//                            backgroundColor = ContextCompat.getColor(
-//                                requireContext(),
-//                                R.color.errorAlertBgColor
-//                            )
-//                        )
-//                    )
-//                }
-//
-//            }
+
             else {
                 verifyBiometricFragmentVM.alertDialog.postValue(
                     DialogUtils.AlertStateUiModel(
@@ -510,14 +390,12 @@ class VerifyBiometricFragment :
 
     override fun onStart() {
         super.onStart()
-
         isOtgEnabled(requireContext())
-
     }
 
     override fun onPause() {
         super.onPause()
-//        requireActivity().unregisterReceiver(userBroadcastReceiver)
+       //requireActivity().unregisterReceiver(userBroadcastReceiver)
     }
 
     override fun getBindingVariable(): Int = BR.viewModel

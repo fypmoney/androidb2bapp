@@ -34,6 +34,7 @@
                     android:layout_marginHorizontal="@dimen/dp20">
 
                     <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvAgentAuthHead"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp18"
@@ -43,6 +44,7 @@
                         app:fontFamily="@font/product_sans_bold" />
 
                     <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvAgentAuthDesc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp24"

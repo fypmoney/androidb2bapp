@@ -67,7 +67,7 @@ class EnterOtpKycFragment : BaseFragment<FragmentEnterOtpKycBinding, EnterOtpKyc
 
         binding.verificationTitle.text = String.format(
             getString(R.string.enter_the_otp_sent_to_to_verify_customer_s_request_for_full_kyc),
-            arguments?.getString("mobile")
+            enterOtpKycFragmentVM.mobileNumber
         )
 
         binding.tvSentOtpAgain.setOnClickListener {

@@ -91,44 +91,49 @@ class VerifyBiometricFragmentVM(application: Application): BaseViewModel(applica
 
     fun checkWhichDeviceIsAttached(
         productName: String?,
-        manufacturerName: String?
+        manufacturerName: String?,
+        fromBroadcast:Boolean
     ) {
         manufacturerName?.let { mfName->
             if(mfName.startsWith("Startek Eng-Inc",false)){
                 connectedDeviceInfo = FingerDeviceInfo(
-                    deviceManufactureName = manufacturerName,
+                    deviceManufactureName = "STARTEK",
                     deviceProductName = productName!!
                 )
                 _deviceState.value = FingerPrintDevices.StartTek(
                     morphoDevice = FingerDeviceInfo(
-                        deviceManufactureName = manufacturerName,
+                        deviceManufactureName = "STARTEK",
                         deviceProductName = productName
                     )
                 )
             }else if(mfName=="MANTRA"){
-                viewModelScope.launch {
-                    progressDialog.postValue(true)
-                    delay(2000)
-                    progressDialog.postValue(false)
-                    connectedDeviceInfo = FingerDeviceInfo(
-                        deviceManufactureName = manufacturerName,
-                        deviceProductName = productName!!
-                    )
-                    _deviceState.value = FingerPrintDevices.Mantra(
-                        morphoDevice = FingerDeviceInfo(
-                            deviceManufactureName = manufacturerName,
-                            deviceProductName = productName!!
-                        ))
+                if(fromBroadcast){
+                    viewModelScope.launch {
+                        progressDialog.postValue(true)
+                        delay(10000)
+                        progressDialog.postValue(false)
+
+                    }
                 }
+
+                connectedDeviceInfo = FingerDeviceInfo(
+                    deviceManufactureName = "MANTRA",
+                    deviceProductName = productName!!
+                )
+                _deviceState.value = FingerPrintDevices.Mantra(
+                    morphoDevice = FingerDeviceInfo(
+                        deviceManufactureName = "MANTRA",
+                        deviceProductName = productName
+                    ))
 
             }else if(mfName=="Morpho"){
                 connectedDeviceInfo = FingerDeviceInfo(
-                    deviceManufactureName = manufacturerName,
+                    deviceManufactureName = "MORPHO",
                     deviceProductName = productName!!
                 )
                 _deviceState.value = FingerPrintDevices.MorphoDevice(
                     morphoDevice = FingerDeviceInfo(
-                        deviceManufactureName = manufacturerName,
+                        deviceManufactureName = "MORPHO",
                         deviceProductName = productName!!
                     ))
             }else{
@@ -138,8 +143,25 @@ class VerifyBiometricFragmentVM(application: Application): BaseViewModel(applica
 
     }
 
+    fun redirectToPlayStore(deviceName:String){
+        if(deviceName.equals("STARTEK",false)){
+            val url = "https://play.google.com/store/apps/details?id=com.acpl.registersdk"
+            _event.value = VerifyBiometricEvent.NavigateToPlayStore(url)
+
+        }else if(deviceName.equals("MANTRA")){
+            val url = "https://play.google.com/store/apps/details?id=com.mantra.rdservice"
+            _event.value = VerifyBiometricEvent.NavigateToPlayStore(url)
+
+        }else if(deviceName.equals("MORPHO")){
+            val url = "https://play.google.com/store/apps/details?id=com.scl.rdservice"
+            _event.value = VerifyBiometricEvent.NavigateToPlayStore(url)
+
+        }
+    }
+
     sealed class VerifyBiometricEvent{
         data class NavigateToFillKycDetailsPage(var fingerDeviceInfo: FingerDeviceInfo):VerifyBiometricEvent()
+        data class NavigateToPlayStore(var url:String):VerifyBiometricEvent()
     }
 
 
@@ -175,7 +197,7 @@ class VerifyBiometricFragmentVM(application: Application): BaseViewModel(applica
     data class FingerDeviceInfo(
         val deviceManufactureName:String,
         val deviceProductName:String,
-        var deviceSerialNumber: String ?= null,
+        var deviceSerialNumber: String ? = null,
         var deviceVersion: String ?= null
     ): Parcelable
 
