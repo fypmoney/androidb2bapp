@@ -37,7 +37,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp24"
-            android:text="Please choose the hand (Right or Left) and the finger the customer will place on the biometric device"
+            tools:text="Please choose the hand (Right or Left) and the finger the customer will place on the biometric device"
             android:textColor="@color/text_grey"
             android:textSize="18sp"
             android:layout_marginHorizontal="@dimen/dp20"

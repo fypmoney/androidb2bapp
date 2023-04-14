@@ -32,6 +32,14 @@ class EnterAadhaarNumberKycFragment : BaseFragment<FragmentEnterAadhaarNumberKyc
         }
         enterAadhaarNumberKycFragmentVM.via = arguments?.getString("via").toString()
 
+        if (enterAadhaarNumberKycFragmentVM.via == "UserKyc"){
+            //userkyc
+            binding.tvAadhaarNumber.text = "Enter Aadhaar Number of Customer"
+        }else{
+            //selfkyc
+            binding.tvAadhaarNumber.text = "Enter Your Aadhaar Number"
+        }
+
         if (arguments?.containsKey("fourDigits") == true) {
             enterAadhaarNumberKycFragmentVM.lastFourDigitCode = arguments?.getString("fourDigits")
         }else{

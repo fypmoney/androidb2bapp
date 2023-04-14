@@ -1,13 +1,10 @@
 package com.fypmoney.view.kycagent.ui
 
-import android.app.Activity.RESULT_CANCELED
-import android.app.Activity.RESULT_OK
-import android.content.Intent
+import android.app.Activity
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Toast
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.core.content.ContextCompat
@@ -27,11 +24,8 @@ import com.fypmoney.view.kycagent.viewmodel.KycMerchantRegistrationFragmentVM
 import com.google.android.gms.common.api.Status
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
-import com.google.android.libraries.places.widget.Autocomplete
-import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
-import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import kotlinx.android.synthetic.main.toolbar.*
 
 
@@ -95,6 +89,11 @@ class KycMerchantRegistrationFragment : BaseFragment<FragmentKycMerchantRegistra
 
     }
 
+    fun hideSoftKeyboard() {
+        val imm = requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0)
+    }
+
     private fun shopLocationPlacesWork() {
         val key = "AIzaSyBSaXkJ_-0oPoKvBgk-6fySZx_QM_uXlbo"
 
@@ -144,6 +143,7 @@ class KycMerchantRegistrationFragment : BaseFragment<FragmentKycMerchantRegistra
                 // Text view where we will
                 // append the information that we fetch
 
+                hideSoftKeyboard()
                 // Information about the place
                 val name = place.name
                 val address = place.address

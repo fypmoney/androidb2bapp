@@ -43,6 +43,14 @@ class TakeHandFingerFragment : BaseFragment<FragmentTakeHandFingerBinding, TakeH
             takeHandFingerFragmentVM.customerNumber = Utility.getCustomerDataFromPreference()?.mobile
         }
 
+        if (takeHandFingerFragmentVM.via == "UserKyc"){
+            //userkyc
+            binding.tvTakeHandDesc.text = "Please choose the hand (Right or Left) and the finger that the customer will place on the biometric device"
+        }else{
+            //selfkyc
+            binding.tvTakeHandDesc.text = "Please choose the hand (Right or Left) and the finger that you will place on the biometric device"
+        }
+
         takeHandFingerFragmentVM.customerAadhaarNumber = arguments?.getString("aadhaarNumber")
 
         setToolbarAndTitle(

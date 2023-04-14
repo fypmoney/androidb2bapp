@@ -67,7 +67,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvAadhaarNumber" />
 
-
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tvAaadhaarError"
             android:layout_width="0dp"
