@@ -1,8 +1,13 @@
 package com.fypmoney.view.kycagent.ui
 
+import android.app.Activity.RESULT_CANCELED
+import android.app.Activity.RESULT_OK
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.core.content.ContextCompat
@@ -22,14 +27,19 @@ import com.fypmoney.view.kycagent.viewmodel.KycMerchantRegistrationFragmentVM
 import com.google.android.gms.common.api.Status
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.widget.Autocomplete
+import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import kotlinx.android.synthetic.main.toolbar.*
+
 
 class KycMerchantRegistrationFragment : BaseFragment<FragmentKycMerchantRegistrationBinding, KycMerchantRegistrationFragmentVM>(){
 
     private lateinit var binding: FragmentKycMerchantRegistrationBinding
     private val kycMerchantRegistrationFragmentVM by viewModels<KycMerchantRegistrationFragmentVM> { defaultViewModelProviderFactory }
+    val AUTOCOMPLETE_REQUEST_CODE = 1
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -79,10 +89,9 @@ class KycMerchantRegistrationFragment : BaseFragment<FragmentKycMerchantRegistra
 //        ).permissions()
 
         setUpObserver()
-
-//        setupStateDropDown()
-
+        //setupStateDropDown()
         shopLocationPlacesWork()
+
 
     }
 
@@ -96,11 +105,6 @@ class KycMerchantRegistrationFragment : BaseFragment<FragmentKycMerchantRegistra
         // Initialize Autocomplete Fragments
         // from the main activity layout file
         val autocompleteSupportFragment1 = childFragmentManager.findFragmentById(R.id.autocomplete_fragment1) as AutocompleteSupportFragment?
-
-//        val hintTxt = findViewById<TextInputEditText>(R.id.places_autocomplete_search_input)
-//        hintTxt?.textSize = 15f
-//        hintTxt?.setTextColor(requireContext().getColor(R.color.greyColor))
-//        autoCompFrag.setHint(getString(R.string.search_hint))
 
         val searchView = requireActivity().findViewById<AppCompatEditText>(R.id.places_autocomplete_search_input)
 //
@@ -132,7 +136,7 @@ class KycMerchantRegistrationFragment : BaseFragment<FragmentKycMerchantRegistra
         // Display the fetched information after clicking on one of the options
         autocompleteSupportFragment1.setOnPlaceSelectedListener(object : PlaceSelectionListener {
             override fun onError(p0: Status) {
-
+                Utility.showToast("Status: $p0")
             }
 
             override fun onPlaceSelected(place: Place) {
@@ -174,6 +178,7 @@ class KycMerchantRegistrationFragment : BaseFragment<FragmentKycMerchantRegistra
         })
 
     }
+
 
 //    private fun setupStateDropDown(){
 //        val items = listOf("Andhra Pradesh",
