@@ -55,6 +55,7 @@
             android:hint="Enter Mobile Number"
             android:inputType="number"
             android:maxLength="10"
+            android:textCursorDrawable="@null"
             android:paddingStart="@dimen/dp18"
             android:paddingEnd="@dimen/dp28"
             android:singleLine="true"

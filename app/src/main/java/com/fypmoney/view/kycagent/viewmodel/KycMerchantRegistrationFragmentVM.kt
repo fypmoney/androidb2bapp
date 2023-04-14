@@ -32,6 +32,8 @@ class KycMerchantRegistrationFragmentVM(application: Application) : BaseViewMode
         null
     )
 
+    val mapOfAddress = HashMap<String, String>()
+
     val stateDelegate = StateDelegate()
 
     fun openPhotoUpload(){

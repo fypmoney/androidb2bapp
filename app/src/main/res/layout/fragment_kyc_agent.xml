@@ -40,26 +40,27 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/myProfileIv"
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:layout_marginStart="14dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_profile_img" />
+<!--                    <androidx.appcompat.widget.AppCompatImageView-->
+<!--                        android:id="@+id/myProfileIv"-->
+<!--                        android:layout_width="36dp"-->
+<!--                        android:layout_height="36dp"-->
+<!--                        android:layout_marginStart="14dp"-->
+<!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                        app:layout_constraintStart_toStartOf="parent"-->
+<!--                        app:layout_constraintTop_toTopOf="parent"-->
+<!--                        app:srcCompat="@drawable/ic_profile_img" />-->
 
                     <TextView
                         android:id="@+id/toolbarTitleTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
+                        android:layout_marginStart="14dp"
                         android:textAppearance="@style/TextAppearance.Fyp.Subtitle1"
                         android:textColor="@color/white"
                         android:textSize="@dimen/text_18sp"
+                        android:text="@{viewModel.toolbarTitle}"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/myProfileIv"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:text="Hey User" />
 
@@ -69,15 +70,33 @@
                         android:id="@+id/help"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_4sdp"
                         android:onClick="@{()->viewModel.onNotificationClicked()}"
                         android:visibility="visible"
+                        app:tint="@color/white"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/tvHelp"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/ic_support" />
 
-<!--                    <FrameLayout-->
+                    <TextView
+                        android:id="@+id/tvHelp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="20dp"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_18sp"
+                        android:onClick="@{()->viewModel.onNotificationClicked()}"
+                        android:fontFamily="@font/product_sans_regular"
+                        android:gravity="center_vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:text="Help" />
+
+
+                    <!--                    <FrameLayout-->
 <!--                        android:id="@+id/framne"-->
 <!--                        android:layout_width="wrap_content"-->
 <!--                        android:layout_height="wrap_content"-->
@@ -127,17 +146,36 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ivKycCard"
+                <LinearLayout
+                    android:id="@+id/rlAgentTopCard"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_190sdp"
-                    android:layout_marginHorizontal="@dimen/dp20"
-                    android:layout_marginTop="@dimen/dp32"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/img_kyc_frame"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivKycCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_190sdp"
+                        android:layout_marginHorizontal="@dimen/dp20"
+                        android:layout_marginTop="@dimen/dp32"
+                        android:scaleType="fitXY"
+                        app:srcCompat="@drawable/img_kyc_frame" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivAfterKycCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_148sdp"
+                        android:layout_marginHorizontal="@dimen/dp20"
+                        android:layout_marginTop="@dimen/dp32"
+                        android:scaleType="fitXY"
+                        android:visibility="gone"
+                        app:srcCompat="@drawable/ic_agent_full_kyc" />
+
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/llKycEarnings"
@@ -148,7 +186,7 @@
                     android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ivKycCard">
+                    app:layout_constraintTop_toBottomOf="@+id/rlAgentTopCard">
 
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/mcvNewKyc"

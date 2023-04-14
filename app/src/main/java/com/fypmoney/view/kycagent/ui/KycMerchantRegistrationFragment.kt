@@ -3,24 +3,30 @@ package com.fypmoney.view.kycagent.ui
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
+import androidx.appcompat.widget.AppCompatEditText
+import androidx.appcompat.widget.AppCompatImageButton
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
 import com.fypmoney.BR
 import com.fypmoney.R
+import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.FragmentKycMerchantRegistrationBinding
-import com.fypmoney.listener.LocationListenerClass
+import com.fypmoney.extension.toVisible
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.view.kycagent.viewmodel.KycMerchantRegistrationFragmentVM
+import com.google.android.gms.common.api.Status
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import kotlinx.android.synthetic.main.toolbar.*
 
-class KycMerchantRegistrationFragment : BaseFragment<FragmentKycMerchantRegistrationBinding, KycMerchantRegistrationFragmentVM>(),
-    LocationListenerClass.GetCurrentLocationListener {
+class KycMerchantRegistrationFragment : BaseFragment<FragmentKycMerchantRegistrationBinding, KycMerchantRegistrationFragmentVM>(){
 
     private lateinit var binding: FragmentKycMerchantRegistrationBinding
     private val kycMerchantRegistrationFragmentVM by viewModels<KycMerchantRegistrationFragmentVM> { defaultViewModelProviderFactory }
@@ -45,9 +51,9 @@ class KycMerchantRegistrationFragment : BaseFragment<FragmentKycMerchantRegistra
                 kycMerchantRegistrationFragmentVM.saveShopDetailsRequest.addr1 = binding.etAddress.text?.trim().toString()
                 kycMerchantRegistrationFragmentVM.saveShopDetailsRequest.agentContact1 = Utility.getCustomerDataFromPreference()?.mobile.toString()
                 kycMerchantRegistrationFragmentVM.saveShopDetailsRequest.shopName = binding.etBusinessName.text?.trim().toString()
-                kycMerchantRegistrationFragmentVM.saveShopDetailsRequest.pincode = binding.etPinCode.text?.trim().toString()
-                kycMerchantRegistrationFragmentVM.saveShopDetailsRequest.city = binding.etCity.text?.trim().toString()
-                kycMerchantRegistrationFragmentVM.saveShopDetailsRequest.state = kycMerchantRegistrationFragmentVM.stateDelegate.getValue()
+//                kycMerchantRegistrationFragmentVM.saveShopDetailsRequest.pincode = binding.etPinCode.text?.trim().toString()
+//                kycMerchantRegistrationFragmentVM.saveShopDetailsRequest.city = binding.etCity.text?.trim().toString()
+//                kycMerchantRegistrationFragmentVM.saveShopDetailsRequest.state = kycMerchantRegistrationFragmentVM.stateDelegate.getValue()
                 kycMerchantRegistrationFragmentVM.saveShopDetailsRequest.isPosterOrdered = kycMerchantRegistrationFragmentVM.mcbPosterValue
 
                 kycMerchantRegistrationFragmentVM.saveShopDetails(kycMerchantRegistrationFragmentVM.saveShopDetailsRequest)
@@ -68,55 +74,147 @@ class KycMerchantRegistrationFragment : BaseFragment<FragmentKycMerchantRegistra
             kycMerchantRegistrationFragmentVM.mcbPosterValue = AppConstants.NO
         }
 
-        LocationListenerClass(
-            requireActivity(), this
-        ).permissions()
+//        LocationListenerClass(
+//            requireActivity(), this
+//        ).permissions()
 
         setUpObserver()
 
-        setupStateDropDown()
+//        setupStateDropDown()
+
+        shopLocationPlacesWork()
+
     }
 
-    private fun setupStateDropDown(){
-        val items = listOf("Andhra Pradesh",
-            "Andaman and Nicobar Islands",
-            "Arunachal Pradesh",
-            "Assam",
-            "Bihar",
-            "Chandigarh",
-            "Chhattisgarh",
-            "Dadar and Nagar Haveli",
-            "Daman and Diu",
-            "Delhi",
-            "Lakshadweep",
-            "Puducherry",
-            "Goa",
-            "Gujarat",
-            "Haryana",
-            "Himachal Pradesh",
-            "Jammu and Kashmir",
-            "Jharkhand",
-            "Karnataka",
-            "Kerala",
-            "Madhya Pradesh",
-            "Maharashtra",
-            "Manipur",
-            "Meghalaya",
-            "Mizoram",
-            "Nagaland",
-            "Odisha",
-            "Punjab",
-            "Rajasthan",
-            "Sikkim",
-            "Tamil Nadu",
-            "Telangana",
-            "Tripura",
-            "Uttar Pradesh",
-            "Uttarakhand",
-            "West Bengal")
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, items)
-        (binding.actState as? AutoCompleteTextView)?.setAdapter(adapter)
+    private fun shopLocationPlacesWork() {
+        val key = "AIzaSyBSaXkJ_-0oPoKvBgk-6fySZx_QM_uXlbo"
+
+        if (!Places.isInitialized()) {
+            Places.initialize(PockketApplication.instance, key)
+        }
+
+        // Initialize Autocomplete Fragments
+        // from the main activity layout file
+        val autocompleteSupportFragment1 = childFragmentManager.findFragmentById(R.id.autocomplete_fragment1) as AutocompleteSupportFragment?
+
+//        val hintTxt = findViewById<TextInputEditText>(R.id.places_autocomplete_search_input)
+//        hintTxt?.textSize = 15f
+//        hintTxt?.setTextColor(requireContext().getColor(R.color.greyColor))
+//        autoCompFrag.setHint(getString(R.string.search_hint))
+
+        val searchView = requireActivity().findViewById<AppCompatEditText>(R.id.places_autocomplete_search_input)
+//
+        searchView.hint = "Type to search"
+        searchView.setPadding(20, 20 , 20, 20)
+        searchView.setHintTextColor(ContextCompat.getColor(requireContext(), R.color.text_grey))
+        searchView.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+        (requireActivity().findViewById<AppCompatImageButton>(R.id.places_autocomplete_search_button)).visibility =
+            View.GONE
+
+        // Information that we wish to fetch after typing
+        // the location and clicking on one of the options
+        autocompleteSupportFragment1!!.setPlaceFields(
+            listOf(
+                Place.Field.NAME,
+                Place.Field.ADDRESS,
+                Place.Field.PHONE_NUMBER,
+                Place.Field.LAT_LNG,
+                Place.Field.OPENING_HOURS,
+                Place.Field.RATING,
+                Place.Field.USER_RATINGS_TOTAL,
+                Place.Field.ADDRESS_COMPONENTS
+            )
+        )
+
+        autocompleteSupportFragment1.setTypesFilter(mutableListOf("school", "primary_school", "secondary_school"))
+        autocompleteSupportFragment1.setCountries("IN")
+
+        // Display the fetched information after clicking on one of the options
+        autocompleteSupportFragment1.setOnPlaceSelectedListener(object : PlaceSelectionListener {
+            override fun onError(p0: Status) {
+
+            }
+
+            override fun onPlaceSelected(place: Place) {
+
+                // Text view where we will
+                // append the information that we fetch
+
+                // Information about the place
+                val name = place.name
+                val address = place.address
+                val latlng = place.latLng
+                val latitude = latlng?.latitude
+                val longitude = latlng?.longitude
+
+                val placesList = place.addressComponents?.asList()
+
+                placesList?.forEach {
+                    kycMerchantRegistrationFragmentVM.mapOfAddress[it.types[0]] = it.name
+                }
+
+                kycMerchantRegistrationFragmentVM.saveShopDetailsRequest.latitude = latitude.toString()
+                kycMerchantRegistrationFragmentVM.saveShopDetailsRequest.longitude = longitude.toString()
+                kycMerchantRegistrationFragmentVM.saveShopDetailsRequest.state =
+                    kycMerchantRegistrationFragmentVM.mapOfAddress["administrative_area_level_1"].toString()
+                kycMerchantRegistrationFragmentVM.saveShopDetailsRequest.city =
+                    kycMerchantRegistrationFragmentVM.mapOfAddress["administrative_area_level_2"].toString()
+                kycMerchantRegistrationFragmentVM.saveShopDetailsRequest.pincode =
+                    kycMerchantRegistrationFragmentVM.mapOfAddress["postal_code"].toString()
+
+                val nameAddress = "$name, $address"
+                autocompleteSupportFragment1.setText(nameAddress)
+
+                binding.tvLocationText.toVisible()
+                binding.tvLocationValue.toVisible()
+                binding.tvLocationValue.text = address
+
+
+            }
+        })
+
     }
+
+//    private fun setupStateDropDown(){
+//        val items = listOf("Andhra Pradesh",
+//            "Andaman and Nicobar Islands",
+//            "Arunachal Pradesh",
+//            "Assam",
+//            "Bihar",
+//            "Chandigarh",
+//            "Chhattisgarh",
+//            "Dadar and Nagar Haveli",
+//            "Daman and Diu",
+//            "Delhi",
+//            "Lakshadweep",
+//            "Puducherry",
+//            "Goa",
+//            "Gujarat",
+//            "Haryana",
+//            "Himachal Pradesh",
+//            "Jammu and Kashmir",
+//            "Jharkhand",
+//            "Karnataka",
+//            "Kerala",
+//            "Madhya Pradesh",
+//            "Maharashtra",
+//            "Manipur",
+//            "Meghalaya",
+//            "Mizoram",
+//            "Nagaland",
+//            "Odisha",
+//            "Punjab",
+//            "Rajasthan",
+//            "Sikkim",
+//            "Tamil Nadu",
+//            "Telangana",
+//            "Tripura",
+//            "Uttar Pradesh",
+//            "Uttarakhand",
+//            "West Bengal")
+//        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, items)
+//        (binding.actState as? AutoCompleteTextView)?.setAdapter(adapter)
+//    }
 
     private fun setUpObserver() {
         kycMerchantRegistrationFragmentVM.state.observe(viewLifecycleOwner){
@@ -164,8 +262,8 @@ class KycMerchantRegistrationFragment : BaseFragment<FragmentKycMerchantRegistra
 
     private fun checkAllFields() : Boolean {
         return (binding.etName.text.toString().isNotEmpty() && binding.etBusinessName.text.toString().isNotEmpty() && binding.etAddress.text.toString().isNotEmpty()
-                && binding.etPinCode.text.toString().isNotEmpty() && binding.etPinCode.text?.trim()?.length == 6 && binding.etCity.text.toString().isNotEmpty()
-                && (kycMerchantRegistrationFragmentVM.stateDelegate.getValue().isNotEmpty() && (kycMerchantRegistrationFragmentVM.stateDelegate.getValue()!="null")) && kycMerchantRegistrationFragmentVM.mcbPosterValue != null)
+                && kycMerchantRegistrationFragmentVM.saveShopDetailsRequest.pincode.isNotEmpty() && kycMerchantRegistrationFragmentVM.saveShopDetailsRequest.pincode.length == 6 && kycMerchantRegistrationFragmentVM.saveShopDetailsRequest.city.isNotEmpty()
+                && (kycMerchantRegistrationFragmentVM.saveShopDetailsRequest.state.isNotEmpty()) && kycMerchantRegistrationFragmentVM.mcbPosterValue != null)
     }
 
     override fun getBindingVariable(): Int = BR.viewModel
@@ -177,13 +275,13 @@ class KycMerchantRegistrationFragment : BaseFragment<FragmentKycMerchantRegistra
     override fun onTryAgainClicked() {
     }
 
-    override fun getCurrentLocation(
-        isInternetConnected: Boolean?,
-        latitude: Double,
-        Longitude: Double
-    ) {
-        kycMerchantRegistrationFragmentVM.saveShopDetailsRequest.latitude = latitude.toString()
-        kycMerchantRegistrationFragmentVM.saveShopDetailsRequest.longitude = Longitude.toString()
-    }
+//    override fun getCurrentLocation(
+//        isInternetConnected: Boolean?,
+//        latitude: Double,
+//        Longitude: Double
+//    ) {
+//        kycMerchantRegistrationFragmentVM.saveShopDetailsRequest.latitude = latitude.toString()
+//        kycMerchantRegistrationFragmentVM.saveShopDetailsRequest.longitude = Longitude.toString()
+//    }
 
 }

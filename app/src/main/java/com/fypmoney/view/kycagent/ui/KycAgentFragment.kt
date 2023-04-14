@@ -18,6 +18,8 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.FragmentKycAgentBinding
+import com.fypmoney.extension.toGone
+import com.fypmoney.extension.toVisible
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.util.videoplayer.VideoActivity2
@@ -164,7 +166,9 @@ class KycAgentFragment : BaseFragment<FragmentKycAgentBinding, KycAgentFragmentV
                     kycAgentFragmentVM.isShopListed = it.shopData.isShopListed
 
                     if (kycAgentFragmentVM.isShopListed.equals(AppConstants.YES)){
-                        Glide.with(requireContext()).load(R.drawable.ic_agent_full_kyc).into(binding.ivKycCard)
+//                        Glide.with(requireContext()).load(R.drawable.ic_agent_full_kyc).into(binding.ivKycCard)
+                        binding.ivKycCard.toGone()
+                        binding.ivAfterKycCard.toVisible()
                     }
                 }
             }
