@@ -202,6 +202,7 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
                 callInsuficientFundMessageSheet(it.amount)
             }
 
+            else -> {}
         }
     }
 
@@ -245,6 +246,7 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
                 }
                 intentToActivity(PlaceOrderSuccessActivity::class.java)
             }
+            else -> {}
         }
     }
 

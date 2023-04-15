@@ -153,6 +153,7 @@ class SelectRelationActivity : BaseActivity<ActivitySelectRelationshipBinding, S
                 startActivity(Intent(this, UserProfileView::class.java))
             }
 
+            else -> {}
         }
     }
 

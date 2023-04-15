@@ -339,6 +339,7 @@ class AddMoneyUpiDebitView : BaseActivity<ViewAddMoneyUpiDebitBinding, AddMoneyU
                         resultData.isPaymentOptionAvailable
                     com.payu.custombrowser.util.PaymentOption.PHONEPE -> isPhonePeSupported =
                         resultData.isPaymentOptionAvailable
+                    else -> {}
                 }
             }
         }

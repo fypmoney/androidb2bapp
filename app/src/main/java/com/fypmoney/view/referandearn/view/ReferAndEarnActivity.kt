@@ -75,6 +75,7 @@ class ReferAndEarnActivity : BaseActivity<ActivityReferAndEarnBinding,ReferAndEa
                 }
 
             }
+            else -> {}
         }
     }
 

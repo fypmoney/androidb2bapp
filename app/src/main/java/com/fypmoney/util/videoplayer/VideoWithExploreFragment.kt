@@ -241,6 +241,7 @@ class VideoWithExploreFragment : BaseFragment<FragmentVideoWithExploreBinding, V
                     videoWithExploreFragmentVM.buttonState.value = PlayingState.PLAYING
                     videoWithExploreFragmentVM.play()
                 }
+                else -> {}
             }
         }
         mViewBinding.playButtonView.setOnClickListener {
@@ -254,6 +255,7 @@ class VideoWithExploreFragment : BaseFragment<FragmentVideoWithExploreBinding, V
                     videoWithExploreFragmentVM.buttonState.value = PlayingState.PLAYING
                     videoWithExploreFragmentVM.play()
                 }
+                else -> {}
             }
         }
         restartTimer()

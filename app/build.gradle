@@ -5,13 +5,19 @@ plugins {
     id 'kotlin-android-extensions'
     id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics'
-    id("com.apollographql.apollo").version("2.4.6")
+    id("com.apollographql.apollo").version("2.5.13")
     id 'androidx.navigation.safeargs.kotlin'
 
 }
 
 android {
     signingConfigs {
+        debug {
+            storeFile file('C:\\Users\\Pawankumar\\Desktop\\FypAgent.jks')
+            storePassword 'Fyp#23'
+            keyAlias 'key0'
+            keyPassword 'Fyp#23'
+        }
         config {
             storeFile file('C:\\Users\\Pawankumar\\Desktop\\FypAgent.jks')
             storePassword 'Fyp#23'
@@ -20,13 +26,13 @@ android {
         }
     }
     compileSdkVersion rootProject.compileSdkVersion
-    buildToolsVersion "30.0.3"
+    buildToolsVersion "33.0.1"
 
     defaultConfig {
         ndk.abiFilters 'armeabi-v7a','arm64-v8a','x86','x86_64'
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 2
+        versionCode 5
         versionName "1.0.0"
         multiDexEnabled = true
         vectorDrawables.useSupportLibrary = true
@@ -38,9 +44,9 @@ android {
 
     buildTypes {
         release {
-            debuggable true
-            minifyEnabled false
-            shrinkResources false
+            debuggable false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
         }
@@ -58,12 +64,6 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
-    }
-    lintOptions {
-        checkReleaseBuilds false
-        // Or, if you prefer, you can continue to check for errors in release builds,
-        // but continue the build even when errors are found:
-        abortOnError false
     }
     kotlinOptions {
         jvmTarget = '1.8'
@@ -87,6 +87,11 @@ android {
                 buildConfigField "String", "MOENAGE_KEY","\"EF6YXWOUCTC748YDOJ47ZU3V\""
             }
     }
+    lint {
+        abortOnError false
+        checkReleaseBuilds false
+    }
+    namespace 'com.fypmoney'
 
 }
 
@@ -96,8 +101,8 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.3.1'
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
     implementation "androidx.biometric:biometric-ktx:1.2.0-alpha03"
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
@@ -161,10 +166,10 @@ dependencies {
     implementation "androidx.preference:preference-ktx:1.1.1"
 
     // Room components
-    implementation "androidx.room:room-ktx:2.3.0"
-    kapt "androidx.room:room-compiler:2.3.0"
-    androidTestImplementation "androidx.room:room-testing:2.3.0"
-
+    implementation "androidx.room:room-ktx:2.5.0"
+    kapt "androidx.room:room-compiler:2.5.0"
+    androidTestImplementation "androidx.room:room-testing:2.5.0"
+    implementation("androidx.room:room-rxjava2:2.5.0")
     // lib for SMS verification (Phone Auth)
     implementation("com.google.android.gms:play-services-auth:19.2.0")
     implementation("com.google.android.gms:play-services-auth-api-phone:17.5.1")
@@ -222,8 +227,8 @@ dependencies {
 
     //play core lib
     implementation 'com.google.android.play:core:1.10.1'
-    debugImplementation "com.github.chuckerteam.chucker:library:3.2.0"
-    releaseImplementation "com.github.chuckerteam.chucker:library:3.2.0"
+    debugImplementation "com.github.chuckerteam.chucker:library:3.5.2"
+    releaseImplementation "com.github.chuckerteam.chucker:library:3.5.2"
 //"com.github.chuckerteam.chucker:library-no-op:3.2.0"
 
     implementation 'com.google.android.gms:play-services-ads-identifier:17.0.1'

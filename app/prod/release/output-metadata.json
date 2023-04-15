@@ -4,16 +4,16 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "com.fypmoney",
+  "applicationId": "com.fypmoney.agent",
   "variantName": "prodRelease",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 74,
-      "versionName": "4.1.2",
-      "outputFile": "Fyp-prodRelease-v4.1.2.apk"
+      "versionCode": 4,
+      "versionName": "1.0.0",
+      "outputFile": "Fyp-prodRelease-v1.0.0.apk"
     }
   ],
   "elementType": "File"

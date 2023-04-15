@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.fypmoney">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-sdk tools:overrideLibrary="com.google.zxing.client.android" />
 
@@ -150,11 +149,6 @@
         <activity
             android:name=".view.activity.BankTransactionHistoryView"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="your.custom.ACTION" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".view.activity.LoginView"
@@ -168,11 +162,6 @@
         <activity
             android:name=".view.activity.CreateAccountView"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".view.activity.LoginSuccessView"
@@ -192,9 +181,6 @@
         <activity
             android:name=".view.activity.ReferralCodeView"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".view.activity.CreateAccountSuccessView"
@@ -229,11 +215,6 @@
         <activity
             android:name=".view.register.UserTypeOnLoginView"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".view.activity.StayTunedView"
@@ -254,11 +235,6 @@
         <activity
             android:name=".view.activity.ActivationSuccessWithAadhaarView"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".view.activity.AddMoneyUpiDebitView"
@@ -345,11 +321,6 @@
         <activity
             android:name=".view.register.PendingRequestActivity"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".view.register.PersonalisedOffersActivity"
@@ -357,20 +328,10 @@
         <activity
             android:name=".view.activity.ChooseInterestRegisterView"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".view.register.PanAdhaarSelectionActivity"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".view.register.KycDetailsActivity"
@@ -405,11 +366,6 @@
         <activity
             android:name=".view.discord.view.DiscordProfileActivity"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
         </activity>
 
         <meta-data

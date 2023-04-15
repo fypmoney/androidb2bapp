@@ -131,6 +131,7 @@ class SpendsAndIncomeFragment : BaseFragment<FragmentSpendsAndIncomeBinding, Ins
                         }
                     }
                 }
+                else -> {}
             }
         }
     }

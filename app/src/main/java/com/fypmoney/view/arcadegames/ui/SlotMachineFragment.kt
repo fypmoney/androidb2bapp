@@ -323,6 +323,7 @@ class SlotMachineFragment : BaseFragment<FragmentSlotMachineBinding, SlotMachine
                 )
             }
 
+            else -> {}
         }
     }
 
@@ -391,6 +392,7 @@ class SlotMachineFragment : BaseFragment<FragmentSlotMachineBinding, SlotMachine
             }
 
             SlotMachineFragmentVM.SlotMachineState.Loading -> {}
+            else -> {}
         }
     }
 
@@ -465,6 +467,7 @@ class SlotMachineFragment : BaseFragment<FragmentSlotMachineBinding, SlotMachine
                 }
 
             }
+            else -> {}
         }
     }
 
@@ -495,6 +498,7 @@ class SlotMachineFragment : BaseFragment<FragmentSlotMachineBinding, SlotMachine
             is SlotMachineFragmentVM.PlayOrderSuccessState.PlayOrderSuccess -> {
                 slotMachineFragmentVM.spinWheelRotateResponseDetails = it.spinWheelResponseDetails
             }
+            else -> {}
         }
     }
 
@@ -532,6 +536,7 @@ class SlotMachineFragment : BaseFragment<FragmentSlotMachineBinding, SlotMachine
             }
             SlotMachineFragmentVM.MyntsSuccessState.Loading -> {
             }
+            else -> {}
         }
     }
 
@@ -568,6 +573,7 @@ class SlotMachineFragment : BaseFragment<FragmentSlotMachineBinding, SlotMachine
             }
             SlotMachineFragmentVM.CashSuccessState.Loading -> {
             }
+            else -> {}
         }
     }
 
@@ -605,6 +611,7 @@ class SlotMachineFragment : BaseFragment<FragmentSlotMachineBinding, SlotMachine
             SlotMachineFragmentVM.TicketSuccessState.Loading -> {
             }
 
+            else -> {}
         }
     }
 

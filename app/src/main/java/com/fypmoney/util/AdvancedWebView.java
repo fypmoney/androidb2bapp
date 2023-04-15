@@ -964,7 +964,7 @@ public class AdvancedWebView extends WebView {
 					super.onExceededDatabaseQuota(url, databaseIdentifier, quota, estimatedDatabaseSize, totalQuota, quotaUpdater);
 				}
 			}
-
+/*
 			@Override
 			public void onReachedMaxAppCacheSize(long requiredStorage, long quota, QuotaUpdater quotaUpdater) {
 				if (mCustomWebChromeClient != null) {
@@ -972,7 +972,7 @@ public class AdvancedWebView extends WebView {
 				} else {
 					super.onReachedMaxAppCacheSize(requiredStorage, quota, quotaUpdater);
 				}
-			}
+			}*/
 
 		});
 

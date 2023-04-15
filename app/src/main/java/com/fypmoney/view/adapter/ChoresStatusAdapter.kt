@@ -25,7 +25,7 @@ class ChoresStatusAdapter(var statusList: List<ChoresTimeLineItem>) :
     }
 
     override fun getItemCount(): Int {
-        return statusList?.size
+        return statusList.size!!
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {

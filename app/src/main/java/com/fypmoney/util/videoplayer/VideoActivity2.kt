@@ -219,6 +219,7 @@ class VideoActivity2 : BaseActivity<ActivityVideo2Binding, VideoViewModel>(),
                     viewModel.buttonState.value = PlayingState.PLAYING
                     viewModel.play()
                 }
+                else -> {}
             }
         }
         play_button_view.setOnClickListener {
@@ -232,6 +233,7 @@ class VideoActivity2 : BaseActivity<ActivityVideo2Binding, VideoViewModel>(),
                     viewModel.buttonState.value = PlayingState.PLAYING
                     viewModel.play()
                 }
+                else -> {}
             }
         }
 

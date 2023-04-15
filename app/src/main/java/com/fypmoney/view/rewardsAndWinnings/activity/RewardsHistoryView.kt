@@ -59,7 +59,7 @@ class RewardsHistoryView : BaseActivity<ViewRewardHistoryBinding, RewardsHistory
     private fun observeInput(sharedVM: RewardsHistoryVM?) {
 
         page = 0
-        mVM?.redeemproductDetails.observe(this) {
+        mVM?.redeemproductDetails?.observe(this) {
 
             Glide.with(this).asDrawable().load(it.scratchResourceHide)
                 .into(object : CustomTarget<Drawable?>() {

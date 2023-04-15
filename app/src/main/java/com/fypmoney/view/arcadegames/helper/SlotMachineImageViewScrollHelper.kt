@@ -56,11 +56,11 @@ class SlotMachineImageViewScrollHelper(context: Context, attributeSet: Attribute
             .setDuration(ANIMATION_DURATION.toLong())
             .setInterpolator(DecelerateInterpolator())
             .setListener(object : Animator.AnimatorListener {
-                override fun onAnimationStart(animation: Animator?) {
+                override fun onAnimationStart(animation: Animator) {
 
                 }
 
-                override fun onAnimationEnd(animation: Animator?) {
+                override fun onAnimationEnd(animation: Animator) {
                     setImage(currentImage, oldValue % NO_OF_IMAGES)
                     currentImage.translationY = 0f
 
@@ -75,11 +75,11 @@ class SlotMachineImageViewScrollHelper(context: Context, attributeSet: Attribute
                     }
                 }
 
-                override fun onAnimationCancel(animation: Animator?) {
+                override fun onAnimationCancel(animation: Animator) {
 
                 }
 
-                override fun onAnimationRepeat(animation: Animator?) {
+                override fun onAnimationRepeat(animation: Animator) {
 
                 }
 

@@ -62,6 +62,7 @@ class DiscordInviteActivity : BaseActivity<ActivityDiscordBinding, DiscordActivi
             DiscordActivityVM.DiscordEvent.ConnectNow -> {
                 openDiscordCommunity()
             }
+            else -> {}
         }
     }
 

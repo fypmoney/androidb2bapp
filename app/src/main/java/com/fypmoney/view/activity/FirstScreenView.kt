@@ -69,6 +69,7 @@ class FirstScreenView : BaseActivity<ViewFirstScreenBinding, FirstScreenViewMode
             FirstScreenViewModel.FirstScreenEvent.CreateAccount -> {
                 intentToActivity()
             }
+            else -> {}
         }
     }
 

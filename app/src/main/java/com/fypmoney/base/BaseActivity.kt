@@ -207,6 +207,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
 
                 }
 
+                else -> {}
             }
         }
         mViewModel?.logoutUser?.observe(this)

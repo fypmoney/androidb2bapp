@@ -46,6 +46,7 @@ class SocialCommunityActivity : BaseActivity<ActivitySocialCommunityBinding,Soci
                 openCommunity(AppConstants.YOUTUBE_PAGE)
             }
 
+            else -> {}
         }
     }
 

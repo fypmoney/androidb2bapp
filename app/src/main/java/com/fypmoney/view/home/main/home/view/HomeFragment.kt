@@ -819,7 +819,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
                     }
 
                     else {
-                        redirectionResources.let { it1 ->
+                        redirectionResources?.let { it1 ->
                             deeplinkRedirection(
                                 it1,
                                 requireContext()

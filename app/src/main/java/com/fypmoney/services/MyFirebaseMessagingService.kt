@@ -74,45 +74,45 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
 
                     notificationBuilder?.setContentTitle(it.notification?.title.toString())
-                        .setContentText(it.notification?.body.toString())
-                        .setPriority(NotificationCompat.PRIORITY_HIGH)
-                        .setStyle(NotificationCompat.BigTextStyle())
-                        .setSmallIcon(R.drawable.ic_notification)
-                        .setSound(
+                        ?.setContentText(it.notification?.body.toString())
+                        ?.setPriority(NotificationCompat.PRIORITY_HIGH)
+                        ?.setStyle(NotificationCompat.BigTextStyle())
+                        ?.setSmallIcon(R.drawable.ic_notification)
+                        ?.setSound(
                             Uri.parse(
                                 ContentResolver.SCHEME_ANDROID_RESOURCE
                                         + "://" + BuildConfig.APPLICATION_ID + "/" + R.raw.notification_sound
                             )
                         )
-                        .setLargeIcon(
+                        ?.setLargeIcon(
                             BitmapFactory.decodeResource(
                                 resources,
                                 R.mipmap.ic_launcher_round
                             )
                         )
-                        .setTicker(resources.getString(R.string.app_name))
-                        .setAutoCancel(true)
+                        ?.setTicker(resources.getString(R.string.app_name))
+                        ?.setAutoCancel(true)
                 } else {
 
                     notificationBuilder?.setContentTitle(it.notification?.title.toString())
-                        .setContentText(it.notification?.body.toString())
-                        .setPriority(NotificationCompat.PRIORITY_HIGH)
-                        .setStyle(NotificationCompat.BigTextStyle())
-                        .setSmallIcon(R.drawable.ic_notification_png)
-                        .setSound(
+                        ?.setContentText(it.notification?.body.toString())
+                        ?.setPriority(NotificationCompat.PRIORITY_HIGH)
+                        ?.setStyle(NotificationCompat.BigTextStyle())
+                        ?.setSmallIcon(R.drawable.ic_notification_png)
+                        ?.setSound(
                             Uri.parse(
                                 ContentResolver.SCHEME_ANDROID_RESOURCE
                                         + "://" + BuildConfig.APPLICATION_ID + "/" + R.raw.notification_sound
                             )
                         )
-                        .setLargeIcon(
+                        ?.setLargeIcon(
                             BitmapFactory.decodeResource(
                                 resources,
                                 R.drawable.ic_notification_png
                             )
                         )
-                        .setTicker(resources.getString(R.string.app_name))
-                        .setAutoCancel(true)
+                        ?.setTicker(resources.getString(R.string.app_name))
+                        ?.setAutoCancel(true)
                 }
 
 
@@ -120,12 +120,21 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                     getSystemService(NOTIFICATION_SERVICE) as NotificationManager
 
 
-                val contentIntent = PendingIntent.getActivity(
-                    this,
-                    0,
-                    onNotificationClick(remoteMessage),
-                    PendingIntent.FLAG_UPDATE_CURRENT
-                )
+                val contentIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    PendingIntent.getActivity(
+                        this,
+                        0,
+                        onNotificationClick(remoteMessage),
+                        PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+                    )
+                } else {
+                    PendingIntent.getActivity(
+                        this,
+                        0,
+                        onNotificationClick(remoteMessage),
+                        PendingIntent.FLAG_UPDATE_CURRENT
+                    )
+                }
 
 
 

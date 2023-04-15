@@ -184,7 +184,7 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                                             getApplication(),
                                             SharedPrefUtils.SF_KEY_USER_INTEREST
                                         )
-                                    if (userInterest != null && userInterest?.size > 0) {
+                                    if (userInterest != null && userInterest?.size!! > 0) {
                                         if (hasPermissions(
                                                 this,
                                                 Manifest.permission.READ_CONTACTS
@@ -222,7 +222,7 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                                                 getApplication(),
                                                 SharedPrefUtils.SF_KEY_USER_INTEREST
                                             )
-                                        if (userInterest != null && userInterest?.size > 0) {
+                                        if (userInterest != null && userInterest?.size!! > 0) {
                                             if (hasPermissions(
                                                     this,
                                                     Manifest.permission.READ_CONTACTS
@@ -249,7 +249,7 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                                             getApplication(),
                                             SharedPrefUtils.SF_KEY_USER_INTEREST
                                         )
-                                    if (userInterest != null && userInterest?.size > 0) {
+                                    if (userInterest != null && userInterest?.size!! > 0) {
                                         if (hasPermissions(
                                                 this,
                                                 Manifest.permission.READ_CONTACTS

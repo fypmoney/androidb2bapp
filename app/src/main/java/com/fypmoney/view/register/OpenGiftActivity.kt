@@ -31,11 +31,11 @@ class OpenGiftActivity : BaseActivity<ActivityOpenGiftBinding, openGiftVM>() {
         }, 300)
 
         binding.giftBox.addAnimatorListener(object : Animator.AnimatorListener {
-            override fun onAnimationStart(animation: Animator?) {
+            override fun onAnimationStart(animation: Animator) {
                 Log.e("Animation:", "start")
             }
 
-            override fun onAnimationEnd(animation: Animator?) {
+            override fun onAnimationEnd(animation: Animator) {
                 Log.e("Animation:", "end")
 
                 val intent = Intent(this@OpenGiftActivity, YourGiftsActivity::class.java)
@@ -49,11 +49,11 @@ class OpenGiftActivity : BaseActivity<ActivityOpenGiftBinding, openGiftVM>() {
 
             }
 
-            override fun onAnimationCancel(animation: Animator?) {
+            override fun onAnimationCancel(animation: Animator) {
                 Log.e("Animation:", "cancel")
             }
 
-            override fun onAnimationRepeat(animation: Animator?) {
+            override fun onAnimationRepeat(animation: Animator) {
                 Log.e("Animation:", "repeat")
             }
         })

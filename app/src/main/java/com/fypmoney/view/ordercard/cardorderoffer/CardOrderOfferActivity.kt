@@ -135,6 +135,7 @@ class CardOrderOfferActivity : BaseActivity<ActivityCardOrderOfferBinding, CardO
                 startActivity(intent)
             }
 
+            else -> {}
         }
     }
 

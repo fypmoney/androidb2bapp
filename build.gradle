@@ -6,13 +6,13 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.3'
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.31")
+        classpath 'com.android.tools.build:gradle:7.4.2'
+        classpath('org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.21')
         // Add google services to support firebase push notification
-        classpath 'com.google.gms:google-services:4.3.10'
+        classpath 'com.google.gms:google-services:4.3.15'
         // use latest dependency for firebase crashlytics
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.5.2'
-        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.3.5"
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.4'
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.5.3"
 
 
 
@@ -44,8 +44,8 @@ ext{
     appName = 'Fyp'
     // Sdk and tools
     minSdkVersion = 23
-    targetSdkVersion = 30
-    compileSdkVersion = 30
+    targetSdkVersion = 33
+    compileSdkVersion = 33
     kotlin_version = '1.5.31'
 
 }

@@ -85,6 +85,7 @@ class UpgradeToKycInfoActivity : BaseActivity<ActivityUpgradeToKycInfoBinding,Up
                 })
             }
 
+            else -> {}
         }
     }
 

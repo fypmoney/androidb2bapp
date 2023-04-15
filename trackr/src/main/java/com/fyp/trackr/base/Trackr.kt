@@ -304,6 +304,7 @@ object Trackr {
                 TrackrServices.FIREBASE -> {
 
                 }
+                else -> {}
             }
         }
     }

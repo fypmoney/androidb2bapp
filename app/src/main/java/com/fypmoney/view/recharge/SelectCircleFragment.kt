@@ -96,7 +96,7 @@ class SelectCircleFragment : BaseFragment<SelectCircleFragmentBinding, SelectCir
                             it.name?.let { it1 ->
                                 selectCircleFragmentVM.mobile.value?.let { it2 ->
                                     SelectCircleFragmentDirections.actionSelectRechargePlans(
-                                        selectCircleFragmentVM.selectedOperator.value,
+                                        selectedOperator = selectCircleFragmentVM.selectedOperator.value,
                                         selectedCircle = it1,
                                         mobile = it2,
                                         rechargeTye = selectCircleFragmentVM.rechargeType.value

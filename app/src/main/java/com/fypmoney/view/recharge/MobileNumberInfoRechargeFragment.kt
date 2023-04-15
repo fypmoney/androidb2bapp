@@ -156,7 +156,7 @@ class MobileNumberInfoRechargeFragment:BaseFragment<MobileNumberInfoRechargeFrag
             is MobileNumberInfoRechargeFragmentVM.EnterMobileNumberInfoRechargeEvent.ShowPlanScreen -> {
                 val directions = mViewModel.mobileNumberInfoModel?.circle?.let { it1 ->
                     MobileNumberInfoRechargeFragmentDirections.actionSelectRechargePlans(
-                        mViewModel.operatorResponse,
+                        selectedOperator = mViewModel.operatorResponse,
                         selectedCircle = it1,
                         mobile = mViewModel.mobileNumberInfoModel?.mobile,
                         rechargeTye = mViewModel.mobileNumberInfoModel?.rechargeType

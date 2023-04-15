@@ -194,6 +194,7 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
 
                 }
 
+                else -> {}
             }
         }
 

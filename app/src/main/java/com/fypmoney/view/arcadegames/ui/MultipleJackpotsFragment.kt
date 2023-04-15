@@ -101,6 +101,7 @@ class MultipleJackpotsFragment :
             MultipleJackpotFragmentVM.CashState.Loading -> {
 
             }
+            else -> {}
         }
     }
 
@@ -121,6 +122,7 @@ class MultipleJackpotsFragment :
             MultipleJackpotFragmentVM.MyntsState.Loading -> {
 
             }
+            else -> {}
         }
     }
 
@@ -161,6 +163,7 @@ class MultipleJackpotsFragment :
             is MultipleJackpotFragmentVM.MultipleJackpotsState.Loading -> {
 
             }
+            else -> {}
         }
     }
 

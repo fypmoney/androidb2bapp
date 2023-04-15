@@ -48,25 +48,25 @@ class YourGiftsActivity : BaseActivity<ActivityYourGiftsBinding, YourgiftVM>() {
     }
 
     private fun setObserver() {
-        yourGiftVM?.giftsList.observe(
-            this,
-            { list ->
+        yourGiftVM?.giftsList?.observe(
+            this
+        ) { list ->
 
-                list.forEach {
-                    if (it.giftType == getString(R.string.mynts_caps)) {
+            list.forEach {
+                if (it.giftType == getString(R.string.mynts_caps)) {
 
-                        binding.myntsLayout.visibility = View.VISIBLE
-                        binding.myntsWon.text = it.message
+                    binding.myntsLayout.visibility = View.VISIBLE
+                    binding.myntsWon.text = it.message
 
-                    } else if (it.giftType == getString(R.string.card_caps)) {
+                } else if (it.giftType == getString(R.string.card_caps)) {
 
 
-                        binding.cardOfferPriceValueTv.text =
-                            "₹" + Utility.convertToRs(it.value.toString())
-                        binding.cardLayout.visibility = View.VISIBLE
-                    }
+                    binding.cardOfferPriceValueTv.text =
+                        "₹" + Utility.convertToRs(it.value.toString())
+                    binding.cardLayout.visibility = View.VISIBLE
                 }
-            })
+            }
+        }
     }
 
 

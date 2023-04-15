@@ -117,6 +117,7 @@ class OrderCardView : BaseActivity<ViewOrderCardBinding, OrderCardViewModel>() {
                 }
 
             }
+            else -> {}
         }
     }
 
@@ -154,6 +155,7 @@ class OrderCardView : BaseActivity<ViewOrderCardBinding, OrderCardViewModel>() {
                 applyPromoCodeBottomSheet.show(supportFragmentManager, "ApplyPromoCode")
             }
 
+            else -> {}
         }
     }
 

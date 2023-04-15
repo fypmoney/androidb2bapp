@@ -260,6 +260,7 @@ class BrandedCouponsFragment :
                 errorCode()
             }
             BrandedCouponsFragmentVM.MyntsState.Loading -> {}
+            else -> {}
         }
 
     }
@@ -278,6 +279,7 @@ class BrandedCouponsFragment :
                     binding.tvBrandedCouponsTicketsCount.text = it.totalTickets.toString()
                 }
             }
+            else -> {}
         }
     }
 
@@ -296,6 +298,7 @@ class BrandedCouponsFragment :
                 errorCode()
             }
             BrandedCouponsFragmentVM.CashState.Loading -> {}
+            else -> {}
         }
     }
 
@@ -395,6 +398,7 @@ class BrandedCouponsFragment :
                 errorCode()
             }
             BrandedCouponsFragmentVM.BrandedCouponDataState.Loading -> {}
+            else -> {}
         }
     }
 
@@ -515,6 +519,7 @@ class BrandedCouponsFragment :
                 }, 1500)
 
             }
+            else -> {}
         }
     }
 
@@ -552,6 +557,7 @@ class BrandedCouponsFragment :
                     binding.lottieRewardConfetti.playAnimation()
                 }, 1500)
             }
+            else -> {}
         }
     }
 
@@ -607,6 +613,7 @@ class BrandedCouponsFragment :
                 })
 
             }
+            else -> {}
         }
     }
 
@@ -625,6 +632,7 @@ class BrandedCouponsFragment :
                 brandedCouponsFragmentVM.couponData = it.couponDetailsListData
 
             }
+            else -> {}
         }
     }
 

@@ -120,6 +120,7 @@ class ActiveCouponFragment :
             }
             is BrandedActiveCouponsFragmentVM.MyntsState.Error -> {}
             BrandedActiveCouponsFragmentVM.MyntsState.Loading -> {}
+            else -> {}
         }
 
     }
@@ -136,6 +137,7 @@ class ActiveCouponFragment :
                     binding.tvBrandedCouponsTicketsCount.text = it.totalTickets.toString()
                 }
             }
+            else -> {}
         }
     }
 
@@ -152,6 +154,7 @@ class ActiveCouponFragment :
             }
             is BrandedActiveCouponsFragmentVM.CashState.Error -> {}
             BrandedActiveCouponsFragmentVM.CashState.Loading -> {}
+            else -> {}
         }
     }
 
@@ -223,6 +226,7 @@ class ActiveCouponFragment :
 
                 setCouponDetailsData(it.couponDetailsListData)
             }
+            else -> {}
         }
     }
 

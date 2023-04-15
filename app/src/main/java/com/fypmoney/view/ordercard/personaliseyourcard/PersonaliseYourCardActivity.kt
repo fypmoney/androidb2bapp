@@ -73,6 +73,7 @@ class PersonaliseYourCardActivity : BaseActivity<ActivityPersonaliseYourCardBind
                 intent.putExtra(AppConstants.ORDER_CARD_INFO,mViewModel.userOfferCard)
                 startActivity(intent)
             }
+            else -> {}
         }
     }
 

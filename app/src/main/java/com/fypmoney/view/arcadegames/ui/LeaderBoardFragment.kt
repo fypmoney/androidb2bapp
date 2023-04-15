@@ -215,6 +215,7 @@ class LeaderBoardFragment : BaseFragment<FragmentLeaderBoardBinding, LeaderBoard
                 mViewBinding!!.shimmerLayoutLeaderBoard.toInvisible()
 
             }
+            else -> {}
         }
     }
 
