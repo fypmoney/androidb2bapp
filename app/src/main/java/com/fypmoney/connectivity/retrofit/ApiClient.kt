@@ -1,8 +1,6 @@
 package com.fypmoney.connectivity.retrofit
 
-import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.fypmoney.BuildConfig
-import com.fypmoney.application.PockketApplication
 import com.fypmoney.util.AppConstants.API_TIMEOUT_SECONDS
 import com.github.simonpercic.oklog3.OkLogInterceptor
 import okhttp3.HttpUrl.Companion.toHttpUrl
@@ -32,7 +30,7 @@ class ApiClient {
                     // ok logging use to see network call in browser
                     val okLogInterceptor = OkLogInterceptor.builder().build()
                     builder.addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-                    builder.addInterceptor(ChuckerInterceptor(PockketApplication.instance))
+                    //builder.addInterceptor(ChuckerInterceptor(PockketApplication.instance))
                     builder.addInterceptor(okLogInterceptor)
                 }
             }

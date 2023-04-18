@@ -25,7 +25,7 @@ class CreateAccountSuccessViewModel(application: Application) : BaseViewModel(ap
     }
     init {
         trackr {
-            it.services = arrayListOf(TrackrServices.FIREBASE,TrackrServices.MOENGAGE,TrackrServices.FB,TrackrServices.ADJUST)
+            it.services = arrayListOf(TrackrServices.FIREBASE,TrackrServices.MOENGAGE,TrackrServices.FB)
             it.name = TrackrEvent.account_creation
             it.add(
                 TrackrField.user_id, SharedPrefUtils.getLong(

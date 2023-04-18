@@ -44,9 +44,9 @@ android {
 
     buildTypes {
         release {
-            debuggable false
-            minifyEnabled true
-            shrinkResources true
+            debuggable true
+            minifyEnabled false
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
         }
@@ -72,19 +72,17 @@ android {
     productFlavors {
             dev{
                 signingConfig signingConfigs.config
-                applicationId "com.fypmoney.agnet.dev"
+                applicationId "com.fypmoney.agent.dev"
                 resValue "string", "app_name", "Fyp Agent-debug"
                 buildConfigField "String", "BASE_ENDPOINT", "\"http://52.22.235.46:9300\""
-                buildConfigField "String", "ADJUST_PROD_KEY","\"buqdhv6bqlts\""
-                buildConfigField "String", "MOENAGE_KEY","\"EF6YXWOUCTC748YDOJ47ZU3V\""
+                buildConfigField "String", "MOENAGE_KEY","\"G0N7KTO5Z8CND06I38E682IA\""
             }
             prod{
                 signingConfig signingConfigs.config
                 applicationId "com.fypmoney.agent"
                 resValue "string", "app_name", "Fyp Agent"
                 buildConfigField "String", "BASE_ENDPOINT", "\"https://techservices.fyp-e.in\""
-                buildConfigField "String", "ADJUST_PROD_KEY","\"buqdhv6bqlts\""
-                buildConfigField "String", "MOENAGE_KEY","\"EF6YXWOUCTC748YDOJ47ZU3V\""
+                buildConfigField "String", "MOENAGE_KEY","\"G0N7KTO5Z8CND06I38E682IA\""
             }
     }
     lint {
@@ -97,37 +95,36 @@ android {
 
 kapt { generateStubs = true }
 dependencies {
-    implementation 'androidx.core:core-ktx:1.6.0'
-    implementation 'androidx.appcompat:appcompat:1.3.1'
-    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.appcompat:appcompat:1.6.0'
+    implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
-    implementation "androidx.biometric:biometric-ktx:1.2.0-alpha03"
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
-    implementation 'com.google.firebase:firebase-inappmessaging-display:20.1.1'
-    implementation 'androidx.lifecycle:lifecycle-common-java8:2.4.0'
-    implementation 'com.google.firebase:firebase-dynamic-links:21.0.0'
-    implementation "com.google.firebase:firebase-dynamic-links-ktx:21.0.0"
+    implementation "androidx.biometric:biometric-ktx:1.2.0-alpha05"
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
+    implementation 'com.google.firebase:firebase-inappmessaging-display:20.3.0'
+    implementation 'androidx.lifecycle:lifecycle-common-java8:2.5.1'
+    implementation 'com.google.firebase:firebase-dynamic-links:21.1.0'
+    implementation "com.google.firebase:firebase-dynamic-links-ktx:21.1.0"
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
 
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
 
     implementation 'com.android.installreferrer:installreferrer:2.2'
     implementation 'androidx.viewpager2:viewpager2:1.1.0-beta01'
 
-    implementation 'com.airbnb.android:lottie:3.7.0'
+    implementation 'com.airbnb.android:lottie:6.0.0'
     // view model
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
-    kapt "androidx.lifecycle:lifecycle-compiler:2.3.0"
-    implementation 'com.google.android.material:material:1.4.0-alpha01'
+    kapt "androidx.lifecycle:lifecycle-compiler:2.5.1"
     implementation 'com.android.support.constraint:constraint-layout:2.0.4'
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
     implementation 'com.android.support:multidex:1.0.3'
 
     // Sdp for handling different screen size resolutions
@@ -144,77 +141,84 @@ dependencies {
     implementation("com.squareup.retrofit2:adapter-rxjava2:2.9.0")
     implementation("io.reactivex.rxjava2:rxandroid:2.1.1")
     implementation("io.reactivex.rxjava2:rxkotlin:2.4.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
-
+    implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2")
+    implementation("androidx.room:room-rxjava2:2.5.0")
     //Add Firebase Core
     implementation platform('com.google.firebase:firebase-bom:28.4.0')
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation("com.google.firebase:firebase-core")
     // Add the SDK for Firebase Cloud Messaging
-    implementation("com.google.firebase:firebase-messaging:23.0.0")
+    implementation("com.google.firebase:firebase-messaging:23.1.1")
 
     // Glide to show images
-    implementation 'com.github.bumptech.glide:glide:4.11.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+    implementation 'com.github.bumptech.glide:glide:4.13.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.13.0'
 
     // qr code generation
     implementation "com.github.kenglxn.QRGen:android:2.6.0"
 
 
     // for saving shared preferences
-    implementation "androidx.preference:preference-ktx:1.1.1"
+    implementation "androidx.preference:preference-ktx:1.2.0"
 
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+
+    // optional - RxJava2 support
+    implementation("androidx.datastore:datastore-preferences-rxjava2:1.0.0")
+
+    // optional - RxJava3 support
+    implementation("androidx.datastore:datastore-preferences-rxjava3:1.0.0")
     // Room components
     implementation "androidx.room:room-ktx:2.5.0"
     kapt "androidx.room:room-compiler:2.5.0"
     androidTestImplementation "androidx.room:room-testing:2.5.0"
     implementation("androidx.room:room-rxjava2:2.5.0")
     // lib for SMS verification (Phone Auth)
-    implementation("com.google.android.gms:play-services-auth:19.2.0")
-    implementation("com.google.android.gms:play-services-auth-api-phone:17.5.1")
-    implementation "com.google.firebase:firebase-messaging-directboot:23.0.0"
+    implementation("com.google.android.gms:play-services-auth:20.4.1")
+    implementation("com.google.android.gms:play-services-auth-api-phone:18.0.1")
+    implementation "com.google.firebase:firebase-messaging-directboot:23.1.1"
     implementation 'com.googlecode.libphonenumber:libphonenumber:8.7.0'
 
     implementation 'com.github.mukeshsolanki:android-otpview-pinview:2.1.2'
 
     // youtube
     implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:10.0.5'
-    implementation 'com.google.android.gms:play-services-location:18.0.0'
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
 
     // shimmer
-    implementation 'com.facebook.shimmer:shimmer:0.1.0@aar'
+    implementation 'com.facebook.shimmer:shimmer:0.5.0@aar'
 
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
 
-    implementation 'com.squareup.moshi:moshi:1.11.0'
+    implementation 'com.squareup.moshi:moshi:1.13.0'
     implementation 'com.squareup.moshi:moshi-kotlin:1.9.3'
     // google pay
-    implementation 'in.payu:payu-gpay:1.4.0'
+    implementation 'in.payu:payu-gpay:1.5.2'
 
     // pay u core sdk
-    implementation 'in.payu:payu-sdk:5.2.2'
+    implementation 'in.payu:payu-sdk:5.5.4'
 
     // pay u custom browser
-    implementation 'in.payu:payu-custom-browser:7.8.0'
+    implementation 'in.payu:payu-custom-browser:7.11.4'
 
-    implementation 'in.payu:phonepe-intent:1.6.1'
+    implementation 'in.payu:phonepe-intent:1.7.2'
 
     // upi
-    implementation 'in.payu:upisdk:1.5.2'
+    implementation 'in.payu:upisdk:1.6.5'
 
     implementation 'com.payu.samsungpay:samsungpay:1.0'
 
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
 
     // Qr code scanner
-    implementation 'com.journeyapps:zxing-android-embedded:4.2.0'
-    implementation 'com.google.zxing:core:3.4.0'
+    implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
+    implementation 'com.google.zxing:core:3.4.1'
 
     // qr code parser
     implementation 'com.payneteasy:ber-tlv:1.0-11'
     //dexter permissions
-    implementation "com.karumi:dexter:6.2.2"
+    implementation "com.karumi:dexter:6.2.3"
     // for cropping image
     implementation 'com.github.yalantis:ucrop:2.2.6'
 
@@ -226,30 +230,80 @@ dependencies {
     implementation 'com.github.freshworks:freshchat-android:5.0.5'
 
     //play core lib
-    implementation 'com.google.android.play:core:1.10.1'
-    debugImplementation "com.github.chuckerteam.chucker:library:3.5.2"
-    releaseImplementation "com.github.chuckerteam.chucker:library:3.5.2"
-//"com.github.chuckerteam.chucker:library-no-op:3.2.0"
+    implementation 'com.google.android.play:core:1.10.3'
 
-    implementation 'com.google.android.gms:play-services-ads-identifier:17.0.1'
-
-    implementation 'com.google.android.exoplayer:exoplayer:2.10.8'
-    implementation 'androidx.lifecycle:lifecycle-process:2.3.1'
-    implementation "com.moengage:moe-android-sdk:11.4.01"
+    implementation 'com.google.android.gms:play-services-ads-identifier:18.0.1'
+    implementation("com.google.guava:guava:28.0-android")
+    implementation 'com.google.android.exoplayer:exoplayer:2.18.2'
+    implementation 'androidx.lifecycle:lifecycle-process:2.5.1'
+    implementation "com.moengage:moe-android-sdk:11.6.02"
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':trackr')
     implementation project(path: ':bubblenavigationbar')
-    implementation(name:'adjust-lib', ext:'aar')
+    //implementation(name:'adjust-lib', ext:'aar')
+    //implementation(name:'yesplussdk-uat', ext:'aar')
     implementation("com.moengage:rich-notification:2.3.00")
     implementation('com.github.simonpercic:oklog3:2.3.0')
     implementation 'com.amazonaws:ivs-player:1.10.0'
-    implementation("com.squareup.okhttp3:okhttp-dnsoverhttps:4.9.0")
-    implementation "ru.tinkoff.scrollingpagerindicator:scrollingpagerindicator:1.0.6"
+    implementation 'javax.xml.bind:jaxb-api:2.3.1'
+    implementation("xerces:xercesImpl:2.12.0")
+
+    //Yes Bank Sdk Dependency
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.google.code.gson:gson:2.10.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2'
+    implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.2'
+
+    implementation 'com.scottyab:rootbeer-lib:0.1.0'
+
+    implementation 'androidx.work:work-runtime-ktx:2.8.0-rc01'
+
+
+    implementation 'com.amazonaws:ivs-player:1.10.0'
+    implementation("com.squareup.okhttp3:okhttp-dnsoverhttps:4.9.3")
+    implementation "ru.tinkoff.scrollingpagerindicator:scrollingpagerindicator:1.2.3"
+    implementation 'com.github.barteksc:android-pdf-viewer:3.2.0-beta.1'
+//    def paging_version = "3.2.0-alpha02"
+//    implementation "androidx.paging:paging-runtime-ktx:$paging_version"
+
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    implementation "org.java-websocket:Java-WebSocket:1.5.1"
+    implementation 'com.opencsv:opencsv:5.5.2'
+    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+
+    implementation 'com.github.imtuann:FloatingActionButtonExpandable:1.1.2'
+
+    implementation 'com.razorpay:checkout:1.6.26'
+
+    //kochava
+    def kochava_tracker_version = "4.2.1"
+    implementation("com.kochava.tracker:tracker:$kochava_tracker_version")
+    implementation("com.kochava.tracker:events:$kochava_tracker_version")
+
+
+    implementation 'com.google.android.gms:play-services-appset:16.0.2'
+
 
     implementation 'com.google.android.libraries.places:places:3.0.0'
 
-//    def paging_version = "3.2.0-alpha02"
-//    implementation "androidx.paging:paging-runtime-ktx:$paging_version"
+
+
+//    debugImplementation 'com.plutolib.plugins:network:2.0.5'
+//    releaseImplementation 'com.plutolib.plugins:network-no-op:2.0.5'
+    implementation("androidx.compose:compose-bom:2023.01.00")
+
+    implementation 'androidx.compose.ui:ui:1.3.3'
+    implementation 'androidx.activity:activity-compose:1.6.1'
+    coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:2.0.2"
+    implementation "dev.chrisbanes.snapper:snapper:0.3.0"
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:1.3.3"
+    debugImplementation "androidx.compose.ui:ui-tooling:1.3.3"
+    debugImplementation "androidx.compose.ui:ui-test-manifest:1.3.3"
+    implementation "androidx.compose.ui:ui-tooling-preview:1.3.3"
+    implementation "androidx.compose.material3:material3:1.0.1"
+
+    implementation "com.airbnb.android:lottie-compose:6.0.0"
 
 }
 apollo {

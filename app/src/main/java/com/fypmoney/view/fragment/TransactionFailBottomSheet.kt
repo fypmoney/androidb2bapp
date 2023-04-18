@@ -95,7 +95,7 @@ class TransactionFailBottomSheet(
             it.services = arrayListOf(
                 TrackrServices.FIREBASE,
                 TrackrServices.MOENGAGE,
-                TrackrServices.FB,TrackrServices.ADJUST)
+                TrackrServices.FB)
             it.name = TrackrEvent.load_money_fail
             it.add(
                 TrackrField.user_mobile_no, SharedPrefUtils.getString(PockketApplication.instance,

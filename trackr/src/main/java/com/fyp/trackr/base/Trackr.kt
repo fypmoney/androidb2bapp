@@ -1,10 +1,8 @@
 package com.fyp.trackr.base
 
-import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
-import android.content.pm.ActivityInfo
 import android.location.Location
 import android.os.Build
 import android.os.Bundle
@@ -12,15 +10,11 @@ import android.os.Handler
 import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
-import com.adjust.sdk.Adjust
-import com.adjust.sdk.AdjustConfig
-import com.adjust.sdk.AdjustEvent
 import com.facebook.appevents.AppEventsLogger
 import com.fyp.trackr.BuildConfig
 import com.fyp.trackr.SERVER_DATE_TIME_FORMAT1
 import com.fyp.trackr.models.AnalyticsEvent
 import com.fyp.trackr.models.ScreenEvent
-import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.parseDateStringIntoDate
 import com.fyp.trackr.services.TrackrServices
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -40,7 +34,6 @@ object Trackr {
     private const val TAG = "Trackr"
     private const val COUNTER_KEY = "ct_event_counter_key"
     private var fire: FirebaseAnalytics? = null
-    private var adjust: Adjust? = null
     private var moEngage: MoEngage? = null
     private var loglevel = LogLevel.PROD
     private var app: Application? = null
@@ -55,24 +48,17 @@ object Trackr {
 
     fun register(app: Application) {
         this.app = app
-        this.app!!.registerActivityLifecycleCallbacks(AdjustLifecycleCallbacks())
     }
-    fun initialize(app: Application, adjustKey:String = "",
+    fun initialize(app: Application,
                    moEngageKey:String = "",notiSmallIcon:Int = 0,notiLargeIcon:Int = 0,notiColor:Int = 0 ) {
         if (fire == null)
             fire = FirebaseAnalytics.getInstance(app.applicationContext)
 
-        if(adjust==null){
-            val appToken = adjustKey
-            val environment = AdjustConfig.ENVIRONMENT_PRODUCTION
-            val config = AdjustConfig(app, appToken, environment)
-            config.setUrlStrategy("URL_STRATEGY_INDIA")
-            Adjust.onCreate(config)
-        }
+
         if(moEngage==null){
             if(BuildConfig.DEBUG){
                 moEngage = MoEngage.Builder(app, moEngageKey)
-                    .configureLogs(LogConfig(VERBOSE, false))
+                    .configureLogs(LogConfig(VERBOSE, true))
                     .setDataCenter(DataCenter.DATA_CENTER_3)
                     .configureNotificationMetaData(
                         NotificationConfig(notiSmallIcon,
@@ -87,7 +73,7 @@ object Trackr {
             }else{
                 moEngage = MoEngage.Builder(app, moEngageKey)
                     .setDataCenter(DataCenter.DATA_CENTER_3)
-                    .configureLogs(LogConfig(VERBOSE, false) )
+                    .configureLogs(LogConfig(VERBOSE, true) )
                     .configureNotificationMetaData(
                         NotificationConfig(
                             notiSmallIcon,
@@ -216,50 +202,6 @@ object Trackr {
                     else
                         fire?.logEvent(event.name.name, event.bundle())
                 }
-                TrackrServices.ADJUST -> {
-                    if (loglevel.num <= LogLevel.DEBUG.num) {
-                        Log.d("ADJUST_EVENT", "Data: $event")
-                    }
-                    var adjustEventName = ""
-                    when(event.name.name){
-                        TrackrEvent.account_creation.name->{
-                            adjustEventName = "tnpgjs"
-                        }
-                        TrackrEvent.kyc_verification.name->{
-                            adjustEventName = "eesdlf"
-                        }
-                        TrackrEvent.kyc_verification_teen.name->{
-                            adjustEventName = "p7vxsb"
-                        }
-                        TrackrEvent.kyc_verification_adult.name->{
-                            adjustEventName = "wcb2ih"
-                        }
-                        TrackrEvent.kyc_verification_other.name->{
-                            adjustEventName = "6shjhs"
-                        }
-                        TrackrEvent.load_money_fail.name->{
-                            adjustEventName = "1x4oan"
-                        }
-                        TrackrEvent.load_money_success.name->{
-                            adjustEventName = "gerdxc"
-                        }
-                        TrackrEvent.mission_given_success.name->{
-                            adjustEventName = "fwz8lp"
-                        }
-                        TrackrEvent.add_familymember.name->{
-                            adjustEventName = "of1zqz"
-                        }
-                        TrackrEvent.order_success.name->{
-                            adjustEventName = "5s49wf"
-                        }
-                        TrackrEvent.refferal_shared.name->{
-                            adjustEventName = "4nxchn"
-                        }
-                    }
-                    Log.d("ADJUST_EVENT_KEY", "KEY: $adjustEventName")
-                    Adjust.trackEvent(AdjustEvent(adjustEventName))
-
-                }
                 TrackrServices.FB -> {
                     try{
                         app?.applicationContext?.let { AppEventsLogger.newLogger(it).logEvent(event.name.name) }
@@ -313,34 +255,5 @@ object Trackr {
         DEBUG(0), INFO(1), PROD(2), ANALYTICS(-1)
     }
 
-    private class AdjustLifecycleCallbacks : Application.ActivityLifecycleCallbacks {
-        override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-            if(Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-                activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-            }
-        }
-
-        override fun onActivityStarted(activity: Activity) {
-        }
-
-        override fun onActivityResumed(activity: Activity) {
-            Adjust.onResume()
-        }
-
-        override fun onActivityPaused(activity: Activity) {
-            Adjust.onPause()
-        }
-
-        override fun onActivityStopped(activity: Activity) {
-        }
-
-        override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
-        }
-
-        override fun onActivityDestroyed(activity: Activity) {
-            app?.applicationContext?.let { MoEHelper.getInstance(it).resetAppContext() }
-
-        }
-    }
 
 }

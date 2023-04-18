@@ -84,7 +84,6 @@ class PockketApplication : Application() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Trackr.initialize(
                 this,
-                BuildConfig.ADJUST_PROD_KEY,
                 BuildConfig.MOENAGE_KEY,
                 R.drawable.ic_notification,
                 R.drawable.ic_notification,
@@ -93,7 +92,6 @@ class PockketApplication : Application() {
         } else {
             Trackr.initialize(
                 this,
-                BuildConfig.ADJUST_PROD_KEY,
                 BuildConfig.MOENAGE_KEY,
                 R.drawable.ic_notification,
                 R.drawable.ic_notification,

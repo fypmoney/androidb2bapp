@@ -41,7 +41,7 @@ task clean(type: Delete) {
 }
 
 ext{
-    appName = 'Fyp'
+    appName = 'Fyp Kyc Agent'
     // Sdk and tools
     minSdkVersion = 23
     targetSdkVersion = 33

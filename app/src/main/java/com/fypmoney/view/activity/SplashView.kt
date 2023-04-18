@@ -145,6 +145,7 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
     * */
     private fun moveToNextScreen() {
 
+            //throw Exception("This is crash")
             if (SharedPrefUtils.getBoolean(
                         applicationContext,
                         SharedPrefUtils.SF_KEY_IS_LOGIN

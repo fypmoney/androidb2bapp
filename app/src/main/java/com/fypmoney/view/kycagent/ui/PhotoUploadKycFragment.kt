@@ -1,6 +1,7 @@
 package com.fypmoney.view.kycagent.ui
 
 import android.Manifest
+import android.app.Activity
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -10,12 +11,18 @@ import android.hardware.usb.UsbDevice
 import android.hardware.usb.UsbManager
 import android.hardware.usb.UsbManager.ACTION_USB_DEVICE_ATTACHED
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.os.Parcelable
+import android.provider.MediaStore
 import android.provider.Settings
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
+import androidx.core.net.toUri
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -30,6 +37,7 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.view.activity.ImagePickerView
 import com.fypmoney.view.kycagent.viewmodel.PhotoUploadKycFragmentVM
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -42,10 +50,13 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class PhotoUploadKycFragment : BaseFragment<FragmentPhotoUploadKycBinding, PhotoUploadKycFragmentVM>() {
 
+    private  var imageFilePath: File? = null
     private lateinit var binding: FragmentPhotoUploadKycBinding
     private val photoUploadKycFragmentVM by viewModels<PhotoUploadKycFragmentVM> { defaultViewModelProviderFactory }
 
@@ -86,19 +97,9 @@ class PhotoUploadKycFragment : BaseFragment<FragmentPhotoUploadKycBinding, Photo
             }
         }
 
-//        photoUploadKycFragmentVM.profileEvent.observe(viewLifecycleOwner){
-//            when(it){
-//                PhotoUploadKycFragmentVM.PhotoUploadEvent.OpenAgentAuthentication -> {
-//
-//                }
-//            }
-//        }
+
 
         binding.btnAddWithdrawSavings.setOnClickListener {
-//            if (photoUploadKycFragmentVM.shopPhotoData != null)
-//                photoUploadKycFragmentVM.callProfilePicUploadApi(photoUploadKycFragmentVM.shopPhotoData!!)
-//            else
-//                Utility.showToast("Please select photo first")
             openCameraAndGallery()
         }
 
@@ -131,59 +132,139 @@ class PhotoUploadKycFragment : BaseFragment<FragmentPhotoUploadKycBinding, Photo
         }
     }
 
-//    fun testMethod(){
-//        val usbManager = requireContext().getSystemService(Context.USB_SERVICE) as UsbManager
-//        val intent = Intent("android.hardware.usb.action.USB_DEVICE_ATTACHED")
-//        intent.addCategory("android.hardware.usb.action.USB_DEVICE_DETACHED")
-//        val usbDeviceList: Map<String, UsbDevice> = usbManager.deviceList
-//        Toast.makeText(this, "Deivce List Size: " + usbDeviceList.size, Toast.LENGTH_SHORT).show()
-//
-//        if (usbDeviceList.isNotEmpty()) {
-//
-//            //vid= vendor id .... pid= product id
-//            Toast.makeText(
-//                this,
-//                "device pid: " + device.getProductId() + " Device vid: " + device.getVendorId(),
-//                Toast.LENGTH_SHORT
-//            ).show()
-//        }
-//    }
+
 
     override fun onTryAgainClicked() {}
 
-    private fun openCameraAndGallery(){
-        val PERMISSIONS2 =
-//            if (Build.VERSION.SDK_INT >= 33) {
-//            arrayOf(
-//                Manifest.permission.CAMERA,
-//                Manifest.permission.READ_MEDIA_IMAGES
-//            )
-//        }
-//    else {
-            arrayOf(
-                Manifest.permission.CAMERA,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            )
-//        }
-        Dexter.withContext(requireContext())
-            .withPermissions(*PERMISSIONS2)
-            .withListener(object : MultiplePermissionsListener {
-                override fun onPermissionsChecked(report: MultiplePermissionsReport) {
-                    if (report.areAllPermissionsGranted()) {
-                        showImagePickerOptions()
-                    }
-                    if (report.isAnyPermissionPermanentlyDenied) {
-                        showSettingsDialog()
-                    }
-                }
 
-                override fun onPermissionRationaleShouldBeShown(
-                    permissions: List<PermissionRequest>,
-                    token: PermissionToken
-                ) {
-                    token.continuePermissionRequest()
+    private val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result->
+        if (result.resultCode == Activity.RESULT_OK) {
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
+                try {
+                    if(imageFilePath!=null){
+
+                        val requestFile =
+                            imageFilePath!!.asRequestBody("multipart/form-data".toMediaTypeOrNull())
+                        val body = MultipartBody.Part.createFormData("file", imageFilePath!!.name, requestFile)
+
+                        photoUploadKycFragmentVM.shopPhotoData = body
+
+                        Glide.with(requireContext()).load(imageFilePath).into(binding.ivShopUploadedPhoto)
+
+                        photoUploadKycFragmentVM.callProfilePicUploadApi(photoUploadKycFragmentVM.shopPhotoData!!)
+
+                    }
+
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                    FirebaseCrashlytics.getInstance().recordException(Throwable(e))
                 }
-            }).check()
+            }else{
+                val data: Intent? = result.data
+                val uri = result.data?.extras?.get("data")
+                try {
+                    val file = File(FileUtils.getPath(requireContext().applicationContext, data?.data))
+                    val requestFile =
+                        file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
+                    val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
+
+                    photoUploadKycFragmentVM.shopPhotoData = body
+
+                    Glide.with(requireContext()).load(uri).into(binding.ivShopUploadedPhoto)
+
+                    photoUploadKycFragmentVM.callProfilePicUploadApi(photoUploadKycFragmentVM.shopPhotoData!!)
+
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                    FirebaseCrashlytics.getInstance().recordException(Throwable(e))
+                }
+            }
+
+
+        }
+
+    }
+
+    @Throws(IOException::class)
+    private fun createImageFile(): File? {
+        val timeStamp: String = SimpleDateFormat(
+            "yyyyMMdd_HHmmss",
+            Locale.getDefault()
+        ).format(Date())
+        val imageFileName = "IMG_" + timeStamp + "_"
+        val storageDir: File? = requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val image = File.createTempFile(
+            imageFileName,  /* prefix */
+            ".jpg",  /* suffix */
+            storageDir /* directory */
+        )
+        imageFilePath = image
+        return image
+    }
+
+
+    private  fun openCameraIntent() {
+        val pictureIntent =  Intent(
+            MediaStore.ACTION_IMAGE_CAPTURE)
+        if(pictureIntent.resolveActivity(requireContext().packageManager) != null){
+            //Create a file to store the image
+            var photoFile:File? = null;
+            try {
+                photoFile = createImageFile();
+            } catch (e:IOException) {
+                // Error occurred while creating the File
+                FirebaseCrashlytics.getInstance().recordException(e)
+            }
+            if (photoFile != null) {
+                val photoURI = getCacheImagePath(photoFile.name)
+                pictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
+                    photoURI);
+                resultLauncher.launch(pictureIntent)
+            }
+        }
+    }
+
+    private fun getCacheImagePath(fileName: String): Uri {
+        val path: File = File(requireActivity().externalCacheDir, "camera")
+        if (!path.exists()) path.mkdirs()
+        val image = File(path, fileName)
+        return FileProvider.getUriForFile(
+            requireContext(),
+            "${requireActivity().packageName}.provider",
+            image
+        )
+    }
+
+
+
+
+
+    private fun openCameraAndGallery(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+//            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+//            if(intent.resolveActivity(requireContext().packageManager)!=null){
+//                resultLauncher.launch(intent)
+//            }
+            openCameraIntent()
+        } else {
+            Dexter.withContext(requireContext())
+                .withPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .withListener(object : MultiplePermissionsListener {
+                    override fun onPermissionsChecked(report: MultiplePermissionsReport) {
+                        if (report.areAllPermissionsGranted()) {
+                            showImagePickerOptions()
+                        }
+                    }
+
+                    override fun onPermissionRationaleShouldBeShown(
+                        permissions: List<PermissionRequest>,
+                        token: PermissionToken
+                    ) {
+                        token.continuePermissionRequest()
+                    }
+                }).check()
+
+        }
     }
 
     private fun showImagePickerOptions() {

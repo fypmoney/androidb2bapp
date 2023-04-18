@@ -113,7 +113,7 @@ class AddMoneyUpiDebitView : BaseActivity<ViewAddMoneyUpiDebitBinding, AddMoneyU
                         it.services = arrayListOf(
                             TrackrServices.FIREBASE,
                             TrackrServices.MOENGAGE,
-                            TrackrServices.FB,TrackrServices.ADJUST)
+                            TrackrServices.FB)
                         it.name = TrackrEvent.load_money_success
                     }
                     callTransactionSuccessBottomSheet()

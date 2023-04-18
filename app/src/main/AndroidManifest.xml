@@ -417,14 +417,6 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <receiver
-            android:name="com.adjust.sdk.AdjustReferrerReceiver"
-            android:exported="true"
-            android:permission="android.permission.INSTALL_PACKAGES">
-            <intent-filter>
-                <action android:name="com.android.vending.INSTALL_REFERRER" />
-            </intent-filter>
-        </receiver>
 
         <service
             android:name=".services.MyFirebaseMessagingService"

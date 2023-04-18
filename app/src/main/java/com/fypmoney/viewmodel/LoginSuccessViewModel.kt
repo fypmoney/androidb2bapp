@@ -116,7 +116,7 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
                     )
 
                     trackr {
-                        it.services = arrayListOf(TrackrServices.ADJUST, TrackrServices.FIREBASE)
+                        it.services = arrayListOf(TrackrServices.FIREBASE)
                         it.name = TrackrEvent.LOGINSUCCESS
                     }
 

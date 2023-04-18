@@ -109,7 +109,7 @@ class KycDetailsActivity : BaseActivity<ActivityKycDetailsBinding, KycdetailView
                         it.services = arrayListOf(
                             TrackrServices.FIREBASE,
                             TrackrServices.MOENGAGE,
-                            TrackrServices.FB, TrackrServices.ADJUST
+                            TrackrServices.FB
                         )
                         it.name = TrackrEvent.kyc_verification_other
                     }
@@ -124,7 +124,7 @@ class KycDetailsActivity : BaseActivity<ActivityKycDetailsBinding, KycdetailView
                         it.services = arrayListOf(
                             TrackrServices.FIREBASE,
                             TrackrServices.MOENGAGE,
-                            TrackrServices.FB, TrackrServices.ADJUST
+                            TrackrServices.FB
                         )
                         it.name = TrackrEvent.kyc_verification_teen
                     }
@@ -144,7 +144,7 @@ class KycDetailsActivity : BaseActivity<ActivityKycDetailsBinding, KycdetailView
                         it.services = arrayListOf(
                             TrackrServices.FIREBASE,
                             TrackrServices.MOENGAGE,
-                            TrackrServices.FB, TrackrServices.ADJUST
+                            TrackrServices.FB
                         )
                         it.name = TrackrEvent.kyc_verification_adult
                     }

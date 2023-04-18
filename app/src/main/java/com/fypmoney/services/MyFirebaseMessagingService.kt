@@ -13,7 +13,6 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import com.adjust.sdk.Adjust
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
@@ -41,7 +40,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         super.onNewToken(s)
         Log.d("FCMToken", s)
         MoEFireBaseHelper.getInstance().passPushToken(applicationContext,s)
-        Adjust.setPushToken(s, applicationContext);
         Freshchat.getInstance(this).setPushRegistrationToken(s)
         SharedPrefUtils.putString(applicationContext, SharedPrefUtils.SF_KEY_FIREBASE_TOKEN, s)
 

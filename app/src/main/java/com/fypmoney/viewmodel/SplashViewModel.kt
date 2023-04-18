@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.adjust.sdk.Adjust
 import com.fyp.trackr.base.Trackr
 import com.fyp.trackr.models.*
 import com.fypmoney.BuildConfig
@@ -96,7 +95,6 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
                             MoEFireBaseHelper.getInstance().passPushToken(PockketApplication.instance,
                                 it2
                             )
-                            Adjust.setPushToken(it2, PockketApplication.instance);
                         }
                 }else{
                     Trackr.appIsInstallFirst(isFirstTime = false)
@@ -105,7 +103,6 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
                             MoEFireBaseHelper.getInstance().passPushToken(PockketApplication.instance,
                                 it2
                             )
-                            Adjust.setPushToken(it2, PockketApplication.instance);
                         }
                     Utility.getCustomerDataFromPreference()?.let {
                         val map = hashMapOf<String,Any>()

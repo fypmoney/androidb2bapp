@@ -175,7 +175,7 @@ Create this method for observe the viewModel fields
 
                 }
                 trackr {
-                    it.services = arrayListOf(TrackrServices.ADJUST, TrackrServices.FIREBASE)
+                    it.services = arrayListOf(TrackrServices.FIREBASE)
                     it.name = TrackrEvent.KYCCOMPLETD
                 }
 

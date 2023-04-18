@@ -286,7 +286,7 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
                     it.services = arrayListOf(
                         TrackrServices.FIREBASE,
                         TrackrServices.MOENGAGE,
-                        TrackrServices.FB, TrackrServices.ADJUST
+                        TrackrServices.FB
                     )
                     it.name = TrackrEvent.kyc_verification
                 }

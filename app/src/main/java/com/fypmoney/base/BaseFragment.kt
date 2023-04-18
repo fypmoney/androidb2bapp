@@ -162,7 +162,7 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
 
 
         }
-        mViewModel?.logoutUser?.observe(this)
+        mViewModel?.logoutUser?.observe(viewLifecycleOwner)
         {
             if(it) {
                 Utility.showToast(resources.getString(R.string.unauthrized_msg))
@@ -416,14 +416,16 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
         if (user != null) {
             fresh.user = user
         }
+
+        val tags: MutableList<String> = ArrayList()
+        tags.add("kyc_agent_app")
         val faqOptions = FaqOptions()
             .showFaqCategoriesAsGrid(true)
             .showContactUsOnAppBar(true)
             .showContactUsOnFaqScreens(true)
             .showContactUsOnFaqNotHelpful(true)
-        val tags: MutableList<String> = ArrayList()
-        tags.add("kyc_agent_app")
-        faqOptions.filterByTags(tags,"Fyp kyc agent")
+            .filterContactUsByTags(tags,"Fyp KYC Agent")
+        faqOptions.filterByTags(tags,"Fyp KYC agent",FaqOptions.FilterType.CATEGORY)
         Freshchat.showFAQs(context, faqOptions)
     }
 
