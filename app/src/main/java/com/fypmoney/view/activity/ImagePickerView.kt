@@ -6,6 +6,7 @@ import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.OpenableColumns
@@ -68,30 +69,58 @@ class ImagePickerView : AppCompatActivity() {
     }
 
     private fun takeCameraImage() {
-        Dexter.withActivity(this)
-            .withPermissions(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-            .withListener(object : MultiplePermissionsListener {
-                override fun onPermissionsChecked(report: MultiplePermissionsReport) {
-                    if (report.areAllPermissionsGranted()) {
-                        fileName = System.currentTimeMillis().toString() + ".jpg"
-                        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                        takePictureIntent.putExtra(
-                            MediaStore.EXTRA_OUTPUT,
-                            getCacheImagePath(fileName)
-                        )
-                        if (takePictureIntent.resolveActivity(packageManager) != null) {
-                            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
+            Dexter.withActivity(this)
+                .withPermissions(Manifest.permission.CAMERA)
+                .withListener(object : MultiplePermissionsListener {
+                    override fun onPermissionsChecked(report: MultiplePermissionsReport) {
+                        if (report.areAllPermissionsGranted()) {
+                            fileName = System.currentTimeMillis().toString() + ".jpg"
+                            val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                            takePictureIntent.putExtra(
+                                MediaStore.EXTRA_OUTPUT,
+                                getCacheImagePath(fileName)
+                            )
+                            if (takePictureIntent.resolveActivity(packageManager) != null) {
+                                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+                            }
                         }
                     }
-                }
 
-                override fun onPermissionRationaleShouldBeShown(
-                    permissions: List<PermissionRequest>,
-                    token: PermissionToken
-                ) {
-                    token.continuePermissionRequest()
-                }
-            }).check()
+                    override fun onPermissionRationaleShouldBeShown(
+                        permissions: List<PermissionRequest>,
+                        token: PermissionToken
+                    ) {
+                        token.continuePermissionRequest()
+                    }
+                }).check()
+        }else{
+            Dexter.withActivity(this)
+                .withPermissions(Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .withListener(object : MultiplePermissionsListener {
+                    override fun onPermissionsChecked(report: MultiplePermissionsReport) {
+                        if (report.areAllPermissionsGranted()) {
+                            fileName = System.currentTimeMillis().toString() + ".jpg"
+                            val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                            takePictureIntent.putExtra(
+                                MediaStore.EXTRA_OUTPUT,
+                                getCacheImagePath(fileName)
+                            )
+                            if (takePictureIntent.resolveActivity(packageManager) != null) {
+                                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+                            }
+                        }
+                    }
+
+                    override fun onPermissionRationaleShouldBeShown(
+                        permissions: List<PermissionRequest>,
+                        token: PermissionToken
+                    ) {
+                        token.continuePermissionRequest()
+                    }
+                }).check()
+        }
+
     }
 
     private fun chooseImageFromGallery() {

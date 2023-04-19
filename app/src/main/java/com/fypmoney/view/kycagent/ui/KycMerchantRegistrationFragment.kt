@@ -12,6 +12,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
@@ -33,7 +35,6 @@ class KycMerchantRegistrationFragment : BaseFragment<FragmentKycMerchantRegistra
 
     private lateinit var binding: FragmentKycMerchantRegistrationBinding
     private val kycMerchantRegistrationFragmentVM by viewModels<KycMerchantRegistrationFragmentVM> { defaultViewModelProviderFactory }
-    val AUTOCOMPLETE_REQUEST_CODE = 1
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -48,8 +49,15 @@ class KycMerchantRegistrationFragment : BaseFragment<FragmentKycMerchantRegistra
             backArrowTint = Color.WHITE
         )
 
+        trackr {
+            it.name = TrackrEvent.signup_shop_details_view
+        }
+
         binding.btnAddWithdrawSavings.setOnClickListener {
             if (checkAllFields()){
+                trackr {
+                    it.name = TrackrEvent.signup_shop_details_submit
+                }
 //                gotoNextScreen()
                 kycMerchantRegistrationFragmentVM.saveShopDetailsRequest.agentName = binding.etName.text?.trim().toString()
                 kycMerchantRegistrationFragmentVM.saveShopDetailsRequest.addr1 = binding.etAddress.text?.trim().toString()

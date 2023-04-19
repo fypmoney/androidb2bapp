@@ -3,6 +3,9 @@ package com.fypmoney.view.kycagent.ui
 import android.Manifest
 import android.os.Bundle
 import androidx.activity.viewModels
+import com.fyp.trackr.models.AnalyticsEvent
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
@@ -26,6 +29,10 @@ class KycAgentActivity : BaseActivity<ActivityKycAgentBinding, KycAgentActivityV
             this, this
         ).permissions()
         checkAndAskPermission()
+
+        trackr {
+            it.name = TrackrEvent.agent_home
+        }
 
     }
 

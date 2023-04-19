@@ -6,6 +6,8 @@ import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
@@ -162,6 +164,17 @@ class TakeHandFingerFragmentVM(application: Application) : BaseViewModel(applica
         when (purpose) {
             ApiConstant.API_FULL_KYC -> {
                 if (responseData is FullKycResponse) {
+                    if (via == "UserKyc"){
+                        trackr {
+                            it.name = TrackrEvent.new_kyc_success
+                        }
+                        //userkyc
+                    }else{
+                        //selfkyc
+                        trackr {
+                            it.name = TrackrEvent.signup_kyc_success
+                        }
+                    }
                     _kycEvent.value = FillKycEvent.FullKycCompleted(responseData.msg)
                 }
             }
@@ -173,6 +186,21 @@ class TakeHandFingerFragmentVM(application: Application) : BaseViewModel(applica
 
         when (purpose) {
             ApiConstant.API_FULL_KYC -> {
+                val map = HashMap<String,Any>()
+                map.put("Reasson",errorResponseInfo.msg)
+                if (via == "UserKyc"){
+                    trackr {
+                        it.name = TrackrEvent.new_kyc_fail
+                        it.map = map
+                    }
+                    //userkyc
+                }else{
+                    //selfkyc
+                    trackr {
+                        it.name = TrackrEvent.signup_kyc_fail
+                        it.map = map
+                    }
+                }
                 alertDialog.postValue(
                     DialogUtils.AlertStateUiModel(
                         icon = ContextCompat.getDrawable(

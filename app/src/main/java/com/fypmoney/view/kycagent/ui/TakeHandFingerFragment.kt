@@ -12,6 +12,8 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
@@ -44,11 +46,17 @@ class TakeHandFingerFragment : BaseFragment<FragmentTakeHandFingerBinding, TakeH
         }
 
         if (takeHandFingerFragmentVM.via == "UserKyc"){
+            trackr {
+                it.name = TrackrEvent.new_choose_finger
+            }
             //userkyc
             binding.tvTakeHandDesc.text = "Please choose the hand (Right or Left) and the finger that the customer will place on the biometric device"
         }else{
             //selfkyc
             binding.tvTakeHandDesc.text = "Please choose the hand (Right or Left) and the finger that you will place on the biometric device"
+            trackr {
+                it.name = TrackrEvent.signup_choose_finger
+            }
         }
 
         takeHandFingerFragmentVM.customerAadhaarNumber = arguments?.getString("aadhaarNumber")

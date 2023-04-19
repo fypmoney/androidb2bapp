@@ -17,6 +17,8 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
@@ -51,9 +53,23 @@ class VerifyBiometricFragment :
                 arguments?.getString("mobileNumber").toString()
         }
 
+
+
         verifyBiometricFragmentVM.aadhaarNumber = arguments?.getString("aadhaarNumber")
 
 
+
+        if (verifyBiometricFragmentVM.via == "UserKyc"){
+            trackr {
+                it.name = TrackrEvent.new_activate_sensor_view
+            }
+            //userkyc
+        }else{
+            //selfkyc
+            trackr {
+                it.name = TrackrEvent.signup_activate_sensor_view
+            }
+        }
         setToolbarAndTitle(
             context = requireContext(),
             toolbar = toolbar,
@@ -70,6 +86,17 @@ class VerifyBiometricFragment :
         verifyBiometricFragmentVM.event.observe(viewLifecycleOwner){
             when(it){
                 is VerifyBiometricFragmentVM.VerifyBiometricEvent.NavigateToFillKycDetailsPage -> {
+                    if (verifyBiometricFragmentVM.via == "UserKyc"){
+                        trackr {
+                            it.name = TrackrEvent.new_activate_sensor_success
+                        }
+                        //userkyc
+                    }else{
+                        //selfkyc
+                        trackr {
+                            it.name = TrackrEvent.signup_activate_sensor_success
+                        }
+                    }
                     val bundle = Bundle()
                     bundle.putString("via", verifyBiometricFragmentVM.via)
                     bundle.putString("aadhaarNumber", verifyBiometricFragmentVM.aadhaarNumber)
@@ -136,19 +163,6 @@ class VerifyBiometricFragment :
             }
             VerifyBiometricFragmentVM.FingerPrintDevices.NotSuppourtedDevice -> {
                 showNoSupportedDevice()
-//                verifyBiometricFragmentVM.alertDialog.postValue(
-//                    DialogUtils.AlertStateUiModel(
-//                        icon = ContextCompat.getDrawable(
-//                            requireContext(),
-//                            R.drawable.ic_error_alert
-//                        )!!,
-//                        message = "No device is connected",
-//                        backgroundColor = ContextCompat.getColor(
-//                            requireContext(),
-//                            R.color.errorAlertBgColor
-//                        )
-//                    )
-//                )
             }
             is VerifyBiometricFragmentVM.FingerPrintDevices.StartTek -> {
                 val appId = "com.acpl.registersdk"
@@ -164,6 +178,9 @@ class VerifyBiometricFragment :
 
 
     private fun showDeviceDriverBototmsheet(deviceName:String){
+        trackr {
+            it.name = TrackrEvent.error_no_driver
+        }
         val deviceDriverSheet = DeviceDriverBottomSheet(deviceName = deviceName, onInstallClick = {
             verifyBiometricFragmentVM.redirectToPlayStore(it)
         }, onDialogDismiss = {
@@ -175,6 +192,9 @@ class VerifyBiometricFragment :
     }
 
     private fun showNoSupportedDevice(){
+        trackr {
+            it.name = TrackrEvent.error_device_support
+        }
         val deviceBottomSheet = DeviceBottomSheet(onContinueClick = {
             findNavController().navigateUp()
         })
@@ -203,6 +223,17 @@ class VerifyBiometricFragment :
 
                     )
                 } else {
+                    if (verifyBiometricFragmentVM.via == "UserKyc"){
+                        trackr {
+                            it.name = TrackrEvent.new_activate_sensor_fail
+                        }
+                        //userkyc
+                    }else{
+                        //selfkyc
+                        trackr {
+                            it.name = TrackrEvent.signup_activate_sensor_fail
+                        }
+                    }
                     Log.d("UsbRecciver", "Device is not detected")
 
                 }
@@ -227,6 +258,17 @@ class VerifyBiometricFragment :
                     verifyBiometricFragmentVM.checkWhichDeviceIsAttached(device.productName!!,device.manufacturerName,false)
                 }
             }else{
+                if (verifyBiometricFragmentVM.via == "UserKyc"){
+                    trackr {
+                        it.name = TrackrEvent.new_activate_sensor_fail
+                    }
+                    //userkyc
+                }else{
+                    //selfkyc
+                    trackr {
+                        it.name = TrackrEvent.signup_activate_sensor_fail
+                    }
+                }
                 verifyBiometricFragmentVM.alertDialog.postValue(  DialogUtils.AlertStateUiModel(
                     icon = ContextCompat.getDrawable(requireContext(),R.drawable.ic_error_alert)!!,
                     message = "Please check OTG is enabled and device is connected",
