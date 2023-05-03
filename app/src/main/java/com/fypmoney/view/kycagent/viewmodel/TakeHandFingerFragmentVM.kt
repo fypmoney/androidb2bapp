@@ -5,7 +5,6 @@ import android.util.Base64
 import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.viewModelScope
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.trackr
 import com.fypmoney.R
@@ -24,12 +23,17 @@ import com.fypmoney.view.delegate.FingreDelegate
 import com.fypmoney.view.delegate.HandDelegate
 import com.fypmoney.view.kycagent.model.FullKycNetworkRequest
 import com.fypmoney.view.kycagent.model.FullKycResponse
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import org.w3c.dom.Attr
+import org.xmlpull.v1.XmlPullParser
+import org.xmlpull.v1.XmlPullParserException
+import org.xmlpull.v1.XmlPullParserFactory
 import java.io.ByteArrayInputStream
+import java.io.IOException
 import java.io.InputStream
+import java.io.StringReader
 import javax.xml.parsers.DocumentBuilderFactory
+
 
 class TakeHandFingerFragmentVM(application: Application) : BaseViewModel(application) {
 
@@ -99,6 +103,135 @@ class TakeHandFingerFragmentVM(application: Application) : BaseViewModel(applica
 
 
     }
+
+
+    fun parseXmlUsingXmlPullParser(xml: String): CaptureFingerStatus {
+//        val inputStream: InputStream = ByteArrayInputStream(xml.toByteArray())
+//
+//        val dom = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(inputStream)
+//        val nodeList = dom.getElementsByTagName("Resp")
+//        if (nodeList.length != 0) {
+//            val attributes = nodeList.item(0).attributes
+//            val errCode = (attributes.getNamedItem("errCode") as Attr).value
+//            Log.d(TAG, "errCode:- $errCode")
+//            if (errCode == "0") {
+//                if (deviceDetails?.deviceManufactureName == "MORPHO") {
+//                    //Rds version
+//                    deviceDetails?.deviceVersion = (dom.getElementsByTagName("DeviceInfo")
+//                        .item(0).attributes.getNamedItem("rdsVer") as Attr).value
+//
+////Device Serial No
+//
+//                    deviceDetails?.deviceSerialNumber = (dom.getElementsByTagName("DeviceInfo")
+//                        .item(0).childNodes.item(1).childNodes.item(1).attributes.getNamedItem("value") as Attr).value
+//                }
+//
+//                val qScore = (attributes.getNamedItem("qScore") as Attr).value
+//                Log.d(TAG, "qScore:- ${qScore}")
+//                qScore.toIntOrNull()?.let {
+//                    if (it <= 10) {
+//                        return CaptureFingerStatus.CaptureFingerQualityIsNotGood
+//                    } else {
+//                        Log.d(TAG, "pidOptions xml: ${xml}")
+//                        val pidOptions = dom.getElementsByTagName("PidData")
+//                        Log.d(TAG, "pidOptions: $pidOptions")
+//                        return CaptureFingerStatus.CapturedSuccessFully(xml)
+//                    }
+//                } ?: kotlin.run {
+//                    return CaptureFingerStatus.CaptureFingerQualityIsPoor
+//
+//                }
+//
+//            } else {
+//                val errInfo = (attributes.getNamedItem("errInfo") as Attr).value
+//
+//                return CaptureFingerStatus.ErrorInCaptureFinger(errInfo)
+//
+//            }
+//
+//
+//        }
+
+
+        try {
+            // Create a new instance of the XmlPullParser
+            val factory = XmlPullParserFactory.newInstance()
+            factory.isNamespaceAware = true
+            val parser = factory.newPullParser()
+
+            // Create a character stream from the XML String
+            val stringReader = StringReader(xml)
+
+            // Set the input for the parser
+            parser.setInput(stringReader)
+
+            // Parse the XML data
+            var eventType = parser.eventType
+            while (eventType != XmlPullParser.END_DOCUMENT) {
+                if (eventType == XmlPullParser.START_TAG) {
+                    val tagName = parser.name
+                    if(tagName == "DeviceInfo"){
+                        if((parser.getAttributeValue(null,"rdsVer")) != null){
+                            deviceDetails?.deviceVersion = parser.getAttributeValue(null,"rdsVer")
+                        }
+                    }else if(tagName=="Param"){
+                        if (deviceDetails?.deviceManufactureName == "MORPHO") {
+                            //Rds version
+                            if(parser.getAttributeValue(null,"value")!= null){
+                                deviceDetails?.deviceSerialNumber = parser.getAttributeValue(null,"value")
+                            }
+                        }
+                    }
+                    else if(tagName=="Resp"){
+                        val errCode = parser.getAttributeValue(null,"errCode")
+                        if(errCode !=null){
+                            if (errCode == "0") {
+
+                                val qScore = parser.getAttributeValue(null,"qScore")
+                                Log.d(TAG, "qScore:- ${qScore}")
+                                qScore.toIntOrNull()?.let {
+                                    if (it <= 10) {
+                                        return CaptureFingerStatus.CaptureFingerQualityIsNotGood
+                                    } else {
+                                        Log.d(TAG, "pidOptions xml: ${xml}")
+//                                val pidOptions = dom.getElementsByTagName("PidData")
+//                                Log.d(TAG, "pidOptions: $pidOptions")
+                                        return CaptureFingerStatus.CapturedSuccessFully(xml)
+                                    }
+                                } ?: kotlin.run {
+                                    return CaptureFingerStatus.CaptureFingerQualityIsPoor
+
+                                }
+
+                            } else {
+                                val errInfo = parser.getAttributeValue(null,"errInfo")
+
+                                return CaptureFingerStatus.ErrorInCaptureFinger(errInfo)
+
+                            }
+                        }
+                    }
+
+
+
+                }
+                eventType = parser.next()
+            }
+        } catch (e: XmlPullParserException) {
+            e.printStackTrace()
+            FirebaseCrashlytics.getInstance().recordException(e.detail)
+        } catch (e: IOException) {
+            e.printStackTrace()
+            FirebaseCrashlytics.getInstance().recordException(e)
+        }
+
+
+
+        return CaptureFingerStatus.UnableToCaptureFinger
+
+
+    }
+
 
     fun onContinueClick() {
         if (handDelegate.getValue().isNotEmpty() && fingreDelegate.getValue().isNotEmpty()) {

@@ -173,7 +173,7 @@ class TakeHandFingerFragment : BaseFragment<FragmentTakeHandFingerBinding, TakeH
                 val dnr = bundle?.getString("DNR", "")
                 if (pid!!.isNotEmpty()) {
                     Log.d(TAG, "Pid Info : ${pid}")
-                    val result = takeHandFingerFragmentVM.parseXml(pid)
+                    val result = takeHandFingerFragmentVM.parseXmlUsingXmlPullParser(pid)
                     when (result) {
                         TakeHandFingerFragmentVM.CaptureFingerStatus.CaptureFingerQualityIsNotGood -> {
                             takeHandFingerFragmentVM.alertDialog.postValue(
