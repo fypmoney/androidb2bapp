@@ -17,6 +17,7 @@ import com.fypmoney.extension.toGone
 import com.fypmoney.extension.toVisible
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.CaptureManager
+import com.fypmoney.util.Utility
 import com.fypmoney.view.kycagent.util.AES
 import com.fypmoney.view.kycagent.viewmodel.QrCodeScanFragmentVM
 import com.google.zxing.BarcodeFormat
@@ -125,12 +126,23 @@ class QrCodeScanFragment : BaseFragment<FragmentQrCodeScanBinding, QrCodeScanFra
         val callback: BarcodeCallback = object : BarcodeCallback {
             override fun barcodeResult(result: BarcodeResult) {
 //                qrCodeScanFragmentVM.parseScanQrCodeString(result.text)
+
                 val decryptedString = AES.decrypt(result.text)
 
-                qrCodeScanFragmentVM.finalQrDecryptCode = decryptedString!!.split("|")
-                performActions()
+                if (decryptedString != null){
+                    qrCodeScanFragmentVM.finalQrDecryptCode = decryptedString.split("|")
 
-                Log.d("FinalQR: ", qrCodeScanFragmentVM.finalQrDecryptCode.toString())
+                    val lastFourDigit: String = qrCodeScanFragmentVM.finalQrDecryptCode[0].substring(6)
+
+                    Utility.showToast("Last: $lastFourDigit")
+                    qrCodeScanFragmentVM.showSuccessDialog(lastFourDigit)
+                    performActions()
+
+                    Log.d("FinalQR: ", qrCodeScanFragmentVM.finalQrDecryptCode.toString())
+                }else{
+//                    qrCodeScanFragmentVM.showErrorDialog()
+                    Utility.showToast("Invalid QR Code")
+                }
             }
 
             override fun possibleResultPoints(resultPoints: List<ResultPoint>) {}
