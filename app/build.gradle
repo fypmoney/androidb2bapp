@@ -13,13 +13,13 @@ plugins {
 android {
     signingConfigs {
         debug {
-            storeFile file('C:\\Users\\Pawankumar\\Desktop\\FypAgent.jks')
+            storeFile file('C:\\Users\\tapan.yadav\\Desktop\\FypAgent.jks')
             storePassword 'Fyp#23'
             keyAlias 'key0'
             keyPassword 'Fyp#23'
         }
         config {
-            storeFile file('C:\\Users\\Pawankumar\\Desktop\\FypAgent.jks')
+            storeFile file('C:\\Users\\tapan.yadav\\Desktop\\FypAgent.jks')
             storePassword 'Fyp#23'
             keyAlias 'key0'
             keyPassword 'Fyp#23'
@@ -72,10 +72,17 @@ android {
     productFlavors {
             dev{
                 signingConfig signingConfigs.config
-                applicationId "com.fypmoney.agent.dev"
+                applicationId "com.fypmoney.agnet.dev"
                 resValue "string", "app_name", "Fyp Agent-debug"
                 buildConfigField "String", "BASE_ENDPOINT", "\"http://52.22.235.46:9300\""
                 buildConfigField "String", "MOENAGE_KEY","\"G0N7KTO5Z8CND06I38E682IA\""
+                buildConfigField "String", "FIVE_PAISA_APP_NAME","\"5PFYPMONEY\""
+                buildConfigField "String", "FIVE_PAISA_APP_SOURCE","\"9769\""
+                buildConfigField "String", "FIVE_PAISA_USER_ID","\"OKSti6Ekk7b\""
+                buildConfigField "String", "FIVE_PAISA_PASS","\"5woT0exPQzp\""
+                buildConfigField "String", "FIVE_PAISA_USER_KEY","\"PPSTYoZqc2MpSujrYgedOSjFJUuo5dw3\""
+                buildConfigField "String", "FIVE_PAISA_ENC_KEY","\"4QPo1aI2KChCrDK6Fgbz0WuiaZMMPOJH\""
+                buildConfigField "String", "FIVE_PAISA_JWT_SECRET_KEY","\"ymen91bim04eimr05ebs07uo31yibb2fqhbMXIHQZ9MBBO40043Bgiieqw6iq55\""
             }
             prod{
                 signingConfig signingConfigs.config
@@ -83,6 +90,13 @@ android {
                 resValue "string", "app_name", "Fyp Agent"
                 buildConfigField "String", "BASE_ENDPOINT", "\"https://techservices.fyp-e.in\""
                 buildConfigField "String", "MOENAGE_KEY","\"G0N7KTO5Z8CND06I38E682IA\""
+                buildConfigField "String", "FIVE_PAISA_APP_NAME","\"5PFYPMONEY\""
+                buildConfigField "String", "FIVE_PAISA_APP_SOURCE","\"9769\""
+                buildConfigField "String", "FIVE_PAISA_USER_ID","\"OKSti6Ekk7b\""
+                buildConfigField "String", "FIVE_PAISA_PASS","\"5woT0exPQzp\""
+                buildConfigField "String", "FIVE_PAISA_USER_KEY","\"PPSTYoZqc2MpSujrYgedOSjFJUuo5dw3\""
+                buildConfigField "String", "FIVE_PAISA_ENC_KEY","\"4QPo1aI2KChCrDK6Fgbz0WuiaZMMPOJH\""
+                buildConfigField "String", "FIVE_PAISA_JWT_SECRET_KEY","\"ymen91bim04eimr05ebs07uo31yibb2fqhbMXIHQZ9MBBO40043Bgiieqw6iq55\""
             }
     }
     lint {

@@ -97,4 +97,10 @@
         android:label="Take Hand Finger Fragment"
         tools:layout="@layout/fragment_take_hand_finger" />
 
+    <fragment
+        android:id="@+id/navigation_qr_code_scan"
+        android:name="com.fypmoney.view.kycagent.ui.QrCodeScanFragment"
+        android:label="QrCodeScanFragment"
+        tools:layout="@layout/fragment_qr_code_scan"/>
+
 </navigation>

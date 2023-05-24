@@ -71,7 +71,7 @@ class KycAgentFragment : BaseFragment<FragmentKycAgentBinding, KycAgentFragmentV
                 )
             ) {
                 findNavController().navigate(
-                    R.id.navigation_enter_mobile_number_kyc,
+                    R.id.navigation_qr_code_scan,
                     null,
                     navOptions {
                         anim {

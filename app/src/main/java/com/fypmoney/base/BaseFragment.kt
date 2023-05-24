@@ -9,12 +9,15 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_WEAK
@@ -27,6 +30,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.freshchat.consumer.sdk.ConversationOptions
 import com.freshchat.consumer.sdk.FaqOptions
 import com.freshchat.consumer.sdk.Freshchat
@@ -39,6 +44,7 @@ import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.activity.LoginView
 import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.coroutines.delay
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
@@ -265,6 +271,42 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
             }
         }
 
+    }
+
+    internal open fun showSettingsDialog() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
+        builder.setTitle(getString(R.string.dialog_permission_title))
+        builder.setMessage(getString(R.string.dialog_permission_message))
+        builder.setPositiveButton(getString(R.string.go_to_settings)) { dialog, which ->
+            dialog.cancel()
+            openSettings()
+        }
+        builder.setNegativeButton(getString(android.R.string.cancel)) { dialog, which ->
+            dialog.cancel()
+            mViewModel?.alertDialog?.value = DialogUtils.AlertStateUiModel(
+                icon = ContextCompat.getDrawable(
+                    PockketApplication.instance,
+                    R.drawable.ic_error_alert
+                )!!,
+                message = "Please allow the permissions to use this feature.",
+                backgroundColor = ContextCompat.getColor(
+                    PockketApplication.instance,
+                    R.color.errorAlertBgColor
+                )
+            )
+            lifecycleScope.launchWhenResumed {
+                delay(DialogUtils.alertDialogTime+100)
+                findNavController().navigateUp()
+            }
+        }
+        builder.show()
+    }
+
+    private fun openSettings() {
+        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+        val uri = Uri.fromParts("package", requireContext().packageName, null)
+        intent.data = uri
+        startActivityForResult(intent, 101)
     }
 
     /*

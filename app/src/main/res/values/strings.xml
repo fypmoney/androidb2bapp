@@ -1060,4 +1060,6 @@ By tapping on Create Account, you agree to the Terms of Service & Privacy Policy
     <string name="agent_to_place_finger_on_biometric_device_for_confirmation_please_ensure_that">Agent to place finger on \nbiometric device for confirmation. \n\nPlease ensure that:</string>
     <string name="place_customer_finger">Place customer’s finger on the biometric device for confirmation</string>
     <string name="enter_the_otp_sent_to_to_verify_customer_s_request_for_full_kyc">Enter the OTP sent to %1$s to verify customer’s request for Full KYC</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

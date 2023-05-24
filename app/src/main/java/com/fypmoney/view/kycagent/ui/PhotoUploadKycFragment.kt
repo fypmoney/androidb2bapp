@@ -299,7 +299,7 @@ class PhotoUploadKycFragment : BaseFragment<FragmentPhotoUploadKycBinding, Photo
         startActivityForResult(intent, AppConstants.REQUEST_IMAGE)
     }
 
-    private fun showSettingsDialog() {
+    override fun showSettingsDialog() {
         val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
         builder.setTitle(getString(R.string.dialog_permission_title))
         builder.setMessage(getString(R.string.dialog_permission_message))
