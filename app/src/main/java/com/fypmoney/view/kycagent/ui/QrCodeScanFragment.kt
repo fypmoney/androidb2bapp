@@ -57,7 +57,7 @@ class QrCodeScanFragment : BaseFragment<FragmentQrCodeScanBinding, QrCodeScanFra
             context = requireContext(),
             toolbar = binding.toolbar,
             isBackArrowVisible = true,
-            toolbarTitle = "My KYC QR Code"
+            toolbarTitle = "Complete Full KYC"
         )
 
 //        val decryptedString = AES.decrypt("nbs6dhnafbjK4EGA9kR26MMOeGrRdFTnnUY1VLHUGGtinbMTwKx+9IVR97Cqoegi")
