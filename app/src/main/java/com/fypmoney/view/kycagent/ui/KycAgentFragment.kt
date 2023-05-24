@@ -66,10 +66,10 @@ class KycAgentFragment : BaseFragment<FragmentKycAgentBinding, KycAgentFragmentV
         }
 
         binding.mcvNewKyc.setOnClickListener {
-//            if (kycAgentFragmentVM.isShopListed != null && kycAgentFragmentVM.isShopListed.equals(
-//                    AppConstants.YES
-//                )
-//            ) {
+            if (kycAgentFragmentVM.isShopListed != null && kycAgentFragmentVM.isShopListed.equals(
+                    AppConstants.YES
+                )
+            ) {
                 findNavController().navigate(
                     R.id.navigation_qr_code_scan,
                     null,
@@ -81,9 +81,9 @@ class KycAgentFragment : BaseFragment<FragmentKycAgentBinding, KycAgentFragmentV
                             exit = R.anim.slide_out_left
                         }
                     })
-//            } else {
-//                setUserRedirection()
-//            }
+            } else {
+                setUserRedirection()
+            }
         }
 
         binding.mcvEarnings.setOnClickListener {
