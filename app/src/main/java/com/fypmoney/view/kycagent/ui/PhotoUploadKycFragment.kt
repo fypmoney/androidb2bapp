@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.hardware.usb.UsbDevice
 import android.hardware.usb.UsbManager
@@ -29,6 +30,8 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
 import com.bumptech.glide.Glide
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
@@ -79,6 +82,9 @@ class PhotoUploadKycFragment : BaseFragment<FragmentPhotoUploadKycBinding, Photo
             backArrowTint = Color.WHITE
         )
 
+        trackr {
+            it.name = TrackrEvent.signup_upload_photo_view
+        }
 //        binding.ivUpload.setOnClickListener {
 //            openCameraAndGallery()
 //        }
@@ -139,22 +145,26 @@ class PhotoUploadKycFragment : BaseFragment<FragmentPhotoUploadKycBinding, Photo
 
     private val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result->
         if (result.resultCode == Activity.RESULT_OK) {
+
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
                 try {
-                    if(imageFilePath!=null){
 
+                    if (result.data != null && result.data!!.extras != null) {
+                        val imageBitmap =  result.data!!.extras!!.get("data")
+                        Glide.with(requireContext()).load(imageBitmap).into(binding.ivShopUploadedPhoto)
+                        //binding.ivShopUploadedPhoto.setImageBitmap(imageBitmap)
+
+                        val file = File(FileUtils.getPath(requireContext().applicationContext, result.data?.data))
                         val requestFile =
-                            imageFilePath!!.asRequestBody("multipart/form-data".toMediaTypeOrNull())
-                        val body = MultipartBody.Part.createFormData("file", imageFilePath!!.name, requestFile)
+                            file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
+                        val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
 
                         photoUploadKycFragmentVM.shopPhotoData = body
 
-                        Glide.with(requireContext()).load(imageFilePath).into(binding.ivShopUploadedPhoto)
+                        Glide.with(requireContext()).load(imageBitmap).into(binding.ivShopUploadedPhoto)
 
                         photoUploadKycFragmentVM.callProfilePicUploadApi(photoUploadKycFragmentVM.shopPhotoData!!)
-
                     }
-
                 } catch (e: IOException) {
                     e.printStackTrace()
                     FirebaseCrashlytics.getInstance().recordException(Throwable(e))
@@ -218,7 +228,7 @@ class PhotoUploadKycFragment : BaseFragment<FragmentPhotoUploadKycBinding, Photo
             if (photoFile != null) {
                 val photoURI = getCacheImagePath(photoFile.name)
                 pictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
-                    photoURI);
+                    photoURI)
                 resultLauncher.launch(pictureIntent)
             }
         }
@@ -241,11 +251,7 @@ class PhotoUploadKycFragment : BaseFragment<FragmentPhotoUploadKycBinding, Photo
 
     private fun openCameraAndGallery(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-//            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-//            if(intent.resolveActivity(requireContext().packageManager)!=null){
-//                resultLauncher.launch(intent)
-//            }
-            openCameraIntent()
+            showImagePickerOptions()
         } else {
             Dexter.withContext(requireContext())
                 .withPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -323,6 +329,9 @@ class PhotoUploadKycFragment : BaseFragment<FragmentPhotoUploadKycBinding, Photo
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == AppConstants.REQUEST_IMAGE) {
             if (resultCode == AppCompatActivity.RESULT_OK) {
+                trackr {
+                    it.name = TrackrEvent.signup_upload_photo_submit
+                }
                 val uri = data?.getParcelableExtra<Uri>("path")
                 try {
                     val file = File(FileUtils.getPath(requireContext().applicationContext, uri))

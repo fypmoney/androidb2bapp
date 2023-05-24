@@ -6,6 +6,8 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
@@ -36,6 +38,9 @@ class MyEarningsFragment : BaseFragment<FragmentMyEarningsBinding, MyEarningsFra
             backArrowTint = Color.WHITE
         )
 
+        trackr {
+            it.name = TrackrEvent.earnings_view
+        }
         setUpRecyclerView()
 
         setUpObserver()

@@ -191,6 +191,33 @@ enum class TrackrEvent(name: String) {
     yes_bank_otp("yes_bank_otp"),
 
 
+    //KYC AGENT
+    agent_home("agent_home"),
+    signup_shop_details_view("signup_shop_details_view"),
+    signup_shop_details_submit("signup_shop_details_submit"),
+    signup_upload_photo_view("signup_upload_photo_view"),
+    signup_upload_photo_submit("signup_upload_photo_submit"),
+    signup_aadhaar_view("signup_aadhaar_view"),
+    signup_aadhaar_submit("signup_aadhaar_submit"),
+    new_aadhaar_submit("new_aadhaar_submit"),
+    new_aadhaar_view("new_aadhaar_view"),
+    signup_choose_finger("signup_choose_finger"),
+    new_choose_finger("new_choose_finger"),
+    signup_activate_sensor_view("signup_activate_sensor_view"),
+    new_activate_sensor_view("new_activate_sensor_view"),
+    new_activate_sensor_fail("new_activate_sensor_fail"),
+    signup_activate_sensor_fail("signup_activate_sensor_fail"),
+    signup_activate_sensor_success("signup_activate_sensor_success"),
+    new_activate_sensor_success("new_activate_sensor_success"),
+    error_device_support("error_device_support"),
+    error_no_driver("error_no_driver"),
+    new_kyc_success("new_kyc_success"),
+    new_kyc_fail("new_kyc_fail"),
+    signup_kyc_fail("signup_kyc_fail"),
+    signup_kyc_success("signup_kyc_success"),
+    earnings_view("earnings_view"),
+
+
 }
 
 enum class TrackrField(name: String) {

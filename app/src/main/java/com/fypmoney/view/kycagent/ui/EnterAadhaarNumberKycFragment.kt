@@ -6,6 +6,8 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
@@ -35,9 +37,15 @@ class EnterAadhaarNumberKycFragment : BaseFragment<FragmentEnterAadhaarNumberKyc
         if (enterAadhaarNumberKycFragmentVM.via == "UserKyc"){
             //userkyc
             binding.tvAadhaarNumber.text = "Enter Aadhaar Number of Customer"
+            trackr {
+                it.name = TrackrEvent.new_aadhaar_view
+            }
         }else{
             //selfkyc
             binding.tvAadhaarNumber.text = "Enter Your Aadhaar Number"
+            trackr {
+                it.name = TrackrEvent.signup_aadhaar_view
+            }
         }
 
         if (arguments?.containsKey("fourDigits") == true) {
@@ -57,6 +65,17 @@ class EnterAadhaarNumberKycFragment : BaseFragment<FragmentEnterAadhaarNumberKyc
         binding.btnAddWithdrawSavings.setOnClickListener {
             binding.tvAaadhaarError.toGone()
             if (binding.etCity.text?.trim().toString().isNotEmpty() && binding.etCity.text?.trim()?.length == 12){
+                if (enterAadhaarNumberKycFragmentVM.via == "UserKyc"){
+                    //userkyc
+                    trackr {
+                        it.name = TrackrEvent.new_aadhaar_submit
+                    }
+                }else{
+                    //selfkyc
+                    trackr {
+                        it.name = TrackrEvent.signup_aadhaar_submit
+                    }
+                }
                 val lastFourDigits = binding.etCity.text?.trim().toString().substring(binding.etCity.text?.trim()?.length!! - 4)
                 if (enterAadhaarNumberKycFragmentVM.lastFourDigitCode != null){
                     if (enterAadhaarNumberKycFragmentVM.lastFourDigitCode == lastFourDigits) {

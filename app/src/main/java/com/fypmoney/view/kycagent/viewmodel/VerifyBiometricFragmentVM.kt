@@ -10,6 +10,8 @@ import androidx.annotation.Keep
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.util.livedata.LiveEvent
 import kotlinx.android.parcel.Parcelize
@@ -148,6 +150,7 @@ class VerifyBiometricFragmentVM(application: Application): BaseViewModel(applica
                     ))
             }else{
                 _deviceState.value = FingerPrintDevices.NotSuppourtedDevice
+
             }
         }
 
