@@ -243,7 +243,7 @@ class TakeHandFingerFragmentVM(application: Application) : BaseViewModel(applica
         getFinger(handDelegate.hand.value!!, fingreDelegate.fingre.value!!)?.let {
             val fullKycNetworkRequest = FullKycNetworkRequest(
                 customerMobile = customerNumber!!,
-                customerAadhaarNumber = customerAadhaarNumber!!,
+                customerAadhaarNumber = customerAadhaarNumber,
                 currentAddressCheck = AppConstants.YES,
                 selectedFinger = it,
                 capturedInfo = capturedInfo,

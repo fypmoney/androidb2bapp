@@ -5,7 +5,7 @@ import androidx.annotation.Keep
 @Keep
 data class FullKycNetworkRequest(
     val customerMobile:String,
-    val customerAadhaarNumber:String,
+    val customerAadhaarNumber:String?=null,
     val currentAddressCheck:String,
     val selectedFinger:String,
     val capturedInfo:String,
