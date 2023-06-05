@@ -10,7 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.TrackrField
 import com.fyp.trackr.models.trackr
@@ -25,7 +24,6 @@ import com.fypmoney.util.Utility
 import com.fypmoney.util.videoplayer.VideoActivity2
 import com.fypmoney.view.StoreWebpageOpener2
 import com.fypmoney.view.activity.LoginView
-import com.fypmoney.view.activity.NotificationView
 import com.fypmoney.view.arcadegames.model.ArcadeType
 import com.fypmoney.view.arcadegames.model.checkTheArcadeType
 import com.fypmoney.view.home.main.explore.ViewDetails.ExploreInAppWebview
@@ -33,7 +31,6 @@ import com.fypmoney.view.home.main.explore.adapters.ExploreBaseAdapter
 import com.fypmoney.view.home.main.explore.`interface`.ExploreItemClickListener
 import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
 import com.fypmoney.view.home.main.explore.model.SectionContentItem
-import com.fypmoney.view.home.main.home.viewmodel.HomeFragmentVM
 import com.fypmoney.view.kycagent.viewmodel.KycAgentFragmentVM
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -70,17 +67,23 @@ class KycAgentFragment : BaseFragment<FragmentKycAgentBinding, KycAgentFragmentV
                     AppConstants.YES
                 )
             ) {
-                findNavController().navigate(
-                    R.id.navigation_qr_code_scan,
-                    null,
-                    navOptions {
-                        anim {
-                            popEnter = R.anim.slide_in_left
-                            popExit = R.anim.slide_out_righ
-                            enter = R.anim.slide_in_right
-                            exit = R.anim.slide_out_left
-                        }
-                    })
+//                findNavController().navigate(
+//                    R.id.navigation_qr_code_scan,
+//                    null,
+//                    navOptions {
+//                        anim {
+//                            popEnter = R.anim.slide_in_left
+//                            popExit = R.anim.slide_out_righ
+//                            enter = R.anim.slide_in_right
+//                            exit = R.anim.slide_out_left
+//                        }
+//                    })
+
+                val kycModeBottomSheet = ChooseKycModeBottomSheet()
+//                val deviceBottomSheet = DeviceBottomSheet(onContinueClick = {
+//                    findNavController().navigateUp()
+//                })
+                kycModeBottomSheet.show(requireActivity().supportFragmentManager,"kycBottomSheet")
             } else {
                 setUserRedirection()
             }
