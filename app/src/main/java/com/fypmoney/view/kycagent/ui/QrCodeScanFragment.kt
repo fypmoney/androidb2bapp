@@ -134,7 +134,6 @@ class QrCodeScanFragment : BaseFragment<FragmentQrCodeScanBinding, QrCodeScanFra
 
                     val lastFourDigit: String = qrCodeScanFragmentVM.finalQrDecryptCode[0].substring(6)
 
-                    Utility.showToast("Last: $lastFourDigit")
                     qrCodeScanFragmentVM.showSuccessDialog(lastFourDigit)
                     performActions()
 
